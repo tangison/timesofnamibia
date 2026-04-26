@@ -84,7 +84,7 @@
   --sidebar-ring: #CB102E;
 }
 
-/* ========= TON BASE STYLES ========= */
+/* ========= TON BASE STYLES — OPEN & EDITORIAL ========= */
 
 @layer base {
   * {
@@ -122,15 +122,15 @@
 .ton-dropcap::first-letter {
   font-family: var(--font-playfair), "Playfair Display", serif;
   float: left;
-  font-size: 4rem;
-  line-height: 0.8;
-  padding-right: 0.5rem;
-  padding-top: 0.25rem;
+  font-size: 4.5rem;
+  line-height: 0.75;
+  padding-right: 0.6rem;
+  padding-top: 0.15rem;
   font-weight: 700;
   color: #111111;
 }
 
-/* ========= COLUMN RULES ========= */
+/* ========= COLUMN RULES — SUBTLE ========= */
 
 .ton-column-rule {
   border-right: 1px solid #D4D2CE;
@@ -143,12 +143,6 @@
 @media (max-width: 768px) {
   .ton-column-rule {
     border-right: none;
-    border-bottom: 1px solid #D4D2CE;
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
-  }
-  .ton-column-rule:last-child {
-    border-bottom: none;
     padding-bottom: 0;
     margin-bottom: 0;
   }
@@ -173,56 +167,67 @@
   animation: ton-pulse 1.5s ease-in-out infinite;
 }
 
-/* ========= CUSTOM SCROLLBAR FOR DATA PANELS ========= */
+/* ========= CUSTOM SCROLLBAR ========= */
 
 .ton-scrollbar::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 .ton-scrollbar::-webkit-scrollbar-track {
-  background: #F0EFED;
+  background: transparent;
 }
 
 .ton-scrollbar::-webkit-scrollbar-thumb {
   background: #D4D2CE;
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
 .ton-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #B8860B;
 }
 
-/* ========= EDITORIAL BORDER ========= */
+/* ========= EDITORIAL BORDERS — REFINED ========= */
 
-.ton-border-editorial {
-  border: 4px solid #111111;
+.ton-rule-top {
+  border-top: 2px solid #111111;
 }
 
-.ton-border-top-editorial {
+.ton-rule-bottom {
+  border-bottom: 1px solid #D4D2CE;
+}
+
+.ton-rule-top-heavy {
   border-top: 4px solid #111111;
 }
 
-.ton-border-bottom-editorial {
-  border-bottom: 4px solid #111111;
+.ton-rule-accent {
+  border-top: 3px solid #CB102E;
+}
+
+.ton-rule-gold {
+  border-top: 3px solid #B8860B;
 }
 
 /* ========= GRAYSCALE IMAGES ========= */
+
 .ton-article-image {
   filter: grayscale(100%);
-  transition: filter 0.5s ease;
+  transition: filter 0.6s ease;
 }
 .ton-article-image:hover {
   filter: grayscale(0%);
 }
 
 /* ========= NO ROUNDED CORNERS (TON BLOCK) ========= */
+
 .ton-no-radius,
 .ton-no-radius button,
 .ton-no-radius [role="button"] {
   border-radius: 0 !important;
 }
 
-/* ========= MOBILE SCROLLBAR HIDE FOR NAV ========= */
+/* ========= MOBILE SCROLLBAR HIDE ========= */
+
 .scrollbar-none {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -232,13 +237,15 @@
 }
 
 /* ========= RESPONSIVE DROP CAP ========= */
+
 @media (max-width: 640px) {
   .ton-dropcap::first-letter {
-    font-size: 3rem;
+    font-size: 3.2rem;
   }
 }
 
 /* ========= WHATSAPP / TUMAOS BUTTONS ========= */
+
 .ton-share-btn {
   border-radius: 0;
   transition: all 0.15s ease;
@@ -247,10 +254,30 @@
   transform: scale(0.97);
 }
 
+/* ========= SMOOTH SECTION SPACING ========= */
+
+.ton-section {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .ton-section {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ton-section {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+}
+
 /* ========= PRINT RULES ========= */
 
 @media print {
-  /* Hide non-essential elements */
   .ton-no-print,
   .ton-ticker-wrapper,
   .ton-utility-nav,
@@ -264,14 +291,12 @@
     display: none !important;
   }
 
-  /* Reset background */
   body {
     background: white !important;
     color: black !important;
     font-size: 12pt;
   }
 
-  /* Masthead stays */
   .ton-masthead {
     border-bottom: 3px solid black !important;
     padding: 0.5in 0 !important;
@@ -281,49 +306,41 @@
     font-size: 24pt !important;
   }
 
-  /* Main content fills page */
   .ton-main-content {
     column-count: 3;
     column-gap: 0.3in;
     column-rule: 1px solid #999;
   }
 
-  /* Drop caps in print */
   .ton-dropcap::first-letter {
     font-size: 3rem;
   }
 
-  /* Page breaks */
   .ton-page-break {
     page-break-before: always;
   }
 
-  /* Force black and white */
   * {
     color: black !important;
     border-color: black !important;
     background: white !important;
   }
 
-  /* Preserve gold for tenders in grayscale */
   .ton-tender-item {
     border-left: 3px solid black !important;
   }
 
-  /* Links show URL */
   a[href]::after {
     content: " (" attr(href) ")";
     font-size: 8pt;
     color: #666 !important;
   }
 
-  /* Ensure images print */
   img {
     max-width: 100% !important;
     page-break-inside: avoid;
   }
 
-  /* Avoid orphans/widows */
   p {
     orphans: 3;
     widows: 3;

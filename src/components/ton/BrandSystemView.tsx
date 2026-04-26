@@ -91,60 +91,61 @@ const PRINCIPLES = [
 
 export default function BrandSystemView() {
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6">
-      {/* Header */}
-      <div className="bg-ton-black text-ton-cream p-4 sm:p-6 md:p-8 ton-border-editorial mb-4 sm:mb-6 ton-no-radius">
-        <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 md:py-10">
+      {/* Page Header */}
+      <div className="mb-8 sm:mb-10">
+        <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-tight">
           Brand System
         </h1>
-        <p className="font-serif italic text-ton-cream/80 text-sm sm:text-base mt-3 max-w-2xl">
+        <p className="font-serif italic text-ton-black/50 text-sm sm:text-base mt-2 max-w-xl">
           The visual identity of Times of Namibia. Every color, every typeface,
           every pixel carries intent.
         </p>
-        <Link
-          href="/"
-          className="mt-3 inline-flex font-mono text-xs text-ton-cream/80 hover:text-ton-cream transition-colors items-center gap-1.5"
-        >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          Back to Newsroom
-        </Link>
+        <div className="flex items-center gap-4 mt-4">
+          <Link
+            href="/"
+            className="font-mono text-[10px] text-ton-black/40 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
+          >
+            <ArrowLeft className="w-3 h-3" />
+            Newsroom
+          </Link>
+        </div>
       </div>
 
-      {/* Quote */}
-      <div className="bg-white ton-border-editorial ton-no-radius p-4 sm:p-6 md:p-8 mb-4 sm:mb-6 text-center">
-        <blockquote className="font-serif italic text-xl sm:text-2xl md:text-3xl text-ton-black/80 leading-relaxed">
+      {/* Philosophy Quote */}
+      <div className="py-8 sm:py-10 text-center border-t border-ton-black/10 mb-8 sm:mb-10">
+        <blockquote className="font-serif italic text-2xl sm:text-3xl md:text-4xl text-ton-black/60 leading-relaxed">
           &ldquo;Every pixel must inform.&rdquo;
         </blockquote>
-        <p className="font-mono text-xs text-ton-black/80 mt-3 tracking-widest uppercase">
+        <p className="font-mono text-[10px] text-ton-black/30 mt-4 tracking-widest uppercase">
           Times of Namibia Design Philosophy — GemsWeb Digital
         </p>
       </div>
 
-      {/* Color Palette - 2 columns on mobile, 5 on desktop */}
-      <div className="mb-4 sm:mb-6">
-        <h2 className="font-serif text-2xl font-bold text-ton-black mb-4 flex items-center gap-3">
-          <span className="w-8 h-1 bg-ton-black" />
-          Core Palette
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+      {/* Color Palette */}
+      <div className="mb-10 sm:mb-12">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="w-6 h-[2px] bg-ton-black" />
+          <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black">
+            Core Palette
+          </h2>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5">
           {PALETTE.map((color) => (
-            <div
-              key={color.hex}
-              className={`bg-white border ${color.border} overflow-hidden ton-no-radius`}
-            >
+            <div key={color.hex}>
               <div
-                className="h-20 sm:h-28 flex items-end p-2 sm:p-3"
+                className="h-24 sm:h-32 flex items-end p-3"
                 style={{ backgroundColor: color.hex }}
               >
                 <span className={`font-mono text-[10px] sm:text-xs font-bold ${color.textColor}`}>
                   {color.hex}
                 </span>
               </div>
-              <div className="p-2 sm:p-3">
+              <div className="pt-3">
                 <h3 className="font-serif text-xs sm:text-sm font-bold text-ton-black">
                   {color.name}
                 </h3>
-                <p className="font-sans text-[10px] sm:text-xs text-ton-black/80 mt-1 leading-relaxed">
+                <p className="font-sans text-[10px] sm:text-xs text-ton-black/40 mt-1 leading-relaxed">
                   {color.description}
                 </p>
               </div>
@@ -153,31 +154,28 @@ export default function BrandSystemView() {
         </div>
       </div>
 
-      {/* Typography - stack vertically on mobile */}
-      <div className="mb-4 sm:mb-6">
-        <h2 className="font-serif text-2xl font-bold text-ton-black mb-4 flex items-center gap-3">
-          <span className="w-8 h-1 bg-ton-black" />
-          Typography
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+      {/* Typography */}
+      <div className="mb-10 sm:mb-12">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="w-6 h-[2px] bg-ton-black" />
+          <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black">
+            Typography
+          </h2>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
           {TYPOGRAPHY.map((type) => (
-            <div
-              key={type.name}
-              className="bg-white ton-border-editorial ton-no-radius p-4 sm:p-6"
-            >
+            <div key={type.name} className="pt-5 border-t border-ton-black/10">
               <h3 className="font-serif text-base sm:text-lg font-bold text-ton-black">
                 {type.name}
               </h3>
-              <p className="font-mono text-xs text-ton-gold mt-1">
+              <p className="font-mono text-[10px] text-ton-gold mt-1">
                 {type.category}
               </p>
-              <p className="font-sans text-xs text-ton-black/80 mt-2">
+              <p className="font-sans text-xs text-ton-black/40 mt-2 leading-relaxed">
                 {type.usage}
               </p>
-              <div className="mt-4 pt-4 border-t border-ton-black/10">
-                <p
-                  className={`${type.className} text-base sm:text-lg text-ton-black leading-relaxed`}
-                >
+              <div className="mt-4 pt-4 border-t border-ton-black/5">
+                <p className={`${type.className} text-base sm:text-lg text-ton-black leading-relaxed`}>
                   {type.sample}
                 </p>
               </div>
@@ -186,25 +184,24 @@ export default function BrandSystemView() {
         </div>
       </div>
 
-      {/* Design Philosophy - stack vertically on mobile */}
-      <div className="mb-4 sm:mb-6">
-        <h2 className="font-serif text-2xl font-bold text-ton-black mb-4 flex items-center gap-3">
-          <span className="w-8 h-1 bg-ton-black" />
-          Design Philosophy
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+      {/* Design Philosophy */}
+      <div className="mb-10 sm:mb-12">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="w-6 h-[2px] bg-ton-black" />
+          <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black">
+            Design Philosophy
+          </h2>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
           {PRINCIPLES.map((principle) => (
-            <div
-              key={principle.title}
-              className="bg-white ton-border-editorial ton-no-radius p-4 sm:p-6"
-            >
+            <div key={principle.title} className="pt-5 border-t border-ton-black/10">
               <div className="flex items-center gap-3 mb-3">
-                <span className="w-3 h-3 bg-ton-red flex-shrink-0 rounded-none" />
+                <span className="w-2.5 h-2.5 bg-ton-red flex-shrink-0" />
                 <h3 className="font-serif text-base sm:text-lg font-bold text-ton-black">
                   {principle.title}
                 </h3>
               </div>
-              <p className="font-sans text-xs sm:text-sm text-ton-black/80 leading-relaxed">
+              <p className="font-sans text-xs sm:text-sm text-ton-black/50 leading-relaxed">
                 {principle.description}
               </p>
             </div>
@@ -213,14 +210,14 @@ export default function BrandSystemView() {
       </div>
 
       {/* Masthead Preview */}
-      <div className="bg-ton-black text-ton-cream p-4 sm:p-8 ton-border-editorial ton-no-radius text-center">
-        <div className="bg-ton-cream/10 inline-block px-3 py-1 font-mono text-xs text-ton-cream/80 tracking-widest uppercase mb-4 rounded-none">
+      <div className="py-10 sm:py-14 text-center border-t border-ton-black/10">
+        <span className="font-mono text-[10px] text-ton-black/30 tracking-widest uppercase">
           Masthead
-        </div>
-        <h1 className="font-serif text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight text-ton-cream">
+        </span>
+        <h1 className="font-serif text-4xl sm:text-6xl md:text-8xl font-bold tracking-tight text-ton-black mt-4">
           TIMES OF NAMIBIA
         </h1>
-        <p className="font-serif italic text-ton-cream/80 mt-2">
+        <p className="font-serif italic text-ton-black/50 mt-3 text-sm sm:text-lg">
           Namibia. Informed. Instantly.
         </p>
       </div>

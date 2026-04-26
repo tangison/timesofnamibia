@@ -18,7 +18,7 @@ export default function ShareButtons({ title, url }: { title: string; url?: stri
   };
 
   return (
-    <div className="flex items-center gap-2 flex-wrap">
+    <div className="flex items-center gap-2">
       <button
         onClick={handleWhatsApp}
         className="ton-share-btn flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-widest bg-emerald-600 text-white px-3 py-1.5 hover:bg-emerald-700 transition-colors"

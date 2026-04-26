@@ -13,7 +13,7 @@ export default function ScrapedTimestamp({ label = "Scraped" }: { label?: string
   }, []);
 
   return (
-    <span className="font-mono text-[10px] text-ton-black/70 uppercase tracking-wider">
+    <span className="font-mono text-[10px] text-ton-black/30 uppercase tracking-wider">
       {label} {seconds}s ago
     </span>
   );

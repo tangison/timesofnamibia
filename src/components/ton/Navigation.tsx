@@ -18,31 +18,33 @@ export default function Navigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="ton-navigation bg-ton-black text-ton-cream ton-border-bottom-editorial border-ton-black">
-      <div className="max-w-7xl mx-auto flex items-center overflow-x-auto scrollbar-none snap-x snap-mandatory">
-        {NAV_ITEMS.map((item) => {
-          const isActive =
-            item.href !== "/" && item.href !== "/?section=economy"
-              ? pathname.startsWith(item.href)
-              : pathname === "/";
-          return (
-            <Link
-              key={item.label}
-              href={item.href}
-              className={`flex-shrink-0 px-3 sm:px-4 py-2.5 min-h-[44px] flex items-center font-sans text-xs font-semibold tracking-widest uppercase transition-colors duration-150 border-b-2 whitespace-nowrap snap-start ${
-                isActive
-                  ? item.highlight === "gold"
-                    ? "bg-ton-gold/20 text-ton-gold border-ton-gold"
-                    : item.highlight === "red"
-                    ? "bg-ton-red/20 text-ton-red border-ton-red"
-                    : "bg-ton-cream/10 text-ton-cream border-ton-cream"
-                  : "border-transparent text-ton-cream/70 hover:text-ton-cream hover:bg-ton-cream/5"
-              }`}
-            >
-              {item.label}
-            </Link>
-          );
-        })}
+    <nav className="ton-navigation ton-rule-top bg-ton-cream">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="flex items-center overflow-x-auto scrollbar-none snap-x snap-mandatory -mx-1">
+          {NAV_ITEMS.map((item) => {
+            const isActive =
+              item.href !== "/" && item.href !== "/?section=economy"
+                ? pathname.startsWith(item.href)
+                : pathname === "/";
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`flex-shrink-0 px-3 sm:px-4 py-3 min-h-[44px] flex items-center font-sans text-[11px] sm:text-xs font-semibold tracking-widest uppercase transition-colors duration-150 border-b-2 whitespace-nowrap snap-start ${
+                  isActive
+                    ? item.highlight === "gold"
+                      ? "text-ton-gold border-ton-gold"
+                      : item.highlight === "red"
+                      ? "text-ton-red border-ton-red"
+                      : "text-ton-black border-ton-black"
+                    : "border-transparent text-ton-black/50 hover:text-ton-black hover:border-ton-black/30"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </div>
       </div>
     </nav>
   );

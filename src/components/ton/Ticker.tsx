@@ -12,14 +12,14 @@ export default function Ticker() {
       <div className="flex items-center">
         <button
           onClick={() => setPaused(!paused)}
-          className="flex-shrink-0 bg-ton-red px-2 sm:px-3 py-1.5 font-mono text-[10px] sm:text-xs font-bold tracking-wider uppercase flex items-center gap-1.5 sm:gap-2 min-h-[36px] active:opacity-80"
+          className="flex-shrink-0 bg-ton-red px-3 sm:px-4 py-2 font-mono text-[10px] sm:text-xs font-bold tracking-wider uppercase flex items-center gap-2 min-h-[36px] active:opacity-80"
           aria-label={paused ? "Resume ticker" : "Pause ticker"}
         >
           <span className="ton-live-dot" />
           LIVE
         </button>
         <div
-          className="overflow-hidden flex-1 py-1.5 cursor-pointer"
+          className="overflow-hidden flex-1 py-2 cursor-pointer"
           onClick={() => setPaused(!paused)}
           role="marquee"
           aria-label="News ticker - tap to pause"

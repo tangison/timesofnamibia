@@ -14,7 +14,6 @@ import {
   Zap,
   ArrowLeft,
 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import {
   Select,
   SelectContent,
@@ -26,15 +25,15 @@ import {
 function sourceColor(source: Job["source"]): string {
   switch (source) {
     case "LinkedIn":
-      return "bg-blue-100 text-blue-800 border-blue-200";
+      return "text-blue-600 bg-blue-50 border-blue-200";
     case "NIEIS":
-      return "bg-emerald-100 text-emerald-800 border-emerald-200";
+      return "text-emerald-700 bg-emerald-50 border-emerald-200";
     case "NamibiaJobs":
-      return "bg-amber-100 text-amber-800 border-amber-200";
+      return "text-amber-700 bg-amber-50 border-amber-200";
     case "CareerPortal":
-      return "bg-purple-100 text-purple-800 border-purple-200";
+      return "text-purple-700 bg-purple-50 border-purple-200";
     default:
-      return "bg-gray-100 text-gray-800 border-gray-200";
+      return "text-gray-600 bg-gray-50 border-gray-200";
   }
 }
 
@@ -51,63 +50,52 @@ export default function JobScraperView() {
   }, [regionFilter, sourceFilter]);
 
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6">
-      {/* Header */}
-      <div className="bg-ton-black text-ton-cream p-4 sm:p-6 md:p-8 ton-border-editorial mb-4 sm:mb-6 ton-no-radius">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 md:py-10">
+      {/* Page Header — open, spacious */}
+      <div className="mb-8 sm:mb-10">
         <div className="flex items-center gap-3 mb-3">
-          <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-ton-red" />
-          <div className="flex items-center gap-1.5">
+          <Zap className="w-5 h-5 text-ton-red" />
+          <div className="flex items-center gap-2">
             <span className="ton-live-dot" />
-            <span className="font-mono text-[10px] sm:text-xs tracking-widest uppercase text-ton-red">
+            <span className="font-mono text-[10px] tracking-widest uppercase text-ton-red font-semibold">
               Live
             </span>
           </div>
         </div>
-        <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
+        <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-tight">
           Job Scraper
         </h1>
-        <p className="font-serif italic text-ton-cream/80 text-sm sm:text-base mt-3 max-w-2xl">
+        <p className="font-serif italic text-ton-black/50 text-sm sm:text-base mt-2 max-w-xl">
           Real-time aggregation from LinkedIn, NIEIS, NamibiaJobs, and CareerPortal.
           {filteredJobs.length} positions across {NAMIBIA_REGIONS.length} regions.
         </p>
-        <div className="flex items-center justify-between mt-3">
+        <div className="flex items-center gap-4 mt-4">
           <Link
             href="/"
-            className="font-mono text-xs text-ton-cream/80 hover:text-ton-cream transition-colors flex items-center gap-1.5"
+            className="font-mono text-[10px] text-ton-black/40 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
           >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            Back to Newsroom
+            <ArrowLeft className="w-3 h-3" />
+            Newsroom
           </Link>
-          <span className="font-mono text-[10px] text-ton-cream/60">GemsWeb Digital</span>
+          <span className="font-mono text-[10px] text-ton-black/30">GemsWeb Digital</span>
         </div>
       </div>
 
-      {/* Job Count - visible at top */}
-      <div className="bg-ton-red/10 border border-ton-red/20 px-4 py-2 mb-4 flex items-center justify-between ton-no-radius">
-        <span className="font-mono text-xs font-bold text-ton-red uppercase tracking-wider">
-          {filteredJobs.length} of {JOBS.length} positions
-        </span>
-        <div className="flex items-center gap-1.5">
-          <span className="ton-live-dot" style={{ width: 6, height: 6 }} />
-          <span className="font-mono text-[10px] text-ton-red">LIVE</span>
-        </div>
-      </div>
-
-      {/* Filters Bar */}
-      <div className="bg-white ton-border-editorial ton-no-radius p-3 sm:p-4 mb-4 sm:mb-6 flex flex-col gap-3">
-        <div className="flex items-center gap-2 text-ton-black/80 flex-shrink-0">
-          <Filter className="w-4 h-4" />
-          <span className="font-mono text-xs uppercase tracking-widest font-bold">
+      {/* Filters Bar — clean, minimal */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 pb-5 mb-6 border-b border-ton-black/10">
+        <div className="flex items-center gap-2 text-ton-black/40 flex-shrink-0">
+          <Filter className="w-3.5 h-3.5" />
+          <span className="font-mono text-[10px] uppercase tracking-widest font-bold">
             Filters
           </span>
         </div>
-        <div className="flex flex-col sm:flex-row flex-1 gap-3">
+        <div className="flex flex-col sm:flex-row gap-3 flex-1 w-full sm:w-auto">
           <Select
             value={regionFilter}
             onValueChange={setRegionFilter}
           >
-            <SelectTrigger className="w-full sm:w-[180px] h-9 text-xs font-mono rounded-none">
-              <MapPin className="w-3.5 h-3.5 mr-1" />
+            <SelectTrigger className="w-full sm:w-[180px] h-9 text-xs font-mono rounded-none border-ton-black/15">
+              <MapPin className="w-3.5 h-3.5 mr-1 opacity-50" />
               <SelectValue placeholder="Region" />
             </SelectTrigger>
             <SelectContent>
@@ -123,8 +111,8 @@ export default function JobScraperView() {
             value={sourceFilter}
             onValueChange={setSourceFilter}
           >
-            <SelectTrigger className="w-full sm:w-[180px] h-9 text-xs font-mono rounded-none">
-              <ExternalLink className="w-3.5 h-3.5 mr-1" />
+            <SelectTrigger className="w-full sm:w-[180px] h-9 text-xs font-mono rounded-none border-ton-black/15">
+              <ExternalLink className="w-3.5 h-3.5 mr-1 opacity-50" />
               <SelectValue placeholder="Source" />
             </SelectTrigger>
             <SelectContent>
@@ -137,12 +125,18 @@ export default function JobScraperView() {
             </SelectContent>
           </Select>
         </div>
+        <div className="flex items-center gap-2">
+          <span className="font-mono text-[10px] text-ton-red font-bold uppercase tracking-wider">
+            {filteredJobs.length} of {JOBS.length}
+          </span>
+          <span className="ton-live-dot" style={{ width: 6, height: 6 }} />
+        </div>
       </div>
 
-      {/* Job Listings Grid - single column on mobile */}
+      {/* Job Listings — open vertical list, no boxes */}
       {filteredJobs.length === 0 ? (
-        <div className="bg-white ton-border-editorial ton-no-radius p-8 sm:p-12 text-center">
-          <p className="font-serif italic text-ton-black/80 text-lg">
+        <div className="py-12 sm:py-16 text-center">
+          <p className="font-serif italic text-ton-black/50 text-lg">
             No positions match your filters.
           </p>
           <button
@@ -150,72 +144,71 @@ export default function JobScraperView() {
               setRegionFilter("all");
               setSourceFilter("all");
             }}
-            className="mt-3 font-mono text-xs text-ton-red font-semibold hover:underline uppercase tracking-wider"
+            className="mt-3 font-mono text-[10px] text-ton-red font-semibold hover:underline uppercase tracking-wider"
           >
             Clear All Filters
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        <div className="divide-y divide-ton-black/5">
           {filteredJobs.map((job) => (
             <div
               key={job.id}
-              className="bg-white border border-ton-black/10 hover:ton-border-editorial hover:border-ton-black transition-colors group ton-no-radius"
+              className="py-5 sm:py-6 group hover:bg-white/60 transition-colors"
             >
-              <div className="p-4 sm:p-5">
-                <div className="flex items-start justify-between gap-2 mb-3">
-                  <Badge
-                    variant="outline"
-                    className={`text-[10px] font-mono rounded-none ${sourceColor(job.source)}`}
-                  >
-                    {job.source}
-                  </Badge>
-                  <Badge
-                    variant="secondary"
-                    className="font-mono text-[10px] bg-ton-cream rounded-none"
-                  >
-                    {job.type}
-                  </Badge>
+              <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-5">
+                {/* Main content */}
+                <div className="flex-1 min-w-0">
+                  {/* Source + Type badges */}
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className={`font-mono text-[10px] px-2 py-0.5 border rounded-none font-semibold ${sourceColor(job.source)}`}>
+                      {job.source}
+                    </span>
+                    <span className="font-mono text-[10px] text-ton-black/30 px-2 py-0.5 border border-ton-black/10 rounded-none">
+                      {job.type}
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="font-serif text-lg sm:text-xl font-bold text-ton-black leading-snug group-hover:text-ton-red transition-colors">
+                    {job.title}
+                  </h3>
+
+                  {/* Meta */}
+                  <div className="flex items-center gap-3 mt-2 text-ton-black/50 flex-wrap">
+                    <span className="flex items-center gap-1 font-sans text-xs">
+                      <Building2 className="w-3.5 h-3.5" />
+                      {job.company}
+                    </span>
+                    <span className="flex items-center gap-1 font-mono text-xs">
+                      <MapPin className="w-3 h-3" />
+                      {job.location}, {job.region}
+                    </span>
+                    <span className="flex items-center gap-1 font-mono text-xs">
+                      <Clock className="w-3 h-3" />
+                      {job.postedAgo}
+                    </span>
+                  </div>
+
+                  {/* Salary + Timestamp */}
+                  <div className="flex items-center gap-4 mt-2.5">
+                    {job.salary && (
+                      <span className="font-mono text-sm text-ton-gold font-semibold">
+                        {job.salary}
+                      </span>
+                    )}
+                    <ScrapedTimestamp label="Scraped" />
+                  </div>
+
+                  {/* Actions row */}
+                  <div className="flex items-center gap-3 mt-3">
+                    <ShareButtons title={`${job.title} — ${job.company}`} />
+                    <button className="font-mono text-[10px] font-bold uppercase tracking-widest bg-ton-red text-white px-4 py-2 hover:bg-ton-red/90 transition-colors flex items-center gap-1.5">
+                      <ExternalLink className="w-3 h-3" />
+                      Apply Now
+                    </button>
+                  </div>
                 </div>
-
-                <h3 className="font-serif text-base font-bold text-ton-black leading-tight group-hover:text-ton-red transition-colors">
-                  {job.title}
-                </h3>
-
-                <div className="flex items-center gap-1.5 mt-2 text-ton-black/80">
-                  <Building2 className="w-3.5 h-3.5 flex-shrink-0" />
-                  <span className="font-sans text-xs">{job.company}</span>
-                </div>
-
-                <div className="flex items-center gap-3 mt-1.5 text-ton-black/80 flex-wrap">
-                  <span className="flex items-center gap-1 font-mono text-xs">
-                    <MapPin className="w-3 h-3" />
-                    {job.location}, {job.region}
-                  </span>
-                  <span className="flex items-center gap-1 font-mono text-xs">
-                    <Clock className="w-3 h-3" />
-                    {job.postedAgo}
-                  </span>
-                </div>
-
-                {job.salary && (
-                  <p className="font-mono text-sm text-ton-gold font-semibold mt-2">
-                    {job.salary}
-                  </p>
-                )}
-
-                <div className="mt-2">
-                  <ScrapedTimestamp label="Scraped" />
-                </div>
-
-                <div className="mt-3 flex items-center gap-2">
-                  <ShareButtons title={`${job.title} — ${job.company}`} />
-                </div>
-
-                <button className="mt-4 w-full bg-ton-red text-white font-mono text-xs font-bold uppercase tracking-widest py-2.5 hover:bg-ton-red/90 transition-colors flex items-center justify-center gap-1.5 rounded-none">
-                  <ExternalLink className="w-3.5 h-3.5" />
-                  Apply Now
-                </button>
               </div>
             </div>
           ))}

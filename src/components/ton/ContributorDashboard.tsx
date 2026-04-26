@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import {
   INITIAL_SUBMISSIONS,
   type WireSubmission,
@@ -14,6 +15,7 @@ import {
   Tag,
   AlertCircle,
   Zap,
+  ArrowLeft,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -126,26 +128,33 @@ export default function ContributorDashboard() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6">
+    <div className="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6">
       {/* Header */}
-      <div className="bg-ton-black text-ton-cream p-6 sm:p-8 ton-border-editorial mb-6">
+      <div className="bg-ton-black text-ton-cream p-4 sm:p-6 md:p-8 ton-border-editorial mb-4 sm:mb-6 ton-no-radius">
         <div className="flex items-center gap-3">
-          <Send className="w-6 h-6 text-ton-gold" />
+          <Send className="w-5 h-5 sm:w-6 sm:h-6 text-ton-gold" />
           <div>
             <h1 className="font-serif text-3xl sm:text-4xl font-bold">
               Contributor Dashboard
             </h1>
-            <p className="font-mono text-xs text-ton-cream/50 mt-1 tracking-wider uppercase">
-              Verified Wires
+            <p className="font-mono text-xs text-ton-cream/80 mt-1 tracking-wider uppercase">
+              Verified Wires — GemsWeb Digital
             </p>
           </div>
         </div>
+        <Link
+          href="/"
+          className="mt-3 inline-flex font-mono text-xs text-ton-cream/80 hover:text-ton-cream transition-colors items-center gap-1.5"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" />
+          Back to Newsroom
+        </Link>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-        {/* Submission Form */}
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-6">
+        {/* Submission Form - NOT sticky on mobile */}
         <div className="lg:col-span-2">
-          <div className="bg-white ton-border-editorial p-6 sticky top-6">
+          <div className="bg-white ton-border-editorial ton-no-radius p-4 sm:p-6 lg:sticky lg:top-6">
             <h2 className="font-serif text-xl font-bold text-ton-black mb-4">
               Submit Wire
             </h2>
@@ -153,25 +162,25 @@ export default function ContributorDashboard() {
             <div className="space-y-4">
               {/* Title */}
               <div>
-                <Label className="font-mono text-xs uppercase tracking-wider text-ton-black/50">
+                <Label className="font-mono text-xs uppercase tracking-wider text-ton-black/80">
                   Wire Title *
                 </Label>
                 <Input
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="Enter wire headline..."
-                  className="mt-1 font-serif"
+                  className="mt-1 font-serif rounded-none"
                 />
               </div>
 
               {/* Category + Priority */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <Label className="font-mono text-xs uppercase tracking-wider text-ton-black/50">
+                  <Label className="font-mono text-xs uppercase tracking-wider text-ton-black/80">
                     Category *
                   </Label>
                   <Select value={category} onValueChange={setCategory}>
-                    <SelectTrigger className="mt-1 font-mono text-xs">
+                    <SelectTrigger className="mt-1 font-mono text-xs rounded-none">
                       <Tag className="w-3 h-3 mr-1" />
                       <SelectValue placeholder="Select" />
                     </SelectTrigger>
@@ -185,7 +194,7 @@ export default function ContributorDashboard() {
                   </Select>
                 </div>
                 <div>
-                  <Label className="font-mono text-xs uppercase tracking-wider text-ton-black/50">
+                  <Label className="font-mono text-xs uppercase tracking-wider text-ton-black/80">
                     Priority
                   </Label>
                   <Select
@@ -194,7 +203,7 @@ export default function ContributorDashboard() {
                       setPriority(v as WireSubmission["priority"])
                     }
                   >
-                    <SelectTrigger className="mt-1 font-mono text-xs">
+                    <SelectTrigger className="mt-1 font-mono text-xs rounded-none">
                       <AlertCircle className="w-3 h-3 mr-1" />
                       <SelectValue />
                     </SelectTrigger>
@@ -211,20 +220,20 @@ export default function ContributorDashboard() {
 
               {/* Source */}
               <div>
-                <Label className="font-mono text-xs uppercase tracking-wider text-ton-black/50">
+                <Label className="font-mono text-xs uppercase tracking-wider text-ton-black/80">
                   Source Attribution
                 </Label>
                 <Input
                   value={source}
                   onChange={(e) => setSource(e.target.value)}
                   placeholder="e.g., Ministry of Finance"
-                  className="mt-1 font-mono text-xs"
+                  className="mt-1 font-mono text-xs rounded-none"
                 />
               </div>
 
               {/* Content */}
               <div>
-                <Label className="font-mono text-xs uppercase tracking-wider text-ton-black/50">
+                <Label className="font-mono text-xs uppercase tracking-wider text-ton-black/80">
                   Content Body *
                 </Label>
                 <Textarea
@@ -232,29 +241,29 @@ export default function ContributorDashboard() {
                   onChange={(e) => setContent(e.target.value)}
                   placeholder="Write your wire content here..."
                   rows={6}
-                  className="mt-1 font-serif text-sm"
+                  className="mt-1 font-serif text-sm rounded-none"
                 />
               </div>
 
               {/* Verification Toggle */}
               <div className="flex items-center justify-between py-2 border-t border-b border-ton-black/5">
                 <div>
-                  <Label className="font-mono text-xs uppercase tracking-wider text-ton-black/50">
+                  <Label className="font-mono text-xs uppercase tracking-wider text-ton-black/80">
                     Verification Status
                   </Label>
-                  <p className="font-mono text-[10px] text-ton-black/30 mt-0.5">
+                  <p className="font-mono text-[10px] text-ton-black/80 mt-0.5">
                     {verified ? "Source verified and cross-referenced" : "Awaiting verification"}
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
                   <span
-                    className={`font-mono text-xs ${!verified ? "text-ton-red" : "text-ton-black/30"}`}
+                    className={`font-mono text-xs ${!verified ? "text-ton-red" : "text-ton-black/80"}`}
                   >
                     Unverified
                   </span>
                   <Switch checked={verified} onCheckedChange={setVerified} />
                   <span
-                    className={`font-mono text-xs ${verified ? "text-emerald-600" : "text-ton-black/30"}`}
+                    className={`font-mono text-xs ${verified ? "text-emerald-600" : "text-ton-black/80"}`}
                   >
                     Verified
                   </span>
@@ -264,7 +273,7 @@ export default function ContributorDashboard() {
               {/* Submit */}
               <button
                 onClick={handleSubmit}
-                className="w-full bg-ton-red text-white font-mono text-sm font-bold uppercase tracking-widest py-3 hover:bg-ton-red/90 transition-colors flex items-center justify-center gap-2"
+                className="w-full bg-ton-red text-white font-mono text-sm font-bold uppercase tracking-widest py-3 hover:bg-ton-red/90 transition-colors flex items-center justify-center gap-2 rounded-none"
               >
                 <Send className="w-4 h-4" />
                 Submit Wire
@@ -275,13 +284,13 @@ export default function ContributorDashboard() {
 
         {/* Recent Submissions */}
         <div className="lg:col-span-3">
-          <div className="bg-white ton-border-editorial">
-            <div className="bg-ton-black px-6 py-3 flex items-center gap-2">
-              <Clock className="w-4 h-4 text-ton-cream/60" />
+          <div className="bg-white ton-border-editorial ton-no-radius">
+            <div className="bg-ton-black px-4 sm:px-6 py-3 flex items-center gap-2">
+              <Clock className="w-4 h-4 text-ton-cream/80" />
               <h2 className="font-mono text-xs font-bold text-ton-cream tracking-widest uppercase">
                 Recent Submissions
               </h2>
-              <span className="font-mono text-xs text-ton-cream/40 ml-auto">
+              <span className="font-mono text-xs text-ton-cream/80 ml-auto">
                 {submissions.length} wires
               </span>
             </div>
@@ -290,42 +299,42 @@ export default function ContributorDashboard() {
                 const pConfig = priorityConfig(wire.priority);
                 const catColor = categoryColor(wire.category);
                 return (
-                  <div key={wire.id} className="px-6 py-4 hover:bg-ton-cream/30 transition-colors">
+                  <div key={wire.id} className="px-4 sm:px-6 py-3 sm:py-4 hover:bg-ton-cream/30 transition-colors">
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1.5 flex-wrap">
                           <Badge
                             variant="outline"
-                            className={`font-mono text-[10px] ${pConfig.color}`}
+                            className={`font-mono text-[10px] rounded-none ${pConfig.color}`}
                           >
                             {pConfig.icon}
                             <span className="ml-1">{pConfig.label}</span>
                           </Badge>
                           <Badge
                             variant="outline"
-                            className={`font-mono text-[10px] ${catColor}`}
+                            className={`font-mono text-[10px] rounded-none ${catColor}`}
                           >
                             {wire.category}
                           </Badge>
                           {wire.verified ? (
-                            <Badge className="bg-emerald-100 text-emerald-700 font-mono text-[10px] flex items-center gap-1">
+                            <Badge className="bg-emerald-100 text-emerald-700 font-mono text-[10px] flex items-center gap-1 rounded-none">
                               <ShieldCheck className="w-3 h-3" />
                               Verified
                             </Badge>
                           ) : (
-                            <Badge className="bg-amber-100 text-amber-700 font-mono text-[10px] flex items-center gap-1">
+                            <Badge className="bg-amber-100 text-amber-700 font-mono text-[10px] flex items-center gap-1 rounded-none">
                               <ShieldAlert className="w-3 h-3" />
                               Unverified
                             </Badge>
                           )}
                         </div>
-                        <h3 className="font-serif text-base font-semibold text-ton-black leading-tight">
+                        <h3 className="font-serif text-sm sm:text-base font-semibold text-ton-black leading-tight">
                           {wire.title}
                         </h3>
-                        <p className="font-sans text-xs text-ton-black/50 mt-1.5 line-clamp-2">
+                        <p className="font-sans text-xs text-ton-black/80 mt-1.5 line-clamp-2">
                           {wire.content}
                         </p>
-                        <div className="flex items-center gap-3 mt-2 font-mono text-[10px] text-ton-black/30">
+                        <div className="flex items-center gap-3 mt-2 font-mono text-[10px] text-ton-black/80 flex-wrap">
                           <span className="flex items-center gap-1">
                             <User className="w-3 h-3" />
                             {wire.author}

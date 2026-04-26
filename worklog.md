@@ -66,3 +66,106 @@ Built the complete "Times of Namibia" (TON) web portal — a single-page applica
 - shadcn/ui components (Select, Badge, Input, Textarea, Switch, Progress, Label) styled to match TON palette
 - Responsive design: 3-column → single column on mobile
 - Print rules preserve editorial layout
+
+---
+
+## Date: 2026-04-26 (Rebuild)
+
+### Summary
+Full rebuild of the TON portal, removing Zustand and converting to real Next.js App Router pages with proper file-based routing. Implemented all brand compliance requirements: grayscale images, no rounded corners, 6-second scraped timestamps, WhatsApp share buttons, TTS/Listen UI hooks, proper text opacity, and comprehensive mobile responsiveness.
+
+### Breaking Changes
+- **DELETED** `src/lib/ton-store.ts` — Zustand store removed entirely
+- **REMOVED** Framer Motion AnimatePresence transitions (replaced with page navigation)
+- All `setView()` calls replaced with Next.js `Link` components or `useRouter().push()`
+- All Zustand state replaced with local `useState` hooks
+
+### Files Created
+
+1. **`src/components/ton/TonLayout.tsx`** — Shared layout wrapper (Ticker + UtilityNav + Masthead + Navigation + Footer) used by all pages
+
+2. **`src/components/ton/ScrapedTimestamp.tsx`** — Live-updating 6-second timestamp component for scraped content. Increments every 6 seconds, resets at 60s.
+
+3. **`src/components/ton/ShareButtons.tsx`** — WhatsApp share button (TumaOS) + TTS/Listen button with simulated states: idle → "Synthesizing..." (2s) → "Playing..." (6s) → idle
+
+4. **`src/app/jobs/page.tsx`** — Job Scraper route page
+
+5. **`src/app/tender/page.tsx`** — Tender Analysis route page
+
+6. **`src/app/contributor/page.tsx`** — Contributor Dashboard route page
+
+7. **`src/app/brand/page.tsx`** — Brand System route page
+
+### Files Modified
+
+1. **`src/app/page.tsx`** — Converted from SPA client component to server component wrapping `<TonLayout><HomeView /></TonLayout>`
+
+2. **`src/app/layout.tsx`** — Removed Framer Motion import, simplified to clean root layout with fonts + Toaster
+
+3. **`src/app/globals.css`** — Added:
+   - `.ton-article-image` — grayscale(100%) with hover reveal to color
+   - `.ton-no-radius` — Forces 0 border-radius for TON Block aesthetic
+   - `.scrollbar-none` — Hides scrollbar for mobile nav
+   - `.ton-ticker-paused` — Pause state for ticker
+   - `.ton-share-btn` — WhatsApp/TumaOS button styles with active scale
+   - Responsive drop cap at `@media (max-width: 640px)` — 3rem font size
+
+4. **`src/components/ton/Navigation.tsx`** — Replaced Zustand `currentView`/`setView` with Next.js `Link` + `usePathname()` for active state. Added snap scroll, min-h-[44px] touch targets, hidden items on small screens.
+
+5. **`src/components/ton/Footer.tsx`** — Replaced all `setView()` calls with `Link` from `next/link`. Fixed text opacity to /80 minimum. Added GemsWeb Digital attribution.
+
+6. **`src/components/ton/Ticker.tsx`** — Added tap-to-pause/resume functionality with `useState`. Smaller text on mobile. Accessible with aria-labels.
+
+7. **`src/components/ton/UtilityNav.tsx`** — Responsive text sizing (text-[10px] on mobile), proper hiding of less-critical info on small screens.
+
+8. **`src/components/ton/Masthead.tsx`** — Title scales from text-3xl (mobile) to text-7xl (desktop). LIVE badge always visible. Edition info hides on smallest screens. Added rounded-none to badges.
+
+9. **`src/components/ton/HomeView.tsx`** — Major changes:
+   - Replaced Zustand with Link components for navigation
+   - Added `ScrapedTimestamp` to mobile job/tender panels
+   - Added `ShareButtons` to main article byline area
+   - Added `ton-article-image` class for grayscale→color hover effect
+   - Mobile: compact job scraper (top 3 jobs with "View All" link)
+   - Mobile: compact tender panel (top 2 tenders with "View All" link)
+   - Market data: 2-column grid on mobile, table rows on desktop
+   - Fixed text opacity: replaced /40, /50 with /80 for readable text
+   - Headline upgraded to text-5xl on desktop (300% larger than body)
+   - Added `ton-no-radius` and `rounded-none` to all badges/buttons
+
+10. **`src/components/ton/JobScraperPanel.tsx`** — Replaced Zustand with local `useState` for filters. Added `ScrapedTimestamp` and `ShareButtons` to each job. Added `rounded-none` to buttons/badges. GemsWeb Digital attribution.
+
+11. **`src/components/ton/JobScraperView.tsx`** — Replaced Zustand with local `useState` for filters. Replaced `setView("home")` with `Link href="/"`. Added `ScrapedTimestamp` and `ShareButtons`. Mobile: single column cards, full-width apply buttons, stacked filter selects. Job count visible at top. `rounded-none` throughout.
+
+12. **`src/components/ton/TenderEdgePanel.tsx`** — Replaced `setView("tender")` with `Link href="/tender"`. Replaced `setSelectedTender()` state with direct navigation. Added `ScrapedTimestamp` and `ShareButtons`. `rounded-none` on badges/buttons.
+
+13. **`src/components/ton/TenderAnalysisView.tsx`** — Replaced Zustand with local `useState` for selectedTender, tenderAnalysisState, expandedTender. Added `ScrapedTimestamp` and `ShareButtons`. Mobile: compact upload zone, single column results, full-width cards. Back to Newsroom link. `rounded-none` throughout.
+
+14. **`src/components/ton/ContributorDashboard.tsx`** — Confirmed no Zustand imports (already used local useState). Form NOT sticky on mobile (only `lg:sticky`). Full width on mobile. `rounded-none` on form elements. Back to Newsroom link.
+
+15. **`src/components/ton/BrandSystemView.tsx`** — Confirmed no Zustand imports. Mobile: 2-column color swatches, stacked typography, stacked design principles. `rounded-none` throughout. Back to Newsroom link.
+
+### Brand Compliance Checklist
+- [x] NO imports from `@/lib/ton-store` anywhere
+- [x] NO Zustand usage anywhere
+- [x] All navigation uses Next.js `Link` or `useRouter`
+- [x] `usePathname()` used in Navigation for active state
+- [x] All pages have proper route files
+- [x] Grayscale images with hover color reveal (`.ton-article-image`)
+- [x] No rounded corners on buttons/badges/cards (TON Block style: `rounded-none`, `ton-no-radius`)
+- [x] 6-second `ScrapedTimestamp` on jobs and tenders
+- [x] WhatsApp share buttons on article, tenders, jobs (TumaOS)
+- [x] TTS/Listen button on main article (simulated: idle → synthesizing → playing)
+- [x] Text opacity never below 70% for readable content (`/80` minimum)
+- [x] Headlines 300% larger than body text (text-5xl on desktop for H2)
+- [x] Perfect mobile responsiveness on ALL views
+- [x] `bun run lint` passes with zero errors
+- [x] App compiles and serves at localhost:3000 with HTTP 200
+- [x] GemsWeb Digital attribution (never "Pty Ltd")
+
+### Verification Results
+- `bun run lint` — PASSED (zero errors)
+- `GET /` — 200 OK
+- `GET /jobs` — 200 OK
+- `GET /tender` — 200 OK
+- `GET /contributor` — 200 OK
+- `GET /brand` — 200 OK

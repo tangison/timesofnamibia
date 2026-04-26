@@ -112,7 +112,8 @@
   white-space: nowrap;
 }
 
-.ton-ticker-track:hover {
+.ton-ticker-track:hover,
+.ton-ticker-track.ton-ticker-paused {
   animation-play-state: paused;
 }
 
@@ -203,6 +204,47 @@
 
 .ton-border-bottom-editorial {
   border-bottom: 4px solid #111111;
+}
+
+/* ========= GRAYSCALE IMAGES ========= */
+.ton-article-image {
+  filter: grayscale(100%);
+  transition: filter 0.5s ease;
+}
+.ton-article-image:hover {
+  filter: grayscale(0%);
+}
+
+/* ========= NO ROUNDED CORNERS (TON BLOCK) ========= */
+.ton-no-radius,
+.ton-no-radius button,
+.ton-no-radius [role="button"] {
+  border-radius: 0 !important;
+}
+
+/* ========= MOBILE SCROLLBAR HIDE FOR NAV ========= */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* ========= RESPONSIVE DROP CAP ========= */
+@media (max-width: 640px) {
+  .ton-dropcap::first-letter {
+    font-size: 3rem;
+  }
+}
+
+/* ========= WHATSAPP / TUMAOS BUTTONS ========= */
+.ton-share-btn {
+  border-radius: 0;
+  transition: all 0.15s ease;
+}
+.ton-share-btn:active {
+  transform: scale(0.97);
 }
 
 /* ========= PRINT RULES ========= */

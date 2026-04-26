@@ -1,0 +1,293 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-playfair);
+  --font-mono: var(--font-jetbrains);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-ton-cream: #F9F8F6;
+  --color-ton-black: #111111;
+  --color-ton-red: #CB102E;
+  --color-ton-gold: #B8860B;
+  --color-ton-navy: #000080;
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: #F9F8F6;
+  --foreground: #111111;
+  --card: #FFFFFF;
+  --card-foreground: #111111;
+  --popover: #FFFFFF;
+  --popover-foreground: #111111;
+  --primary: #111111;
+  --primary-foreground: #F9F8F6;
+  --secondary: #F0EFED;
+  --secondary-foreground: #111111;
+  --muted: #F0EFED;
+  --muted-foreground: #666666;
+  --accent: #F0EFED;
+  --accent-foreground: #111111;
+  --destructive: #CB102E;
+  --border: #D4D2CE;
+  --input: #D4D2CE;
+  --ring: #CB102E;
+  --chart-1: #CB102E;
+  --chart-2: #B8860B;
+  --chart-3: #000080;
+  --chart-4: #111111;
+  --chart-5: #666666;
+  --sidebar: #F9F8F6;
+  --sidebar-foreground: #111111;
+  --sidebar-primary: #111111;
+  --sidebar-primary-foreground: #F9F8F6;
+  --sidebar-accent: #F0EFED;
+  --sidebar-accent-foreground: #111111;
+  --sidebar-border: #D4D2CE;
+  --sidebar-ring: #CB102E;
+}
+
+/* ========= TON BASE STYLES ========= */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-ton-cream text-ton-black font-sans;
+  }
+}
+
+/* ========= TON TICKER ========= */
+
+@keyframes ton-ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.ton-ticker-track {
+  display: flex;
+  animation: ton-ticker 60s linear infinite;
+  white-space: nowrap;
+}
+
+.ton-ticker-track:hover {
+  animation-play-state: paused;
+}
+
+/* ========= DROP CAP ========= */
+
+.ton-dropcap::first-letter {
+  font-family: var(--font-playfair), "Playfair Display", serif;
+  float: left;
+  font-size: 4rem;
+  line-height: 0.8;
+  padding-right: 0.5rem;
+  padding-top: 0.25rem;
+  font-weight: 700;
+  color: #111111;
+}
+
+/* ========= COLUMN RULES ========= */
+
+.ton-column-rule {
+  border-right: 1px solid #D4D2CE;
+}
+
+.ton-column-rule:last-child {
+  border-right: none;
+}
+
+@media (max-width: 768px) {
+  .ton-column-rule {
+    border-right: none;
+    border-bottom: 1px solid #D4D2CE;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
+  .ton-column-rule:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+}
+
+/* ========= LIVE DOT ========= */
+
+@keyframes ton-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.ton-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #CB102E;
+  animation: ton-pulse 1.5s ease-in-out infinite;
+}
+
+/* ========= CUSTOM SCROLLBAR FOR DATA PANELS ========= */
+
+.ton-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ton-scrollbar::-webkit-scrollbar-track {
+  background: #F0EFED;
+}
+
+.ton-scrollbar::-webkit-scrollbar-thumb {
+  background: #D4D2CE;
+  border-radius: 3px;
+}
+
+.ton-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #B8860B;
+}
+
+/* ========= EDITORIAL BORDER ========= */
+
+.ton-border-editorial {
+  border: 4px solid #111111;
+}
+
+.ton-border-top-editorial {
+  border-top: 4px solid #111111;
+}
+
+.ton-border-bottom-editorial {
+  border-bottom: 4px solid #111111;
+}
+
+/* ========= PRINT RULES ========= */
+
+@media print {
+  /* Hide non-essential elements */
+  .ton-no-print,
+  .ton-ticker-wrapper,
+  .ton-utility-nav,
+  .ton-navigation,
+  .ton-footer,
+  nav,
+  button,
+  select,
+  input,
+  textarea {
+    display: none !important;
+  }
+
+  /* Reset background */
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+  }
+
+  /* Masthead stays */
+  .ton-masthead {
+    border-bottom: 3px solid black !important;
+    padding: 0.5in 0 !important;
+  }
+
+  .ton-masthead h1 {
+    font-size: 24pt !important;
+  }
+
+  /* Main content fills page */
+  .ton-main-content {
+    column-count: 3;
+    column-gap: 0.3in;
+    column-rule: 1px solid #999;
+  }
+
+  /* Drop caps in print */
+  .ton-dropcap::first-letter {
+    font-size: 3rem;
+  }
+
+  /* Page breaks */
+  .ton-page-break {
+    page-break-before: always;
+  }
+
+  /* Force black and white */
+  * {
+    color: black !important;
+    border-color: black !important;
+    background: white !important;
+  }
+
+  /* Preserve gold for tenders in grayscale */
+  .ton-tender-item {
+    border-left: 3px solid black !important;
+  }
+
+  /* Links show URL */
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 8pt;
+    color: #666 !important;
+  }
+
+  /* Ensure images print */
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  /* Avoid orphans/widows */
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+}

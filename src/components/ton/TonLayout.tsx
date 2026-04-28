@@ -1,6 +1,7 @@
 import Ticker from "./Ticker";
 import UtilityNav from "./UtilityNav";
 import Masthead from "./Masthead";
+import Navigation from "./Navigation";
 import Footer from "./Footer";
 
 export default function TonLayout({
@@ -15,8 +16,9 @@ export default function TonLayout({
       <Ticker />
       <UtilityNav />
       <Masthead />
+      <Navigation activePage={activePage} />
       <main className="flex-1">{children}</main>
-      <Footer activePage={activePage} />
+      <Footer />
     </div>
   );
 }

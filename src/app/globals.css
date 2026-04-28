@@ -90,7 +90,33 @@
   }
   body {
     @apply bg-ton-cream text-ton-black font-sans;
+    /* Newspaper body text — generous line-height, tight letter-spacing */
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Subtle paper grain texture */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.015'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
   }
+}
+
+/* ========= NEWSPAPER TYPOGRAPHY ========= */
+
+/* Serif body text should feel like broadsheet columns */
+.font-serif {
+  letter-spacing: -0.02em;
+}
+
+/* Mono text should feel like a typesetter's marks */
+.font-mono {
+  letter-spacing: 0.02em;
+}
+
+/* Headlines should be authoritative — extra tight tracking */
+h1, h2, h3 {
+  letter-spacing: -0.03em;
 }
 
 /* ========= TON TICKER ========= */
@@ -269,6 +295,21 @@
   }
 }
 
+/* ========= NEWSPAPER COLUMN HEADERS ========= */
+/* Reusable pattern for section headers with top rules */
+
+.ton-col-header {
+  border-top: 2px solid #111111;
+  padding-top: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.ton-col-header-red {
+  border-top: 2px solid #CB102E;
+  padding-top: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
 /* ========= PRINT RULES ========= */
 
 @media print {
@@ -291,6 +332,9 @@
     background: white !important;
     color: black !important;
     font-size: 11pt;
+    line-height: 1.6;
+    letter-spacing: 0;
+    background-image: none !important;
   }
 
   /* Business Plan specific print rules */
@@ -355,7 +399,8 @@
     border-left: 3px solid black !important;
   }
 
-  a[href]::after {
+  /* Only show URL for external links, not internal navigation */
+  a[href^="http"]::after {
     content: " (" attr(href) ")";
     font-size: 8pt;
     color: #666 !important;
@@ -377,5 +422,10 @@
 
   table {
     page-break-inside: avoid;
+  }
+
+  /* Print column rules */
+  .ton-column-rule {
+    border-right: 1px solid #ccc !important;
   }
 }

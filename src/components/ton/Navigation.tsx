@@ -3,16 +3,12 @@ const NAV_ITEMS = [
   { label: "Economy", href: "/?section=economy", key: "economy" },
   { label: "The Tender Edge", href: "/tender", key: "tender" },
   { label: "Job Scraper", href: "/jobs", key: "jobs" },
-  { label: "Legal Desk", href: "/", key: "legal" },
-  { label: "Contributors", href: "/contributor", key: "contributor" },
-  { label: "Business Plan", href: "/business-plan", key: "business-plan" },
-  { label: "The Plan", href: "/plan", key: "plan" },
-  { label: "Brand", href: "/brand", key: "brand" },
+  { label: "Legal Desk", href: "/#legal", key: "legal" },
 ];
 
 export default function Navigation({ activePage }: { activePage?: string }) {
   return (
-    <nav className="ton-navigation ton-rule-top bg-ton-cream">
+    <nav className="ton-navigation bg-ton-cream border-t-2 border-ton-black">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex items-center overflow-x-auto scrollbar-none snap-x snap-mandatory -mx-1">
           {NAV_ITEMS.map((item) => {
@@ -23,8 +19,8 @@ export default function Navigation({ activePage }: { activePage?: string }) {
                 href={item.href}
                 className={`flex-shrink-0 px-3 sm:px-4 py-3 min-h-[44px] flex items-center font-sans text-[11px] sm:text-xs font-semibold tracking-widest uppercase transition-colors duration-150 border-b-2 whitespace-nowrap snap-start ${
                   isActive
-                    ? "text-ton-red border-ton-red"
-                    : "border-transparent text-ton-black/50 hover:text-ton-black hover:border-ton-black/30"
+                    ? "text-ton-black border-ton-red bg-ton-red/[0.04]"
+                    : "border-transparent text-ton-black/40 hover:text-ton-black hover:border-ton-black/20"
                 }`}
               >
                 {item.label}
@@ -32,6 +28,8 @@ export default function Navigation({ activePage }: { activePage?: string }) {
             );
           })}
         </div>
+        {/* Thin bottom rule — section divider */}
+        <div className="border-b border-ton-black/8" />
       </div>
     </nav>
   );

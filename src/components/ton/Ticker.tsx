@@ -8,7 +8,7 @@ export default function Ticker() {
   const doubled = [...TICKER_ITEMS, ...TICKER_ITEMS];
 
   return (
-    <div className="bg-ton-black text-ton-cream overflow-hidden ton-ticker-wrapper">
+    <div className="bg-ton-black text-ton-cream overflow-hidden ton-ticker-wrapper border-b border-ton-cream/15">
       <div className="flex items-center">
         <button
           onClick={() => setPaused(!paused)}

@@ -69,7 +69,7 @@ export default function TenderAnalysisView() {
             <ArrowLeft className="w-3 h-3" />
             Newsroom
           </a>
-          <span className="font-mono text-[10px] text-ton-black/30">GemsWeb Digital</span>
+          <span className="font-mono text-[9px] text-ton-black/20">GemsWeb Digital</span>
         </div>
       </div>
 

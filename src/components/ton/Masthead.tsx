@@ -2,48 +2,31 @@ export default function Masthead() {
   const editionNumber = 127;
 
   return (
-    <header className="ton-masthead bg-ton-cream py-6 sm:py-8 md:py-10">
+    <header className="bg-ton-cream py-5 sm:py-6 md:py-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
-        {/* TON Badge + LIVE Badge Row */}
-        <div className="flex items-center justify-center gap-3 sm:gap-5 mb-3">
-          <div className="bg-ton-black text-ton-cream font-mono text-[10px] sm:text-xs font-bold px-2.5 py-1 tracking-widest">
-            TON
-          </div>
-          <div className="h-px flex-1 max-w-12 sm:max-w-20 bg-ton-black/20" />
-          <span className="font-mono text-[10px] sm:text-xs text-ton-black/60 tracking-wider uppercase">
-            Est. 2026
-          </span>
-          <div className="h-px flex-1 max-w-12 sm:max-w-20 bg-ton-black/20" />
-          <div className="bg-ton-red text-white font-mono text-[10px] sm:text-xs font-bold px-2.5 py-1 tracking-widest flex items-center gap-1.5">
-            <span className="ton-live-dot" style={{ width: 5, height: 5 }} />
-            LIVE
-          </div>
+        {/* Edition info — top line */}
+        <div className="font-mono text-[9px] sm:text-[10px] text-ton-black/35 tracking-widest uppercase mb-3 sm:mb-4">
+          Vol. I &middot; No. {editionNumber} &middot; {new Date().toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+          })}
         </div>
 
-        {/* Main Title — 300% larger than body */}
-        <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-ton-black leading-none">
+        {/* Title — pure typographic authority */}
+        <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight text-ton-black leading-[0.9]">
           TIMES OF NAMIBIA
         </h1>
 
-        {/* Tagline */}
-        <p className="font-serif italic text-ton-black/70 text-sm sm:text-lg mt-2 tracking-wide">
-          Namibia. Informed. Instantly.
-        </p>
-
-        {/* Edition info */}
-        <div className="flex items-center justify-center gap-3 mt-3 font-mono text-[10px] sm:text-xs text-ton-black/50">
-          <span>Vol. I</span>
-          <span className="text-ton-black/20">|</span>
-          <span>No. {editionNumber}</span>
-          <span className="text-ton-black/20">|</span>
-          <span>
-            {new Date().toLocaleDateString("en-GB", {
-              day: "2-digit",
-              month: "long",
-              year: "numeric",
-            })}
+        {/* Thin rule + tagline */}
+        <div className="mt-2 sm:mt-3">
+          <span className="font-serif italic text-ton-black/40 text-xs sm:text-sm tracking-wide">
+            Namibia. Informed. Instantly.
           </span>
         </div>
+
+        {/* Bottom rule — heavy, like a real newspaper */}
+        <div className="mt-3 sm:mt-4 border-t-2 sm:border-t-[3px] border-ton-black" />
       </div>
     </header>
   );

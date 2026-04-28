@@ -238,6 +238,58 @@ function generateBrandSystemText(): string {
   lines.push("  },");
   lines.push("");
 
+  // TON-GI System Prompt
+  lines.push("┌─ TON-GI: TIMES OF NAMIBIA GLOBAL IDENTITY ────────────┐");
+  lines.push("");
+  lines.push("  1. THE ARCHITECTURAL INTENT");
+  lines.push("  You are the lead architect for Times of Namibia, a GemsWeb Digital");
+  lines.push("  publication. Your mission is to translate the 'Broadsheet Digital'");
+  lines.push("  philosophy into every facet of a modern media conglomerate. You do");
+  lines.push("  not just design websites; you design an information ecosystem that");
+  lines.push("  balances the 'Ink of Authority' with the 'Pulse of Data.'");
+  lines.push("");
+  lines.push("  2. THE VOICE & TONE (EDITORIAL & SOCIAL)");
+  lines.push("  Primary Persona: The Stoic Observer. Intellectual, precise, and");
+  lines.push("  deeply rooted in Namibian soil.");
+  lines.push("  Language Rules:");
+  lines.push("  - No emojis, unless they are functional symbols (e.g., [LIVE] or ->).");
+  lines.push("  - Absolute geographical accuracy: Use //Kharas, !Karas (when");
+  lines.push("    contextually specific), and correct regional spelling.");
+  lines.push("  Social Media: Every post must look like an excerpt from a ledger");
+  lines.push("  or a telegram. Use monospaced timestamps. 'Information Density");
+  lines.push("  over Engagement Bait.'");
+  lines.push("  Response Format: Direct, high-contrast, zero-fluff.");
+  lines.push("");
+  lines.push("  3. GLOBAL DESIGN SPECS (NON-WEB)");
+  lines.push("  Print/Paper: Pure White or Cream stock (120gsm+). No gloss.");
+  lines.push("  Typography must be perfectly aligned to a baseline grid.");
+  lines.push("  Imagery:");
+  lines.push("  - All photography must be High-Contrast Grayscale.");
+  lines.push("  - No 'stock' photography. If it isn't Namibia, it isn't Times of Namibia.");
+  lines.push("  Visual Overlay: Every image must be watermarked with its GPS");
+  lines.push("  coordinates and a JetBrains Mono timestamp in a black box.");
+  lines.push("  Physical Space: Brutalist minimalism. Sharp corners only.");
+  lines.push("  No soft textures.");
+  lines.push("");
+  lines.push("  4. OPERATIONAL ETHOS");
+  lines.push("  Minimalism as Power: Every business process that doesn't inform");
+  lines.push("  the reader or the system is deleted.");
+  lines.push("  The '3G' Logic: If a strategy, image, or document is too heavy");
+  lines.push("  to be understood in 6 seconds, it is flawed.");
+  lines.push("");
+  lines.push("  5. BUSINESS EXECUTION PLAN");
+  lines.push("  Phase I: The Physical Anchor");
+  lines.push("  Establish the print-ready Business Plan. This is the 'Constitution'");
+  lines.push("  of the company. It must be readable, authoritative, and physically imposing.");
+  lines.push("  Phase II: Social Media & The 'Times OS' Feed");
+  lines.push("  Conversion of all social outputs to 'Digital Telegrams.'");
+  lines.push("  Automation of scraping logs from //Kharas and Oshana directly into");
+  lines.push("  public feeds.");
+  lines.push("  Phase III: High-Density Physical Distribution");
+  lines.push("  Deployment of 'The Broadside' — single-page physical printouts at");
+  lines.push("  regional transport hubs, designed to be read in high-density environments.");
+  lines.push("");
+
   lines.push("═══════════════════════════════════════════════════════════");
   lines.push("  © Times of Namibia — A GemsWeb Digital Publication");
   lines.push("═══════════════════════════════════════════════════════════");
@@ -479,7 +531,7 @@ export default function BrandSystemView() {
       </div>
 
       {/* Philosophy Quote */}
-      <div className="py-8 sm:py-10 text-center border-t border-ton-black/10 mb-8 sm:mb-10">
+      <div className="py-8 sm:py-10 text-center border-t border-ton-black/8 mb-8 sm:mb-10">
         <blockquote className="font-serif italic text-2xl sm:text-3xl md:text-4xl text-ton-black/60 leading-relaxed">
           &ldquo;Every pixel must inform.&rdquo;
         </blockquote>
@@ -547,7 +599,7 @@ export default function BrandSystemView() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
           {TYPOGRAPHY.map((type) => (
-            <div key={type.name} className="pt-5 border-t border-ton-black/10">
+            <div key={type.name} className="pt-5 border-t border-ton-black/8">
               <h3 className="font-serif text-base sm:text-lg font-bold text-ton-black">
                 {type.name}
               </h3>
@@ -577,7 +629,7 @@ export default function BrandSystemView() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
           {PRINCIPLES.map((principle) => (
-            <div key={principle.title} className="pt-5 border-t border-ton-black/10">
+            <div key={principle.title} className="pt-5 border-t border-ton-black/8">
               <div className="flex items-center gap-3 mb-3">
                 <span className="w-2.5 h-2.5 bg-ton-red flex-shrink-0" />
                 <h3 className="font-serif text-base sm:text-lg font-bold text-ton-black">
@@ -686,7 +738,7 @@ export default function BrandSystemView() {
 
             {/* Overlay example */}
             <div className="mt-6 bg-ton-black/3 p-4">
-              <div className="bg-ton-black/5 h-32 flex items-center justify-center border border-ton-black/10 relative">
+              <div className="bg-ton-black/5 h-32 flex items-center justify-center border border-ton-black/8 relative">
                 <p className="font-mono text-[10px] text-ton-black/20 uppercase tracking-widest">[ Image Area ]</p>
                 <div className="absolute bottom-2 left-2 bg-ton-black text-ton-cream px-2 py-1">
                   <p className="font-mono text-[7px] leading-tight">
@@ -710,37 +762,37 @@ export default function BrandSystemView() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="pt-5 border-t border-ton-black/10">
+          <div className="pt-5 border-t border-ton-black/8">
             <span className="font-mono text-[10px] text-ton-red font-bold tracking-widest uppercase">Paper Stock</span>
             <p className="font-sans text-xs text-ton-black/50 mt-2 leading-relaxed">
               {PRINT_MATERIALS.paperStock}
             </p>
           </div>
-          <div className="pt-5 border-t border-ton-black/10">
+          <div className="pt-5 border-t border-ton-black/8">
             <span className="font-mono text-[10px] text-ton-red font-bold tracking-widest uppercase">Typography Grid</span>
             <p className="font-sans text-xs text-ton-black/50 mt-2 leading-relaxed">
               {PRINT_MATERIALS.typographyGrid}
             </p>
           </div>
-          <div className="pt-5 border-t border-ton-black/10">
+          <div className="pt-5 border-t border-ton-black/8">
             <span className="font-mono text-[10px] text-ton-red font-bold tracking-widest uppercase">Imagery</span>
             <p className="font-sans text-xs text-ton-black/50 mt-2 leading-relaxed">
               {PRINT_MATERIALS.imagery}
             </p>
           </div>
-          <div className="pt-5 border-t border-ton-black/10">
+          <div className="pt-5 border-t border-ton-black/8">
             <span className="font-mono text-[10px] text-ton-red font-bold tracking-widest uppercase">Physical Space</span>
             <p className="font-sans text-xs text-ton-black/50 mt-2 leading-relaxed">
               {PRINT_MATERIALS.physicalSpace}
             </p>
           </div>
-          <div className="pt-5 border-t border-ton-black/10">
+          <div className="pt-5 border-t border-ton-black/8">
             <span className="font-mono text-[10px] text-ton-red font-bold tracking-widest uppercase">The Broadside</span>
             <p className="font-sans text-xs text-ton-black/50 mt-2 leading-relaxed">
               {PRINT_MATERIALS.theBroadside}
             </p>
           </div>
-          <div className="pt-5 border-t border-ton-black/10">
+          <div className="pt-5 border-t border-ton-black/8">
             <span className="font-mono text-[10px] text-ton-red font-bold tracking-widest uppercase">Social Output</span>
             <p className="font-sans text-xs text-ton-black/50 mt-2 leading-relaxed">
               {PRINT_MATERIALS.socialOutput}
@@ -749,7 +801,7 @@ export default function BrandSystemView() {
         </div>
 
         {/* Business Plan link */}
-        <div className="mt-6 pt-5 border-t border-ton-black/10">
+        <div className="mt-6 pt-5 border-t border-ton-black/8">
           <div className="bg-ton-black text-ton-cream p-5 flex items-center justify-between flex-wrap gap-4">
             <div>
               <h3 className="font-mono text-xs text-ton-red font-bold uppercase tracking-wider">Business Plan</h3>
@@ -837,15 +889,60 @@ export default function BrandSystemView() {
         </div>
       </div>
 
+      {/* TON-GI System Prompt */}
+      <div className="mb-10 sm:mb-12">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="w-6 h-[2px] bg-ton-black" />
+          <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black">
+            TON-GI: Global Identity
+          </h2>
+        </div>
+
+        <div className="bg-ton-black text-ton-cream p-6 sm:p-8">
+          <h3 className="font-mono text-[10px] text-ton-red font-bold uppercase tracking-wider mb-4">
+            System Prompt: Times of Namibia Global Identity
+          </h3>
+
+          <div className="space-y-5 font-serif text-sm text-ton-cream/60 leading-relaxed">
+            <div>
+              <h4 className="font-mono text-[9px] text-ton-red font-bold uppercase tracking-widest mb-2">1. The Architectural Intent</h4>
+              <p>You are the lead architect for Times of Namibia, a GemsWeb Digital publication. Your mission is to translate the &ldquo;Broadsheet Digital&rdquo; philosophy into every facet of a modern media conglomerate. You do not just design websites; you design an information ecosystem that balances the &ldquo;Ink of Authority&rdquo; with the &ldquo;Pulse of Data.&rdquo;</p>
+            </div>
+
+            <div>
+              <h4 className="font-mono text-[9px] text-ton-red font-bold uppercase tracking-widest mb-2">2. Voice & Tone</h4>
+              <p>Primary Persona: The Stoic Observer. Intellectual, precise, and deeply rooted in Namibian soil. No emojis, unless they are functional symbols (e.g., [LIVE] or →). Absolute geographical accuracy: Use //Kharas, !Karas. Social media: every post must look like an excerpt from a ledger or a telegram. Monospaced timestamps. Information Density over Engagement Bait. Response Format: Direct, high-contrast, zero-fluff.</p>
+            </div>
+
+            <div>
+              <h4 className="font-mono text-[9px] text-ton-red font-bold uppercase tracking-widest mb-2">3. Global Design Specs</h4>
+              <p>Print/Paper: Pure White or Cream stock (120gsm+). No gloss. Typography aligned to a baseline grid. Imagery: all photography must be High-Contrast Grayscale. No stock photography. If it isn&apos;t Namibia, it isn&apos;t Times of Namibia. Visual Overlay: every image must be watermarked with GPS coordinates and a JetBrains Mono timestamp in a black box. Physical Space: Brutalist minimalism. Sharp corners only. No soft textures.</p>
+            </div>
+
+            <div>
+              <h4 className="font-mono text-[9px] text-ton-red font-bold uppercase tracking-widest mb-2">4. Operational Ethos</h4>
+              <p>Minimalism as Power: Every business process that doesn&apos;t inform the reader or the system is deleted. The &ldquo;3G&rdquo; Logic: If a strategy, image, or document is too heavy to be understood in 6 seconds, it is flawed.</p>
+            </div>
+
+            <div>
+              <h4 className="font-mono text-[9px] text-ton-red font-bold uppercase tracking-widest mb-2">5. Business Execution Plan</h4>
+              <p className="mb-2"><span className="text-ton-cream font-bold">Phase I: The Physical Anchor</span> — Establish the print-ready Business Plan. Readable, authoritative, and physically imposing.</p>
+              <p className="mb-2"><span className="text-ton-cream font-bold">Phase II: Social Media & Times OS Feed</span> — Conversion of all social outputs to &ldquo;Digital Telegrams.&rdquo; Automation of scraping logs into public feeds.</p>
+              <p><span className="text-ton-cream font-bold">Phase III: High-Density Physical Distribution</span> — Deployment of &ldquo;The Broadside&rdquo; — single-page physical printouts at regional transport hubs.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Masthead Preview */}
-      <div className="py-10 sm:py-14 text-center border-t border-ton-black/10">
-        <span className="font-mono text-[10px] text-ton-black/30 tracking-widest uppercase">
+      <div className="py-8 sm:py-10 text-center border-t border-ton-black/8">
+        <span className="font-mono text-[9px] text-ton-black/20 tracking-widest uppercase">
           Masthead
         </span>
-        <h1 className="font-serif text-4xl sm:text-6xl md:text-8xl font-bold tracking-tight text-ton-black mt-4">
+        <h1 className="font-serif text-4xl sm:text-6xl md:text-8xl font-bold tracking-tight text-ton-black mt-3">
           TIMES OF NAMIBIA
         </h1>
-        <p className="font-serif italic text-ton-black/50 mt-3 text-sm sm:text-lg">
+        <p className="font-serif italic text-ton-black/40 mt-2 text-sm sm:text-lg">
           Namibia. Informed. Instantly.
         </p>
       </div>

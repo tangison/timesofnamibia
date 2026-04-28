@@ -4,8 +4,9 @@ const NAV_ITEMS = [
   { label: "The Tender Edge", href: "/tender", key: "tender" },
   { label: "Job Scraper", href: "/jobs", key: "jobs" },
   { label: "Legal Desk", href: "/", key: "legal" },
-  { label: "Mining", href: "/", key: "mining" },
   { label: "Contributors", href: "/contributor", key: "contributor" },
+  { label: "Business Plan", href: "/business-plan", key: "business-plan" },
+  { label: "The Plan", href: "/plan", key: "plan" },
   { label: "Brand", href: "/brand", key: "brand" },
 ];
 

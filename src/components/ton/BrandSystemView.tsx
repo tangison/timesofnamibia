@@ -112,6 +112,31 @@ const DONTS = [
   "Never use CSS border-radius greater than 0px on any TON component",
 ];
 
+const PRINT_MATERIALS = {
+  paperStock: "Pure White or Cream stock, minimum 120gsm. No gloss. Matte finish only.",
+  typographyGrid: "All type aligned to a baseline grid. Headlines in Playfair Display 900, body in Inter 400, data in JetBrains Mono.",
+  imagery: "High-contrast grayscale. No stock photography. GPS coordinates and JetBrains Mono timestamp in a black box on every image.",
+  physicalSpace: "Brutalist minimalism. Sharp corners only. No soft textures. No rounded edges.",
+  theBroadside: "A3 single sheet, double-sided. 120gsm Cream, Matte. 14 regional transport hubs. Weekly Monday 06:00 CAT. 5,000 copies/week. Top 10 stories + 5 active tenders. 90 seconds reading time.",
+  socialOutput: "Digital Telegrams. Monospaced timestamps. No emojis unless functional. Information density over engagement bait.",
+  businessPlan: "5-page document on A4 format. Title/Manifesto, Operations/Technology, Financial Roadmap, Print Materials/Social, Final Directive. Print-ready via browser. Cream stock, 120gsm.",
+};
+
+const IMAGERY_RULES = [
+  "All photography must be high-contrast grayscale — no exceptions",
+  "No stock photography. If it is not Namibia, it is not Times of Namibia",
+  "Every image must carry a GPS coordinate watermark in a black rectangular box",
+  "Every image must carry a JetBrains Mono timestamp in the same black box",
+  "No rounded corners on any overlay element — sharp rectangles only",
+  "Images displayed grayscale by default; colour on hover (digital only)",
+  "Print imagery is always grayscale — no hover state in print",
+  "All images must be shot with Namibian content: landscapes, infrastructure, people, commerce",
+  "No artificial lighting in outdoor shots — natural light only",
+  "Aspect ratio: 16:9 for hero images, 4:3 for inline, 1:1 for portraits",
+  "Overlay position: bottom-left (default) or bottom-right (variant)",
+  "Overlay format: 'LOCATION NAME // 00.00 S, 00.00 E' + ISO-8601 timestamp with CAT timezone",
+];
+
 /* ================================================================
    COPY CONTENT GENERATORS
    ================================================================ */
@@ -163,6 +188,24 @@ function generateBrandSystemText(): string {
   for (const item of DONTS) {
     lines.push(`  ✗  ${item}`);
   }
+  lines.push("");
+
+  lines.push("┌─ IMAGERY RULES ───────────────────────────────────────┐");
+  lines.push("");
+  for (const rule of IMAGERY_RULES) {
+    lines.push(`  >  ${rule}`);
+  }
+  lines.push("");
+
+  lines.push("┌─ PRINT MATERIALS ─────────────────────────────────────┐");
+  lines.push("");
+  lines.push(`  Paper Stock: ${PRINT_MATERIALS.paperStock}`);
+  lines.push(`  Typography Grid: ${PRINT_MATERIALS.typographyGrid}`);
+  lines.push(`  Imagery: ${PRINT_MATERIALS.imagery}`);
+  lines.push(`  Physical Space: ${PRINT_MATERIALS.physicalSpace}`);
+  lines.push(`  The Broadside: ${PRINT_MATERIALS.theBroadside}`);
+  lines.push(`  Social Output: ${PRINT_MATERIALS.socialOutput}`);
+  lines.push(`  Business Plan: ${PRINT_MATERIALS.businessPlan}`);
   lines.push("");
 
   lines.push("┌─ CSS VARIABLES ───────────────────────────────────────┐");
@@ -601,6 +644,125 @@ export default function BrandSystemView() {
                 </li>
               ))}
             </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Imagery Rules */}
+      <div className="mb-10 sm:mb-12">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="w-6 h-[2px] bg-ton-black" />
+          <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black">
+            Imagery Rules
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+          <div>
+            <h3 className="font-mono text-[10px] font-bold text-ton-red uppercase tracking-widest mb-4">
+              Universal Rules
+            </h3>
+            <ul className="space-y-2.5">
+              {IMAGERY_RULES.slice(0, 6).map((rule, i) => (
+                <li key={i} className="flex items-start gap-2.5">
+                  <span className="w-1.5 h-1.5 bg-ton-red flex-shrink-0 mt-1.5" />
+                  <span className="font-sans text-xs sm:text-sm text-ton-black/60 leading-relaxed">{rule}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-mono text-[10px] font-bold text-ton-red uppercase tracking-widest mb-4">
+              Overlay & Format
+            </h3>
+            <ul className="space-y-2.5">
+              {IMAGERY_RULES.slice(6).map((rule, i) => (
+                <li key={i} className="flex items-start gap-2.5">
+                  <span className="w-1.5 h-1.5 bg-ton-red flex-shrink-0 mt-1.5" />
+                  <span className="font-sans text-xs sm:text-sm text-ton-black/60 leading-relaxed">{rule}</span>
+                </li>
+              ))}
+            </ul>
+
+            {/* Overlay example */}
+            <div className="mt-6 bg-ton-black/3 p-4">
+              <div className="bg-ton-black/5 h-32 flex items-center justify-center border border-ton-black/10 relative">
+                <p className="font-mono text-[10px] text-ton-black/20 uppercase tracking-widest">[ Image Area ]</p>
+                <div className="absolute bottom-2 left-2 bg-ton-black text-ton-cream px-2 py-1">
+                  <p className="font-mono text-[7px] leading-tight">
+                    WINDHOEK CBD // 22.57 S, 17.08 E<br/>
+                    2026-04-28 14:32:07 CAT
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Print Materials */}
+      <div className="mb-10 sm:mb-12">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="w-6 h-[2px] bg-ton-black" />
+          <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black">
+            Print Materials
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="pt-5 border-t border-ton-black/10">
+            <span className="font-mono text-[10px] text-ton-red font-bold tracking-widest uppercase">Paper Stock</span>
+            <p className="font-sans text-xs text-ton-black/50 mt-2 leading-relaxed">
+              {PRINT_MATERIALS.paperStock}
+            </p>
+          </div>
+          <div className="pt-5 border-t border-ton-black/10">
+            <span className="font-mono text-[10px] text-ton-red font-bold tracking-widest uppercase">Typography Grid</span>
+            <p className="font-sans text-xs text-ton-black/50 mt-2 leading-relaxed">
+              {PRINT_MATERIALS.typographyGrid}
+            </p>
+          </div>
+          <div className="pt-5 border-t border-ton-black/10">
+            <span className="font-mono text-[10px] text-ton-red font-bold tracking-widest uppercase">Imagery</span>
+            <p className="font-sans text-xs text-ton-black/50 mt-2 leading-relaxed">
+              {PRINT_MATERIALS.imagery}
+            </p>
+          </div>
+          <div className="pt-5 border-t border-ton-black/10">
+            <span className="font-mono text-[10px] text-ton-red font-bold tracking-widest uppercase">Physical Space</span>
+            <p className="font-sans text-xs text-ton-black/50 mt-2 leading-relaxed">
+              {PRINT_MATERIALS.physicalSpace}
+            </p>
+          </div>
+          <div className="pt-5 border-t border-ton-black/10">
+            <span className="font-mono text-[10px] text-ton-red font-bold tracking-widest uppercase">The Broadside</span>
+            <p className="font-sans text-xs text-ton-black/50 mt-2 leading-relaxed">
+              {PRINT_MATERIALS.theBroadside}
+            </p>
+          </div>
+          <div className="pt-5 border-t border-ton-black/10">
+            <span className="font-mono text-[10px] text-ton-red font-bold tracking-widest uppercase">Social Output</span>
+            <p className="font-sans text-xs text-ton-black/50 mt-2 leading-relaxed">
+              {PRINT_MATERIALS.socialOutput}
+            </p>
+          </div>
+        </div>
+
+        {/* Business Plan link */}
+        <div className="mt-6 pt-5 border-t border-ton-black/10">
+          <div className="bg-ton-black text-ton-cream p-5 flex items-center justify-between flex-wrap gap-4">
+            <div>
+              <h3 className="font-mono text-xs text-ton-red font-bold uppercase tracking-wider">Business Plan</h3>
+              <p className="font-sans text-sm text-ton-cream/60 mt-1 leading-relaxed">
+                {PRINT_MATERIALS.businessPlan}
+              </p>
+            </div>
+            <a
+              href="/business-plan"
+              className="font-mono text-[10px] font-bold uppercase tracking-widest bg-ton-red text-white px-5 py-2.5 hover:bg-ton-red/90 transition-colors"
+            >
+              View Business Plan
+            </a>
           </div>
         </div>
       </div>

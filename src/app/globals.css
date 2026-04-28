@@ -272,13 +272,17 @@
 /* ========= PRINT RULES ========= */
 
 @media print {
+  @page {
+    size: A4;
+    margin: 20mm;
+  }
+
   .ton-no-print,
   .ton-ticker-wrapper,
   .ton-utility-nav,
   .ton-navigation,
   .ton-footer,
   nav,
-  button,
   select,
   input,
   textarea {
@@ -288,7 +292,18 @@
   body {
     background: white !important;
     color: black !important;
-    font-size: 12pt;
+    font-size: 11pt;
+  }
+
+  /* Business Plan specific print rules */
+  .ton-bp-page {
+    page-break-after: always;
+    padding-top: 0;
+    margin-bottom: 0 !important;
+  }
+
+  .ton-bp-page:last-child {
+    page-break-after: auto;
   }
 
   .ton-masthead {
@@ -314,10 +329,28 @@
     page-break-before: always;
   }
 
-  * {
+  /* Print color treatment — TON red preserved for accent elements */
+  .ton-bp-page * {
     color: black !important;
     border-color: black !important;
-    background: white !important;
+  }
+
+  .ton-bp-page .bg-ton-black {
+    background: black !important;
+    color: white !important;
+  }
+
+  .ton-bp-page .bg-ton-black * {
+    color: white !important;
+  }
+
+  .ton-bp-page .text-ton-red {
+    color: #CB102E !important;
+  }
+
+  .ton-bp-page .bg-ton-red {
+    background: #CB102E !important;
+    color: white !important;
   }
 
   .ton-tender-item {
@@ -342,5 +375,9 @@
 
   h1, h2, h3, h4, h5, h6 {
     page-break-after: avoid;
+  }
+
+  table {
+    page-break-inside: avoid;
   }
 }

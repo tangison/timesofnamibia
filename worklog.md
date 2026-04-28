@@ -26,3 +26,30 @@ Stage Summary:
 - 3-color palette enforced throughout: Cream, Black, Red
 - Brand System page has comprehensive copy functionality with 3 formats + dos/don'ts
 - All server-convertible components are now server components (TonLayout, Navigation, Masthead, Footer, UtilityNav)
+
+---
+Task ID: 2
+Agent: Main Agent
+Task: Add Business Plan page, The Plan page, Print Materials, Imagery Rules to Brand System
+
+Work Log:
+- Created /business-plan page with 5-section comprehensive business plan
+- Created /plan page with 5-phase strategic execution plan
+- Both pages have Print / Save PDF buttons that trigger window.print()
+- Added A4 print CSS with @page rules, page breaks per section
+- Business Plan: Title/Manifesto, Operations/Technology, Financial Roadmap, Print Materials/Social, Final Directive
+- The Plan: Phase I-V with execution tasks and detailed imagery specifications per phase
+- All imagery described (not stock) with GPS overlays, timestamps, grayscale requirements
+- Updated Navigation with Business Plan and The Plan items
+- Updated Footer with Documents section linking to both new pages
+- Added PRINT_MATERIALS and IMAGERY_RULES to Brand System data
+- Brand System now shows: Imagery Rules (with overlay example), Print Materials (6 items), Business Plan link
+- Brand System clipboard TEXT format now includes Imagery Rules and Print Materials sections
+- A4 print CSS preserves red accents in business plan for print output
+
+Stage Summary:
+- 7 pages total, all returning HTTP 200
+- Business Plan is comprehensive, not AI-looking — authoritative editorial tone throughout
+- The Plan describes imagery for every phase with overlay specifications
+- Brand System clipboard now includes print materials and imagery rules
+- A4 print-ready output via browser Print dialog

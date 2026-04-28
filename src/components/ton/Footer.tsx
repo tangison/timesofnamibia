@@ -1,10 +1,10 @@
-import { Cpu, FileText, Briefcase, Mail } from "lucide-react";
+import { Cpu, FileText, Briefcase, Mail, BookOpen, Map } from "lucide-react";
 
 export default function Footer() {
   return (
     <footer className="ton-footer bg-ton-black text-ton-cream mt-auto">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 sm:gap-8">
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2.5 mb-4">
@@ -59,6 +59,42 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Documents */}
+          <div>
+            <h4 className="font-mono text-[10px] font-bold tracking-widest uppercase text-ton-cream/50 mb-4">
+              Documents
+            </h4>
+            <ul className="space-y-2.5">
+              <li>
+                <a
+                  href="/business-plan"
+                  className="font-sans text-sm text-ton-cream/70 hover:text-ton-cream transition-colors flex items-center gap-2"
+                >
+                  <BookOpen className="w-3.5 h-3.5 text-ton-red" />
+                  Business Plan
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/plan"
+                  className="font-sans text-sm text-ton-cream/70 hover:text-ton-cream transition-colors flex items-center gap-2"
+                >
+                  <Map className="w-3.5 h-3.5 text-ton-red" />
+                  The Plan
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/brand"
+                  className="font-sans text-sm text-ton-cream/70 hover:text-ton-cream transition-colors flex items-center gap-2"
+                >
+                  <Cpu className="w-3.5 h-3.5 text-ton-red" />
+                  Brand System
+                </a>
+              </li>
+            </ul>
+          </div>
+
           {/* Company */}
           <div>
             <h4 className="font-mono text-[10px] font-bold tracking-widest uppercase text-ton-cream/50 mb-4">
@@ -80,26 +116,15 @@ export default function Footer() {
                   Contact
                 </span>
               </li>
-              <li>
-                <span className="font-sans text-sm text-ton-cream/60">
-                  Careers
-                </span>
-              </li>
             </ul>
           </div>
 
-          {/* Brand */}
+          {/* Identity */}
           <div>
             <h4 className="font-mono text-[10px] font-bold tracking-widest uppercase text-ton-cream/50 mb-4">
               Identity
             </h4>
-            <a
-              href="/brand"
-              className="font-sans text-sm text-ton-cream/70 hover:text-ton-cream transition-colors"
-            >
-              Brand System
-            </a>
-            <p className="font-sans text-xs text-ton-cream/40 mt-5 leading-relaxed">
+            <p className="font-sans text-xs text-ton-cream/40 leading-relaxed">
               Built with Times OS v2.1. All data sourced from public government portals
               and verified channels.
             </p>

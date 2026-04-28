@@ -6,6 +6,7 @@ import Footer from "./Footer";
 import SearchModal from "./SearchModal";
 import ReadingProgress from "./ReadingProgress";
 import NewsletterSignup from "./NewsletterSignup";
+import Sidebar from "./Sidebar";
 
 export default function TonLayout({
   children,

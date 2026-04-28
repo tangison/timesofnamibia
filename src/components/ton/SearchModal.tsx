@@ -14,7 +14,7 @@ const searchData: SearchItem[] = [
   {
     title: "Available Government Tenders",
     category: "Tenders",
-    href: "/tenders",
+    href: "/tender",
     snippet: "Browse active tender opportunities from Namibian government departments and state-owned enterprises.",
   },
   {
@@ -50,7 +50,7 @@ const searchData: SearchItem[] = [
   {
     title: "The Plan — Our Roadmap",
     category: "Pages",
-    href: "/the-plan",
+    href: "/plan",
     snippet: "A detailed execution timeline covering technology, content strategy, and community growth.",
   },
   {
@@ -68,7 +68,7 @@ const searchData: SearchItem[] = [
   {
     title: "Tender Analysis & Insights",
     category: "Tenders",
-    href: "/tender-analysis",
+    href: "/tender",
     snippet: "Data-driven analysis of Namibia's public procurement landscape — trends, values, and awardees.",
   },
 ];

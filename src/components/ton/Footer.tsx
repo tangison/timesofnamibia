@@ -18,39 +18,10 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* News */}
+          {/* TON */}
           <div>
             <h4 className="font-mono text-[9px] font-bold tracking-widest uppercase text-ton-cream/30 mb-3">
-              News
-            </h4>
-            <ul className="space-y-2">
-              <li>
-                <a href="/" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
-                  National
-                </a>
-              </li>
-              <li>
-                <a href="/world" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
-                  World
-                </a>
-              </li>
-              <li>
-                <a href="/africa" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
-                  Africa
-                </a>
-              </li>
-              <li>
-                <a href="/?section=economy" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
-                  Economy
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Data Pipelines */}
-          <div>
-            <h4 className="font-mono text-[9px] font-bold tracking-widest uppercase text-ton-cream/30 mb-3">
-              Data Pipelines
+              TON
             </h4>
             <ul className="space-y-2">
               <li>
@@ -132,6 +103,33 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
+          </div>
+
+          {/* GemsWeb Digital */}
+          <div>
+            <h4 className="font-mono text-[9px] font-bold tracking-widest uppercase text-ton-cream/30 mb-3">
+              GemsWeb Digital
+            </h4>
+            <ul className="space-y-2">
+              <li>
+                <a
+                  href="https://gemsweb.xyz"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors"
+                >
+                  gemsweb.xyz
+                </a>
+              </li>
+              <li>
+                <a href="/about" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
+                  About GemsWeb Digital
+                </a>
+              </li>
+            </ul>
+            <p className="font-sans text-[11px] text-ton-cream/25 mt-3 leading-relaxed">
+              Enterprise data pipelines powering TON&apos;s real-time intelligence.
+            </p>
           </div>
         </div>
 

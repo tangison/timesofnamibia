@@ -6,7 +6,7 @@ import { Sun, Moon } from "lucide-react";
 export default function ThemeToggle() {
   const [isDark, setIsDark] = useState(false);
 
-  // Initialize theme on mount — read from localStorage / system preference
+  // Initialize theme on mount — default to LIGHT, only go dark if explicitly chosen
   useEffect(() => {
     const stored = localStorage.getItem("ton-theme");
     let dark = false;
@@ -15,10 +15,13 @@ export default function ThemeToggle() {
     } else if (stored === "light") {
       dark = false;
     } else {
-      dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      // Default to light — TON is a newspaper, broadsheets are cream
+      dark = false;
     }
     if (dark) {
       document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
     }
     // Queue state update outside the synchronous effect body
     const id = requestAnimationFrame(() => {

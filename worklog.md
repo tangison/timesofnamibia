@@ -31,3 +31,32 @@ Stage Summary:
 - Search system with keyboard shortcut and click trigger
 - All pages return HTTP 200, build compiles cleanly
 - Brand voice enforced: Stoic Observer across all new content
+
+---
+Task ID: 2
+Agent: Main
+Task: Add side navigation system, light theme default, fix broken links, add GemsWeb page
+
+Work Log:
+- Rated current site 6.5/10 and identified key issues
+- Created full Sidebar component with collapsible sections (News, TON, Documents, Company, GemsWeb Digital)
+- Sidebar opens from left via hamburger Menu button in UtilityNav
+- Custom event system (ton-sidebar-open) decouples trigger from panel
+- Active page highlighting with red dots and background tints
+- Collapsible sections: News auto-expanded, Documents/Company/GemsWeb collapsed by default
+- Auto-expand sections containing the active page
+- Escape key closes sidebar, body scroll locked when open
+- Fixed ThemeToggle to default to LIGHT theme (not system preference dark)
+- Fixed SearchModal broken links: /tenders→/tender, /the-plan→/plan, /tender-analysis→/tender
+- Created About GemsWeb Digital page (/gemsweb) with 3 sections: Who We Are, Products & Systems, Philosophy
+- Updated Footer with GemsWeb Digital column (gemsweb.xyz link + about link)
+- Added GemsWeb section to Sidebar navigation
+- Build compiles cleanly with all 20 routes
+
+Stage Summary:
+- Side navigation system fully functional (hamburger trigger → slide-out panel)
+- Light theme is now default on first visit
+- SearchModal links all point to correct routes
+- GemsWeb Digital page live at /gemsweb
+- Footer restructured with TON/Documents/Company/GemsWeb columns
+- All 20 routes compile and build successfully

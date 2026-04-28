@@ -1,5 +1,7 @@
 const NAV_ITEMS = [
   { label: "National", href: "/", key: "national" },
+  { label: "World", href: "/world", key: "world" },
+  { label: "Africa", href: "/africa", key: "africa" },
   { label: "Economy", href: "/?section=economy", key: "economy" },
   { label: "The Tender Edge", href: "/tender", key: "tender" },
   { label: "Job Scraper", href: "/jobs", key: "jobs" },

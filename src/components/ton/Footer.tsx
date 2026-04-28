@@ -2,7 +2,7 @@ export default function Footer() {
   return (
     <footer className="bg-ton-black text-ton-cream mt-auto">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-6">
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2.5 mb-3">
@@ -16,6 +16,35 @@ export default function Footer() {
             <p className="font-serif italic text-ton-cream/40 text-sm leading-relaxed">
               Namibia. Informed. Instantly.
             </p>
+          </div>
+
+          {/* News */}
+          <div>
+            <h4 className="font-mono text-[9px] font-bold tracking-widest uppercase text-ton-cream/30 mb-3">
+              News
+            </h4>
+            <ul className="space-y-2">
+              <li>
+                <a href="/" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
+                  National
+                </a>
+              </li>
+              <li>
+                <a href="/world" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
+                  World
+                </a>
+              </li>
+              <li>
+                <a href="/africa" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
+                  Africa
+                </a>
+              </li>
+              <li>
+                <a href="/?section=economy" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
+                  Economy
+                </a>
+              </li>
+            </ul>
           </div>
 
           {/* Data Pipelines */}
@@ -85,6 +114,21 @@ export default function Footer() {
               <li>
                 <a href="/contact" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
                   Contact
+                </a>
+              </li>
+              <li>
+                <a href="/privacy" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
+                <a href="/terms" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
+                  Terms of Service
+                </a>
+              </li>
+              <li>
+                <a href="/accessibility" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
+                  Accessibility
                 </a>
               </li>
             </ul>

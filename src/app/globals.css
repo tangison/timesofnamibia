@@ -82,6 +82,42 @@
   --sidebar-ring: #CB102E;
 }
 
+/* ========= TON ONYX — DARK THEME ========= */
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ffffff;
+  --card: #111111;
+  --card-foreground: #ffffff;
+  --popover: #111111;
+  --popover-foreground: #ffffff;
+  --primary: #ffffff;
+  --primary-foreground: #0a0a0a;
+  --secondary: #1a1a1a;
+  --secondary-foreground: #ffffff;
+  --muted: #1a1a1a;
+  --muted-foreground: #a0a0a0;
+  --accent: #1a1a1a;
+  --accent-foreground: #ffffff;
+  --destructive: #CB102E;
+  --border: #222222;
+  --input: #222222;
+  --ring: #CB102E;
+  --chart-1: #CB102E;
+  --chart-2: #ffffff;
+  --chart-3: #0a0a0a;
+  --chart-4: #ffffff;
+  --chart-5: #a0a0a0;
+  --sidebar: #0a0a0a;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #ffffff;
+  --sidebar-primary-foreground: #0a0a0a;
+  --sidebar-accent: #1a1a1a;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #222222;
+  --sidebar-ring: #CB102E;
+}
+
 /* ========= TON BASE STYLES — OPEN & EDITORIAL ========= */
 
 @layer base {
@@ -308,6 +344,131 @@ h1, h2, h3 {
   border-top: 2px solid #CB102E;
   padding-top: 0.5rem;
   margin-bottom: 0.75rem;
+}
+
+/* ========= TON ONYX — DARK MODE OVERRIDES ========= */
+
+/* Smooth transitions for theme switching */
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark body {
+  background-image: none; /* No paper grain in dark mode */
+}
+
+.dark .ton-column-rule {
+  border-right-color: #222222;
+}
+
+.dark .ton-rule-top {
+  border-top-color: #ffffff;
+}
+
+.dark .ton-rule-top-heavy {
+  border-top-color: #ffffff;
+}
+
+.dark .ton-rule-bottom {
+  border-bottom-color: #222222;
+}
+
+.dark .ton-dropcap::first-letter {
+  color: #ffffff;
+}
+
+.dark .ton-rule-accent {
+  border-top-color: #CB102E; /* Red stays */
+}
+
+.dark .ton-col-header {
+  border-top-color: #ffffff;
+}
+
+.dark .ton-col-header-red {
+  border-top-color: #CB102E;
+}
+
+/* Dark mode scrollbar */
+.dark .ton-scrollbar::-webkit-scrollbar-thumb {
+  background: #333333;
+}
+.dark .ton-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #CB102E;
+}
+
+/* TON brand class overrides for dark mode */
+.dark .bg-ton-cream {
+  background-color: #0a0a0a;
+}
+
+.dark .text-ton-black {
+  color: #ffffff;
+}
+
+.dark .border-ton-black {
+  border-color: #ffffff;
+}
+
+.dark .border-ton-black\/8 {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark .border-ton-black\/10 {
+  border-color: rgba(255, 255, 255, 0.10);
+}
+
+.dark .text-ton-black\/20 {
+  color: rgba(255, 255, 255, 0.20);
+}
+
+.dark .text-ton-black\/25 {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.dark .text-ton-black\/30 {
+  color: rgba(255, 255, 255, 0.30);
+}
+
+.dark .text-ton-black\/40 {
+  color: rgba(255, 255, 255, 0.40);
+}
+
+.dark .text-ton-black\/50 {
+  color: rgba(255, 255, 255, 0.50);
+}
+
+.dark .text-ton-black\/60 {
+  color: rgba(255, 255, 255, 0.60);
+}
+
+.dark .text-ton-black\/70 {
+  color: rgba(255, 255, 255, 0.70);
+}
+
+.dark .text-ton-black\/80 {
+  color: rgba(255, 255, 255, 0.80);
+}
+
+.dark .bg-ton-black\/\[0\.03\] {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.dark .bg-ton-black {
+  background-color: #111111;
+}
+
+/* TON red stays unchanged in dark mode */
+.dark .text-ton-red {
+  color: #CB102E;
+}
+
+.dark .bg-ton-red {
+  background-color: #CB102E;
+}
+
+.dark .text-ton-red\/40 {
+  color: rgba(203, 16, 46, 0.40);
 }
 
 /* ========= PRINT RULES ========= */

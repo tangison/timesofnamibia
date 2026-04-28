@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import { FEATURED_ARTICLE, JOBS, TENDERS } from "@/lib/ton-data";
 import ScrapedTimestamp from "./ScrapedTimestamp";
 import ShareButtons from "./ShareButtons";
@@ -39,7 +38,7 @@ export default function HomeView() {
                   <div className="flex items-center justify-between mt-1.5">
                     <ScrapedTimestamp label="Scraped" />
                     {job.salary && (
-                      <span className="font-mono text-[10px] text-ton-gold font-semibold">
+                      <span className="font-mono text-[10px] text-ton-red font-semibold">
                         {job.salary}
                       </span>
                     )}
@@ -47,26 +46,26 @@ export default function HomeView() {
                 </div>
               ))}
             </div>
-            <Link
+            <a
               href="/jobs"
               className="mt-3 inline-flex items-center gap-1.5 font-mono text-[10px] text-ton-red font-semibold uppercase tracking-wider hover:gap-2.5 transition-all"
             >
               View All Jobs <ArrowRight className="w-3 h-3" />
-            </Link>
+            </a>
           </div>
 
           {/* Tender Edge Summary */}
           <div className="pt-8 md:pt-0 border-t md:border-t-0 border-ton-black/5">
             <div className="flex items-center gap-2 mb-4">
-              <TrendingUp className="w-3.5 h-3.5 text-ton-gold" />
-              <h2 className="font-mono text-[10px] font-bold tracking-widest uppercase text-ton-gold">
+              <TrendingUp className="w-3.5 h-3.5 text-ton-red" />
+              <h2 className="font-mono text-[10px] font-bold tracking-widest uppercase text-ton-red">
                 The Tender Edge
               </h2>
             </div>
             <div className="space-y-0">
               {sidebarTenders.map((tender, i) => (
                 <div key={tender.id} className={`py-3 ${i > 0 ? "border-t border-ton-black/5" : ""}`}>
-                  <span className="font-mono text-[10px] text-ton-gold/60 font-semibold">
+                  <span className="font-mono text-[10px] text-ton-red/60 font-semibold">
                     {tender.docId}
                   </span>
                   <h4 className="font-serif text-sm font-semibold text-ton-black leading-snug">
@@ -74,19 +73,19 @@ export default function HomeView() {
                   </h4>
                   <div className="flex items-center justify-between mt-1.5">
                     <ScrapedTimestamp label="Verified" />
-                    <span className="font-mono text-[10px] text-ton-gold font-semibold">
+                    <span className="font-mono text-[10px] text-ton-red font-semibold">
                       {tender.estimatedValue}
                     </span>
                   </div>
                 </div>
               ))}
             </div>
-            <Link
+            <a
               href="/tender"
-              className="mt-3 inline-flex items-center gap-1.5 font-mono text-[10px] text-ton-gold font-semibold uppercase tracking-wider hover:gap-2.5 transition-all"
+              className="mt-3 inline-flex items-center gap-1.5 font-mono text-[10px] text-ton-red font-semibold uppercase tracking-wider hover:gap-2.5 transition-all"
             >
               Full Tender Analysis <ArrowRight className="w-3 h-3" />
-            </Link>
+            </a>
           </div>
         </div>
 
@@ -156,7 +155,7 @@ export default function HomeView() {
             </div>
 
             {/* Pull Quote */}
-            <div className="my-8 md:my-10 pl-5 border-l-[3px] border-ton-black">
+            <div className="my-8 md:my-10 pl-5 border-l-[3px] border-ton-red">
               <p className="font-serif italic text-lg sm:text-xl md:text-2xl text-ton-black/60 leading-relaxed">
                 &ldquo;We cannot drink hydrogen. What good is a green revolution if our people
                 still live without clean water and reliable electricity?&rdquo;
@@ -201,8 +200,8 @@ export default function HomeView() {
           {/* Market Data */}
           <div className="pt-8 md:pt-0 border-t md:border-t-0 border-ton-black/5">
             <div className="flex items-center gap-2 mb-4">
-              <TrendingUp className="w-3.5 h-3.5 text-ton-gold" />
-              <h3 className="font-mono text-[10px] font-bold tracking-widest uppercase text-ton-gold">
+              <TrendingUp className="w-3.5 h-3.5 text-ton-red" />
+              <h3 className="font-mono text-[10px] font-bold tracking-widest uppercase text-ton-black">
                 Market Data
               </h3>
             </div>
@@ -233,7 +232,7 @@ export default function HomeView() {
           {/* GemsWeb Digital CTA */}
           <div className="pt-8 md:pt-0 border-t md:border-t-0 border-ton-black/5">
             <div className="flex items-center gap-2 mb-3">
-              <Cpu className="w-4 h-4 text-ton-gold" />
+              <Cpu className="w-4 h-4 text-ton-red" />
               <h3 className="font-serif text-base font-bold text-ton-black">GemsWeb Digital</h3>
             </div>
             <p className="font-sans text-xs text-ton-black/40 leading-relaxed mb-4">

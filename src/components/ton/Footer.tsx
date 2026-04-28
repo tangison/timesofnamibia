@@ -1,6 +1,3 @@
-"use client";
-
-import Link from "next/link";
 import { Cpu, FileText, Briefcase, Mail } from "lucide-react";
 
 export default function Footer() {
@@ -15,7 +12,7 @@ export default function Footer() {
                 TON
               </div>
               <div className="flex items-center gap-1.5">
-                <Cpu className="w-3.5 h-3.5 text-ton-gold" />
+                <Cpu className="w-3.5 h-3.5 text-ton-red" />
                 <span className="font-mono text-xs text-ton-cream/70">
                   GemsWeb Digital
                 </span>
@@ -33,31 +30,31 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5">
               <li>
-                <Link
+                <a
                   href="/jobs"
                   className="font-sans text-sm text-ton-cream/70 hover:text-ton-cream transition-colors flex items-center gap-2"
                 >
                   <Briefcase className="w-3.5 h-3.5 text-ton-red" />
                   Job Scraper
-                </Link>
+                </a>
               </li>
               <li>
-                <Link
+                <a
                   href="/tender"
                   className="font-sans text-sm text-ton-cream/70 hover:text-ton-cream transition-colors flex items-center gap-2"
                 >
-                  <FileText className="w-3.5 h-3.5 text-ton-gold" />
+                  <FileText className="w-3.5 h-3.5 text-ton-red" />
                   Tender Analysis
-                </Link>
+                </a>
               </li>
               <li>
-                <Link
+                <a
                   href="/contributor"
                   className="font-sans text-sm text-ton-cream/70 hover:text-ton-cream transition-colors flex items-center gap-2"
                 >
                   <Mail className="w-3.5 h-3.5" />
                   Contributors
-                </Link>
+                </a>
               </li>
             </ul>
           </div>
@@ -96,12 +93,12 @@ export default function Footer() {
             <h4 className="font-mono text-[10px] font-bold tracking-widest uppercase text-ton-cream/50 mb-4">
               Identity
             </h4>
-            <Link
+            <a
               href="/brand"
               className="font-sans text-sm text-ton-cream/70 hover:text-ton-cream transition-colors"
             >
               Brand System
-            </Link>
+            </a>
             <p className="font-sans text-xs text-ton-cream/40 mt-5 leading-relaxed">
               Built with Times OS v2.1. All data sourced from public government portals
               and verified channels.

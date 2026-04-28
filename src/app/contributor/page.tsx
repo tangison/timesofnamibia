@@ -3,7 +3,7 @@ import ContributorDashboard from "@/components/ton/ContributorDashboard";
 
 export default function ContributorPage() {
   return (
-    <TonLayout>
+    <TonLayout activePage="contributor">
       <ContributorDashboard />
     </TonLayout>
   );

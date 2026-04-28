@@ -45,12 +45,10 @@
   --color-ton-cream: #F9F8F6;
   --color-ton-black: #111111;
   --color-ton-red: #CB102E;
-  --color-ton-gold: #B8860B;
-  --color-ton-navy: #000080;
 }
 
 :root {
-  --radius: 0.625rem;
+  --radius: 0px;
   --background: #F9F8F6;
   --foreground: #111111;
   --card: #FFFFFF;
@@ -70,8 +68,8 @@
   --input: #D4D2CE;
   --ring: #CB102E;
   --chart-1: #CB102E;
-  --chart-2: #B8860B;
-  --chart-3: #000080;
+  --chart-2: #111111;
+  --chart-3: #F9F8F6;
   --chart-4: #111111;
   --chart-5: #666666;
   --sidebar: #F9F8F6;
@@ -183,7 +181,7 @@
 }
 
 .ton-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #B8860B;
+  background: #CB102E;
 }
 
 /* ========= EDITORIAL BORDERS — REFINED ========= */
@@ -202,10 +200,6 @@
 
 .ton-rule-accent {
   border-top: 3px solid #CB102E;
-}
-
-.ton-rule-gold {
-  border-top: 3px solid #B8860B;
 }
 
 /* ========= GRAYSCALE IMAGES ========= */

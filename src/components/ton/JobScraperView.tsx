@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import Link from "next/link";
 import { JOBS, NAMIBIA_REGIONS, JOB_SOURCES, type Job } from "@/lib/ton-data";
 import ScrapedTimestamp from "./ScrapedTimestamp";
 import ShareButtons from "./ShareButtons";
@@ -51,7 +50,7 @@ export default function JobScraperView() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 md:py-10">
-      {/* Page Header — open, spacious */}
+      {/* Page Header */}
       <div className="mb-8 sm:mb-10">
         <div className="flex items-center gap-3 mb-3">
           <Zap className="w-5 h-5 text-ton-red" />
@@ -70,18 +69,18 @@ export default function JobScraperView() {
           {filteredJobs.length} positions across {NAMIBIA_REGIONS.length} regions.
         </p>
         <div className="flex items-center gap-4 mt-4">
-          <Link
+          <a
             href="/"
             className="font-mono text-[10px] text-ton-black/40 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
           >
             <ArrowLeft className="w-3 h-3" />
             Newsroom
-          </Link>
+          </a>
           <span className="font-mono text-[10px] text-ton-black/30">GemsWeb Digital</span>
         </div>
       </div>
 
-      {/* Filters Bar — clean, minimal */}
+      {/* Filters Bar */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 pb-5 mb-6 border-b border-ton-black/10">
         <div className="flex items-center gap-2 text-ton-black/40 flex-shrink-0">
           <Filter className="w-3.5 h-3.5" />
@@ -133,7 +132,7 @@ export default function JobScraperView() {
         </div>
       </div>
 
-      {/* Job Listings — open vertical list, no boxes */}
+      {/* Job Listings */}
       {filteredJobs.length === 0 ? (
         <div className="py-12 sm:py-16 text-center">
           <p className="font-serif italic text-ton-black/50 text-lg">
@@ -157,7 +156,6 @@ export default function JobScraperView() {
               className="py-5 sm:py-6 group hover:bg-white/60 transition-colors"
             >
               <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-5">
-                {/* Main content */}
                 <div className="flex-1 min-w-0">
                   {/* Source + Type badges */}
                   <div className="flex items-center gap-2 mb-2">
@@ -193,7 +191,7 @@ export default function JobScraperView() {
                   {/* Salary + Timestamp */}
                   <div className="flex items-center gap-4 mt-2.5">
                     {job.salary && (
-                      <span className="font-mono text-sm text-ton-gold font-semibold">
+                      <span className="font-mono text-sm text-ton-red font-semibold">
                         {job.salary}
                       </span>
                     )}

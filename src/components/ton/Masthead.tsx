@@ -1,6 +1,6 @@
-"use client";
-
 export default function Masthead() {
+  const editionNumber = 127;
+
   return (
     <header className="ton-masthead bg-ton-cream py-6 sm:py-8 md:py-10">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
@@ -34,7 +34,7 @@ export default function Masthead() {
         <div className="flex items-center justify-center gap-3 mt-3 font-mono text-[10px] sm:text-xs text-ton-black/50">
           <span>Vol. I</span>
           <span className="text-ton-black/20">|</span>
-          <span>No. {Math.floor(Math.random() * 300) + 100}</span>
+          <span>No. {editionNumber}</span>
           <span className="text-ton-black/20">|</span>
           <span>
             {new Date().toLocaleDateString("en-GB", {

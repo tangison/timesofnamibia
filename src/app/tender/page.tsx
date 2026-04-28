@@ -3,7 +3,7 @@ import TenderAnalysisView from "@/components/ton/TenderAnalysisView";
 
 export default function TenderPage() {
   return (
-    <TonLayout>
+    <TonLayout activePage="tender">
       <TenderAnalysisView />
     </TonLayout>
   );

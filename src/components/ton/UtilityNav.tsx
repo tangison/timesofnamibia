@@ -1,5 +1,3 @@
-"use client";
-
 import { Cloud, Wifi } from "lucide-react";
 
 export default function UtilityNav() {

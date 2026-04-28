@@ -1,9 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import { ArrowLeft, Copy, Check, ClipboardCopy } from "lucide-react";
 import { toast } from "sonner";
+
+/* ================================================================
+   BRAND DATA — 3 CORE COLORS ONLY
+   ================================================================ */
 
 const PALETTE = [
   {
@@ -11,35 +14,18 @@ const PALETTE = [
     hex: "#F9F8F6",
     description: "Background base — warm, paper-like canvas for broadsheet digital",
     textColor: "text-ton-black",
-    border: "border-ton-black/10",
   },
   {
     name: "TON Black",
     hex: "#111111",
     description: "Typography, structure, editorial borders — the ink of our identity",
     textColor: "text-ton-cream",
-    border: "border-ton-black",
   },
   {
     name: "TON Red",
     hex: "#CB102E",
-    description: "Breaking news, urgency, live indicators — the pulse of now",
+    description: "Breaking news, urgency, live indicators, CTAs — the pulse of now",
     textColor: "text-white",
-    border: "border-ton-red/30",
-  },
-  {
-    name: "TON Gold",
-    hex: "#B8860B",
-    description: "Financial data, tenders, premium insights — the value of intelligence",
-    textColor: "text-white",
-    border: "border-ton-gold/30",
-  },
-  {
-    name: "TON Navy",
-    hex: "#000080",
-    description: "Accent — rarely used, reserved for institutional authority",
-    textColor: "text-white",
-    border: "border-ton-navy/30",
   },
 ];
 
@@ -76,7 +62,7 @@ const PRINCIPLES = [
   {
     title: "Times OS Integration",
     description:
-      "The visual language of data intelligence. Gold for financial insights, red for breaking urgency, monospace for system trust. The interface between human editorial and machine intelligence.",
+      "The visual language of data intelligence. Red for urgency and breaking news, monospace for system trust. The interface between human editorial and machine intelligence.",
   },
   {
     title: "Information Density",
@@ -89,6 +75,46 @@ const PRINCIPLES = [
       "From the regions we cover to the sources we scrape, our identity is Namibian. //Kharas is spelled with the click. Oshana is not just a region — it's home. Our design reflects the land we serve.",
   },
 ];
+
+const DOS = [
+  "Use sharp corners (0px border-radius) on all TON Block elements",
+  "Use Playfair Display for headlines, Inter for UI, JetBrains Mono for data",
+  "Use Cream (#F9F8F6) as the default background everywhere",
+  "Make headlines 300% larger than body text",
+  "Apply grayscale to all images with color on hover only",
+  "Use editorial borders (2px top rules) to separate sections",
+  "Respect the 6-second scraped timestamp convention from Times OS",
+  "Use drop caps on lead paragraphs and opening articles",
+  "Keep whitespace generous — let the content breathe like a newspaper",
+  "Use Red (#CB102E) exclusively for urgency, breaking news, and primary CTAs",
+  "Use Black (#111111) for all body text, borders, and structural elements",
+  "Maintain column rules (1px solid) between multi-column layouts",
+  "Spell Namibian regions correctly: //Kharas with the click, Oshana not Oshanaa",
+  "Credit GemsWeb Digital — never 'Pty Ltd'",
+  "Optimize for 3G: CSS-heavy, image-light, system fonts as fallback",
+];
+
+const DONTS = [
+  "Never use rounded corners on any TON element — sharp corners only",
+  "Never use mid-grays — only pure Black (#111111) on Cream (#F9F8F6)",
+  "Never add a fourth color to the core palette — three is the law",
+  "Never display imagery in color by default — grayscale first, color on hover",
+  "Never add decoration without purpose — every pixel must inform",
+  "Never use 'Pty Ltd' anywhere — always 'GemsWeb Digital'",
+  "Never use sans-serif fonts for editorial headlines — Playfair Display only",
+  "Never crowd the layout — maintain newspaper-like spacing and breathing room",
+  "Never use more than one serif typeface — Playfair Display is the only serif",
+  "Never use Red for decorative purposes — it is reserved for urgency and action",
+  "Never apply gradients or shadows to text — flat, high-contrast typography only",
+  "Never hide the scraped timestamp — it proves the data is live and verified",
+  "Never use placeholder images — every visual must be real Namibian content",
+  "Never compromise mobile performance — 3G users are our readers too",
+  "Never use CSS border-radius greater than 0px on any TON component",
+];
+
+/* ================================================================
+   COPY CONTENT GENERATORS
+   ================================================================ */
 
 function generateBrandSystemText(): string {
   const lines: string[] = [];
@@ -125,13 +151,26 @@ function generateBrandSystemText(): string {
     lines.push("");
   }
 
+  lines.push("┌─ DO'S ────────────────────────────────────────────────┐");
+  lines.push("");
+  for (const item of DOS) {
+    lines.push(`  ✓  ${item}`);
+  }
+  lines.push("");
+
+  lines.push("┌─ DON'TS ──────────────────────────────────────────────┐");
+  lines.push("");
+  for (const item of DONTS) {
+    lines.push(`  ✗  ${item}`);
+  }
+  lines.push("");
+
   lines.push("┌─ CSS VARIABLES ───────────────────────────────────────┐");
   lines.push("");
   lines.push("  :root {");
-  for (const color of PALETTE) {
-    const varName = color.name.toLowerCase().replace(/\s+/g, "-").replace("ton-", "");
-    lines.push(`    --ton-${varName}: ${color.hex};`);
-  }
+  lines.push("    --ton-cream: #F9F8F6;");
+  lines.push("    --ton-black: #111111;");
+  lines.push("    --ton-red: #CB102E;");
   lines.push("    --font-display: 'Playfair Display', serif;");
   lines.push("    --font-sans: 'Inter', sans-serif;");
   lines.push("    --font-mono: 'JetBrains Mono', monospace;");
@@ -143,10 +182,9 @@ function generateBrandSystemText(): string {
   lines.push("  theme: {");
   lines.push("    extend: {");
   lines.push("      colors: {");
-  for (const color of PALETTE) {
-    const key = color.name.toLowerCase().replace(/\s+/g, "-");
-    lines.push(`        '${key}': '${color.hex}',`);
-  }
+  lines.push("        'ton-cream': '#F9F8F6',");
+  lines.push("        'ton-black': '#111111',");
+  lines.push("        'ton-red': '#CB102E',");
   lines.push("      },");
   lines.push("      fontFamily: {");
   lines.push("        serif: ['Playfair Display', 'serif'],");
@@ -164,79 +202,168 @@ function generateBrandSystemText(): string {
   return lines.join("\n");
 }
 
-export default function BrandSystemView() {
-  const [copied, setCopied] = useState(false);
-  const [copyFormat, setCopyFormat] = useState<"text" | "css" | "tailwind">("text");
-
-  function getCopyContent(format: "text" | "css" | "tailwind"): string {
-    if (format === "text") {
-      return generateBrandSystemText();
-    }
-
-    if (format === "css") {
-      return `/* ========= TIMES OF NAMIBIA — BRAND SYSTEM ========= */
+function generateBrandSystemCSS(): string {
+  return `/* ========= TIMES OF NAMIBIA — BRAND SYSTEM ========= */
 /* GemsWeb Digital Publication */
 
 :root {
-  /* Core Palette */
-${PALETTE.map(c => {
-  const varName = c.name.toLowerCase().replace(/\s+/g, "-").replace("ton-", "");
-  return `  --ton-${varName}: ${c.hex}; /* ${c.description} */`;
-}).join("\n")}
+  /* Core Palette — 3 Colors Only */
+  --ton-cream: #F9F8F6; /* Background base — warm, paper-like canvas */
+  --ton-black: #111111; /* Typography, structure, editorial borders */
+  --ton-red: #CB102E;   /* Breaking news, urgency, live indicators, CTAs */
 
   /* Typography */
   --font-display: 'Playfair Display', serif;
   --font-sans: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
-}`;
-    }
+}
 
-    // tailwind
-    return `// ========= TIMES OF NAMIBIA — TAILWIND CONFIG =========
+/* TON Block — No Rounded Corners */
+.ton-no-radius,
+.ton-no-radius button,
+.ton-no-radius [role="button"] {
+  border-radius: 0 !important;
+}
+
+/* Editorial Borders */
+.ton-rule-top { border-top: 2px solid #111111; }
+.ton-rule-bottom { border-bottom: 1px solid #D4D2CE; }
+.ton-rule-accent { border-top: 3px solid #CB102E; }
+
+/* Column Rules */
+.ton-column-rule { border-right: 1px solid #D4D2CE; }
+.ton-column-rule:last-child { border-right: none; }
+
+/* Grayscale Images — Color on Hover */
+.ton-article-image {
+  filter: grayscale(100%);
+  transition: filter 0.6s ease;
+}
+.ton-article-image:hover { filter: grayscale(0%); }
+
+/* Drop Cap */
+.ton-dropcap::first-letter {
+  font-family: var(--font-display);
+  float: left;
+  font-size: 4.5rem;
+  line-height: 0.75;
+  padding-right: 0.6rem;
+  padding-top: 0.15rem;
+  font-weight: 700;
+  color: #111111;
+}
+
+/* Live Pulse Dot */
+@keyframes ton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.ton-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #CB102E;
+  animation: ton-pulse 1.5s ease-in-out infinite;
+}`;
+}
+
+function generateBrandSystemTailwind(): string {
+  return `// ========= TIMES OF NAMIBIA — TAILWIND CONFIG =========
 // GemsWeb Digital Publication
 
+/** @type {import('tailwindcss').Config} */
 module.exports = {
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
   theme: {
     extend: {
       colors: {
-${PALETTE.map(c => {
-  const key = c.name.toLowerCase().replace(/\s+/g, "-");
-  return `        '${key}': '${c.hex}',`;
-}).join("\n")}
+        'ton-cream': '#F9F8F6',
+        'ton-black': '#111111',
+        'ton-red': '#CB102E',
       },
       fontFamily: {
         serif: ['Playfair Display', 'serif'],
         sans: ['Inter', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
+      borderRadius: {
+        'ton': '0px',
+      },
     },
   },
+  plugins: [],
 };`;
+}
+
+/* ================================================================
+   BRAND SYSTEM VIEW COMPONENT
+   ================================================================ */
+
+type CopyFormat = "text" | "css" | "tailwind";
+
+function getCopyContent(format: CopyFormat): string {
+  switch (format) {
+    case "text":
+      return generateBrandSystemText();
+    case "css":
+      return generateBrandSystemCSS();
+    case "tailwind":
+      return generateBrandSystemTailwind();
   }
+}
+
+async function copyToClipboard(text: string): Promise<boolean> {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    textarea.style.left = "-9999px";
+    document.body.appendChild(textarea);
+    textarea.select();
+    const success = document.execCommand("copy");
+    document.body.removeChild(textarea);
+    return success;
+  }
+}
+
+export default function BrandSystemView() {
+  const [copied, setCopied] = useState(false);
+  const [copyFormat, setCopyFormat] = useState<CopyFormat>("text");
 
   const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(getCopyContent(copyFormat));
+    const content = getCopyContent(copyFormat);
+    const success = await copyToClipboard(content);
+    if (success) {
       setCopied(true);
       toast.success("Brand system copied to clipboard!", {
         description: `Copied as ${copyFormat.toUpperCase()} format.`,
       });
       setTimeout(() => setCopied(false), 2500);
-    } catch {
-      // Fallback for older browsers
-      const textarea = document.createElement("textarea");
-      textarea.value = getCopyContent(copyFormat);
-      textarea.style.position = "fixed";
-      textarea.style.opacity = "0";
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textarea);
-      setCopied(true);
-      toast.success("Brand system copied to clipboard!", {
-        description: `Copied as ${copyFormat.toUpperCase()} format.`,
-      });
-      setTimeout(() => setCopied(false), 2500);
+    } else {
+      toast.error("Failed to copy. Please try again.");
+    }
+  };
+
+  const handleCopyColor = async (name: string, hex: string) => {
+    const success = await copyToClipboard(hex);
+    if (success) {
+      toast.success(`${name} (${hex}) copied!`);
+    }
+  };
+
+  const handleCopyColors = async () => {
+    const colors = PALETTE.map((c) => `${c.name}: ${c.hex}`).join("\n");
+    const success = await copyToClipboard(colors);
+    if (success) {
+      toast.success("All palette colors copied!");
     }
   };
 
@@ -298,13 +425,13 @@ ${PALETTE.map(c => {
         </div>
 
         <div className="flex items-center gap-4 mt-4">
-          <Link
+          <a
             href="/"
             className="font-mono text-[10px] text-ton-black/40 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
           >
             <ArrowLeft className="w-3 h-3" />
             Newsroom
-          </Link>
+          </a>
         </div>
       </div>
 
@@ -318,7 +445,7 @@ ${PALETTE.map(c => {
         </p>
       </div>
 
-      {/* Color Palette */}
+      {/* Color Palette — 3 Colors Only */}
       <div className="mb-10 sm:mb-12">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
@@ -326,40 +453,36 @@ ${PALETTE.map(c => {
             <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black">
               Core Palette
             </h2>
+            <span className="font-mono text-[9px] text-ton-red font-semibold uppercase tracking-wider">
+              3 Colors
+            </span>
           </div>
           <button
-            onClick={() => {
-              const css = PALETTE.map(c => `${c.name}: ${c.hex}`).join("\n");
-              navigator.clipboard.writeText(css);
-              toast.success("Palette colors copied!");
-            }}
+            onClick={handleCopyColors}
             className="flex items-center gap-1.5 font-mono text-[9px] text-ton-black/30 hover:text-ton-black/60 uppercase tracking-wider transition-colors"
           >
             <Copy className="w-3 h-3" />
             Copy Colors
           </button>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6">
           {PALETTE.map((color) => (
             <div
               key={color.hex}
               className="group cursor-pointer"
-              onClick={() => {
-                navigator.clipboard.writeText(color.hex);
-                toast.success(`${color.name} (${color.hex}) copied!`);
-              }}
+              onClick={() => handleCopyColor(color.name, color.hex)}
               title="Click to copy hex value"
             >
               <div
-                className="h-24 sm:h-32 flex items-end p-3 transition-opacity group-hover:opacity-90"
+                className="h-28 sm:h-36 flex items-end p-4 transition-opacity group-hover:opacity-90"
                 style={{ backgroundColor: color.hex }}
               >
-                <span className={`font-mono text-[10px] sm:text-xs font-bold ${color.textColor}`}>
+                <span className={`font-mono text-xs sm:text-sm font-bold ${color.textColor}`}>
                   {color.hex}
                 </span>
               </div>
               <div className="pt-3">
-                <h3 className="font-serif text-xs sm:text-sm font-bold text-ton-black">
+                <h3 className="font-serif text-sm sm:text-base font-bold text-ton-black">
                   {color.name}
                 </h3>
                 <p className="font-sans text-[10px] sm:text-xs text-ton-black/40 mt-1 leading-relaxed">
@@ -385,7 +508,7 @@ ${PALETTE.map(c => {
               <h3 className="font-serif text-base sm:text-lg font-bold text-ton-black">
                 {type.name}
               </h3>
-              <p className="font-mono text-[10px] text-ton-gold mt-1">
+              <p className="font-mono text-[10px] text-ton-red mt-1">
                 {type.category}
               </p>
               <p className="font-sans text-xs text-ton-black/40 mt-2 leading-relaxed">
@@ -423,6 +546,132 @@ ${PALETTE.map(c => {
               </p>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Do's and Don'ts */}
+      <div className="mb-10 sm:mb-12">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="w-6 h-[2px] bg-ton-black" />
+          <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black">
+            Do&apos;s &amp; Don&apos;ts
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10">
+          {/* DO's */}
+          <div className="pt-5 border-t-2 border-emerald-600">
+            <div className="flex items-center gap-2.5 mb-5">
+              <span className="w-6 h-6 bg-emerald-600 text-white font-mono text-xs font-bold flex items-center justify-center">
+                ✓
+              </span>
+              <h3 className="font-serif text-lg font-bold text-emerald-700">
+                DO
+              </h3>
+            </div>
+            <ul className="space-y-3">
+              {DOS.map((item, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <span className="text-emerald-600 font-bold mt-0.5 flex-shrink-0 text-sm">✓</span>
+                  <span className="font-sans text-xs sm:text-sm text-ton-black/60 leading-relaxed">
+                    {item}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* DON'Ts */}
+          <div className="pt-5 border-t-2 border-ton-red">
+            <div className="flex items-center gap-2.5 mb-5">
+              <span className="w-6 h-6 bg-ton-red text-white font-mono text-xs font-bold flex items-center justify-center">
+                ✗
+              </span>
+              <h3 className="font-serif text-lg font-bold text-ton-red">
+                DON&apos;T
+              </h3>
+            </div>
+            <ul className="space-y-3">
+              {DONTS.map((item, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <span className="text-ton-red font-bold mt-0.5 flex-shrink-0 text-sm">✗</span>
+                  <span className="font-sans text-xs sm:text-sm text-ton-black/60 leading-relaxed">
+                    {item}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* CSS Variables Preview */}
+      <div className="mb-10 sm:mb-12">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <span className="w-6 h-[2px] bg-ton-black" />
+            <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black">
+              CSS Variables
+            </h2>
+          </div>
+          <button
+            onClick={async () => {
+              const success = await copyToClipboard(generateBrandSystemCSS());
+              if (success) toast.success("CSS copied to clipboard!");
+            }}
+            className="flex items-center gap-1.5 font-mono text-[9px] text-ton-black/30 hover:text-ton-black/60 uppercase tracking-wider transition-colors"
+          >
+            <Copy className="w-3 h-3" />
+            Copy CSS
+          </button>
+        </div>
+        <div className="bg-ton-black text-ton-cream p-5 sm:p-6 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto">
+          <pre className="whitespace-pre">{`:root {
+  --ton-cream: #F9F8F6;
+  --ton-black: #111111;
+  --ton-red: #CB102E;
+  --font-display: 'Playfair Display', serif;
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}`}</pre>
+        </div>
+      </div>
+
+      {/* Tailwind Config Preview */}
+      <div className="mb-10 sm:mb-12">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <span className="w-6 h-[2px] bg-ton-black" />
+            <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black">
+              Tailwind Config
+            </h2>
+          </div>
+          <button
+            onClick={async () => {
+              const success = await copyToClipboard(generateBrandSystemTailwind());
+              if (success) toast.success("Tailwind config copied to clipboard!");
+            }}
+            className="flex items-center gap-1.5 font-mono text-[9px] text-ton-black/30 hover:text-ton-black/60 uppercase tracking-wider transition-colors"
+          >
+            <Copy className="w-3 h-3" />
+            Copy Config
+          </button>
+        </div>
+        <div className="bg-ton-black text-ton-cream p-5 sm:p-6 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto">
+          <pre className="whitespace-pre">{`theme: {
+  extend: {
+    colors: {
+      'ton-cream': '#F9F8F6',
+      'ton-black': '#111111',
+      'ton-red': '#CB102E',
+    },
+    fontFamily: {
+      serif: ['Playfair Display', 'serif'],
+      sans: ['Inter', 'sans-serif'],
+      mono: ['JetBrains Mono', 'monospace'],
+    },
+  },
+},`}</pre>
         </div>
       </div>
 

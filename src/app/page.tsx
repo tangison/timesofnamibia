@@ -3,7 +3,7 @@ import HomeView from "@/components/ton/HomeView";
 
 export default function HomePage() {
   return (
-    <TonLayout>
+    <TonLayout activePage="national">
       <HomeView />
     </TonLayout>
   );

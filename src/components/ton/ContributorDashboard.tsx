@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import {
   INITIAL_SUBMISSIONS,
   type WireSubmission,
@@ -55,8 +54,8 @@ function priorityConfig(priority: WireSubmission["priority"]) {
       };
     case "urgent":
       return {
-        color: "text-ton-gold",
-        bg: "bg-ton-gold/10",
+        color: "text-ton-red",
+        bg: "bg-ton-red/10",
         icon: <Zap className="w-3 h-3" />,
         label: "URGENT",
       };
@@ -75,11 +74,11 @@ function categoryColor(category: string) {
     case "National":
       return "text-ton-red";
     case "Economy":
-      return "text-ton-gold";
+      return "text-ton-red";
     case "Mining":
       return "text-amber-600";
     case "Legal":
-      return "text-ton-navy";
+      return "text-ton-black";
     case "Energy":
       return "text-emerald-600";
     case "Infrastructure":
@@ -133,8 +132,8 @@ export default function ContributorDashboard() {
       {/* Page Header */}
       <div className="mb-8 sm:mb-10">
         <div className="flex items-center gap-3 mb-3">
-          <Send className="w-5 h-5 text-ton-gold" />
-          <span className="font-mono text-[10px] tracking-widest uppercase text-ton-gold/70 font-semibold">
+          <Send className="w-5 h-5 text-ton-red" />
+          <span className="font-mono text-[10px] tracking-widest uppercase text-ton-red/70 font-semibold">
             Verified Wires
           </span>
         </div>
@@ -142,13 +141,13 @@ export default function ContributorDashboard() {
           Contributor Dashboard
         </h1>
         <div className="flex items-center gap-4 mt-4">
-          <Link
+          <a
             href="/"
             className="font-mono text-[10px] text-ton-black/40 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
           >
             <ArrowLeft className="w-3 h-3" />
             Newsroom
-          </Link>
+          </a>
           <span className="font-mono text-[10px] text-ton-black/30">GemsWeb Digital</span>
         </div>
       </div>
@@ -276,7 +275,7 @@ export default function ContributorDashboard() {
           </div>
         </div>
 
-        {/* Recent Submissions — open list */}
+        {/* Recent Submissions */}
         <div className="lg:col-span-3">
           <div className="flex items-center justify-between mb-5">
             <div className="flex items-center gap-2">

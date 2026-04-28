@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import { TENDERS } from "@/lib/ton-data";
 import ScrapedTimestamp from "./ScrapedTimestamp";
 import ShareButtons from "./ShareButtons";
@@ -50,8 +49,8 @@ export default function TenderAnalysisView() {
       {/* Page Header */}
       <div className="mb-8 sm:mb-10">
         <div className="flex items-center gap-3 mb-3">
-          <Cpu className="w-5 h-5 text-ton-gold" />
-          <span className="font-mono text-[10px] tracking-widest uppercase text-ton-gold/70 font-semibold border border-ton-gold/20 px-2 py-0.5">
+          <Cpu className="w-5 h-5 text-ton-red" />
+          <span className="font-mono text-[10px] tracking-widest uppercase text-ton-red/70 font-semibold border border-ton-red/20 px-2 py-0.5">
             Times OS v2.1
           </span>
         </div>
@@ -63,18 +62,18 @@ export default function TenderAnalysisView() {
           Upload a tender document or select from active tenders below.
         </p>
         <div className="flex items-center gap-4 mt-4">
-          <Link
+          <a
             href="/"
             className="font-mono text-[10px] text-ton-black/40 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
           >
             <ArrowLeft className="w-3 h-3" />
             Newsroom
-          </Link>
+          </a>
           <span className="font-mono text-[10px] text-ton-black/30">GemsWeb Digital</span>
         </div>
       </div>
 
-      {/* Upload Zone — clean, open */}
+      {/* Upload Zone */}
       <div className="py-8 sm:py-10 mb-8 sm:mb-10 border-t border-b border-dashed border-ton-black/15 text-center">
         <div className="flex flex-col items-center">
           <Upload className="w-8 h-8 text-ton-black/30 mb-3" />
@@ -110,7 +109,7 @@ export default function TenderAnalysisView() {
         </div>
       )}
 
-      {/* Analysis Result — spacious, editorial */}
+      {/* Analysis Result */}
       {tenderAnalysisState === "complete" && selectedTenderData && (
         <div className="mb-8 sm:mb-10">
           <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
@@ -137,14 +136,14 @@ export default function TenderAnalysisView() {
           </div>
 
           {/* 3-Bullet Summary */}
-          <div className="pl-5 border-l-[3px] border-ton-gold mb-6">
-            <h4 className="font-mono text-[10px] font-bold text-ton-gold uppercase tracking-wider mb-3">
+          <div className="pl-5 border-l-[3px] border-ton-red mb-6">
+            <h4 className="font-mono text-[10px] font-bold text-ton-red uppercase tracking-wider mb-3">
               Executive Summary
             </h4>
             <ul className="space-y-2.5">
               {selectedTenderData.summary.map((s, i) => (
                 <li key={i} className="font-serif text-sm text-ton-black/70 flex items-start gap-2.5">
-                  <span className="text-ton-gold font-bold mt-0.5">—</span>
+                  <span className="text-ton-red font-bold mt-0.5">—</span>
                   {s}
                 </li>
               ))}
@@ -171,14 +170,14 @@ export default function TenderAnalysisView() {
             </div>
 
             {/* Estimated Value */}
-            <div className="pt-5 border-t border-ton-gold/20">
+            <div className="pt-5 border-t border-ton-red/20">
               <div className="flex items-center gap-2 mb-3">
-                <DollarSign className="w-4 h-4 text-ton-gold" />
-                <h4 className="font-mono text-[10px] font-bold text-ton-gold uppercase tracking-wider">
+                <DollarSign className="w-4 h-4 text-ton-red" />
+                <h4 className="font-mono text-[10px] font-bold text-ton-red uppercase tracking-wider">
                   Estimated Value Range
                 </h4>
               </div>
-              <p className="font-serif text-2xl sm:text-3xl font-bold text-ton-gold">
+              <p className="font-serif text-2xl sm:text-3xl font-bold text-ton-red">
                 {selectedTenderData.estimatedValue}
               </p>
               <p className="font-mono text-[10px] text-ton-black/40 mt-2">
@@ -190,8 +189,8 @@ export default function TenderAnalysisView() {
           {/* Compliance Requirements */}
           <div className="mt-6 pt-5 border-t border-ton-black/10">
             <div className="flex items-center gap-2 mb-3">
-              <ShieldCheck className="w-4 h-4 text-ton-navy" />
-              <h4 className="font-mono text-[10px] font-bold text-ton-navy uppercase tracking-wider">
+              <ShieldCheck className="w-4 h-4 text-ton-black" />
+              <h4 className="font-mono text-[10px] font-bold text-ton-black uppercase tracking-wider">
                 Compliance Requirements Checklist
               </h4>
             </div>
@@ -207,14 +206,14 @@ export default function TenderAnalysisView() {
         </div>
       )}
 
-      {/* Active Tenders List — open editorial list */}
+      {/* Active Tenders List */}
       <div>
         <div className="flex items-center gap-2 mb-5 pt-6 border-t border-ton-black/10">
-          <FileText className="w-4 h-4 text-ton-gold" />
+          <FileText className="w-4 h-4 text-ton-red" />
           <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black">
             Active Tenders
           </h2>
-          <span className="font-mono text-[10px] text-ton-gold/60 ml-1">
+          <span className="font-mono text-[10px] text-ton-red/60 ml-1">
             ({TENDERS.length})
           </span>
         </div>
@@ -230,7 +229,7 @@ export default function TenderAnalysisView() {
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                      <span className="font-mono text-[10px] text-ton-gold/60 font-semibold">
+                      <span className="font-mono text-[10px] text-ton-red/60 font-semibold">
                         {tender.docId}
                       </span>
                       {tender.status === "closing" && (
@@ -243,15 +242,15 @@ export default function TenderAnalysisView() {
                         <span className="font-mono text-[9px] text-emerald-600 font-semibold uppercase">Open</span>
                       )}
                     </div>
-                    <h3 className="font-serif text-base sm:text-lg font-semibold text-ton-black leading-snug group-hover:text-ton-gold transition-colors">
+                    <h3 className="font-serif text-base sm:text-lg font-semibold text-ton-black leading-snug group-hover:text-ton-red transition-colors">
                       {tender.title}
                     </h3>
                     <p className="font-mono text-[11px] text-ton-black/40 mt-1">
                       {tender.department}
                     </p>
                     {isExpanded && (
-                      <div className="mt-4 space-y-2.5 pl-4 border-l-2 border-ton-gold/20">
-                        <p className="font-mono text-xs text-ton-gold font-semibold">
+                      <div className="mt-4 space-y-2.5 pl-4 border-l-2 border-ton-red/20">
+                        <p className="font-mono text-xs text-ton-red font-semibold">
                           Est. Value: {tender.estimatedValue}
                         </p>
                         <p className="font-mono text-xs text-ton-black/50">
@@ -261,7 +260,7 @@ export default function TenderAnalysisView() {
                         <ul className="space-y-1.5 mt-2">
                           {tender.summary.map((s, i) => (
                             <li key={i} className="font-sans text-xs text-ton-black/60 flex items-start gap-1.5">
-                              <span className="text-ton-gold">—</span>
+                              <span className="text-ton-red">—</span>
                               {s}
                             </li>
                           ))}
@@ -289,7 +288,7 @@ export default function TenderAnalysisView() {
       {/* Footer Badge */}
       <div className="mt-8 text-center">
         <span className="inline-flex items-center gap-2 font-mono text-[10px] text-ton-black/30 uppercase tracking-wider">
-          <Cpu className="w-3.5 h-3.5 text-ton-gold" />
+          <Cpu className="w-3.5 h-3.5 text-ton-red" />
           Powered by Times OS v2.1 — GemsWeb Digital
         </span>
       </div>

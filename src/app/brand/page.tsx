@@ -3,7 +3,7 @@ import BrandSystemView from "@/components/ton/BrandSystemView";
 
 export default function BrandPage() {
   return (
-    <TonLayout>
+    <TonLayout activePage="brand">
       <BrandSystemView />
     </TonLayout>
   );

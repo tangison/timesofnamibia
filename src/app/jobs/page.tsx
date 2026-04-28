@@ -3,7 +3,7 @@ import JobScraperView from "@/components/ton/JobScraperView";
 
 export default function JobsPage() {
   return (
-    <TonLayout>
+    <TonLayout activePage="jobs">
       <JobScraperView />
     </TonLayout>
   );

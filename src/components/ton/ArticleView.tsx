@@ -1,0 +1,230 @@
+"use client";
+
+import React from "react";
+import ShareButtons from "./ShareButtons";
+import { ArrowLeft } from "lucide-react";
+
+// ── TYPES matching Prisma model shapes ──────────────────────────
+
+interface Category {
+  id: string;
+  name: string;
+  slug: string;
+}
+
+interface RssFeed {
+  id: string;
+  name: string;
+  url?: string;
+}
+
+interface Article {
+  id: string;
+  slug: string;
+  headline: string;
+  subheadline: string | null;
+  content: string;
+  excerpt: string | null;
+  source: string;
+  categorySlug: string | null;
+  section: string;
+  readingTime: number;
+  imageAlt: string | null;
+  imageGps: string | null;
+  imageUrl: string | null;
+  authorLine: string;
+  featured: boolean;
+  published: boolean;
+  publishedAt: Date | null;
+  views: number;
+  commentCount: number;
+  category: Category | null;
+  rssFeed: RssFeed | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// ── HELPERS ─────────────────────────────────────────────────────
+
+function formatDate(date: Date | null): string {
+  if (!date) return "";
+  return new Date(date).toLocaleDateString("en-GB", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+function formatDateTime(date: Date | null): string {
+  if (!date) return "";
+  return new Date(date).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+// ── COMPONENT ───────────────────────────────────────────────────
+
+interface ArticleViewProps {
+  article: Article;
+}
+
+export default function ArticleView({ article }: ArticleViewProps) {
+  const isRss = article.source === "rss";
+
+  return (
+    <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      {/* Back link */}
+      <div className="pt-5 sm:pt-6 md:pt-8">
+        <a
+          href="/"
+          className="inline-flex items-center gap-1.5 font-mono text-[9px] font-bold uppercase tracking-widest text-ton-black/40 hover:text-ton-red transition-colors"
+        >
+          <ArrowLeft className="w-3 h-3" />
+          Back to Front Page
+        </a>
+      </div>
+
+      {/* Article container — broadsheet column style */}
+      <article className="max-w-3xl mx-auto py-6 sm:py-8 md:py-10">
+        {/* Category badge */}
+        <span className="bg-ton-red text-white font-mono text-[9px] tracking-widest uppercase px-2 py-0.5 font-bold">
+          {article.category?.name || article.categorySlug || "News"}
+        </span>
+
+        {/* Headline */}
+        <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-[1.05] tracking-tight mt-4">
+          {article.headline}
+        </h1>
+
+        {/* Subheadline */}
+        {article.subheadline && (
+          <p className="font-serif italic text-ton-black/40 text-base sm:text-lg mt-3 leading-relaxed max-w-2xl">
+            {article.subheadline}
+          </p>
+        )}
+
+        {/* Byline + Date + Reading Time */}
+        <div className="mt-5 pb-4 border-b border-ton-black/10 flex items-center justify-between flex-wrap gap-2">
+          <div className="flex items-center gap-3 flex-wrap">
+            <span className="font-sans text-sm text-ton-black/70 font-medium">
+              {article.authorLine}
+            </span>
+            {isRss && article.rssFeed && (
+              <span className="font-mono text-[8px] font-bold tracking-widest uppercase bg-ton-black/5 text-ton-black/50 px-2 py-0.5">
+                Via {article.rssFeed.name}
+              </span>
+            )}
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="font-mono text-[10px] text-ton-black/25">
+              {formatDate(article.publishedAt)}
+            </span>
+            <span className="font-mono text-[10px] text-ton-black/15">
+              {article.readingTime} min read
+            </span>
+          </div>
+        </div>
+
+        {/* Share buttons */}
+        <div className="mt-4 flex items-center gap-3">
+          <ShareButtons title={article.headline} url={`/article/${article.slug}`} />
+        </div>
+
+        {/* Image area — if image exists */}
+        {article.imageUrl ? (
+          <div className="mt-6 relative overflow-hidden border border-ton-black/8">
+            <img
+              src={article.imageUrl}
+              alt={article.imageAlt || article.headline}
+              className="w-full aspect-[16/9] object-cover ton-article-image"
+            />
+            {article.imageGps && (
+              <div className="absolute bottom-2 left-2 bg-ton-black text-ton-cream px-2 py-1">
+                <p className="font-mono text-[7px] sm:text-[8px] leading-tight">
+                  {article.imageGps}<br />
+                  {article.publishedAt
+                    ? new Date(article.publishedAt).toISOString().replace("T", " ").slice(0, 19) + " CAT"
+                    : ""}
+                </p>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="mt-6 bg-ton-black/[0.03] aspect-[16/9] relative overflow-hidden border border-ton-black/8">
+            <div className="absolute inset-0 flex items-center justify-center px-8">
+              <p className="font-serif text-sm text-ton-black/25 italic text-center leading-relaxed max-w-lg">
+                {article.imageAlt || "Editorial photograph — no stock imagery. High-contrast grayscale image accompanying this report."}
+              </p>
+            </div>
+            {article.imageGps && (
+              <div className="absolute bottom-2 left-2 bg-ton-black text-ton-cream px-2 py-1">
+                <p className="font-mono text-[7px] sm:text-[8px] leading-tight">
+                  {article.imageGps}<br />
+                  {article.publishedAt
+                    ? new Date(article.publishedAt).toISOString().replace("T", " ").slice(0, 19) + " CAT"
+                    : ""}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Content with Drop Cap */}
+        <div className="mt-6">
+          {article.content.split("\n\n").map((para, i) => (
+            <p
+              key={i}
+              className={`font-serif text-base sm:text-lg text-ton-black/60 leading-[1.8] mb-5 ${
+                i === 0 ? "ton-dropcap" : ""
+              }`}
+            >
+              {para}
+            </p>
+          ))}
+        </div>
+
+        {/* Source attribution — if RSS */}
+        {isRss && article.rssFeed && (
+          <div className="mt-8 pt-4 border-t border-ton-black/8">
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-[8px] font-bold tracking-widest uppercase bg-ton-black/5 text-ton-black/50 px-2 py-0.5">
+                Source
+              </span>
+              <span className="font-sans text-xs text-ton-black/40">
+                This article was originally published by{" "}
+                <strong className="text-ton-black/60">{article.rssFeed.name}</strong>
+                {article.rssFeed.url && (
+                  <>
+                    {" "}—{" "}
+                    <a
+                      href={article.rssFeed.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-ton-red hover:underline"
+                    >
+                      Visit source
+                    </a>
+                  </>
+                )}
+              </span>
+            </div>
+          </div>
+        )}
+
+        {/* Article footer */}
+        <div className="mt-6 pt-4 border-t border-ton-black/10 flex items-center justify-between flex-wrap gap-3">
+          <div className="font-mono text-[9px] text-ton-black/20 space-y-0.5">
+            <p>Published {formatDateTime(article.publishedAt)}</p>
+            <p>Section: {article.section} &middot; {article.readingTime} min read</p>
+          </div>
+          <ShareButtons title={article.headline} url={`/article/${article.slug}`} />
+        </div>
+      </article>
+    </div>
+  );
+}

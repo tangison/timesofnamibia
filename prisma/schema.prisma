@@ -1,8 +1,7 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// ============================================================
+// Times of Namibia — Prisma Schema v3
+// RSS-Powered News Portal + Job/Tender/Market Intelligence
+// ============================================================
 
 generator client {
   provider = "prisma-client-js"
@@ -13,20 +12,416 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ── USERS & AUTH ─────────────────────────────────────────────
+
 model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String?
+  role         String   @default("reader") // reader | journalist | editor | admin
+  avatarUrl    String?
+  bio          String?
+  passwordHash String?
+  articles     Article[]
+  wires        WireSubmission[]
+  comments     Comment[]
+  bookmarks    Bookmark[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ── CATEGORIES ───────────────────────────────────────────────
+
+model Category {
+  id          String     @id @default(cuid())
+  name        String     @unique
+  slug        String     @unique
+  description String?
+  color       String?
+  icon        String?
+  order       Int        @default(0)
+  active      Boolean    @default(true)
+  parentId    String?
+  parent      Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children    Category[] @relation("CategoryHierarchy")
+  articles    Article[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+// ── TAGS ─────────────────────────────────────────────────────
+
+model Tag {
+  id        String       @id @default(cuid())
+  name      String       @unique
+  slug      String       @unique
+  articles  ArticleTag[]
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+}
+
+model ArticleTag {
+  articleId String
+  tagId     String
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([articleId, tagId])
+}
+
+// ── ARTICLES ─────────────────────────────────────────────────
+
+model Article {
+  id            String    @id @default(cuid())
+  slug          String    @unique
+  headline      String
+  subheadline   String?
+  content       String
+  excerpt       String?
+  source        String    @default("manual") // rss | manual | wire
+  categorySlug  String?
+  section       String    @default("national")
+  readingTime   Int       @default(5)
+  imageAlt      String?
+  imageGps      String?
+  imageUrl      String?
+  authorLine    String    @default("TON Editorial")
+  featured      Boolean   @default(false)
+  published     Boolean   @default(false)
+  publishedAt   DateTime?
+  views         Int       @default(0)
+  commentCount  Int       @default(0)
+  seoTitle      String?
+  seoKeywords   String?
+  categoryId    String?
+  category      Category? @relation(fields: [categoryId], references: [id])
+  authorId      String?
+  author        User?     @relation(fields: [authorId], references: [id])
+  tags          ArticleTag[]
+  comments      Comment[]
+  bookmarks     Bookmark[]
+  media         ArticleMedia[]
+  revisions     ArticleRevision[]
+  views_log     ArticleView[]
+  // RSS source tracking
+  rssFeedId     String?
+  rssFeed       RssFeed?  @relation(fields: [rssFeedId], references: [id])
+  rssGuid       String?   // Unique identifier from the RSS item
+  rssFetchedAt  DateTime? // When this article was fetched from RSS
+  deletedAt     DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+// ── MEDIA ────────────────────────────────────────────────────
+
+model Media {
+  id        String         @id @default(cuid())
+  url       String
+  alt       String?
+  caption   String?
+  mimeType  String?
+  width     Int?
+  height    Int?
+  fileSize  Int?
+  source    String?        // upload | rss | wire
+  articles  ArticleMedia[]
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
+
+model ArticleMedia {
+  articleId String
+  mediaId   String
+  order     Int     @default(0)
+  role      String  @default("hero") // hero | inline | gallery
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  media     Media   @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+
+  @@id([articleId, mediaId])
+}
+
+model ArticleRevision {
+  id        String   @id @default(cuid())
+  articleId String
+  version   Int
+  headline  String
+  content   String
+  summary   String?
+  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([articleId, version])
+}
+
+// ── COMMENTS ─────────────────────────────────────────────────
+
+model Comment {
+  id        String    @id @default(cuid())
+  content   String
+  status    String    @default("pending") // pending | approved | rejected
+  parentId  String?
+  parent    Comment?  @relation("CommentThread", fields: [parentId], references: [id])
+  replies   Comment[] @relation("CommentThread")
+  articleId String
+  article   Article   @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  userId    String?
+  user      User?     @relation(fields: [userId], references: [id])
+  deletedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+// ── BOOKMARKS ────────────────────────────────────────────────
+
+model Bookmark {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  articleId String
+  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, articleId])
+}
+
+// ── ARTICLE VIEWS ────────────────────────────────────────────
+
+model ArticleView {
+  id        String   @id @default(cuid())
+  articleId String
+  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  sessionId String?
+  userId    String?
+  referer   String?
+  country   String?
+  device    String?
+  createdAt DateTime @default(now())
+}
+
+// ── RSS FEEDS ────────────────────────────────────────────────
+
+model RssFeed {
+  id          String     @id @default(cuid())
+  name        String
+  url         String     @unique
+  description String?
+  siteUrl     String?
+  favicon     String?
+  category    String?    // Mapping: articles from this feed get this category
+  active      Boolean    @default(true)
+  lastFetched DateTime?
+  fetchCount  Int        @default(0)
+  errorCount  Int        @default(0)
+  lastError   String?
+  items       RssItem[]
+  articles    Article[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model RssItem {
+  id          String    @id @default(cuid())
+  feedId      String
+  feed        RssFeed   @relation(fields: [feedId], references: [id], onDelete: Cascade)
+  title       String
+  link        String
+  description String?
+  content     String?
+  author      String?
+  guid        String?
+  pubDate     DateTime?
+  ingested    Boolean   @default(false) // Has this been converted to an Article?
+  articleId   String?   // Link to the created article
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([feedId, guid])
+}
+
+// ── JOBS ─────────────────────────────────────────────────────
+
+model Job {
+  id          String    @id @default(cuid())
+  title       String
+  company     String
+  location    String
+  region      String?
+  source      String
+  salary      String?
+  salaryMin   Float?
+  salaryMax   Float?
+  type        String?   // Full-time | Contract | Part-time
+  description String?
+  requirements String?
+  closingDate DateTime?
+  url         String?
+  postedAgo   String?
+  scrapedAt   DateTime  @default(now())
+  active      Boolean   @default(true)
+  deletedAt   DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// ── TENDERS ──────────────────────────────────────────────────
+
+model Tender {
+  id              String    @id @default(cuid())
+  docId           String    @unique
+  title           String
+  department      String
+  contactPerson   String?
+  contactEmail    String?
+  contactPhone    String?
+  deadline        DateTime
+  estimatedValue  String?
+  valueMin        Float?
+  valueMax        Float?
+  status          String    @default("open") // open | closing | closed | awarded
+  awardedTo       String?
+  documentUrl     String?
+  active          Boolean   @default(true)
+  summaries       TenderSummary[]
+  keyDates        TenderKeyDate[]
+  compliances     TenderCompliance[]
+  deletedAt       DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model TenderSummary {
+  id        String  @id @default(cuid())
+  text      String
+  order     Int     @default(0)
+  tenderId  String
+  tender    Tender  @relation(fields: [tenderId], references: [id], onDelete: Cascade)
+}
+
+model TenderKeyDate {
+  id        String  @id @default(cuid())
+  text      String
+  order     Int     @default(0)
+  tenderId  String
+  tender    Tender  @relation(fields: [tenderId], references: [id], onDelete: Cascade)
+}
+
+model TenderCompliance {
+  id          String  @id @default(cuid())
+  requirement String
+  order       Int     @default(0)
+  tenderId    String
+  tender      Tender  @relation(fields: [tenderId], references: [id], onDelete: Cascade)
+}
+
+// ── WIRE SUBMISSIONS ─────────────────────────────────────────
+
+model WireSubmission {
+  id        String    @id @default(cuid())
+  title     String
+  category  String
+  priority  String    @default("routine") // routine | urgent | breaking
+  source    String
+  content   String
+  verified  Boolean   @default(false)
+  timestamp DateTime  @default(now())
+  authorId  String?
+  author    User?     @relation(fields: [authorId], references: [id])
+  deletedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+// ── NEWSLETTER ───────────────────────────────────────────────
+
+model NewsletterSubscriber {
   id        String   @id @default(cuid())
   email     String   @unique
   name      String?
+  active    Boolean  @default(true)
+  source    String   @default("website")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model Post {
+// ── MARKET DATA ──────────────────────────────────────────────
+
+model MarketDatum {
   id        String   @id @default(cuid())
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  authorId  String
+  pair      String
+  rate      String
+  change    String
+  direction String   @default("flat") // up | down | flat
+  source    String   @default("BoN")
+  active    Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
+
+// ── TICKER ───────────────────────────────────────────────────
+
+model TickerItem {
+  id        String   @id @default(cuid())
+  text      String
+  active    Boolean  @default(true)
+  order     Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+// ── FAQ ──────────────────────────────────────────────────────
+
+model FaqItem {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String
+  category  String
+  order     Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ── PAGES ────────────────────────────────────────────────────
+
+model Page {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  title     String
+  content   String
+  section   String?
+  published Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ── ADVERTS ──────────────────────────────────────────────────
+
+model Advert {
+  id          String   @id @default(cuid())
+  title       String
+  imageUrl    String?
+  linkUrl     String?
+  placement   String   @default("sidebar") // sidebar | banner | inline | footer
+  impressions Int      @default(0)
+  clicks      Int      @default(0)
+  active      Boolean  @default(true)
+  startDate   DateTime @default(now())
+  endDate     DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ── SITE CONFIG ──────────────────────────────────────────────
+
+model SiteConfig {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String
+  type        String   @default("string") // string | number | boolean | json
+  group       String   @default("general")
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

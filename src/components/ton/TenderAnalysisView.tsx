@@ -77,9 +77,9 @@ export default function TenderAnalysisView() {
       <div className="py-8 sm:py-10 mb-8 sm:mb-10 border-t border-b border-dashed border-ton-black/15 text-center">
         <div className="flex flex-col items-center">
           <Upload className="w-8 h-8 text-ton-black/30 mb-3" />
-          <h3 className="font-serif text-lg sm:text-xl font-semibold text-ton-black">
+          <h2 className="font-serif text-lg sm:text-xl font-semibold text-ton-black">
             Upload Tender Document
-          </h3>
+          </h2>
           <p className="font-sans text-xs sm:text-sm text-ton-black/40 mt-1.5 max-w-md">
             Drag and drop a PDF file here, or click to browse. Times OS will extract
             key intelligence including deadlines, values, and compliance requirements.
@@ -95,9 +95,9 @@ export default function TenderAnalysisView() {
         <div className="py-6 sm:py-8 mb-8 border-t border-ton-black/10">
           <div className="flex items-center gap-3 mb-4">
             <Loader2 className="w-5 h-5 text-ton-red animate-spin" />
-            <h3 className="font-mono text-xs font-bold text-ton-black uppercase tracking-wider">
+            <h2 className="font-mono text-xs font-bold text-ton-black uppercase tracking-wider">
               Analyzing {selectedTenderData.docId}...
-            </h3>
+            </h2>
           </div>
           <Progress value={65} className="h-1.5" />
           <div className="flex items-center justify-between mt-3">
@@ -115,9 +115,9 @@ export default function TenderAnalysisView() {
           <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
             <div className="flex items-center gap-2.5">
               <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-              <h3 className="font-mono text-xs font-bold text-emerald-700 uppercase tracking-wider">
+              <h2 className="font-mono text-xs font-bold text-emerald-700 uppercase tracking-wider">
                 Analysis Complete
-              </h3>
+              </h2>
             </div>
             <div className="flex items-center gap-3">
               <span className="font-mono text-[10px] text-emerald-600 bg-emerald-50 px-2 py-0.5 font-semibold">
@@ -137,9 +137,9 @@ export default function TenderAnalysisView() {
 
           {/* 3-Bullet Summary */}
           <div className="pl-5 border-l-[3px] border-ton-red mb-6">
-            <h4 className="font-mono text-[10px] font-bold text-ton-red uppercase tracking-wider mb-3">
+            <h3 className="font-mono text-[10px] font-bold text-ton-red uppercase tracking-wider mb-3">
               Executive Summary
-            </h4>
+            </h3>
             <ul className="space-y-2.5">
               {selectedTenderData.summary.map((s, i) => (
                 <li key={i} className="font-serif text-sm text-ton-black/70 flex items-start gap-2.5">
@@ -155,9 +155,9 @@ export default function TenderAnalysisView() {
             <div className="pt-5 border-t border-ton-black/10">
               <div className="flex items-center gap-2 mb-3">
                 <Clock className="w-4 h-4 text-ton-red" />
-                <h4 className="font-mono text-[10px] font-bold text-ton-black uppercase tracking-wider">
+                <h3 className="font-mono text-[10px] font-bold text-ton-black uppercase tracking-wider">
                   Key Dates & Deadlines
-                </h4>
+                </h3>
               </div>
               <ul className="space-y-2">
                 {selectedTenderData.keyDates.map((d, i) => (
@@ -173,9 +173,9 @@ export default function TenderAnalysisView() {
             <div className="pt-5 border-t border-ton-red/20">
               <div className="flex items-center gap-2 mb-3">
                 <DollarSign className="w-4 h-4 text-ton-red" />
-                <h4 className="font-mono text-[10px] font-bold text-ton-red uppercase tracking-wider">
+                <h3 className="font-mono text-[10px] font-bold text-ton-red uppercase tracking-wider">
                   Estimated Value Range
-                </h4>
+                </h3>
               </div>
               <p className="font-serif text-2xl sm:text-3xl font-bold text-ton-red">
                 {selectedTenderData.estimatedValue}
@@ -190,9 +190,9 @@ export default function TenderAnalysisView() {
           <div className="mt-6 pt-5 border-t border-ton-black/10">
             <div className="flex items-center gap-2 mb-3">
               <ShieldCheck className="w-4 h-4 text-ton-black" />
-              <h4 className="font-mono text-[10px] font-bold text-ton-black uppercase tracking-wider">
+              <h3 className="font-mono text-[10px] font-bold text-ton-black uppercase tracking-wider">
                 Compliance Requirements Checklist
-              </h4>
+              </h3>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5">
               {selectedTenderData.compliance.map((c, i) => (

@@ -34,7 +34,9 @@ export default function NewsletterSignup() {
         bait. No emojis. Just the verified data.
       </p>
       <form onSubmit={handleSubmit} className="flex gap-0">
+        <label htmlFor="newsletter-email" className="sr-only">Email address for newsletter</label>
         <input
+          id="newsletter-email"
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}

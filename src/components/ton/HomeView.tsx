@@ -150,9 +150,9 @@ export default function HomeView({
       {/* ====== ABOVE THE FOLD label ====== */}
       <div className="flex items-center gap-3 pt-5 sm:pt-6 md:pt-8 pb-0">
         <div className="flex-1 border-t border-ton-black/10" />
-        <span className="font-mono text-[8px] tracking-[0.3em] uppercase text-ton-black/20">
+        <h1 className="font-mono text-[8px] tracking-[0.3em] uppercase text-ton-black/20 font-normal">
           Above the Fold
-        </span>
+        </h1>
         <div className="flex-1 border-t border-ton-black/10" />
       </div>
 
@@ -175,9 +175,9 @@ export default function HomeView({
             <div className="space-y-0">
               {sidebarJobs.map((job, i) => (
                 <div key={job.id} className={`py-2.5 ${i > 0 ? "border-t border-ton-black/5" : ""}`}>
-                  <h4 className="font-serif text-sm font-semibold text-ton-black leading-snug">
+                  <h3 className="font-serif text-sm font-semibold text-ton-black leading-snug">
                     {job.title}
-                  </h4>
+                  </h3>
                   <p className="font-mono text-[10px] text-ton-black/35 mt-0.5">
                     {job.company} &middot; {job.location}
                   </p>
@@ -217,9 +217,9 @@ export default function HomeView({
                   <span className="font-mono text-[9px] text-ton-red/50 font-semibold">
                     {tender.docId}
                   </span>
-                  <h4 className="font-serif text-sm font-semibold text-ton-black leading-snug">
+                  <h3 className="font-serif text-sm font-semibold text-ton-black leading-snug">
                     {tender.title}
-                  </h4>
+                  </h3>
                   <div className="flex items-center justify-between mt-1">
                     <ScrapedTimestamp label="Verified" />
                     <span className="font-mono text-[9px] text-ton-red font-semibold">

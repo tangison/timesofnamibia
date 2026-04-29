@@ -23,10 +23,10 @@ export default function Masthead() {
         {/* Thin decorative rule above title */}
         <div className="border-t border-ton-black/30 mb-2 sm:mb-3" />
 
-        {/* Title — pure typographic authority */}
-        <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight text-ton-black leading-[0.9]">
+        {/* Title — pure typographic authority (not a heading — page H1 is in content area) */}
+        <div className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight text-ton-black leading-[0.9]">
           TIMES OF NAMIBIA
-        </h1>
+        </div>
 
         {/* Short red accent rule — newspaper signature */}
         <div className="flex justify-center mt-2 sm:mt-3">

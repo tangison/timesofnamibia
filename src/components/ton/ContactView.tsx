@@ -167,10 +167,11 @@ export default function ContactView() {
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Name */}
             <div>
-              <label className="block font-mono text-[9px] text-ton-black/40 font-bold tracking-widest uppercase mb-1.5">
+              <label htmlFor="contact-name" className="block font-mono text-[9px] text-ton-black/40 font-bold tracking-widest uppercase mb-1.5">
                 Name
               </label>
               <input
+                id="contact-name"
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -181,10 +182,11 @@ export default function ContactView() {
 
             {/* Email */}
             <div>
-              <label className="block font-mono text-[9px] text-ton-black/40 font-bold tracking-widest uppercase mb-1.5">
+              <label htmlFor="contact-email" className="block font-mono text-[9px] text-ton-black/40 font-bold tracking-widest uppercase mb-1.5">
                 Email
               </label>
               <input
+                id="contact-email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -195,10 +197,11 @@ export default function ContactView() {
 
             {/* Category */}
             <div>
-              <label className="block font-mono text-[9px] text-ton-black/40 font-bold tracking-widest uppercase mb-1.5">
+              <label htmlFor="contact-category" className="block font-mono text-[9px] text-ton-black/40 font-bold tracking-widest uppercase mb-1.5">
                 Department
               </label>
               <select
+                id="contact-category"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 className="w-full bg-ton-cream border border-ton-black/15 px-3 py-2.5 font-sans text-sm text-ton-black focus:outline-none focus:border-ton-black/40 transition-colors appearance-none"
@@ -214,10 +217,11 @@ export default function ContactView() {
 
             {/* Message */}
             <div>
-              <label className="block font-mono text-[9px] text-ton-black/40 font-bold tracking-widest uppercase mb-1.5">
+              <label htmlFor="contact-message" className="block font-mono text-[9px] text-ton-black/40 font-bold tracking-widest uppercase mb-1.5">
                 Message
               </label>
               <textarea
+                id="contact-message"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 rows={6}

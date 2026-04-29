@@ -48,7 +48,7 @@ export default function ThemeToggle() {
     <button
       onClick={toggle}
       className="inline-flex items-center gap-1 font-mono text-[8px] sm:text-[9px] uppercase tracking-wider text-ton-black/30 dark:text-white/30 hover:text-ton-red dark:hover:text-ton-red transition-colors duration-300 px-1 py-0.5"
-      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      aria-label={isDark ? "Light mode — click to switch to dark" : "Dark mode — click to switch to light"}
     >
       {isDark ? (
         <>
@@ -58,7 +58,7 @@ export default function ThemeToggle() {
       ) : (
         <>
           <Moon className="w-3 h-3" />
-          <span className="hidden sm:inline">Onyx</span>
+          <span className="hidden sm:inline">Dark</span>
         </>
       )}
     </button>

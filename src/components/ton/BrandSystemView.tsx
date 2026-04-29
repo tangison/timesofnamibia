@@ -939,9 +939,9 @@ export default function BrandSystemView() {
         <span className="font-mono text-[9px] text-ton-black/20 tracking-widest uppercase">
           Masthead
         </span>
-        <h1 className="font-serif text-4xl sm:text-6xl md:text-8xl font-bold tracking-tight text-ton-black mt-3">
+        <div className="font-serif text-4xl sm:text-6xl md:text-8xl font-bold tracking-tight text-ton-black mt-3">
           TIMES OF NAMIBIA
-        </h1>
+        </div>
         <p className="font-serif italic text-ton-black/40 mt-2 text-sm sm:text-lg">
           Namibia. Informed. Instantly.
         </p>

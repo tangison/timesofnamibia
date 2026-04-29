@@ -142,7 +142,7 @@ export function SidebarTrigger() {
     <button
       onClick={handleOpen}
       className="inline-flex items-center gap-1.5 font-mono text-[8px] sm:text-[9px] uppercase tracking-wider text-ton-black/30 dark:text-white/30 hover:text-ton-red dark:hover:text-ton-red transition-colors duration-300 px-1 py-0.5"
-      aria-label="Open navigation"
+      aria-label="Open menu"
     >
       <Menu className="w-3.5 h-3.5" />
       <span className="hidden sm:inline">Menu</span>
@@ -215,7 +215,7 @@ export default function Sidebar({ activePage }: { activePage?: string }) {
           <button
             onClick={closeSidebar}
             className="text-ton-black/25 dark:text-white/25 hover:text-ton-red dark:hover:text-ton-red transition-colors p-1"
-            aria-label="Close navigation"
+            aria-label="Close menu"
           >
             <X className="w-4 h-4" />
           </button>

@@ -13,7 +13,7 @@ export default function Ticker() {
         <button
           onClick={() => setPaused(!paused)}
           className="flex-shrink-0 bg-ton-red px-3 sm:px-4 py-2 font-mono text-[10px] sm:text-xs font-bold tracking-wider uppercase flex items-center gap-2 min-h-[36px] active:opacity-80"
-          aria-label={paused ? "Resume ticker" : "Pause ticker"}
+          aria-label={paused ? "Resume live news ticker" : "Pause live news ticker"}
         >
           <span className="ton-live-dot" />
           LIVE

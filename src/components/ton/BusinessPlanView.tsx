@@ -85,9 +85,9 @@ export default function BusinessPlanView() {
 
           {/* Masthead */}
           <div className="text-center border-b-2 border-ton-black pb-5 mb-6">
-            <h1 className="font-serif text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight text-ton-black leading-none">
+            <div className="font-serif text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight text-ton-black leading-none">
               TIMES OF NAMIBIA
-            </h1>
+            </div>
             <p className="font-mono text-[10px] sm:text-xs text-ton-black/40 mt-2.5 tracking-wider uppercase">
               Strategic Business Plan // 2026 — 2028
             </p>
@@ -181,6 +181,7 @@ export default function BusinessPlanView() {
           </h3>
           <div className="overflow-x-auto mb-6">
             <table className="w-full text-left">
+              <caption className="sr-only">Regional Node Deployment — Status and scraping frequency across Namibian regions</caption>
               <thead>
                 <tr className="border-b-2 border-ton-black">
                   <th className="font-mono text-[8px] font-bold uppercase tracking-widest py-2.5 pr-3">Region</th>
@@ -320,6 +321,7 @@ export default function BusinessPlanView() {
               </h3>
               <div className="overflow-x-auto mb-4">
                 <table className="w-full text-left">
+                  <caption className="sr-only">Financial Projections — Revenue and operational status by period</caption>
                   <thead>
                     <tr className="border-b-2 border-ton-black">
                       <th className="font-mono text-[8px] font-bold uppercase tracking-widest py-2.5 pr-3">Period</th>

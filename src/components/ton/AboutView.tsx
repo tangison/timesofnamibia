@@ -425,9 +425,9 @@ export default function AboutView() {
             </p>
           </div>
           <div className="bg-ton-black text-ton-cream p-5">
-            <h4 className="font-mono text-[10px] text-ton-red font-bold uppercase tracking-wider mb-2.5">
+            <h3 className="font-mono text-[10px] text-ton-red font-bold uppercase tracking-wider mb-2.5">
               Broadside Specifications
-            </h4>
+            </h3>
             <div className="space-y-1.5 font-mono text-[10px]">
               {[
                 { label: "Format", value: "A3 Single Sheet, Double-Sided" },

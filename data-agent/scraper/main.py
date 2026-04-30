@@ -2,6 +2,7 @@
 # ============================================================
 # Times of Namibia — Data Scraper Agent Orchestrator
 # Scrape → Enrich → Store pipeline
+# 180 verified sources • Broadsheet Digital • GemsWeb Digital
 # ============================================================
 
 import os
@@ -15,7 +16,9 @@ from dotenv import load_dotenv
 # Load environment
 load_dotenv()
 
-# Import sources
+# ── IMPORT SOURCES ────────────────────────────────────────────
+
+# Original core sources
 from scraper.sources.rss_generic import fetch_all_ton_feeds
 from scraper.sources.parliament import fetch as fetch_parliament
 from scraper.sources.tenders import fetch as fetch_tenders
@@ -26,6 +29,24 @@ from scraper.sources.markets import fetch as fetch_markets
 from scraper.sources.sports import fetch as fetch_sports
 from scraper.sources.culture import fetch as fetch_culture
 from scraper.sources.environment import fetch as fetch_environment
+
+# NEW: Expanded API sources
+from scraper.sources.namibia_apis import (
+    fetch_worldnewsapi,
+    fetch_newsdata,
+    fetch_gnews,
+    fetch_expanded_rss,
+)
+from scraper.sources.african_aggregators import (
+    fetch_ein_presswire,
+    fetch_apify_african_news,
+)
+from scraper.sources.specialized_namibia import (
+    fetch_mining_news,
+    fetch_namibia_sports,
+    fetch_climate_alerts,
+    fetch_tourism_news,
+)
 
 # Import storage
 from storage.sqlite_sync import sync
@@ -47,18 +68,34 @@ def load_config() -> dict:
 
 
 # ── SOURCE REGISTRY ───────────────────────────────────────────
+# Organized by priority tier and editorial taxonomy
 
 SOURCES = [
-    ("RSS Feeds", fetch_all_ton_feeds),
+    # ── CRITICAL: Core Namibian news + government ──────────
+    ("RSS Feeds (10 feeds)", fetch_all_ton_feeds),
+    ("Expanded RSS (16 feeds)", fetch_expanded_rss),
     ("Parliament of Namibia", fetch_parliament),
     ("Government Portals", fetch_government),
     ("Legal Desk", fetch_legal),
+
+    # ── HIGH: API sources + specialist ──────────────────────
+    ("WorldNewsAPI-NA", fetch_worldnewsapi),
+    ("NewsData-NA", fetch_newsdata),
+    ("GNews-NA", fetch_gnews),
     ("Tenders Live", fetch_tenders),
     ("Job Scraper", fetch_jobs),
     ("Market Data", fetch_markets),
-    ("Sports", fetch_sports),
+    ("Mining & Energy", fetch_mining_news),
+
+    # ── MEDIUM: Aggregators + regional ──────────────────────
+    ("EIN Presswire", fetch_ein_presswire),
+    ("Apify African News", fetch_apify_african_news),
+    ("Sports (NFA/NPL/NOCR/Rugby)", fetch_namibia_sports),
+    ("Sports (BBC/SuperSport)", fetch_sports),
+    ("Climate Alerts", fetch_climate_alerts),
     ("Culture & Education", fetch_culture),
     ("Environment", fetch_environment),
+    ("Tourism News", fetch_tourism_news),
 ]
 
 
@@ -67,6 +104,7 @@ def main():
     start_time = datetime.now(timezone.utc)
     print("=" * 60)
     print(f"TIMES OF NAMIBIA — Data Scraper Agent")
+    print(f"Broadsheet Digital • GemsWeb Digital • 180 Sources")
     print(f"Started: {start_time.strftime('%Y-%m-%d %H:%M:%S UTC')}")
     print("=" * 60)
 
@@ -89,13 +127,18 @@ def main():
     # ── DEDUPLICATE ────────────────────────────────────────────
     print(f"\n📊 Total raw items: {len(all_items)}")
     seen_urls = set()
+    seen_guids = set()
     deduped = []
     for item in all_items:
         url = item.get("url", "")
         guid = item.get("guid", "")
         key = guid or url
-        if key and key not in seen_urls:
-            seen_urls.add(key)
+        if key and key not in seen_guids:
+            seen_guids.add(key)
+            seen_urls.add(url)
+            deduped.append(item)
+        elif url and url not in seen_urls:
+            seen_urls.add(url)
             deduped.append(item)
     print(f"📊 Unique items after dedup: {len(deduped)}")
 
@@ -131,7 +174,6 @@ def main():
             enriched_items = []
             for item in deduped:
                 if item.get("item_type") == "article":
-                    # Find matching enriched article
                     matched = next((e for e in enriched_articles if e.get("guid") == item.get("guid")), item)
                     enriched_items.append(matched)
                 else:
@@ -142,6 +184,13 @@ def main():
             if ai_scored:
                 avg_score = sum(i["ai_score"] for i in ai_scored) / len(ai_scored)
                 print(f"  Average AI score: {avg_score:.1f}")
+
+                # Urgency breakdown
+                urgency_counts = {}
+                for i in ai_scored:
+                    u = i.get("urgency", "low")
+                    urgency_counts[u] = urgency_counts.get(u, 0) + 1
+                print(f"  Urgency: {dict(urgency_counts)}")
         except Exception as e:
             print(f"  [AI] Enrichment failed: {e}")
             print(f"  [AI] Continuing without AI enrichment...")
@@ -167,6 +216,17 @@ def main():
         elif "updated" in counts:
             print(f"  {item_type.title()}: {counts['updated']} updated, {counts['skipped']} skipped")
 
+    # ── OPTIONAL: NOTION SYNC ──────────────────────────────────
+    notion_db_id = os.environ.get("NOTION_DATABASE_ID", "")
+    if notion_db_id and os.environ.get("NOTION_TOKEN"):
+        try:
+            from storage.notion_sync import sync as notion_sync
+            notion_added, notion_skipped = notion_sync(notion_db_id, enriched_items)
+            print(f"  Notion: {notion_added} added, {notion_skipped} skipped")
+            summary["notion"] = {"added": notion_added, "skipped": notion_skipped}
+        except Exception as e:
+            print(f"  [Notion] Sync failed: {e}")
+
     # ── SUMMARY ────────────────────────────────────────────────
     end_time = datetime.now(timezone.utc)
     duration = (end_time - start_time).total_seconds()
@@ -177,6 +237,7 @@ def main():
     print(f"Sources: {len(SOURCES)}")
     print(f"Items collected: {len(all_items)}")
     print(f"Items after dedup: {len(deduped)}")
+    print(f"AI enabled: {ai_enabled()}")
     print(f"Database summary: {json.dumps(summary)}")
     print(f"Completed: {end_time.strftime('%Y-%m-%d %H:%M:%S UTC')}")
     print("=" * 60)

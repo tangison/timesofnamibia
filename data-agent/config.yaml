@@ -1,6 +1,6 @@
 # ============================================================
 # Times of Namibia — Data Scraper Agent Configuration
-# Controls all user-facing settings; no hardcoded values
+# Broadsheet Digital • GemsWeb Digital • 180 Sources
 # ============================================================
 
 # What to collect (pre-filter before AI)
@@ -8,48 +8,84 @@ filters:
   required_keywords:
     - "Namibia"
     - "Windhoek"
+    - "//Kharas"
+    - "Oshana"
+    - "N$"
+    - "CAT"
     - "Namibian"
     - "southern Africa"
     - "SADC"
   blocked_keywords:
+    - "spam"
+    - "clickbait"
+    - "unverified"
     - "lottery winner"
     - "crypto giveaway"
     - "click here to claim"
 
 # Editorial priorities — AI uses these for scoring
 priorities:
-  - "Direct impact on Namibian citizens and residents"
-  - "Government policy, legislation, and parliamentary activity"
-  - "Economic developments: mining, energy, agriculture, trade"
+  - "Breaking news from verified Namibian sources"
+  - "Government tenders with closing dates"
+  - "Job listings with salary ranges"
+  - "Parliamentary bills with voting records"
+  - "Sports results for Namibian teams (Brave Warriors, NPL)"
+  - "Mining and oil & gas sector developments"
+  - "Climate and drought alerts from MetService"
+  - "Business and finance from The Brief, Economist"
   - "Regional governance: //Kharas, Oshana, Khomas, Erongo"
   - "Infrastructure projects: roads, ports, broadband, energy"
-  - "Environmental and climate developments in Namibia"
-  - "Employment opportunities and labour market data"
   - "Court judgments and legal precedents in Namibia"
-  - "Sports: Brave Warriors, domestic leagues, athletics"
   - "Cultural heritage, education, and social development"
+
+# Source prioritization weights
+source_weights:
+  critical: ["The Namibian", "New Era", "GovNA", "NAMPA", "Parliament of Namibia"]
+  high: ["Republikein", "Namibian Sun", "The Brief", "WorldNewsAPI-NA", "NewsData-NA", "Bank of Namibia", "NamPower"]
+  medium: ["Informante", "EIN-Presswire", "Apify-Africa", "Windhoek Observer", "Allgemeine Zeitung"]
+  low: ["NewsNow", "International wires", "Municipal notices"]
 
 # Storage
 storage:
   provider: "sqlite"           # sqlite | notion | sheets | supabase
   db_path: "../db/custom.db"  # Relative to data-agent/ directory
+  # Notion config (if provider is "notion")
+  notion:
+    database_id_env: "NOTION_DATABASE_ID"
+    token_env: "NOTION_TOKEN"
 
 # Feedback learning
 feedback:
-  positive_statuses: ["featured", "published"]
-  negative_statuses: ["deleted", "draft"]
+  positive_statuses: ["Published", "Urgent", "Verified", "Breaking", "featured"]
+  negative_statuses: ["Duplicate", "Outdated", "Unverified", "Irrelevant", "deleted"]
 
 # AI settings
 ai:
   enabled: true
   model: "gemini-2.5-flash"
-  min_score: 30               # Filter out items below this score
+  min_score: 60               # Filter low-relevance items
   rate_limit_seconds: 7       # Seconds between API calls
-  batch_size: 5               # Items per API call
+  batch_size: 4               # Stay within free tier
+  # Category-specific scoring boosts
+  category_boosts:
+    "National": 10
+    "Politics": 5
+    "Economy": 10
+    "Climate": 15             # High priority for Namibia drought context
+    "Sport": 5
+    "Mining": 10
+    "Energy": 8
+    "Legal Desk": 5
+  # Prompt suffix for brand-aware analysis
+  prompt_suffix: |
+    Score based on: Namibian relevance (40%), timeliness (30%),
+    source authority (20%), actionability (10%).
+    Use JetBrains Mono-friendly formatting for numbers/dates.
+    Spell //Kharas with click character. Never use Oshanaa.
 
 # Scraping settings
 scraper:
-  user_agent: "TimesOfNamibiaBot/2.0 (+https://ton.na; data-agent)"
+  user_agent: "TimesOfNamibia-Bot/1.0 (Broadsheet Digital; GemsWeb)"
   request_timeout: 15         # Seconds
   delay_between_requests: 1.0 # Seconds (be respectful)
   max_items_per_source: 50    # Cap per run
@@ -58,7 +94,7 @@ scraper:
 
 # Source schedule (how often each source type is scraped)
 schedule:
-  rss_feeds: 180              # Every 3 hours (minutes)
+  rss_feeds: 240              # Every 4 hours (CAT)
   parliament: 360             # Every 6 hours
   tenders: 360                # Every 6 hours
   jobs: 720                   # Every 12 hours
@@ -66,3 +102,34 @@ schedule:
   legal: 1440                 # Daily
   culture: 1440               # Daily
   sports: 360                 # Every 6 hours
+  climate_alerts: 180         # Every 3 hours
+  mining_energy: 360          # Every 6 hours
+  tourism: 720                # Every 12 hours
+  discovery_scan: 10080       # Weekly (domain discovery)
+
+# Discovery settings (automated feed finding)
+discovery:
+  phase_1_verified:
+    count: 180
+    sources_file: "sources.csv"
+  phase_2_automated:
+    method: "RSS discovery script + .na domain wordlist"
+    target: "+200 sources"
+    domains_to_scan:
+      - "news*.com.na"
+      - "media*.org.na"
+      - "*press*.gov.na"
+      - "blog*.com.na"
+  phase_3_community:
+    method: "User submissions + civic264.org.na scraping"
+    target: "+300 NGO/civil society sources"
+  phase_4_archive:
+    method: "PressReader archive scraping + National Archives"
+    target: "+320 historical/archival sources"
+
+# Quality gates per source
+quality_gates:
+  min_articles_per_source: 5  # Filter inactive sites
+  max_age_days: 90            # Exclude stale content
+  namibia_keyword_required: true  # Ensure local relevance
+  robots_txt_respected: true  # Ethical scraping

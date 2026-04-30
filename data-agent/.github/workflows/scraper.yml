@@ -1,8 +1,8 @@
-name: TON Data Scraper Agent
+name: Times of Namibia • Data Agent
 
 on:
   schedule:
-    - cron: "0 */3 * * *"    # Every 3 hours
+    - cron: "0 */4 * * *"    # Every 4 hours (CAT timezone)
   workflow_dispatch:           # Allow manual trigger
 
 permissions:
@@ -11,7 +11,7 @@ permissions:
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 15        # 3G-friendly runtime
 
     steps:
       - uses: actions/checkout@v4
@@ -26,20 +26,27 @@ jobs:
           cd data-agent
           pip install -r requirements.txt
 
-      - name: Run Data Scraper Agent
+      - name: Run TON Data Scraper
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          WORLDNEWSAPI_KEY: ${{ secrets.WORLDNEWSAPI_KEY }}
+          NEWSDATA_API_KEY: ${{ secrets.NEWSDATA_API_KEY }}
+          GNEWS_API_KEY: ${{ secrets.GNEWS_API_KEY }}
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+          TON_REGION: "//Kharas,Oshana,Khomas"  # Optional filter
         run: |
           cd data-agent
           python -m scraper.main
 
       - name: Commit feedback history
         run: |
-          git config user.name "ton-scraper-bot"
-          git config user.email "ton-scraper-bot@users.noreply.github.com"
+          git config user.name "ton-bot"
+          git config user.email "bot@gemsweb.digital"
           git add data-agent/data/feedback.json || true
           git add data-agent/data/last_run.json || true
-          git diff --cached --quiet || git commit -m "chore: update scraper feedback and run log"
+          git diff --cached --quiet || git commit -m "chore: update TON feedback [scraped: $(date -u +%Y-%m-%dT%H:%M:%S+02:00)]"
           git push
 
       - name: Upload database artifact

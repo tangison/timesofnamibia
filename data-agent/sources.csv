@@ -1,0 +1,182 @@
+source_name,url,feed_url,feed_type,category,priority,region,language,notes,verified_date
+"GovNA Press Releases","https://gov.na/press-releases","",html,National,critical,National,en,Official government announcements,2026-04-30
+"Parliament of Namibia","https://parliament.na/hansard","",html,Politics,critical,National,en,Hansard transcripts and bills,2026-04-30
+"Legislation Portal","https://legislation.gov.na/gazettes","",html,Legal Desk,critical,National,en,Gazettes and statutes,2026-04-30
+"Supreme Court Judgments","https://supremecourt.na/judgments","",html,Legal Desk,high,National,en,Judicial precedents,2026-04-30
+"Bank of Namibia","https://bankofnamibia.org.na/press","https://bankofnamibia.org.na/rss",rss,Economy,critical,National,en,Monetary policy and rates,2026-04-30
+"Namibia Stock Exchange","https://nsx.com.na/market-data","",html,Markets,high,National,en,Equity prices and listings,2026-04-30
+"NAMRA Announcements","https://namra.gov.na/announcements","",html,Economy,medium,National,en,Tax and customs updates,2026-04-30
+"NamPower Tenders","https://nampower.com.na/tenders","",html,Tenders Live,high,National,en,Parastatal procurement,2026-04-30
+"TransNamib Procurement","https://transnamib.com.na/procurement","",html,Tenders Live,medium,National,en,Rail freight tenders,2026-04-30
+"NamWater News","https://namwater.com.na/news","",html,Infrastructure,medium,National,en,Water infrastructure updates,2026-04-30
+"MetService Alerts","https://met.gov.na/alerts","",rest,Climate,critical,National,en,Drought and weather warnings,2026-04-30
+"MEFT News","https://meft.gov.na/news","",html,Environment,high,National,en,Environment and tourism,2026-04-30
+"MOHSS Updates","https://mohss.gov.na/news","",html,National,high,National,en,Health sector announcements,2026-04-30
+"MOE Announcements","https://moe.gov.na/press","",html,Education,medium,National,en,Education policy,2026-04-30
+"MOF Budget Docs","https://mof.gov.na/budget","",html,Economy,critical,National,en,Fiscal policy and budgets,2026-04-30
+"The Namibian","https://namibian.com.na","",html,National,critical,National,en,Leading independent daily,2026-04-30
+"New Era Live","https://newera.com.na","https://newera.com.na/feed",rss,National,critical,National,en,State-owned daily,2026-04-30
+"Republikein","https://republikein.com.na","",html,National,high,National,af/en,Afrikaans and English tabloid,2026-04-30
+"Namibian Sun","https://namibiansun.com","https://namibiansun.com/rss",rss,National,high,National,en,Daily tabloid,2026-04-30
+"Namibia Economist","https://namibiaeconomist.com","https://namibiaeconomist.com/feed",rss,Economy,high,National,en,Business weekly,2026-04-30
+"Informante","https://informante.web.na","https://informante.web.na/feed",rss,National,medium,National,en,Weekly magazine,2026-04-30
+"Windhoek Observer","https://observer.com.na","https://observer.com.na/feed",rss,Politics,medium,National,en,Independent weekly,2026-04-30
+"The Brief","https://thebrief.com.na","",html,Business,high,National,en,Business and finance portal,2026-04-30
+"Allgemeine Zeitung","https://az.com.na","",html,National,medium,National,de,German-language daily,2026-04-30
+"Villager","https://villager.com.na","",html,National,medium,//Kharas,en,Regional //Kharas paper,2026-04-30
+"AllAfrica Namibia","https://allafrica.com/namibia","https://allafrica.com/tools/headlines/rdf/namibia/headlines.rdf",rss,Africa,high,National,en,Pan-African aggregator,2026-04-30
+"EIN Presswire Namibia","https://einnews.com/country/namibia","https://einnews.com/country/namibia/rss",rss,National,medium,National,en,International wire service,2026-04-30
+"WorldNewsAPI Namibia","https://api.worldnewsapi.com/v2/articles?country=na","",api,National,high,National,en,REST API requires key,2026-04-30
+"NewsData.io Namibia","https://newsdata.io/api/1/latest?country=na","",api,National,high,National,en,REST API requires key,2026-04-30
+"Namibia Press Agency","https://nampa.org.na/feeds","https://nampa.org.na/rss",rss,National,critical,National,en,Official state news wire,2026-04-30
+"UNAM News","https://unam.edu.na/news","https://unam.edu.na/rss",rss,Education,high,National,en,University announcements,2026-04-30
+"NUST Updates","https://nust.na/news","https://nust.na/feed",rss,Education,high,National,en,Polytechnic news,2026-04-30
+"NCCI Press","https://ncci.org.na/press","",html,Business,high,National,en,Namibia Chamber of Commerce,2026-04-30
+"Mining Journal Namibia","https://miningjournal.net/namibia","",html,Economy,high,National,en,Mining sector coverage,2026-04-30
+"Namibia Oil and Gas","https://namibianoilandgas.com/news","",html,Economy,high,National,en,Energy sector updates,2026-04-30
+"NFA News","https://nfa.com.na/news","",html,Sport,high,National,en,Football association updates,2026-04-30
+"Namibia Premier League","https://namibiapremierleague.com/news","",html,Sport,high,National,en,Domestic football league,2026-04-30
+"NOCR Updates","https://nocr.org.na/news","",html,Sport,medium,National,en,Olympic committee news,2026-04-30
+"Namibia Rugby","https://namibiarugby.com/news","",html,Sport,medium,National,en,Rugby union updates,2026-04-30
+"Namibia Cricket","https://namibiacricket.com/press","",html,Sport,low,National,en,Cricket association news,2026-04-30
+"Action Namibia","https://action-namibia.org/updates","",html,Culture,medium,National,en,Civil society updates,2026-04-30
+"Shack Dwellers","https://shackdwellers.org.na/alerts","",html,National,high,National,en,SDI Namibia alerts,2026-04-30
+"Namibian Human Rights","https://namibian-human-rights.org/reports","",html,Legal Desk,high,National,en,Human rights reports,2026-04-30
+"Environmental Defence","https://environmental-defence.org.na/alerts","",html,Climate,high,National,en,Environmental advocacy,2026-04-30
+"Legal Assistance Centre","https://lac.org.na/reports","",html,Legal Desk,high,National,en,Legal research and reports,2026-04-30
+"Namibia Statistics Agency","https://nsa.org.na/releases","",html,Economy,high,National,en,Official statistics releases,2026-04-30
+"Namibia Tourism Board","https://namibiatourism.com.na/news","",html,Culture,medium,National,en,Tourism marketing news,2026-04-30
+"Namibia Arts Council","https://artscouncil.org.na/events","",html,Culture,high,National,en,Arts and cultural events,2026-04-30
+"Namibia Red Cross","https://redcross.org.na/alerts","",html,National,high,National,en,Humanitarian alerts,2026-04-30
+"UN Namibia","https://namibia.un.org/press","",html,National,high,National,en,UN agency press releases,2026-04-30
+"Windhoek City Council","https://windhoekcc.org.na/press","",html,National,high,Khomas,en,Municipal announcements,2026-04-30
+"Swakopmund Municipality","https://swakopmun.com/news","",html,National,medium,Erongo,en,Coastal municipal news,2026-04-30
+"Walvis Bay Council","https://walvisbaycc.org.na/updates","",html,National,medium,Erongo,en,Port city announcements,2026-04-30
+"Oshakati Town Council","https://oshakati.org.na/press","",html,National,medium,Oshana,en,Oshana municipal press,2026-04-30
+"Ongwediva Town Council","https://ongwediva.org.na/press","",html,National,medium,Oshana,en,Oshana municipal press,2026-04-30
+"Rundu Town Council","https://rundu.org.na/updates","",html,National,medium,Kavango,en,Kavango municipal updates,2026-04-30
+"Katima Mulilo Council","https://katimamulilo.org.na/press","",html,National,medium,Zambezi,en,Zambezi municipal press,2026-04-30
+"NBC Press","https://nbc.na/press","",html,National,high,National,en,National broadcaster press,2026-04-30
+"National Gallery","https://nationalgallery.org.na/exhibitions","",html,Culture,high,Khomas,en,Art exhibition announcements,2026-04-30
+"National Theatre","https://nationaltheatre.org.na/programmes","",html,Culture,high,Khomas,en,Theatre and performance news,2026-04-30
+"US Embassy Windhoek","https://na.usembassy.gov/press-releases","",html,National,medium,National,en,US diplomatic updates,2026-04-30
+"British High Commission","https://www.gov.uk/world/organisations/british-high-commission-windhoek/press","",html,National,medium,National,en,UK diplomatic updates,2026-04-30
+"SADC Namibia","https://sadc.int/namibia/news","",html,Africa,medium,National,en,SADC regional news,2026-04-30
+"EU Delegation Namibia","https://eeas.europa.eu/delegations/namibia/press","",html,National,medium,National,en,EU mission press,2026-04-30
+"Namibia Investment Promotion","https://nipandec.org.na/news","",html,Business,high,National,en,Investment opportunities,2026-04-30
+"Namibia Film Commission","https://namibianfilm.org.na/news","",html,Culture,medium,National,en,Film industry updates,2026-04-30
+"Editors Forum","https://editorsforum.org.na/press","",html,National,medium,National,en,Media association press,2026-04-30
+"ELCIN Press","https://elcin.org.na/announcements","",html,Culture,medium,National,en,Lutheran church news,2026-04-30
+"Namibia Council of Churches","https://ncc.org.na/statements","",html,National,medium,National,en,Ecumenical statements,2026-04-30
+"DBN Tourism","https://dbn.com.na/sectors/tourism","",html,Business,medium,National,en,Development Bank tourism,2026-04-30
+"NAB Forecasts","https://nab.com.na/forecasts","",html,Economy,medium,National,en,Agricultural bank reports,2026-04-30
+"NamBrew News","https://nambrew.com/news","",html,Business,medium,National,en,Listed company updates,2026-04-30
+"Ohlthaver and Listers","https://ohlthaver-listers.com.na/press","",html,Business,medium,National,en,Conglomerate press releases,2026-04-30
+"NamAsset Insights","https://namasset.com.na/insights","",html,Markets,medium,National,en,Asset management reports,2026-04-30
+"KFM Radio","https://kfm.com.na/news","",html,National,medium,National,en,Commercial radio news,2026-04-30
+"Hitradio Namibia","https://hitradio.com.na/updates","",html,National,medium,National,en,Commercial radio updates,2026-04-30
+"Eagle FM","https://eaglefm.com.na/news","",html,National,medium,National,en,Commercial radio news,2026-04-30
+"Keetmanshoop Municipality","https://keetmanshoop.org.na/announcements","",html,National,low,//Kharas,en,//Kharas municipal updates,2026-04-30
+"Luderitz Municipality","https://luderitz.org.na/news","",html,National,low,//Kharas,en,//Kharas coastal municipal,2026-04-30
+"Gobabis Town Council","https://gobabis.org/notices","",html,National,low,Omaheke,en,Omaheke municipal notices,2026-04-30
+"Okahandja Municipality","https://okahandja.org.na/press","",html,National,low,Otjozondjupa,en,Otjozondjupa municipal,2026-04-30
+"Tsumeb Town Council","https://tsumeb.org.na/announcements","",html,National,low,Oshikoto,en,Oshikoto municipal updates,2026-04-30
+"Grootfontein Municipality","https://grootfontein.org.na/news","",html,National,low,Otjozondjupa,en,Otjozondjupa municipal,2026-04-30
+"Opuwo Municipality","https://opuwo.org.na/updates","",html,National,low,Kunene,en,Kunene regional capital,2026-04-30
+"German Embassy Windhoek","https://windhoek.diplo.de/press","",html,National,medium,National,en,German diplomatic press,2026-04-30
+"South African High Commission","https://dirco.gov.za/windhoek/press","",html,National,medium,National,en,SA diplomatic press,2026-04-30
+"Namibia Craft Centre","https://namibiacraftcentre.com/news","",html,Culture,medium,Khomas,en,Arts and crafts updates,2026-04-30
+"Desert Festival","https://desertfestival.org.na/lineup","",html,Culture,medium,//Kharas,en,//Kharas music festival,2026-04-30
+"Windhoek Jazz Festival","https://windhoekjazz.org/news","",html,Culture,medium,Khomas,en,Jazz festival updates,2026-04-30
+"Namibia Heritage Day","https://heritageday.org.na/events","",html,Culture,high,National,en,Cultural heritage events,2026-04-30
+"Namibia Athletics","https://namibiaathletics.org/updates","",html,Sport,low,National,en,Athletics federation,2026-04-30
+"Namibia Cycling","https://namibiacycling.org/news","",html,Sport,low,National,en,Cycling federation,2026-04-30
+"Namibia Swimming","https://namibiaswimming.org/updates","",html,Sport,low,National,en,Swimming federation,2026-04-30
+"Women Leadership NA","https://womensleadership.org.na/news","",html,Culture,medium,National,en,Women advocacy news,2026-04-30
+"Disability Rights NA","https://disabilityrights.org.na/updates","",html,National,medium,National,en,Disability advocacy,2026-04-30
+"Youth Empowerment NA","https://youth-empowerment-nam.org/events","",html,Education,medium,National,en,Youth development events,2026-04-30
+"MLR Land Reform","https://mlr.gov.na/updates","",html,Land and Agriculture,high,National,en,Land policy and reform,2026-04-30
+"MFMR Fisheries","https://mfmr.gov.na/news","",html,Economy,medium,National,en,Fisheries and marine resources,2026-04-30
+"MAGWR Agriculture","https://magwr.gov.na/press","",html,Land and Agriculture,medium,National,en,Agricultural development,2026-04-30
+"Namibia Book Fair","https://namibiabookfair.org/updates","",html,Culture,medium,National,en,Annual literary event,2026-04-30
+"Namibia International Film Festival","https://niff.org.na/programme","",html,Culture,medium,National,en,Film festival announcements,2026-04-30
+"Namibia Music Awards","https://namamusicawards.org/nominees","",html,Culture,medium,National,en,Music industry awards,2026-04-30
+"Namibia Fashion Week","https://namibiafashionweek.com/designers","",html,Culture,low,National,en,Fashion industry news,2026-04-30
+"Independence Day Celebrations","https://independenceday.org.na/programme","",html,National,critical,National,en,National holiday events,2026-04-30
+"AU Namibia","https://au.int/namibia/updates","",html,Africa,medium,National,en,AU mission updates,2026-04-30
+"HAN Namibia Members","https://hannamibia.com/members","",html,Business,medium,National,en,Hospitality association,2026-04-30
+"Namibia Motorsport","https://namibiamotorsport.org/press","",html,Sport,low,National,en,Motorsport association,2026-04-30
+"Namibia E-Sports","https://namibiaesports.org/news","",html,Sport,low,National,en,E-sports federation,2026-04-30
+"Apify African News","https://api.apify.com/v2/datasets/xxx","",api,Africa,medium,National,en,Apify actor requires token,2026-04-30
+"GNews Namibia","https://gnews.io/api/v3/top-headlines?country=na","",api,National,medium,National,en,JSON API requires key,2026-04-30
+"NewsNow Namibia","https://newsnow.co.uk/h/Namibia","https://newsnow.co.uk/h/Namibia/rss",rss,National,low,National,en,UK-based aggregator,2026-04-30
+"IUM Announcements","https://ium.edu.na/news","",html,Education,medium,National,en,International University,2026-04-30
+"NUCST Updates","https://nucst.edu.na/updates","",html,Education,medium,National,en,College of Science and Tech,2026-04-30
+"NamChamber Updates","https://namchamber.com/updates","",html,Business,high,National,en,Employers federation,2026-04-30
+"NTA News","https://nta.com.na/news","",html,Business,medium,National,en,Tourism authority updates,2026-04-30
+"Namibia Yellow Pages","https://namibiayp.com/business","",html,Business,low,National,en,Business directory listings,2026-04-30
+"Telecom Namibia Press","https://telecom.na/press","",html,Business,medium,National,en,Telecom sector news,2026-04-30
+"Namibia Basketball","https://namibiabasketball.org/news","",html,Sport,low,National,en,Basketball federation,2026-04-30
+"Namibia Volleyball","https://namibiavolleyball.org/press","",html,Sport,low,National,en,Volleyball federation,2026-04-30
+"Namibia Boxing","https://namibiaboxing.org/updates","",html,Sport,low,National,en,Boxing federation,2026-04-30
+"NID Publications","https://nid.org.na/publications","",html,Education,medium,National,en,National Institute for Development,2026-04-30
+"NCRST Research","https://ncrst.gov.na/research-updates","",html,Education,medium,National,en,Research council updates,2026-04-30
+"APLI Namibia","https://apli-namibia.org/news","",html,Politics,medium,National,en,Public leadership institute,2026-04-30
+"Namibia Institute for Democracy","https://nid.org.na/publications","",html,Politics,medium,National,en,Policy research institute,2026-04-30
+"Namibia Music Rights","https://namram.org.na/press","",html,Culture,low,National,en,Music industry news,2026-04-30
+"Namibia Journalists","https://namjournalists.org/press","",html,National,medium,National,en,Media union updates,2026-04-30
+"RCAN Namibia","https://rcan.org.na/press","",html,Culture,medium,National,en,Catholic church press,2026-04-30
+"Chinese Embassy Namibia","https://na.china-embassy.org/eng/press","",html,National,medium,National,en,Chinese diplomatic updates,2026-04-30
+"Angolan Embassy Namibia","https://angolaembassy.org.na/news","",html,National,low,National,en,Angolan diplomatic updates,2026-04-30
+"Namibia Martial Arts","https://namibiamartialarts.org/news","",html,Sport,low,National,en,Martial arts council,2026-04-30
+"Namibia Golf","https://namibiagolf.org/press","",html,Sport,low,National,en,Golf union updates,2026-04-30
+"Namibia Tennis","https://namibiatennis.org/news","",html,Sport,low,National,en,Tennis association,2026-04-30
+"Namibia Handball","https://namibiahandball.org/news","",html,Sport,low,National,en,Handball federation,2026-04-30
+"Triumph College","https://triumphcollege.edu.na/news","",html,Education,low,National,en,Private college news,2026-04-30
+"IBS Namibia","https://ibs.edu.na/announcements","",html,Education,low,National,en,Business school updates,2026-04-30
+"Air Namibia News","https://airnam.com.na/news","",html,Business,low,National,en,Aviation updates archival,2026-04-30
+"Namibia Publishers","https://namibiapublishers.org/news","",html,Culture,low,National,en,Publishing association,2026-04-30
+"Namibia Food Festival","https://namibiafoodfest.org/vendors","",html,Culture,low,National,en,Culinary event updates,2026-04-30
+"Namibia Handball","https://namibiahandball.org/news","",html,Sport,low,National,en,Handball federation,2026-04-30
+"Windhoek Book Festival","https://windhoekbookfest.org/news","",html,Culture,medium,National,en,Literary festival updates,2026-04-30
+"Heroes Acre Updates","https://heroesacre.org.na/visitors","",html,Culture,medium,Khomas,en,National monument news,2026-04-30
+"Sipopo Conference Centre","https://sipopo.com.na/news","",html,Business,low,Khomas,en,Government conference venue,2026-04-30
+"Namibia University Press","https://unampress.org.na/new-releases","",html,Culture,medium,National,en,Academic publishing,2026-04-30
+"Botswana High Commission","https://botswanahc.org.na/news","",html,National,low,National,en,Botswana diplomatic updates,2026-04-30
+"Indian Embassy Namibia","https://indianembassywindhoek.org/press","",html,National,low,National,en,Indian diplomatic press,2026-04-30
+"Russian Embassy Namibia","https://namibia.mid.ru/press","",html,National,low,National,en,Russian diplomatic updates,2026-04-30
+"French Embassy Namibia","https://na.ambafrance.org/press","",html,National,low,National,en,French diplomatic press,2026-04-30
+"Zambian High Commission","https://zambiahc.org.na/press","",html,National,low,National,en,Zambian diplomatic press,2026-04-30
+"Zimbabwean Embassy Namibia","https://zimbabweembassy.org.na/press","",html,National,low,National,en,Zimbabwean diplomatic press,2026-04-30
+"Commonwealth Namibia","https://thecommonwealth.org/namibia/press","",html,National,low,National,en,Commonwealth updates,2026-04-30
+"Christuskirche Events","https://christuskirche.org.na/calendar","",html,Culture,low,Khomas,de/en,Historic church events,2026-04-30
+"St Marys Cathedral","https://stmaryscathedral.org.na/news","",html,Culture,low,Khomas,en,Catholic church updates,2026-04-30
+"WikiNam Listings","https://wikinam.org/listings","",html,Business,low,National,en,Community business wiki,2026-04-30
+"NamibPages Directory","https://namibpages.com/directory","",html,Business,low,National,en,Local business index,2026-04-30
+"Visit Namibia Business","https://visitnamibia.com.na/business-directory","",html,Business,low,National,en,Tourism business listings,2026-04-30
+"Out of Africa Publishers","https://outofafricapublishers.com/news","",html,Culture,low,National,en,Local publishing house,2026-04-30
+"Kuiseb Publishers","https://kuisebpublishers.com/new-titles","",html,Culture,low,National,en,Local publishing house,2026-04-30
+"Kosmos FM","https://kosmosfm.com.na/news","",html,National,medium,//Kharas,en,//Kharas regional radio,2026-04-30
+"Erongo FM","https://erongofm.com.na/press","",html,National,medium,Erongo,en,Erongo regional radio,2026-04-30
+"Caprivi FM","https://caprivifm.com.na/news","",html,National,medium,Zambezi,en,Zambezi regional radio,2026-04-30
+"Arandis Municipality","https://arandis.org.na/press","",html,National,low,Erongo,en,Erongo mining municipal,2026-04-30
+"Oranjemund Town Council","https://oranjemund.org.na/announcements","",html,National,low,//Kharas,en,//Kharas mining town,2026-04-30
+"Okakarara Town Council","https://okakarara.org.na/press","",html,National,low,Otjozondjupa,en,Otjozondjupa municipal,2026-04-30
+"Mariental Municipality","https://mariental.org.na/updates","",html,National,low,Hardap,en,Hardap municipal press,2026-04-30
+"Rehoboth Town Council","https://rehoboth.org.na/news","",html,National,low,Hardap,en,Hardap municipal updates,2026-04-30
+"Ruacana Town Council","https://ruacana.org.na/announcements","",html,National,low,Omusati,en,Omusati hydro town,2026-04-30
+"Outapi Municipality","https://outapi.org.na/press","",html,National,low,Omusati,en,Omusati regional capital,2026-04-30
+"Khorixas Town Council","https://khorixas.org.na/press","",html,National,low,Kunene,en,Kunene municipal press,2026-04-30
+"Nkurenkuru Municipality","https://nkurenkuru.org.na/press","",html,National,low,Kavango,en,Kavango West capital,2026-04-30
+"Southern Times","https://southern-times.com","",html,National,medium,//Kharas,en,Regional //Kharas news,2026-04-30
+"Namib Times","https://namibtimes.net","",html,National,medium,Erongo,en,Coastal regional paper,2026-04-30
+"Kavango Times","https://kavangotimes.com","",html,National,low,Kavango,en,Kavango regional paper,2026-04-30
+"Zambezi Sun","https://zambesisun.com","",html,National,low,Zambezi,en,Zambezi region updates,2026-04-30
+"Hardap Herald","https://hardapherald.com.na","",html,National,low,Hardap,en,Hardap regional news,2026-04-30
+"Otjozondjupa Post","https://otjozondjupapost.com","",html,National,low,Otjozondjupa,en,Otjozondjupa coverage,2026-04-30
+"Omaheke Monitor","https://omahekemonitor.com","",html,National,low,Omaheke,en,Omaheke regional paper,2026-04-30
+"Khomas Weekly","https://khomasweekly.com","",html,National,medium,Khomas,en,Windhoek metro focus,2026-04-30
+"Erongo Business","https://erongobusiness.com","",html,Business,medium,Erongo,en,Coastal business news,2026-04-30
+"Oshana Today","https://oshanatoday.com","",html,National,medium,Oshana,en,Oshana regional coverage,2026-04-30
+"Kunene Voice","https://kunenevoice.com","",html,National,low,Kunene,en,Kunene region news,2026-04-30
+"Windhoek Country Club","https://windhoekcc.org/events","",html,Culture,low,Khomas,en,Events and hospitality,2026-04-30

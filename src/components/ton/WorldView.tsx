@@ -2,6 +2,7 @@
 
 import React from "react";
 import SourceBadge, { BadgeType } from "./SourceBadge";
+import Breadcrumbs from "./Breadcrumbs";
 import { ArrowLeft, Globe } from "lucide-react";
 
 interface WorldArticle {
@@ -210,13 +211,7 @@ export default function WorldView() {
         </div>
 
         <div className="flex items-center gap-4 mt-4">
-          <a
-            href="/"
-            className="font-mono text-[10px] text-ton-black/40 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
-          >
-            <ArrowLeft className="w-3 h-3" />
-            Newsroom
-          </a>
+          <Breadcrumbs items={[{ label: "World" }]} />
         </div>
       </div>
 

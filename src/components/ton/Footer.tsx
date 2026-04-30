@@ -142,6 +142,15 @@ export default function Footer() {
             Built with Times OS v2.1. All data sourced from public government portals
             and verified channels.
           </p>
+          <div className="flex items-center gap-3 mt-3">
+            <a href="/feed.xml" className="font-mono text-[9px] text-ton-cream/25 hover:text-ton-cream/50 uppercase tracking-wider transition-colors">
+              RSS Feed
+            </a>
+            <span className="text-ton-cream/10">|</span>
+            <a href="/sitemap.xml" className="font-mono text-[9px] text-ton-cream/25 hover:text-ton-cream/50 uppercase tracking-wider transition-colors">
+              Sitemap
+            </a>
+          </div>
         </div>
 
         {/* Copyright */}

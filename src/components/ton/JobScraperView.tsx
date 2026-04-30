@@ -4,6 +4,7 @@ import React, { useMemo, useState } from "react";
 import { JOBS, NAMIBIA_REGIONS, JOB_SOURCES, type Job } from "@/lib/ton-data";
 import ScrapedTimestamp from "./ScrapedTimestamp";
 import ShareButtons from "./ShareButtons";
+import Breadcrumbs from "./Breadcrumbs";
 import {
   MapPin,
   Building2,
@@ -69,13 +70,7 @@ export default function JobScraperView() {
           {filteredJobs.length} positions across {NAMIBIA_REGIONS.length} regions.
         </p>
         <div className="flex items-center gap-4 mt-4">
-          <a
-            href="/"
-            className="font-mono text-[10px] text-ton-black/40 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
-          >
-            <ArrowLeft className="w-3 h-3" />
-            Newsroom
-          </a>
+          <Breadcrumbs items={[{ label: "Job Scraper" }]} />
           <span className="font-mono text-[9px] text-ton-black/20">GemsWeb Digital</span>
         </div>
       </div>

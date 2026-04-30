@@ -22,7 +22,7 @@ export default function TonLayout({
       <UtilityNav />
       <Masthead />
       <Navigation activePage={activePage} />
-      <main className="flex-1">{children}</main>
+      <main id="main-content" className="flex-1">{children}</main>
       <NewsletterSignup />
       <Footer />
       <SearchModal />

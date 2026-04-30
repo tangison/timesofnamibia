@@ -7,6 +7,7 @@ import {
   getTenders,
   getMarketData,
 } from "@/lib/data";
+import { triggerAutoIngestion } from "@/lib/rss-scheduler";
 
 export const dynamic = "force-dynamic";
 
@@ -18,6 +19,11 @@ export const metadata = {
 };
 
 export default async function HomePage() {
+  // Trigger RSS ingestion in the background (non-blocking)
+  triggerAutoIngestion().catch(() => {
+    // Silently fail — don't block page render
+  });
+
   const [featuredArticle, recentArticles, jobs, tenders, marketData] =
     await Promise.all([
       getFeaturedArticle(),

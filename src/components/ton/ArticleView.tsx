@@ -2,6 +2,7 @@
 
 import React from "react";
 import ShareButtons from "./ShareButtons";
+import Breadcrumbs from "./Breadcrumbs";
 import { ArrowLeft } from "lucide-react";
 
 // ── TYPES matching Prisma model shapes ──────────────────────────
@@ -78,15 +79,16 @@ export default function ArticleView({ article }: ArticleViewProps) {
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6">
-      {/* Back link */}
+      {/* Breadcrumbs */}
       <div className="pt-5 sm:pt-6 md:pt-8">
-        <a
-          href="/"
-          className="inline-flex items-center gap-1.5 font-mono text-[9px] font-bold uppercase tracking-widest text-ton-black/40 hover:text-ton-red transition-colors"
-        >
-          <ArrowLeft className="w-3 h-3" />
-          Back to Front Page
-        </a>
+        <Breadcrumbs
+          items={[
+            ...(article.section
+              ? [{ label: article.section, href: `/${article.section === "national" ? "" : article.section}` }]
+              : []),
+            { label: article.category?.name || article.categorySlug || "News" },
+          ]}
+        />
       </div>
 
       {/* Article container — broadsheet column style */}

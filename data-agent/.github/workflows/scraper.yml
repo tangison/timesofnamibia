@@ -1,0 +1,50 @@
+name: TON Data Scraper Agent
+
+on:
+  schedule:
+    - cron: "0 */3 * * *"    # Every 3 hours
+  workflow_dispatch:           # Allow manual trigger
+
+permissions:
+  contents: write              # Required for feedback-history commit
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          cd data-agent
+          pip install -r requirements.txt
+
+      - name: Run Data Scraper Agent
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          cd data-agent
+          python -m scraper.main
+
+      - name: Commit feedback history
+        run: |
+          git config user.name "ton-scraper-bot"
+          git config user.email "ton-scraper-bot@users.noreply.github.com"
+          git add data-agent/data/feedback.json || true
+          git add data-agent/data/last_run.json || true
+          git diff --cached --quiet || git commit -m "chore: update scraper feedback and run log"
+          git push
+
+      - name: Upload database artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ton-database
+          path: db/custom.db
+          retention-days: 7

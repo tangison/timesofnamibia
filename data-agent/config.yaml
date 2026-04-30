@@ -1,0 +1,68 @@
+# ============================================================
+# Times of Namibia — Data Scraper Agent Configuration
+# Controls all user-facing settings; no hardcoded values
+# ============================================================
+
+# What to collect (pre-filter before AI)
+filters:
+  required_keywords:
+    - "Namibia"
+    - "Windhoek"
+    - "Namibian"
+    - "southern Africa"
+    - "SADC"
+  blocked_keywords:
+    - "lottery winner"
+    - "crypto giveaway"
+    - "click here to claim"
+
+# Editorial priorities — AI uses these for scoring
+priorities:
+  - "Direct impact on Namibian citizens and residents"
+  - "Government policy, legislation, and parliamentary activity"
+  - "Economic developments: mining, energy, agriculture, trade"
+  - "Regional governance: //Kharas, Oshana, Khomas, Erongo"
+  - "Infrastructure projects: roads, ports, broadband, energy"
+  - "Environmental and climate developments in Namibia"
+  - "Employment opportunities and labour market data"
+  - "Court judgments and legal precedents in Namibia"
+  - "Sports: Brave Warriors, domestic leagues, athletics"
+  - "Cultural heritage, education, and social development"
+
+# Storage
+storage:
+  provider: "sqlite"           # sqlite | notion | sheets | supabase
+  db_path: "../db/custom.db"  # Relative to data-agent/ directory
+
+# Feedback learning
+feedback:
+  positive_statuses: ["featured", "published"]
+  negative_statuses: ["deleted", "draft"]
+
+# AI settings
+ai:
+  enabled: true
+  model: "gemini-2.5-flash"
+  min_score: 30               # Filter out items below this score
+  rate_limit_seconds: 7       # Seconds between API calls
+  batch_size: 5               # Items per API call
+
+# Scraping settings
+scraper:
+  user_agent: "TimesOfNamibiaBot/2.0 (+https://ton.na; data-agent)"
+  request_timeout: 15         # Seconds
+  delay_between_requests: 1.0 # Seconds (be respectful)
+  max_items_per_source: 50    # Cap per run
+  max_retries: 2
+  retry_delay: 5              # Seconds
+
+# Source schedule (how often each source type is scraped)
+schedule:
+  rss_feeds: 180              # Every 3 hours (minutes)
+  parliament: 360             # Every 6 hours
+  tenders: 360                # Every 6 hours
+  jobs: 720                   # Every 12 hours
+  market_data: 60             # Every hour
+  legal: 1440                 # Daily
+  culture: 1440               # Daily
+  sports: 360                 # Every 6 hours

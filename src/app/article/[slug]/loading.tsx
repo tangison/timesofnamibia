@@ -1,7 +1,7 @@
 import TonLayout from "@/components/ton/TonLayout";
 
-function SkeletonPulse({ className = "" }: { className?: string }) {
-  return <div className={`animate-pulse bg-ton-black/[0.06] ${className}`} />;
+function SkeletonPulse({ className = "", width }: { className?: string; width?: string }) {
+  return <div className={`animate-pulse bg-ton-black/[0.06] ${className}`} style={width ? { width } : undefined} />;
 }
 
 export default function ArticleLoading() {
@@ -41,7 +41,7 @@ export default function ArticleLoading() {
               <SkeletonPulse className="h-4 w-full rounded-none mb-1" />
               <SkeletonPulse
                 className="h-4 rounded-none mb-1"
-                style={{ width: `${60 + Math.random() * 35}%` }}
+                width={`${60 + ((i * 7) % 35)}%`}
               />
             </div>
           ))}

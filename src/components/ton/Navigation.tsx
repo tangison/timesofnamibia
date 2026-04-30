@@ -1,11 +1,15 @@
 const NAV_ITEMS = [
   { label: "National", href: "/", key: "national" },
-  { label: "World", href: "/world", key: "world" },
+  { label: "Politics", href: "/section/politics", key: "politics" },
+  { label: "Economy", href: "/section/economy", key: "economy" },
+  { label: "Mining", href: "/section/mining", key: "mining" },
+  { label: "Energy", href: "/section/energy", key: "energy" },
   { label: "Africa", href: "/africa", key: "africa" },
-  { label: "Economy", href: "/?section=economy", key: "economy" },
-  { label: "The Tender Edge", href: "/tender", key: "tender" },
-  { label: "Job Scraper", href: "/jobs", key: "jobs" },
-  { label: "Legal Desk", href: "/#legal", key: "legal" },
+  { label: "World", href: "/world", key: "world" },
+  { label: "Sport", href: "/section/sport", key: "sport" },
+  { label: "Tenders", href: "/tender", key: "tender" },
+  { label: "Jobs", href: "/jobs", key: "jobs" },
+  { label: "Environment", href: "/section/environment", key: "environment" },
 ];
 
 export default function Navigation({ activePage }: { activePage?: string }) {

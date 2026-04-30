@@ -18,7 +18,7 @@ export async function GET() {
       <dc:creator><![CDATA[${article.authorLine}]]></dc:creator>
       <pubDate>${article.publishedAt ? new Date(article.publishedAt).toUTCString() : new Date().toUTCString()}</pubDate>
       <category>${article.category?.name || article.section || "News"}</category>
-      <source url="${article.rssFeed?.url || ""}">${article.rssFeed?.name || "Times of Namibia"}</source>
+      <source>${article.rssFeed?.name || "Times of Namibia"}</source>
     </item>`
     )
     .join("");

@@ -6,10 +6,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticPages: MetadataRoute.Sitemap = [
     { url: baseUrl, lastModified: new Date(), changeFrequency: "hourly", priority: 1.0 },
-    { url: `${baseUrl}/world`, lastModified: new Date(), changeFrequency: "hourly", priority: 0.9 },
+    // Section pages (data-scraper-agent taxonomy)
+    { url: `${baseUrl}/section/national`, lastModified: new Date(), changeFrequency: "hourly", priority: 0.9 },
+    { url: `${baseUrl}/section/politics`, lastModified: new Date(), changeFrequency: "hourly", priority: 0.9 },
+    { url: `${baseUrl}/section/economy`, lastModified: new Date(), changeFrequency: "hourly", priority: 0.9 },
+    { url: `${baseUrl}/section/mining`, lastModified: new Date(), changeFrequency: "daily", priority: 0.8 },
+    { url: `${baseUrl}/section/energy`, lastModified: new Date(), changeFrequency: "daily", priority: 0.8 },
     { url: `${baseUrl}/africa`, lastModified: new Date(), changeFrequency: "hourly", priority: 0.9 },
-    { url: `${baseUrl}/tender`, lastModified: new Date(), changeFrequency: "daily", priority: 0.8 },
-    { url: `${baseUrl}/jobs`, lastModified: new Date(), changeFrequency: "daily", priority: 0.8 },
+    { url: `${baseUrl}/world`, lastModified: new Date(), changeFrequency: "hourly", priority: 0.9 },
+    { url: `${baseUrl}/section/sport`, lastModified: new Date(), changeFrequency: "daily", priority: 0.8 },
+    { url: `${baseUrl}/section/infrastructure`, lastModified: new Date(), changeFrequency: "daily", priority: 0.7 },
+    { url: `${baseUrl}/section/environment`, lastModified: new Date(), changeFrequency: "daily", priority: 0.7 },
+    { url: `${baseUrl}/section/technology`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.6 },
+    { url: `${baseUrl}/section/opinion`, lastModified: new Date(), changeFrequency: "daily", priority: 0.7 },
+    // Transactional pages
+    { url: `${baseUrl}/tender`, lastModified: new Date(), changeFrequency: "daily", priority: 0.85 },
+    { url: `${baseUrl}/jobs`, lastModified: new Date(), changeFrequency: "daily", priority: 0.85 },
+    // Static pages
     { url: `${baseUrl}/about`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
     { url: `${baseUrl}/contact`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.4 },
     { url: `${baseUrl}/brand`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.3 },

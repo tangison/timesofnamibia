@@ -1,0 +1,26 @@
+{
+  "timestamp": "2026-04-30T02:14:35.484239+00:00",
+  "duration_seconds": 111.299094,
+  "sources_count": 10,
+  "items_collected": 194,
+  "items_deduped": 189,
+  "ai_enabled": false,
+  "summary": {
+    "articles": {
+      "added": 76,
+      "skipped": 54
+    },
+    "tenders": {
+      "added": 0,
+      "skipped": 0
+    },
+    "jobs": {
+      "added": 53,
+      "skipped": 0
+    },
+    "markets": {
+      "updated": 6,
+      "skipped": 0
+    }
+  }
+}

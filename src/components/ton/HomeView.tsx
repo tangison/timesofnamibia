@@ -3,6 +3,7 @@
 import React from "react";
 import ScrapedTimestamp from "./ScrapedTimestamp";
 import ShareButtons from "./ShareButtons";
+import IngestionStatus from "./IngestionStatus";
 import { TrendingUp, ArrowRight, ArrowUpRight, ArrowDownRight, Minus } from "lucide-react";
 
 // ── TYPES matching Prisma model shapes ──────────────────────────
@@ -150,9 +151,12 @@ export default function HomeView({
       {/* ====== ABOVE THE FOLD label ====== */}
       <div className="flex items-center gap-3 pt-5 sm:pt-6 md:pt-8 pb-0">
         <div className="flex-1 border-t border-ton-black/10" />
-        <h1 className="font-mono text-[8px] tracking-[0.3em] uppercase text-ton-black/20 font-normal">
-          Above the Fold
-        </h1>
+        <div className="flex items-center gap-4">
+          <h1 className="font-mono text-[8px] tracking-[0.3em] uppercase text-ton-black/20 font-normal">
+            Above the Fold
+          </h1>
+          <IngestionStatus />
+        </div>
         <div className="flex-1 border-t border-ton-black/10" />
       </div>
 
@@ -182,7 +186,7 @@ export default function HomeView({
                     {job.company} &middot; {job.location}
                   </p>
                   <div className="flex items-center justify-between mt-1">
-                    <ScrapedTimestamp label="Scraped" />
+                    <ScrapedTimestamp label="Scraped" date={job.scrapedAt} />
                     {job.salary && (
                       <span className="font-mono text-[9px] text-ton-red font-semibold">
                         {job.salary}
@@ -221,7 +225,7 @@ export default function HomeView({
                     {tender.title}
                   </h3>
                   <div className="flex items-center justify-between mt-1">
-                    <ScrapedTimestamp label="Verified" />
+                    <ScrapedTimestamp label="Verified" date={tender.deadline} />
                     <span className="font-mono text-[9px] text-ton-red font-semibold">
                       {tender.estimatedValue || "—"}
                     </span>

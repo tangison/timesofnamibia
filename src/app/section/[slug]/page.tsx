@@ -129,7 +129,7 @@ export default async function SectionPage({ params }: SectionPageProps) {
                     <Clock className="w-3 h-3" />
                     {articles[0].readingTime} min
                   </span>
-                  <ScrapedTimestamp label="Published" />
+                  <ScrapedTimestamp label="Published" date={articles[0].publishedAt} />
                 </div>
                 <div className="mt-3">
                   <ShareButtons title={articles[0].headline} />
@@ -169,7 +169,7 @@ export default async function SectionPage({ params }: SectionPageProps) {
                         <span className="font-mono text-[10px]">
                           {article.readingTime} min
                         </span>
-                        <ScrapedTimestamp label="" />
+                        <ScrapedTimestamp label="" date={article.publishedAt} />
                       </div>
                     </div>
                     <ArrowRight className="w-4 h-4 text-ton-black/15 group-hover:text-ton-red transition-colors mt-2 flex-shrink-0" />

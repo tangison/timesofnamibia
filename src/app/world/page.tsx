@@ -1,17 +1,30 @@
+import { Metadata } from "next";
 import TonLayout from "@/components/ton/TonLayout";
 import WorldView from "@/components/ton/WorldView";
+import { getArticles } from "@/lib/data";
 
-export const metadata = {
-  title: "World News — International Desk",
+export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "World News — International Affairs",
   description:
-    "Verified international coverage from wire services, government agencies, and confirmed correspondents across five continents. Every source carries its proof.",
+    "International news and analysis from verified wire services. Global affairs through a Namibian lens.",
   alternates: { canonical: "/world" },
+  openGraph: {
+    title: "World News — Times of Namibia",
+    description: "International news and analysis from verified wire services.",
+    type: "website",
+    locale: "en_NA",
+    siteName: "Times of Namibia",
+  },
 };
 
-export default function WorldPage() {
+export default async function WorldPage() {
+  const articles = await getArticles({ section: "world", limit: 20 });
+
   return (
     <TonLayout activePage="world">
-      <WorldView />
+      <WorldView articles={articles} />
     </TonLayout>
   );
 }

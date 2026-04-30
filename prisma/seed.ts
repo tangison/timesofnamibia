@@ -37,40 +37,25 @@ async function main() {
 
   // ── RSS FEEDS (Real Namibian/African sources) ────────────
   const rssFeeds = [
+    // ── NAMIBIAN SOURCES ─────────────────────────────────────
     {
-      name: "The Namibian",
-      url: "https://www.namibian.com.na/rss/feed.xml",
-      category: "National",
-      siteUrl: "https://www.namibian.com.na",
-      description: "Namibia's leading independent newspaper",
+      name: "Namibia Economist",
+      url: "https://economist.com.na/feed/",
+      category: "Economy",
+      siteUrl: "https://economist.com.na",
+      description: "Namibia's business and economic analysis",
     },
-    {
-      name: "New Era Namibia",
-      url: "https://neweralive.com/feed/",
-      category: "National",
-      siteUrl: "https://neweralive.com",
-      description: "Government-owned national newspaper",
-    },
-    {
-      name: "The Guardian Nigeria - Africa",
-      url: "https://guardian.ng/category/features/africa/feed/",
-      category: "Africa",
-      siteUrl: "https://guardian.ng",
-      description: "Nigerian Guardian Africa coverage",
-    },
+    // Note: Many .na domains block automated RSS fetching or have
+    // discontinued their RSS feeds. The Python data-agent scrapes
+    // these sites directly (not via RSS) for Namibian-specific content.
+
+    // ── AFRICA DESK ────────────────────────────────────────
     {
       name: "BBC Africa",
       url: "https://feeds.bbci.co.uk/news/world/africa/rss.xml",
       category: "Africa",
       siteUrl: "https://bbc.com/news/world/africa",
       description: "BBC World Service Africa desk",
-    },
-    {
-      name: "Reuters Africa",
-      url: "https://feeds.reuters.com/Reuters/worldNews",
-      category: "World",
-      siteUrl: "https://reuters.com",
-      description: "Reuters global news wire",
     },
     {
       name: "AllAfrica",
@@ -80,18 +65,105 @@ async function main() {
       description: "Pan-African news aggregator",
     },
     {
-      name: "Mining Weekly",
-      url: "https://www.miningweekly.com/rss",
-      category: "Mining",
-      siteUrl: "https://www.miningweekly.com",
-      description: "Southern African mining industry news",
+      name: "Al Jazeera",
+      url: "https://www.aljazeera.com/xml/rss/all.xml",
+      category: "Africa",
+      siteUrl: "https://www.aljazeera.com",
+      description: "Al Jazeera global coverage including Africa",
     },
     {
-      name: "ESI Africa - Energy",
-      url: "https://www.esi-africa.com/feed/",
-      category: "Energy",
-      siteUrl: "https://www.esi-africa.com",
-      description: "Energy and power news for Africa",
+      name: "Mail & Guardian",
+      url: "https://mg.co.za/feed/",
+      category: "Africa",
+      siteUrl: "https://mg.co.za",
+      description: "Southern African investigative journalism",
+    },
+    {
+      name: "The Guardian — Africa",
+      url: "https://www.theguardian.com/world/africa/rss",
+      category: "Africa",
+      siteUrl: "https://www.theguardian.com/world/africa",
+      description: "The Guardian Africa coverage",
+    },
+
+    // ── WORLD DESK ──────────────────────────────────────────
+    {
+      name: "Reuters World",
+      url: "https://feeds.feedburner.com/Reuters/worldNews",
+      category: "World",
+      siteUrl: "https://reuters.com",
+      description: "Reuters global news wire",
+    },
+    {
+      name: "BBC World",
+      url: "https://feeds.bbci.co.uk/news/world/rss.xml",
+      category: "World",
+      siteUrl: "https://bbc.com/news/world",
+      description: "BBC World News",
+    },
+    {
+      name: "The Guardian — World",
+      url: "https://www.theguardian.com/world/rss",
+      category: "World",
+      siteUrl: "https://www.theguardian.com/world",
+      description: "The Guardian world news coverage",
+    },
+    {
+      name: "NYT Africa",
+      url: "https://rss.nytimes.com/services/xml/rss/nyt/Africa.xml",
+      category: "Africa",
+      siteUrl: "https://nytimes.com",
+      description: "New York Times Africa coverage",
+    },
+
+    // ── ECONOMY & BUSINESS ──────────────────────────────────
+    {
+      name: "BBC Business",
+      url: "https://feeds.bbci.co.uk/news/business/rss.xml",
+      category: "Economy",
+      siteUrl: "https://bbc.com/news/business",
+      description: "BBC Business and finance news",
+    },
+
+    // ── ENERGY & ENVIRONMENT ────────────────────────────────
+    {
+      name: "BBC Science & Environment",
+      url: "https://feeds.bbci.co.uk/news/science_and_environment/rss.xml",
+      category: "Environment",
+      siteUrl: "https://bbc.com/news/science_and_environment",
+      description: "BBC science, climate, and environment",
+    },
+    {
+      name: "The Guardian — Environment",
+      url: "https://www.theguardian.com/environment/rss",
+      category: "Environment",
+      siteUrl: "https://www.theguardian.com/environment",
+      description: "The Guardian environment and climate coverage",
+    },
+
+    // ── SPORT ───────────────────────────────────────────────
+    {
+      name: "BBC Sport",
+      url: "https://feeds.bbci.co.uk/sport/rss.xml",
+      category: "Sport",
+      siteUrl: "https://bbc.com/sport",
+      description: "BBC Sport coverage including African football",
+    },
+
+    // ── TECHNOLOGY ──────────────────────────────────────────
+    {
+      name: "BBC Technology",
+      url: "https://feeds.bbci.co.uk/news/technology/rss.xml",
+      category: "Technology",
+      siteUrl: "https://bbc.com/news/technology",
+      description: "BBC technology news",
+    },
+    {
+      name: "TechCabal",
+      url: "https://techcabal.com/feed/",
+      category: "Technology",
+      siteUrl: "https://techcabal.com",
+      description: "African technology and startup coverage",
     },
   ];
 
@@ -158,6 +230,16 @@ The debate encapsulates Namibia's broader challenge: how to harness its extraord
       authorId: (await prisma.user.findUnique({ where: { email: "editor@ton.na" } }))!.id,
     },
   });
+
+  // ── CLEANUP (idempotent re-seed) ───────────────────────────
+  await prisma.tickerItem.deleteMany();
+  await prisma.marketDatum.deleteMany();
+  await prisma.wireSubmission.deleteMany();
+  await prisma.tenderSummary.deleteMany();
+  await prisma.tenderKeyDate.deleteMany();
+  await prisma.tenderCompliance.deleteMany();
+  await prisma.tender.deleteMany();
+  await prisma.job.deleteMany();
 
   // ── JOBS ─────────────────────────────────────────────────
   const jobs = [

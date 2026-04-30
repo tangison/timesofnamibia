@@ -76,6 +76,7 @@ interface ArticleViewProps {
 
 export default function ArticleView({ article }: ArticleViewProps) {
   const isRss = article.source === "rss";
+  const sectionLabel = article.section ? article.section.charAt(0).toUpperCase() + article.section.slice(1) : "News";
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -84,7 +85,7 @@ export default function ArticleView({ article }: ArticleViewProps) {
         <Breadcrumbs
           items={[
             ...(article.section
-              ? [{ label: article.section, href: `/${article.section === "national" ? "" : article.section}` }]
+              ? [{ label: sectionLabel, href: `/section/${article.section}` }]
               : []),
             { label: article.category?.name || article.categorySlug || "News" },
           ]}

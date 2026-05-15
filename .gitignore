@@ -16,6 +16,11 @@ node_modules
 # next.js
 /.next/
 /out/
+/frontend/.next/
+/frontend/out/
+/frontend-new/.next/
+/frontend-new/out/
+/frontend-new/node_modules/
 
 # production
 /build
@@ -36,7 +41,6 @@ yarn-error.log*
 # vercel
 .vercel
 
-
 # typescript
 *.tsbuildinfo
 next-env.d.ts
@@ -48,7 +52,32 @@ dev.log
 dev.out.log
 test
 prompt
-
 server.log
+
 # Skills directory
 /skills/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+
+# data-agent
+data-agent/storage/*.db
+data-agent/logs/

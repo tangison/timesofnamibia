@@ -2,8 +2,12 @@
 # Times of Namibia — SQLite Storage Sync
 # Writes scraped data directly to the TON SQLite database
 # Compatible with Prisma schema (28 models)
+#
+# Dual-write mode: if BACKEND_URL is set in .env, items are
+# ALSO pushed to the FastAPI backend for Supabase storage.
 # ============================================================
 
+import os
 import sqlite3
 import json
 import re
@@ -385,6 +389,10 @@ def sync_market_data(conn: sqlite3.Connection, items: list[dict]) -> tuple[int, 
 def sync(items: list[dict], db_path: Optional[str] = None) -> dict:
     """
     Main sync function: categorise items and sync to appropriate tables.
+
+    Dual-write mode: if BACKEND_URL env var is set, items are ALSO pushed
+    to the FastAPI backend (Supabase). SQLite write still happens as fallback.
+
     Returns a summary of all operations.
     """
     summary = {
@@ -392,32 +400,40 @@ def sync(items: list[dict], db_path: Optional[str] = None) -> dict:
         "tenders": {"added": 0, "skipped": 0},
         "jobs": {"added": 0, "skipped": 0},
         "markets": {"updated": 0, "skipped": 0},
+        "backend_push": None,
     }
 
-    # Partition items by type
+    # ── Dual-write: push to FastAPI backend if configured ────
+    backend_url = os.environ.get("BACKEND_URL", "").strip()
+    if backend_url:
+        try:
+            from storage.http_push import push_to_backend
+            push_result = push_to_backend(items, source_name="data-agent")
+            summary["backend_push"] = push_result
+            print(f"  [Storage] Backend push: {push_result}")
+        except Exception as e:
+            print(f"  [Storage] Backend push failed: {e}")
+
+    # ── SQLite write (always happens as local fallback) ──────
     articles = [item for item in items if item.get("item_type") == "article"]
-    tenders = [item for item in items if item.get("item_type") == "tender"]
-    jobs = [item for item in items if item.get("item_type") == "job"]
-    markets = [item for item in items if item.get("item_type") == "market"]
+    tenders  = [item for item in items if item.get("item_type") == "tender"]
+    jobs     = [item for item in items if item.get("item_type") == "job"]
+    markets  = [item for item in items if item.get("item_type") == "market"]
 
     conn = get_connection(db_path)
     try:
         if articles:
             added, skipped = sync_articles(conn, articles)
             summary["articles"] = {"added": added, "skipped": skipped}
-
         if tenders:
             added, skipped = sync_tenders(conn, tenders)
             summary["tenders"] = {"added": added, "skipped": skipped}
-
         if jobs:
             added, skipped = sync_jobs(conn, jobs)
             summary["jobs"] = {"added": added, "skipped": skipped}
-
         if markets:
             updated, skipped = sync_market_data(conn, markets)
             summary["markets"] = {"updated": updated, "skipped": skipped}
-
     finally:
         conn.close()
 

@@ -6,9 +6,15 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
-  --font-serif: var(--font-playfair);
+  /* TANGISON brand typography mapping:
+     - font-sans (Tailwind default) → Satoshi (body)
+     - font-serif (used by older components) → Cabinet Grotesk (display)
+     - font-mono → JetBrains Mono (technical) */
+  --font-sans: "Satoshi", system-ui, sans-serif;
+  --font-serif: "Cabinet Grotesk", system-ui, sans-serif;
   --font-mono: var(--font-jetbrains);
+  --font-display: "Cabinet Grotesk", system-ui, sans-serif;
+  --font-body: "Satoshi", system-ui, sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -42,83 +48,111 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-ton-cream: #F9F8F6;
-  --color-ton-black: #111111;
-  --color-ton-red: #CB102E;
+
+  /* ============================================================
+     TANGISON BRAND SYSTEM
+     Applied AI. Built in Africa.
+     ============================================================
+     Color tokens keep their `ton-*` names for backwards compatibility
+     with existing Tailwind classes (`bg-ton-cream`, `text-ton-red`, etc.)
+     but values are remapped to the TANGISON palette.
+     ============================================================ */
+
+  /* Primary palette */
+  --color-ton-cream: #FAFAF8;      /* warm-white: primary background */
+  --color-ton-black: #111315;      /* atlantic-black: dark sections, primary text */
+  --color-ton-red: #C56A4A;        /* rust-signal: primary accent, CTAs */
+
+  /* Secondary palette */
+  --color-ton-teal: #2CB5B4;       /* signal-teal: secondary accent */
+  --color-ton-ocean: #16353D;      /* deep-ocean: dark accents */
+
+  /* Neutral palette */
+  --color-ton-warm-gray: #F0EDE8;  /* warm-gray: card surfaces */
+  --color-ton-sand: #E8E5DF;       /* sand-gray: subtle backgrounds */
+  --color-ton-ink: #6B6860;        /* ink-muted: secondary text */
+
+  /* Extended */
+  --color-ton-terminal: #0A0B0C;   /* terminal-black: deepest surfaces */
+  --color-ton-steel: #1C1E22;      /* steel-shadow: dark cards */
+  --color-ton-rust-light: #D4896F; /* rust-light: hover states */
+  --color-ton-teal-light: #3DCCC8; /* signal-teal-light: teal hover */
 }
 
 :root {
-  --radius: 0px;
-  --background: #F9F8F6;
-  --foreground: #111111;
+  --radius: 0px;  /* TANGISON: zero border-radius on all elements */
+
+  /* TANGISON BRAND SYSTEM — Light theme */
+  --background: #FAFAF8;            /* warm-white */
+  --foreground: #111315;            /* atlantic-black */
   --card: #FFFFFF;
-  --card-foreground: #111111;
+  --card-foreground: #111315;
   --popover: #FFFFFF;
-  --popover-foreground: #111111;
-  --primary: #111111;
-  --primary-foreground: #F9F8F6;
-  --secondary: #F0EFED;
-  --secondary-foreground: #111111;
-  --muted: #F0EFED;
-  --muted-foreground: #666666;
-  --accent: #F0EFED;
-  --accent-foreground: #111111;
-  --destructive: #CB102E;
-  --border: #D4D2CE;
-  --input: #D4D2CE;
-  --ring: #CB102E;
-  --chart-1: #CB102E;
-  --chart-2: #111111;
-  --chart-3: #F9F8F6;
-  --chart-4: #111111;
-  --chart-5: #666666;
-  --sidebar: #F9F8F6;
-  --sidebar-foreground: #111111;
-  --sidebar-primary: #111111;
-  --sidebar-primary-foreground: #F9F8F6;
-  --sidebar-accent: #F0EFED;
-  --sidebar-accent-foreground: #111111;
-  --sidebar-border: #D4D2CE;
-  --sidebar-ring: #CB102E;
+  --popover-foreground: #111315;
+  --primary: #111315;               /* atlantic-black */
+  --primary-foreground: #FAFAF8;    /* warm-white */
+  --secondary: #F0EDE8;             /* warm-gray */
+  --secondary-foreground: #111315;
+  --muted: #F0EDE8;
+  --muted-foreground: #6B6860;      /* ink-muted */
+  --accent: #F0EDE8;
+  --accent-foreground: #111315;
+  --destructive: #C56A4A;           /* rust-signal */
+  --border: #E8E5DF;                /* sand-gray */
+  --input: #E8E5DF;
+  --ring: #C56A4A;                  /* rust-signal */
+  --chart-1: #C56A4A;               /* rust-signal */
+  --chart-2: #2CB5B4;               /* signal-teal */
+  --chart-3: #16353D;               /* deep-ocean */
+  --chart-4: #6B6860;               /* ink-muted */
+  --chart-5: #D4896F;               /* rust-light */
+  --sidebar: #FAFAF8;
+  --sidebar-foreground: #111315;
+  --sidebar-primary: #111315;
+  --sidebar-primary-foreground: #FAFAF8;
+  --sidebar-accent: #F0EDE8;
+  --sidebar-accent-foreground: #111315;
+  --sidebar-border: #E8E5DF;
+  --sidebar-ring: #C56A4A;
 }
 
-/* ========= TON ONYX — DARK THEME ========= */
+/* ========= TANGISON ONYX — DARK THEME ========= */
 
 .dark {
-  --background: #0a0a0a;
-  --foreground: #ffffff;
-  --card: #111111;
-  --card-foreground: #ffffff;
-  --popover: #111111;
-  --popover-foreground: #ffffff;
-  --primary: #ffffff;
-  --primary-foreground: #0a0a0a;
-  --secondary: #1a1a1a;
-  --secondary-foreground: #ffffff;
-  --muted: #1a1a1a;
-  --muted-foreground: #a0a0a0;
-  --accent: #1a1a1a;
-  --accent-foreground: #ffffff;
-  --destructive: #CB102E;
-  --border: #222222;
-  --input: #222222;
-  --ring: #CB102E;
-  --chart-1: #CB102E;
-  --chart-2: #ffffff;
-  --chart-3: #0a0a0a;
-  --chart-4: #ffffff;
-  --chart-5: #a0a0a0;
-  --sidebar: #0a0a0a;
-  --sidebar-foreground: #ffffff;
-  --sidebar-primary: #ffffff;
-  --sidebar-primary-foreground: #0a0a0a;
-  --sidebar-accent: #1a1a1a;
-  --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: #222222;
-  --sidebar-ring: #CB102E;
+  --background: #0A0B0C;            /* terminal-black */
+  --foreground: #FAFAF8;            /* warm-white */
+  --card: #1C1E22;                  /* steel-shadow */
+  --card-foreground: #FAFAF8;
+  --popover: #1C1E22;
+  --popover-foreground: #FAFAF8;
+  --primary: #FAFAF8;
+  --primary-foreground: #0A0B0C;
+  --secondary: #16353D;             /* deep-ocean */
+  --secondary-foreground: #FAFAF8;
+  --muted: #16353D;
+  --muted-foreground: #6B6860;      /* ink-muted */
+  --accent: #16353D;
+  --accent-foreground: #FAFAF8;
+  --destructive: #C56A4A;           /* rust-signal */
+  --border: #1C1E22;
+  --input: #1C1E22;
+  --ring: #C56A4A;
+  --chart-1: #C56A4A;
+  --chart-2: #2CB5B4;               /* signal-teal */
+  --chart-3: #FAFAF8;
+  --chart-4: #FAFAF8;
+  --chart-5: #6B6860;
+  --sidebar: #0A0B0C;
+  --sidebar-foreground: #FAFAF8;
+  --sidebar-primary: #FAFAF8;
+  --sidebar-primary-foreground: #0A0B0C;
+  --sidebar-accent: #1C1E22;
+  --sidebar-accent-foreground: #FAFAF8;
+  --sidebar-border: #1C1E22;
+  --sidebar-ring: #C56A4A;
 }
 
-/* ========= TON BASE STYLES — OPEN & EDITORIAL ========= */
+/* ========= TANGISON BASE STYLES ========= */
 
 @layer base {
   * {

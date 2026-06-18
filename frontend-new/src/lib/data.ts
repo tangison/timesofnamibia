@@ -67,7 +67,7 @@ function mapArticle(item: BackendItem) {
     views: Math.round((item.relevance_score || 0) * 1000),
     commentCount: 0,
     category: item.category
-      ? { id: `cat-${item.category}`, name: item.category, slug: slugify(item.category) }
+      ? { id: `cat-${item.category}`, name: item.category, slug: slugify(item.category), color: null as string | null }
       : null,
     rssFeed: { id: `src-${item.id}`, name: item.source_name, url: item.source_url },
     createdAt: new Date(item.created_at),

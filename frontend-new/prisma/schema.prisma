@@ -1,6 +1,18 @@
 // ============================================================
-// Times of Namibia — Prisma Schema v3
+// Times of Namibia — Prisma Schema v4
 // RSS-Powered News Portal + Job/Tender/Market Intelligence
+//
+// DATABASE DECISION (Tangison Audit Iteration 2):
+//   Switched from SQLite → PostgreSQL to align with the FastAPI backend.
+//   The backend already uses Postgres; the frontend Prisma layer now
+//   shares the same DB instance using a separate schema ("frontend")
+//   to avoid table-name collisions with SQLAlchemy's `source_items`.
+//
+//   Connection string format:
+//     postgresql://user:pass@host:5432/dbname?schema=frontend
+//
+//   Future work: route all reads through the FastAPI backend and retire
+//   the Prisma data layer entirely.
 // ============================================================
 
 generator client {
@@ -8,8 +20,13 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
+  // Note: Prisma creates tables in the default `public` schema. The backend
+  // SQLAlchemy models use the table name `source_items` — to avoid collision,
+  // the frontend Prisma models use distinct table names (Article, Job, Tender,
+  // etc.). For full schema isolation, add `@@schema("frontend")` to every
+  // model in a future migration.
 }
 
 // ── USERS & AUTH ─────────────────────────────────────────────

@@ -92,7 +92,7 @@ export default function BusinessPlanView() {
               Strategic Business Plan // 2026 — 2028
             </p>
             <p className="font-mono text-[9px] text-ton-black/20 mt-1 tracking-wider uppercase">
-              A GemsWeb Digital Publication
+              A TANGISON Publication
             </p>
           </div>
 
@@ -161,7 +161,7 @@ export default function BusinessPlanView() {
 
           <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
             <span>Page 01 // Executive Summary</span>
-            <span>&copy; GemsWeb Digital</span>
+            <span>&copy; TANGISON</span>
           </div>
         </section>
 
@@ -274,7 +274,7 @@ export default function BusinessPlanView() {
 
           <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
             <span>Page 02 // Operations & Technology</span>
-            <span>&copy; GemsWeb Digital</span>
+            <span>&copy; TANGISON</span>
           </div>
         </section>
 
@@ -377,7 +377,7 @@ export default function BusinessPlanView() {
 
           <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
             <span>Page 03 // Financial Roadmap</span>
-            <span>&copy; GemsWeb Digital</span>
+            <span>&copy; TANGISON</span>
           </div>
         </section>
 
@@ -483,7 +483,7 @@ export default function BusinessPlanView() {
 
           <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
             <span>Page 04 // Print Materials & Social Output</span>
-            <span>&copy; GemsWeb Digital</span>
+            <span>&copy; TANGISON</span>
           </div>
         </section>
 
@@ -495,7 +495,7 @@ export default function BusinessPlanView() {
               &ldquo;Information is the only currency that appreciates when shared correctly.&rdquo;
             </blockquote>
             <p className="font-mono text-[10px] text-ton-black/20 mt-4 tracking-wider">
-              — GemsWeb Digital Editorial Board
+              — TANGISON Editorial Board
             </p>
           </div>
 
@@ -503,7 +503,7 @@ export default function BusinessPlanView() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             <div className="pt-5 border-t border-ton-black/8">
               <span className="font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">Authorised By</span>
-              <p className="font-serif text-base font-bold text-ton-black mt-2">GemsWeb Digital</p>
+              <p className="font-serif text-base font-bold text-ton-black mt-2">TANGISON</p>
               <p className="font-mono text-[10px] text-ton-black/30 mt-0.5">Editorial & Architectural Board</p>
               <div className="h-px bg-ton-black/15 mt-5 mb-1.5" />
               <p className="font-mono text-[8px] text-ton-black/15 uppercase tracking-widest">Signature</p>
@@ -603,7 +603,7 @@ function generateStandaloneHTML(): string {
         <h1 class="masthead">Times of Namibia</h1>
         <div style="text-align: center; margin-bottom: 40px;">
             <p class="mono" style="font-size: 12pt;">Strategic Business Plan // 2026 — 2028</p>
-            <p class="mono" style="margin-top: 5px;">A GemsWeb Digital Publication</p>
+            <p class="mono" style="margin-top: 5px;">A TANGISON Publication</p>
         </div>
         <div class="editorial-rule"></div>
         <div class="grid-2">
@@ -642,7 +642,7 @@ function generateStandaloneHTML(): string {
         <span class="mono caption">Visual Anchor: Central Plateau // Ref: 22.56 S, 17.08 E</span>
         <footer>
             <span class="mono">Page 01 // Executive Summary</span>
-            <span class="mono">&copy; GemsWeb Digital</span>
+            <span class="mono">&copy; TANGISON</span>
         </footer>
     </article>
 
@@ -696,7 +696,7 @@ function generateStandaloneHTML(): string {
         <span class="mono caption">System Integration: Times OS v1.0.4 Log Output</span>
         <footer>
             <span class="mono">Page 02 // Operations & Technology</span>
-            <span class="mono">&copy; GemsWeb Digital</span>
+            <span class="mono">&copy; TANGISON</span>
         </footer>
     </article>
 
@@ -740,7 +740,7 @@ function generateStandaloneHTML(): string {
         </div>
         <footer>
             <span class="mono">Page 03 // Financial Roadmap</span>
-            <span class="mono">&copy; GemsWeb Digital</span>
+            <span class="mono">&copy; TANGISON</span>
         </footer>
     </article>
 
@@ -790,7 +790,7 @@ function generateStandaloneHTML(): string {
         </div>
         <footer>
             <span class="mono">Page 04 // Print Materials & Social Output</span>
-            <span class="mono">&copy; GemsWeb Digital</span>
+            <span class="mono">&copy; TANGISON</span>
         </footer>
     </article>
 
@@ -800,12 +800,12 @@ function generateStandaloneHTML(): string {
             <blockquote style="font-family: var(--font-display); font-style: italic; font-size: 18pt; color: #666; line-height: 1.5; margin: 20px auto; max-width: 500px;">
                 "Information is the only currency that appreciates when shared correctly."
             </blockquote>
-            <p class="mono" style="margin-top: 15px; color: #999;">— GemsWeb Digital Editorial Board</p>
+            <p class="mono" style="margin-top: 15px; color: #999;">— TANGISON Editorial Board</p>
         </div>
         <div class="grid-2" style="margin-top: 40px;">
             <div style="border-top: 1px solid #ddd; padding-top: 15px;">
                 <span class="mono" style="color: #999;">Authorised By</span>
-                <p style="font-family: var(--font-display); font-size: 14pt; font-weight: bold; margin-top: 10px;">GemsWeb Digital</p>
+                <p style="font-family: var(--font-display); font-size: 14pt; font-weight: bold; margin-top: 10px;">TANGISON</p>
                 <p class="mono" style="font-size: 8pt; color: #999;">Editorial & Architectural Board</p>
                 <div style="border-top: 1px solid var(--ton-black); margin-top: 20px; padding-top: 5px;">
                     <p class="mono" style="color: #ccc;">Signature</p>

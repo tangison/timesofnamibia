@@ -1,62 +1,59 @@
+// ============================================================
+// Times of Namibia — Contact Form API (TANGISON)
+// Validation: Zod schema with length caps. Rate limit: 5/hour/IP.
+// ============================================================
+
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 import { db } from "@/lib/db";
+import { rateLimit } from "@/lib/auth";
+
+const ContactSchema = z.object({
+  name: z.string().trim().min(2).max(100),
+  email: z.string().email().max(254),
+  category: z.string().trim().min(1).max(50),
+  message: z.string().trim().min(10).max(5_000),
+});
+
+const ALLOWED_CATEGORIES = new Set([
+  "news", "advertising", "editorial", "technical", "careers", "partnership", "other",
+]);
 
 export async function POST(request: NextRequest) {
+  if (rateLimit(request, { windowMs: 60 * 60_000, max: 5 })) {
+    return NextResponse.json(
+      { error: "Too many submissions. Please try again later." },
+      { status: 429 }
+    );
+  }
+
   try {
-    const body = await request.json();
-    const { name, email, category, message } = body;
-
-    // Validation
-    if (!name || typeof name !== "string" || name.trim().length < 2) {
+    const body = await request.json().catch(() => ({}));
+    const parsed = ContactSchema.safeParse(body);
+    if (!parsed.success) {
+      const firstError = parsed.error.issues[0];
       return NextResponse.json(
-        { error: "Name is required (minimum 2 characters)." },
+        { error: firstError?.message ?? "Invalid input" },
         { status: 400 }
       );
     }
-
-    if (!email || typeof email !== "string") {
+    const { name, email, category, message } = parsed.data;
+    if (!ALLOWED_CATEGORIES.has(category.toLowerCase())) {
       return NextResponse.json(
-        { error: "Email is required." },
+        { error: "Invalid department selection." },
         { status: 400 }
       );
     }
-
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { error: "Please enter a valid email address." },
-        { status: 400 }
-      );
-    }
-
-    if (!category || typeof category !== "string") {
-      return NextResponse.json(
-        { error: "Department selection is required." },
-        { status: 400 }
-      );
-    }
-
-    if (!message || typeof message !== "string" || message.trim().length < 10) {
-      return NextResponse.json(
-        { error: "Message is required (minimum 10 characters)." },
-        { status: 400 }
-      );
-    }
-
-    // Store as a WireSubmission (reusing existing model) or in SiteConfig
-    // For now, store in the wire_submissions table with category = "contact"
     const submission = await db.wireSubmission.create({
       data: {
-        title: `Contact: ${name} — ${category}`,
+        title: `Contact: ${name} — ${category}`.slice(0, 200),
         category: "contact",
         priority: "routine",
         source: email.trim(),
-        content: `Name: ${name.trim()}\nEmail: ${email.trim()}\nDepartment: ${category}\n\n${message.trim()}`,
+        content: `Name: ${name}\nEmail: ${email}\nDepartment: ${category}\n\n${message}`.slice(0, 10_000),
         verified: false,
       },
     });
-
     return NextResponse.json({
       success: true,
       message: "Your enquiry has been received. We respond within 24 hours.",

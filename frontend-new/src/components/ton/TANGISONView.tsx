@@ -1,7 +1,7 @@
 import React from "react";
 import { ArrowLeft, Cpu, Radio, MapPin, ExternalLink } from "lucide-react";
 
-export default function GemsWebView() {
+export default function TANGISONView() {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 md:py-10">
       {/* Page Header */}
@@ -10,7 +10,7 @@ export default function GemsWebView() {
           About // The Company
         </span>
         <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-tight mt-2">
-          GemsWeb Digital
+          TANGISON
         </h1>
         <p className="font-serif italic text-ton-black/50 text-sm sm:text-base mt-2 max-w-xl">
           Enterprise data pipelines and publishing infrastructure for the African information landscape.
@@ -26,12 +26,12 @@ export default function GemsWebView() {
           </a>
           <span className="text-ton-black/10">|</span>
           <a
-            href="https://gemsweb.xyz"
+            href="https://tangison.com"
             target="_blank"
             rel="noopener noreferrer"
             className="font-mono text-[10px] text-ton-red hover:text-ton-red/80 transition-colors flex items-center gap-1.5 uppercase tracking-wider"
           >
-            gemsweb.xyz
+            tangison.com
             <ExternalLink className="w-2.5 h-2.5" />
           </a>
         </div>
@@ -44,7 +44,7 @@ export default function GemsWebView() {
           Information Density Over Engagement Metrics
         </blockquote>
         <p className="font-mono text-[10px] text-ton-black/30 mt-4 tracking-widest uppercase">
-          GemsWeb Digital — Windhoek, Namibia
+          TANGISON — Windhoek, Namibia
         </p>
       </div>
 
@@ -58,7 +58,7 @@ export default function GemsWebView() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           <div className="ton-dropcap">
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-3">
-              GemsWeb Digital is a Windhoek-based publishing and technology company that builds information infrastructure for the African continent. Founded on the conviction that Namibian readers deserve a news platform as rigorous and precise as the country they inhabit, the company operates at the intersection of editorial judgment and systems engineering.
+              TANGISON is a Windhoek-based publishing and technology company that builds information infrastructure for the African continent. Founded on the conviction that Namibian readers deserve a news platform as rigorous and precise as the country they inhabit, the company operates at the intersection of editorial judgment and systems engineering.
             </p>
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-3">
               We do not publish opinion. We publish data — verified, timestamped, and sourced. We do not optimise for engagement. We optimise for understanding. Every product we build, from Times OS to TumaOS to The Broadside, is an expression of a single philosophy: that information density and editorial integrity are not just compatible, but inseparable.
@@ -74,8 +74,8 @@ export default function GemsWebView() {
             </h3>
             <div className="space-y-2 font-mono text-[10px]">
               {[
-                { label: "Company", value: "GemsWeb Digital" },
-                { label: "Website", value: "gemsweb.xyz" },
+                { label: "Company", value: "TANGISON" },
+                { label: "Website", value: "tangison.com" },
                 { label: "Founded", value: "Windhoek, Namibia" },
                 { label: "Publication", value: "Times of Namibia" },
                 { label: "Philosophy", value: "Broadsheet Digital" },
@@ -91,19 +91,19 @@ export default function GemsWebView() {
               ))}
             </div>
             <a
-              href="https://gemsweb.xyz"
+              href="https://tangison.com"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-4 font-mono text-[10px] font-bold uppercase tracking-widest bg-ton-red text-white px-4 py-2 hover:bg-ton-red/90 transition-colors"
             >
-              Visit gemsweb.xyz
+              Visit tangison.com
             </a>
           </div>
         </div>
 
         <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Section I // Who We Are</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -151,7 +151,7 @@ export default function GemsWebView() {
 
         <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Section II // Products & Systems</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -165,7 +165,7 @@ export default function GemsWebView() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           <div>
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-3">
-              Broadsheet Digital is the design and engineering philosophy that governs every decision at GemsWeb Digital. It dictates that every screen must carry the gravitas of a printed front page — heavy editorial borders, column rules, serif-dominant typography, and a high-contrast cream-and-black palette. The reader should feel the weight of information before they read a single word.
+              Broadsheet Digital is the design and engineering philosophy that governs every decision at TANGISON. It dictates that every screen must carry the gravitas of a printed front page — heavy editorial borders, column rules, serif-dominant typography, and a high-contrast cream-and-black palette. The reader should feel the weight of information before they read a single word.
             </p>
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8]">
               We reject the shallow scroll. We reject infinite feeds. We design for density, not duration. If a reader can grasp the essential truth of a story from the layout alone — headline, timestamp, source, verification status — then the design has succeeded.
@@ -194,7 +194,7 @@ export default function GemsWebView() {
 
         <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Section III // Broadsheet Digital</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -203,24 +203,24 @@ export default function GemsWebView() {
         <div className="py-10 sm:py-14 text-center border-t border-b border-ton-black">
           <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">Contact</span>
           <blockquote className="font-serif text-2xl sm:text-3xl font-bold text-ton-black leading-tight mt-5">
-            gemsweb.xyz
+            tangison.com
           </blockquote>
           <p className="font-mono text-[10px] text-ton-black/20 mt-4 tracking-wider">
-            Windhoek, Namibia &middot; A GemsWeb Digital Publication
+            Windhoek, Namibia &middot; A TANGISON Publication
           </p>
           <a
-            href="https://gemsweb.xyz"
+            href="https://tangison.com"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block mt-6 font-mono text-[10px] font-bold uppercase tracking-widest bg-ton-black text-ton-cream px-6 py-2.5 hover:bg-ton-black/90 transition-colors"
           >
-            Visit gemsweb.xyz
+            Visit tangison.com
           </a>
         </div>
 
         <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
-          <span>About GemsWeb Digital // End</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>About TANGISON // End</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
     </div>

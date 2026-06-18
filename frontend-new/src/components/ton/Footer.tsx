@@ -10,7 +10,7 @@ export default function Footer() {
                 TON
               </div>
               <span className="font-mono text-[10px] text-ton-cream/50">
-                GemsWeb Digital
+                TANGISON
               </span>
             </div>
             <p className="font-serif italic text-ton-cream/40 text-sm leading-relaxed">
@@ -105,25 +105,25 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* GemsWeb Digital */}
+          {/* TANGISON */}
           <div>
             <h4 className="font-mono text-[9px] font-bold tracking-widest uppercase text-ton-cream/30 mb-3">
-              GemsWeb Digital
+              TANGISON
             </h4>
             <ul className="space-y-2">
               <li>
                 <a
-                  href="https://gemsweb.xyz"
+                  href="https://tangison.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors"
                 >
-                  gemsweb.xyz
+                  tangison.com
                 </a>
               </li>
               <li>
                 <a href="/about" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
-                  About GemsWeb Digital
+                  About TANGISON
                 </a>
               </li>
             </ul>
@@ -159,7 +159,7 @@ export default function Footer() {
             &copy; 2026 Times of Namibia. All rights reserved.
           </p>
           <p className="font-mono text-[9px] text-ton-cream/25">
-            A GemsWeb Digital Publication
+            A TANGISON Publication
           </p>
         </div>
       </div>

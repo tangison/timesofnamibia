@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// Maintenance mode: set NEXT_PUBLIC_MAINTENANCE_MODE=true in .env to enable
-const MAINTENANCE_MODE = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true";
+// Maintenance mode — NOT prefixed with NEXT_PUBLIC_ (security: don't leak state to client)
+const MAINTENANCE_MODE = process.env.MAINTENANCE_MODE === "true";
 
-// Paths that should always be accessible even in maintenance mode
 const ALLOWED_PATHS = [
   "/api/",
   "/_next/",
   "/favicon",
   "/logo.svg",
+  "/logo-white.svg",
   "/robots.txt",
   "/sitemap.xml",
 ];

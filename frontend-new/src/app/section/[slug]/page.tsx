@@ -85,7 +85,7 @@ export default async function SectionPage({ params }: SectionPageProps) {
           </p>
           <div className="flex items-center gap-4 mt-4">
             <Breadcrumbs items={[{ label: meta.title }]} />
-            <span className="font-mono text-[9px] text-ton-black/20">GemsWeb Digital</span>
+            <span className="font-mono text-[9px] text-ton-black/20">TANGISON</span>
           </div>
         </div>
 

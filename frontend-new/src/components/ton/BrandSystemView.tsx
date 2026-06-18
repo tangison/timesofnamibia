@@ -90,7 +90,7 @@ const DOS = [
   "Use Black (#111111) for all body text, borders, and structural elements",
   "Maintain column rules (1px solid) between multi-column layouts",
   "Spell Namibian regions correctly: //Kharas with the click, Oshana not Oshanaa",
-  "Credit GemsWeb Digital — never 'Pty Ltd'",
+  "Credit TANGISON — never 'Pty Ltd'",
   "Optimize for 3G: CSS-heavy, image-light, system fonts as fallback",
 ];
 
@@ -100,7 +100,7 @@ const DONTS = [
   "Never add a fourth color to the core palette — three is the law",
   "Never display imagery in color by default — grayscale first, color on hover",
   "Never add decoration without purpose — every pixel must inform",
-  "Never use 'Pty Ltd' anywhere — always 'GemsWeb Digital'",
+  "Never use 'Pty Ltd' anywhere — always 'TANGISON'",
   "Never use sans-serif fonts for editorial headlines — Playfair Display only",
   "Never crowd the layout — maintain newspaper-like spacing and breathing room",
   "Never use more than one serif typeface — Playfair Display is the only serif",
@@ -146,7 +146,7 @@ function generateBrandSystemText(): string {
 
   lines.push("═══════════════════════════════════════════════════════════");
   lines.push("  TIMES OF NAMIBIA — BRAND SYSTEM");
-  lines.push("  GemsWeb Digital Publication");
+  lines.push("  TANGISON Publication");
   lines.push("═══════════════════════════════════════════════════════════");
   lines.push("");
 
@@ -242,7 +242,7 @@ function generateBrandSystemText(): string {
   lines.push("┌─ TON-GI: TIMES OF NAMIBIA GLOBAL IDENTITY ────────────┐");
   lines.push("");
   lines.push("  1. THE ARCHITECTURAL INTENT");
-  lines.push("  You are the lead architect for Times of Namibia, a GemsWeb Digital");
+  lines.push("  You are the lead architect for Times of Namibia, a TANGISON");
   lines.push("  publication. Your mission is to translate the 'Broadsheet Digital'");
   lines.push("  philosophy into every facet of a modern media conglomerate. You do");
   lines.push("  not just design websites; you design an information ecosystem that");
@@ -291,7 +291,7 @@ function generateBrandSystemText(): string {
   lines.push("");
 
   lines.push("═══════════════════════════════════════════════════════════");
-  lines.push("  © Times of Namibia — A GemsWeb Digital Publication");
+  lines.push("  © Times of Namibia — A TANGISON Publication");
   lines.push("═══════════════════════════════════════════════════════════");
 
   return lines.join("\n");
@@ -299,7 +299,7 @@ function generateBrandSystemText(): string {
 
 function generateBrandSystemCSS(): string {
   return `/* ========= TIMES OF NAMIBIA — BRAND SYSTEM ========= */
-/* GemsWeb Digital Publication */
+/* TANGISON Publication */
 
 :root {
   /* Core Palette — 3 Colors Only */
@@ -364,7 +364,7 @@ function generateBrandSystemCSS(): string {
 
 function generateBrandSystemTailwind(): string {
   return `// ========= TIMES OF NAMIBIA — TAILWIND CONFIG =========
-// GemsWeb Digital Publication
+// TANGISON Publication
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -536,7 +536,7 @@ export default function BrandSystemView() {
           &ldquo;Every pixel must inform.&rdquo;
         </blockquote>
         <p className="font-mono text-[10px] text-ton-black/30 mt-4 tracking-widest uppercase">
-          Times of Namibia Design Philosophy — GemsWeb Digital
+          Times of Namibia Design Philosophy — TANGISON
         </p>
       </div>
 
@@ -906,7 +906,7 @@ export default function BrandSystemView() {
           <div className="space-y-5 font-serif text-sm text-ton-cream/60 leading-relaxed">
             <div>
               <h4 className="font-mono text-[9px] text-ton-red font-bold uppercase tracking-widest mb-2">1. The Architectural Intent</h4>
-              <p>You are the lead architect for Times of Namibia, a GemsWeb Digital publication. Your mission is to translate the &ldquo;Broadsheet Digital&rdquo; philosophy into every facet of a modern media conglomerate. You do not just design websites; you design an information ecosystem that balances the &ldquo;Ink of Authority&rdquo; with the &ldquo;Pulse of Data.&rdquo;</p>
+              <p>You are the lead architect for Times of Namibia, a TANGISON publication. Your mission is to translate the &ldquo;Broadsheet Digital&rdquo; philosophy into every facet of a modern media conglomerate. You do not just design websites; you design an information ecosystem that balances the &ldquo;Ink of Authority&rdquo; with the &ldquo;Pulse of Data.&rdquo;</p>
             </div>
 
             <div>

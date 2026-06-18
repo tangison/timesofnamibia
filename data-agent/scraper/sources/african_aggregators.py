@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from scraper.filters import is_relevant, classify_section
 
 HEADERS = {
-    "User-Agent": "TimesOfNamibia-Bot/1.0 (Broadsheet Digital; GemsWeb)",
+    "User-Agent": "TimesOfNamibia-Bot/1.0 (Broadsheet Digital; TANGISON)",
 }
 
 

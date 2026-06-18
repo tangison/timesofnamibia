@@ -1,6 +1,6 @@
 # ============================================================
 # Times of Namibia — Data Scraper Agent Configuration
-# Broadsheet Digital • GemsWeb Digital • 180 Sources
+# Broadsheet Digital • TANGISON • 180 Sources
 # ============================================================
 
 # What to collect (pre-filter before AI)
@@ -85,7 +85,7 @@ ai:
 
 # Scraping settings
 scraper:
-  user_agent: "TimesOfNamibia-Bot/1.0 (Broadsheet Digital; GemsWeb)"
+  user_agent: "TimesOfNamibia-Bot/1.0 (Broadsheet Digital; TANGISON)"
   request_timeout: 15         # Seconds
   delay_between_requests: 1.0 # Seconds (be respectful)
   max_items_per_source: 50    # Cap per run

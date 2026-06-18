@@ -31,7 +31,7 @@ export default function AboutView() {
             About Times of Namibia
           </h1>
           <p className="font-serif italic text-ton-black/50 text-sm sm:text-base mt-2 max-w-xl">
-            A GemsWeb Digital publication. Carrying print gravitas into the digital age since inception.
+            A TANGISON publication. Carrying print gravitas into the digital age since inception.
           </p>
         </div>
 
@@ -53,7 +53,7 @@ export default function AboutView() {
           Namibia. Informed. Instantly.
         </blockquote>
         <p className="font-mono text-[10px] text-ton-black/30 mt-4 tracking-widest uppercase">
-          Times of Namibia — GemsWeb Digital
+          Times of Namibia — TANGISON
         </p>
       </div>
 
@@ -63,7 +63,7 @@ export default function AboutView() {
           <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black">
             I. The Founding Vision
           </h2>
-          <span className="font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">Est. GemsWeb Digital</span>
+          <span className="font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">Est. TANGISON</span>
         </div>
         <div className="h-px bg-ton-black/8 mb-5" />
 
@@ -75,7 +75,7 @@ export default function AboutView() {
               </p>
             </div>
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-3">
-              As a GemsWeb Digital publication, TON operates at the intersection of editorial integrity and systems engineering. Every data point is scraped, verified, and timestamped. Every headline respects the reader&rsquo;s time. Every design decision prioritises information density over decorative excess.
+              As a TANGISON publication, TON operates at the intersection of editorial integrity and systems engineering. Every data point is scraped, verified, and timestamped. Every headline respects the reader&rsquo;s time. Every design decision prioritises information density over decorative excess.
             </p>
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8]">
               This is not a website. It is a high-density information architecture — a digital broadsheet that treats every screen as a front page and every reader as a citizen who demands the truth, delivered with precision, at the speed of data.
@@ -89,7 +89,7 @@ export default function AboutView() {
               </h3>
               <div className="space-y-2 font-mono text-[10px]">
                 {[
-                  { label: "Publisher", value: "GemsWeb Digital" },
+                  { label: "Publisher", value: "TANGISON" },
                   { label: "Founded", value: "Windhoek, Namibia" },
                   { label: "Philosophy", value: "Broadsheet Digital" },
                   { label: "Engine", value: "Times OS v2.1" },
@@ -127,7 +127,7 @@ export default function AboutView() {
 
         <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Section I // Founding Vision</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -173,7 +173,7 @@ export default function AboutView() {
 
         <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Section II // Broadsheet Digital</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -253,7 +253,7 @@ export default function AboutView() {
 
         <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Section III // Times OS</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -298,7 +298,7 @@ export default function AboutView() {
 
         <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Section IV // TumaOS</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -347,14 +347,14 @@ export default function AboutView() {
 
         <div className="flex items-center justify-between mt-4 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Section V // Regional Coverage</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
-      {/* Section VI: GemsWeb Digital */}
+      {/* Section VI: TANGISON */}
       <section className="border-t-4 border-ton-black pt-6 mb-10 sm:mb-14">
         <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black mb-2">
-          VI. GemsWeb Digital — The Company Behind TON
+          VI. TANGISON — The Company Behind TON
         </h2>
         <div className="h-px bg-ton-black/8 mb-5" />
 
@@ -362,20 +362,20 @@ export default function AboutView() {
           <div>
             <div className="ton-dropcap">
               <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-3">
-                GemsWeb Digital is the publishing and technology company behind Times of Namibia. Founded with a singular conviction: that Namibian readers deserve a news infrastructure as rigorous and precise as the country they inhabit. The company operates at the intersection of editorial judgment and systems engineering, building tools that scrape, verify, and deliver information with the stoic precision of a well-run machine.
+                TANGISON is the publishing and technology company behind Times of Namibia. Founded with a singular conviction: that Namibian readers deserve a news infrastructure as rigorous and precise as the country they inhabit. The company operates at the intersection of editorial judgment and systems engineering, building tools that scrape, verify, and deliver information with the stoic precision of a well-run machine.
               </p>
             </div>
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8]">
-              GemsWeb Digital does not publish opinion. It publishes data, verified and timestamped. It does not optimise for engagement. It optimises for understanding. The company&rsquo;s products — Times OS, TumaOS, The Broadside — are all expressions of a single philosophy: information density over engagement metrics.
+              TANGISON does not publish opinion. It publishes data, verified and timestamped. It does not optimise for engagement. It optimises for understanding. The company&rsquo;s products — Times OS, TumaOS, The Broadside — are all expressions of a single philosophy: information density over engagement metrics.
             </p>
           </div>
           <div className="bg-ton-black text-ton-cream p-5">
             <h3 className="font-mono text-[10px] text-ton-red font-bold uppercase tracking-wider mb-3">
-              GemsWeb Digital
+              TANGISON
             </h3>
             <div className="space-y-2 font-mono text-[10px]">
               {[
-                { label: "Website", value: "gemsweb.xyz" },
+                { label: "Website", value: "tangison.com" },
                 { label: "Location", value: "Windhoek, Namibia" },
                 { label: "Publication", value: "Times of Namibia" },
                 { label: "Engine", value: "Times OS" },
@@ -389,19 +389,19 @@ export default function AboutView() {
               ))}
             </div>
             <a
-              href="https://gemsweb.xyz"
+              href="https://tangison.com"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-4 font-mono text-[10px] font-bold uppercase tracking-widest bg-ton-red text-white px-4 py-2 hover:bg-ton-red/90 transition-colors"
             >
-              Visit gemsweb.xyz
+              Visit tangison.com
             </a>
           </div>
         </div>
 
         <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
-          <span>Section VI // GemsWeb Digital</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>Section VI // TANGISON</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -466,7 +466,7 @@ export default function AboutView() {
 
         <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Section VII // The Broadside</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -478,13 +478,13 @@ export default function AboutView() {
             Namibia. Informed. Instantly.
           </blockquote>
           <p className="font-mono text-[10px] text-ton-black/20 mt-4 tracking-wider">
-            — GemsWeb Digital Editorial Board
+            — TANGISON Editorial Board
           </p>
         </div>
 
         <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>About Times of Namibia // End</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
     </div>

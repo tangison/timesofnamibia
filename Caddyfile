@@ -1,15 +1,26 @@
+# ============================================================
+# Times of Namibia — Caddy reverse proxy (TANGISON)
+#
+# SECURITY: The previous version exposed an arbitrary-port SSRF
+# via `?XTransformPort=`. That block has been removed.
+# ============================================================
+
 :81 {
-	@transform_port_query {
-		query XTransformPort=*
+	encode zstd gzip
+	protocols h1 h2 h3
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "SAMEORIGIN"
+		Permissions-Policy "geolocation=(), microphone=(), camera=()"
 	}
 
-	handle @transform_port_query {
-		reverse_proxy localhost:{query.XTransformPort} {
-			header_up Host {host}
-			header_up X-Forwarded-For {remote_host}
-			header_up X-Forwarded-Proto {scheme}
-			header_up X-Real-IP {remote_host}
-		}
+	@static path /_next/static/* /favicon* /robots.txt /sitemap.xml /feed.xml /logo.svg /logo-white.svg
+	handle @static {
+		header Cache-Control "public, max-age=31536000, immutable"
+		reverse_proxy localhost:3000
 	}
 
 	handle {

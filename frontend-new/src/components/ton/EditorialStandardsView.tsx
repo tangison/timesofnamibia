@@ -35,7 +35,7 @@ export default function EditorialStandardsView() {
           &ldquo;The standard is the standard. There are no exceptions, no shortcuts, no editorial conveniences that override the protocol.&rdquo;
         </blockquote>
         <p className="font-mono text-[10px] text-ton-black/30 mt-4 tracking-widest uppercase">
-          GemsWeb Digital Editorial Board
+          TANGISON Editorial Board
         </p>
       </div>
 
@@ -88,7 +88,7 @@ export default function EditorialStandardsView() {
 
         <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Standard I // Verification Protocol</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -135,7 +135,7 @@ export default function EditorialStandardsView() {
 
         <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Standard II // The 6-Second Rule</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -171,7 +171,7 @@ export default function EditorialStandardsView() {
 
         <div className="flex items-center justify-between mt-4 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Standard III // Regional Accuracy</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -212,7 +212,7 @@ export default function EditorialStandardsView() {
 
         <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Standard IV // Source Attribution</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -258,7 +258,7 @@ export default function EditorialStandardsView() {
 
         <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Standard V // No Engagement Bait</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -303,7 +303,7 @@ export default function EditorialStandardsView() {
 
         <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Standard VI // The Stoic Observer</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -345,7 +345,7 @@ export default function EditorialStandardsView() {
 
         <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Standard VII // Contributor Standards</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -386,7 +386,7 @@ export default function EditorialStandardsView() {
 
         <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Standard VIII // Correction Policy</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -445,7 +445,7 @@ export default function EditorialStandardsView() {
 
         <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Standard IX // Imagery Standards</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -503,7 +503,7 @@ export default function EditorialStandardsView() {
 
         <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Standard X // Print Standards</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
     </div>

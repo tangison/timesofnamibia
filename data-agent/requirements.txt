@@ -1,6 +1,6 @@
 # ============================================================
 # Times of Namibia — Data Scraper Agent Dependencies
-# Broadsheet Digital • GemsWeb Digital
+# Broadsheet Digital • TANGISON
 # ============================================================
 requests==2.32.3
 beautifulsoup4==4.12.3

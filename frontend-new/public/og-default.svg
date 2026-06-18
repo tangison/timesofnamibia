@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FAFAF8"/>
+      <stop offset="100%" stop-color="#F0EDE8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- Top accent bar — Rust Signal -->
+  <rect x="0" y="0" width="1200" height="8" fill="#C56A4A"/>
+  <!-- TANGISON wordmark -->
+  <text x="80" y="200" font-family="'Cabinet Grotesk', system-ui, sans-serif" font-weight="900" font-size="92" fill="#111315" letter-spacing="-2.5">TANGISON</text>
+  <!-- Subhead -->
+  <text x="80" y="290" font-family="'Cabinet Grotesk', system-ui, sans-serif" font-weight="700" font-size="44" fill="#111315" letter-spacing="-1">Times of Namibia</text>
+  <!-- Tagline -->
+  <text x="80" y="360" font-family="'Satoshi', system-ui, sans-serif" font-weight="400" font-size="26" fill="#6B6860" letter-spacing="0.5">Applied AI. Built in Africa.</text>
+  <!-- Footer rule -->
+  <rect x="80" y="490" width="1040" height="1" fill="#E8E5DF"/>
+  <text x="80" y="540" font-family="'JetBrains Mono', ui-monospace, monospace" font-weight="600" font-size="15" fill="#C56A4A" letter-spacing="3">INFORMED. INSTANTLY.</text>
+  <text x="1120" y="540" text-anchor="end" font-family="'JetBrains Mono', ui-monospace, monospace" font-weight="500" font-size="15" fill="#6B6860" letter-spacing="2">timesofnamibia.com</text>
+</svg>

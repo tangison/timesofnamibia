@@ -40,9 +40,9 @@ const CONTACT_CHANNELS = [
   },
   {
     icon: Globe,
-    label: "GemsWeb Digital",
+    label: "TANGISON",
     desc: "The company behind Times of Namibia. Corporate enquiries and press.",
-    detail: "gemsweb.xyz",
+    detail: "tangison.com",
   },
 ];
 
@@ -319,15 +319,15 @@ export default function ContactView() {
       {/* Footer Note */}
       <div className="py-6 text-center border-t border-ton-black/8">
         <p className="font-serif italic text-ton-black/30 text-sm">
-          Times of Namibia is a GemsWeb Digital publication.
+          Times of Namibia is a TANGISON publication.
         </p>
         <a
-          href="https://gemsweb.xyz"
+          href="https://tangison.com"
           target="_blank"
           rel="noopener noreferrer"
           className="font-mono text-[10px] text-ton-red font-bold uppercase tracking-widest mt-2 inline-block hover:text-ton-red/80 transition-colors"
         >
-          gemsweb.xyz
+          tangison.com
         </a>
       </div>
     </div>

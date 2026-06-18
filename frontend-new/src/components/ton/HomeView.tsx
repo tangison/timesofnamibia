@@ -437,10 +437,10 @@ export default function HomeView({
             </div>
           </div>
 
-          {/* GemsWeb Digital — now links to /about */}
+          {/* TANGISON — now links to /about */}
           <div className="pt-4 border-t border-ton-black/8">
             <div className="border-t-2 border-ton-black pt-2 mb-2">
-              <span className="font-serif text-sm font-bold text-ton-black">GemsWeb Digital</span>
+              <span className="font-serif text-sm font-bold text-ton-black">TANGISON</span>
             </div>
             <p className="font-sans text-[11px] text-ton-black/35 leading-relaxed mt-1.5 mb-3">
               Enterprise data pipelines powering TON&apos;s real-time intelligence. Automated scraping, verification, and analysis across Namibia&apos;s business landscape.
@@ -455,7 +455,7 @@ export default function HomeView({
               href="/about"
               className="mt-3 flex items-center justify-center gap-1.5 w-full bg-ton-black text-ton-cream font-mono text-[9px] font-bold uppercase tracking-widest py-2 hover:bg-ton-black/90 transition-colors"
             >
-              About GemsWeb <ArrowRight className="w-2.5 h-2.5" />
+              About TANGISON <ArrowRight className="w-2.5 h-2.5" />
             </a>
           </div>
         </div>

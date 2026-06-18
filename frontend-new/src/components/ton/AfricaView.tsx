@@ -300,7 +300,7 @@ export default function AfricaView({ articles }: AfricaViewProps) {
             {/* Article count footer */}
             <div className="mt-4 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest flex items-center justify-between">
               <span>{articles.length} articles // Africa Desk</span>
-              <span>&copy; GemsWeb Digital</span>
+              <span>&copy; TANGISON</span>
             </div>
           </div>
         </div>
@@ -366,7 +366,7 @@ export default function AfricaView({ articles }: AfricaViewProps) {
           Africa, covered from home.
         </blockquote>
         <p className="font-mono text-[10px] text-ton-black/25 mt-3 tracking-wider">
-          14 Regional Nodes — Times OS v2.1 — GemsWeb Digital
+          14 Regional Nodes — Times OS v2.1 — TANGISON
         </p>
       </div>
     </div>

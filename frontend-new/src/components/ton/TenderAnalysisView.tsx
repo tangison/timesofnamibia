@@ -106,7 +106,7 @@ export default function TenderAnalysisView() {
         </p>
         <div className="flex items-center gap-4 mt-4">
           <Breadcrumbs items={[{ label: "The Tender Edge" }]} />
-          <span className="font-mono text-[9px] text-ton-black/20">GemsWeb Digital</span>
+          <span className="font-mono text-[9px] text-ton-black/20">TANGISON</span>
         </div>
       </div>
 
@@ -325,7 +325,7 @@ export default function TenderAnalysisView() {
       <div className="mt-8 text-center">
         <span className="inline-flex items-center gap-2 font-mono text-[10px] text-ton-black/30 uppercase tracking-wider">
           <Cpu className="w-3.5 h-3.5 text-ton-red" />
-          Powered by Times OS v2.1 — GemsWeb Digital
+          Powered by Times OS v2.1 — TANGISON
         </span>
       </div>
     </div>

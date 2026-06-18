@@ -34,7 +34,18 @@ const nextConfig: NextConfig = {
           },
           {
             key: "Content-Security-Policy",
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none';",
+            // TANGISON: dropped 'unsafe-eval'. Allow Fontshare + GA domains.
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com",
+              "style-src 'self' 'unsafe-inline' https://api.fontshare.com",
+              "img-src 'self' data: blob: https:",
+              "font-src 'self' data: https://api.fontshare.com",
+              "connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com",
+              "frame-ancestors 'none'",
+              "base-uri 'self'",
+              "form-action 'self'",
+            ].join("; ") + ";",
           },
         ],
       },

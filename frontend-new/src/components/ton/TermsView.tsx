@@ -43,7 +43,7 @@ export default function TermsView() {
           These Terms of Service are governed by and construed in accordance with the laws of the
           Republic of Namibia. Any disputes arising from these terms shall be subject to the
           exclusive jurisdiction of the courts of Namibia. Times of Namibia is a publication of
-          GemsWeb Digital.
+          TANGISON.
         </p>
       </div>
 
@@ -68,7 +68,7 @@ export default function TermsView() {
 
         <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-4">
           These terms apply to all visitors, readers, contributors, and any other persons accessing
-          the Service. GemsWeb Digital reserves the right to modify these terms at any time. Material
+          the Service. TANGISON reserves the right to modify these terms at any time. Material
           changes will be communicated through a notice on the platform. Your continued use after
           such notice constitutes acceptance of the modified terms.
         </p>
@@ -87,7 +87,7 @@ export default function TermsView() {
 
         <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Section 01 // Acceptance of Terms</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -112,7 +112,7 @@ export default function TermsView() {
               You may share links to individual articles via the TumaOS WhatsApp pipeline or other
               standard sharing mechanisms. You may not reproduce, distribute, modify, create
               derivative works from, or commercially exploit any content from the Service without
-              explicit written permission from GemsWeb Digital.
+              explicit written permission from TANGISON.
             </p>
           </div>
           <div>
@@ -141,7 +141,7 @@ export default function TermsView() {
 
         <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Section 02 // Use License</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -188,7 +188,7 @@ export default function TermsView() {
               Disclaimer
             </span>
             <p className="font-serif text-sm text-ton-black/50 leading-relaxed mt-2">
-              The materials on the Service are provided on an &ldquo;as is&rdquo; basis. GemsWeb
+              The materials on the Service are provided on an &ldquo;as is&rdquo; basis. TANGISON
               Digital makes no warranties, expressed or implied, and hereby disclaims all warranties
               including without limitation implied warranties of merchantability or fitness for a
               particular purpose.
@@ -198,7 +198,7 @@ export default function TermsView() {
 
         <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Section 03 // Content Accuracy</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -214,7 +214,7 @@ export default function TermsView() {
 
         <div className="ton-dropcap">
           <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-4">
-            In no event shall GemsWeb Digital, its directors, employees, partners, agents,
+            In no event shall TANGISON, its directors, employees, partners, agents,
             suppliers, or affiliates be liable for any indirect, incidental, special, consequential,
             or punitive damages, including without limitation loss of profits, data, use, goodwill,
             or other intangible losses, resulting from your access to or use of (or inability to
@@ -225,7 +225,7 @@ export default function TermsView() {
         <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-4">
           This limitation applies regardless of the legal theory under which such damages are
           sought, whether based on warranty, contract, tort (including negligence), strict liability,
-          or any other legal theory, and whether or not GemsWeb Digital has been advised of the
+          or any other legal theory, and whether or not TANGISON has been advised of the
           possibility of such damages. In jurisdictions that do not allow the exclusion or limitation
           of liability for consequential or incidental damages, our liability shall be limited to the
           maximum extent permitted by Namibian law.
@@ -233,7 +233,7 @@ export default function TermsView() {
 
         <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Section 04 // Limitation of Liability</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -265,7 +265,7 @@ export default function TermsView() {
                 </div>
                 <div className="flex items-center justify-between border-b border-ton-black/5 pb-1.5">
                   <span className="text-ton-black/30">Publisher</span>
-                  <span className="text-ton-black font-semibold">GemsWeb Digital</span>
+                  <span className="text-ton-black font-semibold">TANGISON</span>
                 </div>
                 <div className="flex items-center justify-between pb-1.5">
                   <span className="text-ton-black/30">Jurisdiction</span>
@@ -287,7 +287,7 @@ export default function TermsView() {
                   { label: "Document", value: "Terms of Service" },
                   { label: "Version", value: "1.0" },
                   { label: "Last Updated", value: "2026-04-28" },
-                  { label: "Publisher", value: "GemsWeb Digital" },
+                  { label: "Publisher", value: "TANGISON" },
                   { label: "Governing Law", value: "Republic of Namibia" },
                   { label: "Review Cycle", value: "Annual" },
                 ].map((spec, i) => (
@@ -306,7 +306,7 @@ export default function TermsView() {
 
         <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Section 05 // Contact & Governance</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
     </div>

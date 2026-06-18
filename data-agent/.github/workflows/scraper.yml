@@ -43,7 +43,7 @@ jobs:
       - name: Commit feedback history
         run: |
           git config user.name "ton-bot"
-          git config user.email "bot@gemsweb.digital"
+          git config user.email "bot@tangison.digital"
           git add data-agent/data/feedback.json || true
           git add data-agent/data/last_run.json || true
           git diff --cached --quiet || git commit -m "chore: update TON feedback [scraped: $(date -u +%Y-%m-%dT%H:%M:%S+02:00)]"

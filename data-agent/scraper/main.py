@@ -2,7 +2,7 @@
 # ============================================================
 # Times of Namibia — Data Scraper Agent Orchestrator
 # Scrape → Enrich → Store pipeline
-# 180 verified sources • Broadsheet Digital • GemsWeb Digital
+# 180 verified sources • Broadsheet Digital • TANGISON
 # ============================================================
 
 import os
@@ -104,7 +104,7 @@ def main():
     start_time = datetime.now(timezone.utc)
     print("=" * 60)
     print(f"TIMES OF NAMIBIA — Data Scraper Agent")
-    print(f"Broadsheet Digital • GemsWeb Digital • 180 Sources")
+    print(f"Broadsheet Digital • TANGISON • 180 Sources")
     print(f"Started: {start_time.strftime('%Y-%m-%d %H:%M:%S UTC')}")
     print("=" * 60)
 

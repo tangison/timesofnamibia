@@ -1,6 +1,7 @@
 // ============================================================
-// Times of Namibia — Data Agent API Route
-// Triggers the Python data-scraper-agent and returns status
+// Times of Namibia — Data Agent API Route (TANGISON)
+// GET (status): public, rate-limited 60/min/IP.
+// POST (trigger): admin-only, rate-limited 1/5min/IP.
 // ============================================================
 
 import { NextRequest, NextResponse } from "next/server";
@@ -9,12 +10,22 @@ import { promisify } from "util";
 import { readFile } from "fs/promises";
 import { join } from "path";
 import { db } from "@/lib/db";
+import { requireAdmin, rateLimit } from "@/lib/auth";
 
 const execAsync = promisify(exec);
-
 const DATA_AGENT_PATH = join(process.cwd(), "data-agent");
 
 export async function POST(request: NextRequest) {
+  const unauthorized = requireAdmin(request);
+  if (unauthorized) return unauthorized;
+
+  if (rateLimit(request, { windowMs: 5 * 60_000, max: 1 })) {
+    return NextResponse.json(
+      { success: false, error: "Rate limited: max 1 trigger per 5 minutes" },
+      { status: 429 }
+    );
+  }
+
   try {
     const body = await request.json().catch(() => ({}));
     const mode = body.mode || "status";
@@ -25,14 +36,12 @@ export async function POST(request: NextRequest) {
 
     if (mode === "trigger") {
       const pythonCmd = process.env.PYTHON_CMD || "python3";
-      // Fire-and-forget: run Python data agent in the background
       execAsync(
         `cd ${DATA_AGENT_PATH} && ${pythonCmd} -m scraper.main`,
         { timeout: 300000 }
       ).catch((err: unknown) => {
         console.error("[Data Agent] Execution error:", err instanceof Error ? err.message : String(err));
       });
-
       return NextResponse.json({
         success: true,
         message: "Data agent triggered in background",
@@ -45,22 +54,19 @@ export async function POST(request: NextRequest) {
     );
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Data agent error";
-    return NextResponse.json(
-      { success: false, error: message },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, error: message }, { status: 500 });
   }
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  if (rateLimit(request, { windowMs: 60_000, max: 60 })) {
+    return NextResponse.json({ success: false, error: "Rate limited" }, { status: 429 });
+  }
   try {
     return NextResponse.json(await getAgentStatus());
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Status check failed";
-    return NextResponse.json(
-      { success: false, error: message },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, error: message }, { status: 500 });
   }
 }
 

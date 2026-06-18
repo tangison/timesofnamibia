@@ -1,19 +1,15 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter, JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 
-const playfairDisplay = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
+// TANGISON brand typography:
+//   Display:  Cabinet Grotesk (Fontshare, free)
+//   Body:     Satoshi (Fontshare, free)
+//   Technical: JetBrains Mono (Google Fonts)
+// Fontshare fonts are loaded via <link> in <head> below because next/font
+// doesn't support Fontshare directly. The CSS variables --font-display
+// and --font-body are defined in globals.css.
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains",
@@ -23,38 +19,47 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Times of Namibia — Namibia's Digital Broadsheet | TON",
+    default: "Times of Namibia — Applied AI. Built in Africa. | TANGISON",
     template: "%s — Times of Namibia",
   },
   description:
-    "Times of Namibia: Namibia's premier digital broadsheet. Real-time verified news, tender analysis, job market intelligence, and market data — powered by Times OS v2.1. Informed. Instantly.",
+    "Times of Namibia — a TANGISON news outlet. Real-time verified news, tender analysis, job market intelligence, and market data for Namibia and the continent. Powered by applied AI built in Africa.",
   metadataBase: new URL("https://timesofnamibia.com"),
   keywords: [
     "Namibia",
     "News",
     "Times of Namibia",
     "TON",
+    "TANGISON",
     "Tenders",
     "Jobs",
     "Africa",
     "Windhoek",
-    "Broadsheet Digital",
-    "GemsWeb Digital",
+    "Applied AI",
     "Market Data",
   ],
   openGraph: {
     type: "website",
     locale: "en_NA",
     siteName: "Times of Namibia",
-    title: "Times of Namibia — Namibia's Digital Broadsheet",
+    title: "Times of Namibia — Applied AI. Built in Africa.",
     description:
-      "Namibia's premier digital broadsheet. Real-time verified news, tender analysis, job market intelligence, and market data.",
+      "A TANGISON news outlet. Real-time verified news, tender analysis, job market intelligence, and market data for Namibia.",
+    images: [
+      {
+        url: "/og-default.svg",
+        width: 1200,
+        height: 630,
+        alt: "Times of Namibia — Applied AI. Built in Africa.",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Times of Namibia — Namibia's Digital Broadsheet",
+    title: "Times of Namibia — Applied AI. Built in Africa.",
     description:
-      "Namibia's premier digital broadsheet. Real-time verified news, tender analysis, job market intelligence, and market data.",
+      "A TANGISON news outlet. Real-time verified news, tender analysis, job market intelligence, and market data for Namibia.",
+    images: ["/og-default.svg"],
   },
   icons: {
     icon: [
@@ -76,17 +81,19 @@ export const metadata: Metadata = {
   },
 };
 
-// Website JSON-LD
+// Website JSON-LD — TANGISON brand
 const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "Times of Namibia",
+  alternateName: "TANGISON News — Namibia",
   url: "https://timesofnamibia.com",
-  description: "Namibia's premier digital broadsheet. Real-time verified news, tender analysis, job market intelligence, and market data.",
+  description:
+    "A TANGISON news outlet. Real-time verified news, tender analysis, job market intelligence, and market data for Namibia.",
   publisher: {
     "@type": "Organization",
-    name: "GemsWeb Digital",
-    url: "https://gemsweb.xyz",
+    name: "TANGISON",
+    url: "https://tangison.com",
   },
   potentialAction: {
     "@type": "SearchAction",
@@ -95,17 +102,73 @@ const websiteJsonLd = {
   },
 };
 
+// Organization JSON-LD — TANGISON as publisher
+// Establishes E-E-A-T signals for Google.
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "NewsMediaOrganization",
+  name: "TANGISON",
+  alternateName: "TANGISON Lab",
+  url: "https://tangison.com",
+  logo: {
+    "@type": "ImageObject",
+    url: "https://timesofnamibia.com/logo.svg",
+    width: 320,
+    height: 60,
+  },
+  parentOrganization: {
+    "@type": "Organization",
+    name: "TANGISON",
+    url: "https://tangison.com",
+  },
+  foundingDate: "2025",
+  areaServed: {
+    "@type": "Country",
+    name: "Namibia",
+  },
+  // Placeholder social profiles — replace with real handles once created.
+  sameAs: [
+    "https://x.com/tangison",
+    "https://www.linkedin.com/company/tangison",
+    "https://github.com/tangison",
+    "https://www.instagram.com/tangison",
+    "https://www.youtube.com/@tangison",
+  ],
+  publishingPrinciples: "https://timesofnamibia.com/editorial-standards",
+  actionableFeedbackPolicy: "https://timesofnamibia.com/contact",
+  diversityPolicy: "https://timesofnamibia.com/about",
+};
+
+// Helper: safely serialize JSON-LD — escape < to prevent script injection.
+function safeJsonLd(obj: unknown): string {
+  return JSON.stringify(obj).replace(/</g, "\\u003c");
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en-NA" suppressHydrationWarning>
       <head>
+        {/* TANGISON brand typography — Cabinet Grotesk + Satoshi via Fontshare */}
+        <link
+          rel="preconnect"
+          href="https://api.fontshare.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,700,800,900&f[]=satoshi@300,400,500,700,900&display=swap"
+          rel="stylesheet"
+        />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: safeJsonLd(websiteJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: safeJsonLd(organizationJsonLd) }}
         />
         {/* Analytics placeholder — replace GA_MEASUREMENT_ID with your actual ID */}
         {process.env.NEXT_PUBLIC_GA_ID && (
@@ -121,14 +184,14 @@ export default function RootLayout({
                   function gtag(){dataLayer.push(arguments);}
                   gtag('js', new Date());
                   gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', { page_path: window.location.pathname });
-                `,
+                `.replace(/</g, "\\u003c"),
               }}
             />
           </>
         )}
       </head>
       <body
-        className={`${playfairDisplay.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}
+        className={`${jetbrainsMono.variable} antialiased`}
       >
         {/* Skip to content — accessibility */}
         <a

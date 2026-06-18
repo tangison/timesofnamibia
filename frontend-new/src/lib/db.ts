@@ -1,44 +1,19 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from "@prisma/client";
 
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined
-}
+const globalForPrisma = globalThis as unknown as { prisma: PrismaClient | undefined };
 
-function createFallbackDb() {
-  const modelProxy = new Proxy(
-    {},
-    {
-      get(_, method: string) {
-        if (method === 'findMany') return async () => []
-        if (method === 'findFirst' || method === 'findUnique') return async () => null
-        if (method === 'count') return async () => 0
-        if (method === 'upsert' || method === 'create' || method === 'update') return async () => null
-        return async () => null
-      },
-    }
-  )
-
-  return new Proxy(
-    {},
-    {
-      get() {
-        return modelProxy
-      },
-    }
-  )
-}
-
-let prisma: PrismaClient | undefined
+let prisma: PrismaClient;
 
 try {
   prisma =
     globalForPrisma.prisma ??
     new PrismaClient({
-      log: ['query'],
-    })
-  if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+      log: process.env.NODE_ENV === "development" ? ["warn", "error"] : ["error"],
+    });
+  if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 } catch (error) {
-  console.warn('[db] Prisma client unavailable, using fallback DB adapter.', error)
+  console.error("[db] FATAL: Prisma client construction failed:", error);
+  throw error;
 }
 
-export const db = (prisma ?? createFallbackDb()) as PrismaClient
+export const db = prisma;

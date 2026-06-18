@@ -48,8 +48,8 @@ const COMPANY_ITEMS = [
   { label: "Contact", href: "/contact", icon: Phone, key: "contact" },
 ];
 
-const GEMSWEB_ITEMS = [
-  { label: "About GemsWeb", href: "/gemsweb", icon: ExternalLink, key: "gemsweb" },
+const TANGISON_ITEMS = [
+  { label: "About TANGISON", href: "/tangison", icon: ExternalLink, key: "tangison" },
 ];
 
 /* ─── Section Component ─── */
@@ -276,10 +276,10 @@ export default function Sidebar({ activePage }: { activePage?: string }) {
           {/* Thin divider */}
           <div className="mx-3 my-1 border-t border-ton-black/6 dark:border-white/6" />
 
-          {/* GemsWeb Digital section */}
+          {/* TANGISON section */}
           <SidebarSection
-            title="GemsWeb Digital"
-            items={GEMSWEB_ITEMS}
+            title="TANGISON"
+            items={TANGISON_ITEMS}
             activePage={activePage}
             defaultCollapsed
           />
@@ -296,7 +296,7 @@ export default function Sidebar({ activePage }: { activePage?: string }) {
             </span>
           </div>
           <p className="font-mono text-[7px] text-ton-black/10 dark:text-white/10 uppercase tracking-widest mt-0.5">
-            A GemsWeb Digital Publication
+            A TANGISON Publication
           </p>
         </div>
       </aside>

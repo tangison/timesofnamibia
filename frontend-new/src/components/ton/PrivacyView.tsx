@@ -41,7 +41,7 @@ export default function PrivacyView() {
         </div>
         <p className="font-serif text-sm text-ton-cream/70 leading-relaxed">
           This privacy policy is governed by the laws of the Republic of Namibia. Times of Namibia
-          is a publication of GemsWeb Digital, operating from Windhoek, Namibia. All data processing
+          is a publication of TANGISON, operating from Windhoek, Namibia. All data processing
           activities comply with Namibian data protection legislation.
         </p>
       </div>
@@ -92,7 +92,7 @@ export default function PrivacyView() {
 
         <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Section 01 // Information We Collect</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -137,7 +137,7 @@ export default function PrivacyView() {
 
         <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Section 02 // How We Use Your Information</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -197,7 +197,7 @@ export default function PrivacyView() {
 
         <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Section 03 // Data Protection Rights</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -255,7 +255,7 @@ export default function PrivacyView() {
 
         <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Section 04 // Cookies</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -287,7 +287,7 @@ export default function PrivacyView() {
                 </div>
                 <div className="flex items-center justify-between border-b border-ton-black/5 pb-1.5">
                   <span className="text-ton-black/30">Publisher</span>
-                  <span className="text-ton-black font-semibold">GemsWeb Digital</span>
+                  <span className="text-ton-black font-semibold">TANGISON</span>
                 </div>
                 <div className="flex items-center justify-between pb-1.5">
                   <span className="text-ton-black/30">Jurisdiction</span>
@@ -309,7 +309,7 @@ export default function PrivacyView() {
                   { label: "Document", value: "Privacy Policy" },
                   { label: "Version", value: "1.0" },
                   { label: "Last Updated", value: "2026-04-28" },
-                  { label: "Publisher", value: "GemsWeb Digital" },
+                  { label: "Publisher", value: "TANGISON" },
                   { label: "Governing Law", value: "Republic of Namibia" },
                   { label: "Review Cycle", value: "Annual" },
                 ].map((spec, i) => (
@@ -328,7 +328,7 @@ export default function PrivacyView() {
 
         <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Section 05 // Contact & Governance</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
     </div>

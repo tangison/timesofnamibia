@@ -63,7 +63,7 @@ export default function ThePlanView() {
       },
       layout: {
         title: "Digital Telegram — Social Template",
-        description: "Each social media post follows an identical template: monospaced timestamp at top (JetBrains Mono, 8pt equivalent), followed by a 1pt horizontal rule, then the source attribution in uppercase red (#CB102E on digital, black on print). Below: the headline in Playfair Display bold, maximum 12 words. Below: a single data point — one number, one fact, one verified datum. No hashtags. No emojis. No call-to-action. Footer: a black band with 'Times of Namibia // GemsWeb Digital' in JetBrains Mono. All posts are single-frame images, not threads. The format is rigid because the format IS the brand.",
+        description: "Each social media post follows an identical template: monospaced timestamp at top (JetBrains Mono, 8pt equivalent), followed by a 1pt horizontal rule, then the source attribution in uppercase red (#CB102E on digital, black on print). Below: the headline in Playfair Display bold, maximum 12 words. Below: a single data point — one number, one fact, one verified datum. No hashtags. No emojis. No call-to-action. Footer: a black band with 'Times of Namibia // TANGISON' in JetBrains Mono. All posts are single-frame images, not threads. The format is rigid because the format IS the brand.",
       },
     },
     {
@@ -364,7 +364,7 @@ export default function ThePlanView() {
           <div className="bg-ton-red text-white font-mono text-[9px] font-bold px-2 py-0.5 tracking-widest">PLAN</div>
         </div>
         <p className="font-mono text-[9px] text-ton-black/20 tracking-widest uppercase">
-          A GemsWeb Digital Publication // {new Date().getFullYear()}
+          A TANGISON Publication // {new Date().getFullYear()}
         </p>
       </div>
     </div>
@@ -401,7 +401,7 @@ function generateStandalonePlanHTML(): string {
     <div class="page">
         <h1 style="font-size: 36pt;">THE PLAN</h1>
         <p class="mono red" style="margin-top: 5px;">Strategic Execution Plan // Times of Namibia</p>
-        <p class="mono" style="margin-top: 3px;">A GemsWeb Digital Publication</p>
+        <p class="mono" style="margin-top: 3px;">A TANGISON Publication</p>
         <div class="rule"></div>
         <p style="font-style: italic; font-family: var(--font-display); font-size: 14pt;">"Minimalism as Power. Every process that doesn't inform the reader or the system is deleted."</p>
         <div class="black-box">

@@ -9,20 +9,24 @@ import {
 } from "@/lib/data";
 import { triggerAutoIngestion } from "@/lib/rss-scheduler";
 
-export const dynamic = "force-dynamic";
+// TANGISON: ISR with 5-min revalidate instead of force-dynamic.
+export const revalidate = 300;
 
 export const metadata = {
   title: "National News — Latest Headlines",
   description:
-    "Real-time verified news, tender alerts, job market data, and financial updates from Namibia — sourced and timestamped by Times OS.",
+    "Real-time verified news, tender alerts, job market data, and financial updates from Namibia — a TANGISON news outlet. Applied AI. Built in Africa.",
   alternates: { canonical: "/" },
 };
 
 export default async function HomePage() {
-  // Trigger RSS ingestion in the background (non-blocking)
-  triggerAutoIngestion().catch(() => {
-    // Silently fail — don't block page render
-  });
+  try {
+    triggerAutoIngestion().catch(() => {
+      // Silently fail — don't block page render
+    });
+  } catch {
+    // Non-critical
+  }
 
   const [featuredArticle, recentArticles, jobs, tenders, marketData] =
     await Promise.all([
@@ -40,7 +44,7 @@ export default async function HomePage() {
         recentArticles={recentArticles}
         jobs={jobs}
         tenders={tenders}
-        marketData={marketData}
+        marketData={marketData as any}
       />
     </TonLayout>
   );

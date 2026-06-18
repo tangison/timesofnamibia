@@ -41,7 +41,7 @@ export default function AccessibilityView() {
           Information is a right. Access to that information is non-negotiable.
         </blockquote>
         <p className="font-mono text-[10px] text-ton-black/30 mt-4 tracking-wider">
-          WCAG 2.1 Level AA — GemsWeb Digital
+          WCAG 2.1 Level AA — TANGISON
         </p>
       </div>
 
@@ -99,7 +99,7 @@ export default function AccessibilityView() {
 
         <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Section 01 // WCAG Commitment</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -173,7 +173,7 @@ export default function AccessibilityView() {
 
         <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Section 02 // Accessibility Features</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
 
@@ -216,7 +216,7 @@ export default function AccessibilityView() {
                 </div>
                 <div className="flex items-center justify-between pb-1.5">
                   <span className="text-ton-black/30">Publisher</span>
-                  <span className="text-ton-black font-semibold">GemsWeb Digital</span>
+                  <span className="text-ton-black font-semibold">TANGISON</span>
                 </div>
               </div>
             </div>
@@ -235,7 +235,7 @@ export default function AccessibilityView() {
                   { label: "Version", value: "1.0" },
                   { label: "Last Updated", value: "2026-04-28" },
                   { label: "Conformance Target", value: "WCAG 2.1 Level AA" },
-                  { label: "Publisher", value: "GemsWeb Digital" },
+                  { label: "Publisher", value: "TANGISON" },
                   { label: "Audit Cycle", value: "Quarterly" },
                 ].map((spec, i) => (
                   <div
@@ -253,7 +253,7 @@ export default function AccessibilityView() {
 
         <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
           <span>Section 03 // Contact & Feedback</span>
-          <span>&copy; GemsWeb Digital</span>
+          <span>&copy; TANGISON</span>
         </div>
       </section>
     </div>

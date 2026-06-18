@@ -164,18 +164,18 @@ export default function DocumentsView() {
         </div>
       </div>
 
-      {/* GemsWeb Digital */}
+      {/* TANGISON */}
       <div className="py-8 text-center border-t border-ton-black/8 mt-8">
         <p className="font-serif italic text-ton-black/30 text-sm">
-          All documents are published by GemsWeb Digital.
+          All documents are published by TANGISON.
         </p>
         <a
-          href="https://gemsweb.xyz"
+          href="https://tangison.com"
           target="_blank"
           rel="noopener noreferrer"
           className="font-mono text-[10px] text-ton-red font-bold uppercase tracking-widest mt-2 inline-block hover:text-ton-red/80 transition-colors"
         >
-          gemsweb.xyz
+          tangison.com
         </a>
       </div>
     </div>

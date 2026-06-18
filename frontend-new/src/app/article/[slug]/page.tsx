@@ -61,11 +61,13 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     },
     publisher: {
       "@type": "Organization",
-      name: "Times of Namibia",
-      url: "https://timesofnamibia.com",
+      name: "TANGISON",
+      url: "https://tangison.com",
       logo: {
         "@type": "ImageObject",
-        url: "https://timesofnamibia.com/logo.svg",
+        url: "https://timesofnamibia.com/logo.png",
+        width: 874,
+        height: 286,
       },
     },
     datePublished: article.publishedAt

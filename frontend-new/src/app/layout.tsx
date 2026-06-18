@@ -64,8 +64,7 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
-      { url: "/favicon-48.png", sizes: "48x48", type: "image/png" },
-      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-48.ico", sizes: "48x48" },
     ],
     apple: "/apple-touch-icon.png",
   },
@@ -112,9 +111,11 @@ const organizationJsonLd = {
   url: "https://tangison.com",
   logo: {
     "@type": "ImageObject",
-    url: "https://timesofnamibia.com/logo.svg",
-    width: 320,
-    height: 60,
+    // Google requires PNG/JPG ≥ 112×112 for publisher logo.
+    // Real TANGISON logo (874×286) — downloaded from tangison.com/images/logo.png
+    url: "https://timesofnamibia.com/logo.png",
+    width: 874,
+    height: 286,
   },
   parentOrganization: {
     "@type": "Organization",

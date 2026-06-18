@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Masthead() {
   const editionNumber = 127;
 
@@ -23,7 +25,7 @@ export default function Masthead() {
         {/* Thin decorative rule above title */}
         <div className="border-t border-ton-black/30 mb-2 sm:mb-3" />
 
-        {/* Title — pure typographic authority (not a heading — page H1 is in content area) */}
+        {/* Title — pure typographic authority */}
         <div className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight text-ton-black leading-[0.9]">
           TIMES OF NAMIBIA
         </div>
@@ -37,6 +39,24 @@ export default function Masthead() {
         <div className="mt-2 sm:mt-2.5">
           <span className="font-serif italic text-ton-black/45 text-xs sm:text-sm md:text-[15px] tracking-wide">
             Namibia. Informed. Instantly.
+          </span>
+        </div>
+
+        {/* TANGISON publisher mark — real logo from tangison.com */}
+        <div className="flex items-center justify-center gap-2 mt-3 sm:mt-4">
+          <span className="font-mono text-[8px] sm:text-[9px] text-ton-black/35 tracking-[0.25em] uppercase">
+            A
+          </span>
+          <Image
+            src="/logo.webp"
+            alt="TANGISON — Applied AI. Built in Africa."
+            width={120}
+            height={39}
+            priority={false}
+            className="h-5 sm:h-6 w-auto opacity-70"
+          />
+          <span className="font-mono text-[8px] sm:text-[9px] text-ton-black/35 tracking-[0.25em] uppercase">
+            Publication
           </span>
         </div>
 

@@ -8,6 +8,12 @@ const isClient = typeof window !== "undefined";
 // On the client, always go through the proxy. On the server, hit the backend directly.
 const API_BASE = isClient ? PROXY_BASE : BACKEND_URL;
 
+// --- TANGISON: Convex is preferred when configured ---
+// If NEXT_PUBLIC_CONVEX_URL is set, all data-layer calls route to Convex.
+// Otherwise, fall back to the FastAPI backend.
+import { dataConvex } from "@/lib/dataConvex";
+const useConvex = dataConvex.isAvailable();
+
 type BackendItem = {
   id: number;
   item_type: "news" | "job" | "tender" | "internship";
@@ -109,6 +115,7 @@ function mapTender(item: BackendItem) {
 }
 
 export async function getFeaturedArticle() {
+  if (useConvex) return dataConvex.getFeaturedArticle();
   const rows = await api<BackendItem[]>("/api/v1/articles?limit=1");
   return rows.length ? mapArticle(rows[0]) : null;
 }
@@ -121,9 +128,11 @@ export async function getArticles(options?: {
   limit?: number;
   offset?: number;
 }) {
+  if (useConvex) return dataConvex.getArticles(options);
   const params = new URLSearchParams();
   params.set("limit", String(options?.limit || 20));
   if (options?.section) params.set("section", options.section);
+  if (options?.offset) params.set("offset", String(options.offset));
   const rows = await api<BackendItem[]>(`/api/v1/articles?${params.toString()}`);
   let articles = rows.map(mapArticle);
   if (options?.category) {
@@ -134,16 +143,22 @@ export async function getArticles(options?: {
     const s = options.source.toLowerCase();
     articles = articles.filter((a) => a.authorLine.toLowerCase().includes(s));
   }
-  if (options?.offset) articles = articles.slice(options.offset);
   return articles;
 }
 
 export async function getArticleBySlug(slug: string) {
-  const rows = await api<BackendItem[]>("/api/v1/articles?limit=200");
-  return rows.map(mapArticle).find((a) => a.slug === slug) || null;
+  if (useConvex) return dataConvex.getArticleBySlug(slug);
+  try {
+    const row = await api<BackendItem>(`/api/v1/articles/${encodeURIComponent(slug)}`);
+    return row ? mapArticle(row) : null;
+  } catch {
+    const rows = await api<BackendItem[]>("/api/v1/articles?limit=200");
+    return rows.map(mapArticle).find((a) => a.slug === slug) || null;
+  }
 }
 
 export async function getJobs(options?: { region?: string; source?: string; type?: string; limit?: number }) {
+  if (useConvex) return dataConvex.getJobs(options);
   const rows = await api<BackendItem[]>(`/api/v1/jobs?limit=${options?.limit || 50}`);
   let jobs = rows.map(mapJob);
   if (options?.region) jobs = jobs.filter((j) => (j.region || "").toLowerCase() === options.region!.toLowerCase());
@@ -152,6 +167,7 @@ export async function getJobs(options?: { region?: string; source?: string; type
 }
 
 export async function getTenders(options?: { status?: string; department?: string; limit?: number }) {
+  if (useConvex) return dataConvex.getTenders(options);
   const rows = await api<BackendItem[]>(`/api/v1/tenders?limit=${options?.limit || 50}`);
   let tenders = rows.map(mapTender);
   if (options?.department) {
@@ -162,6 +178,7 @@ export async function getTenders(options?: { status?: string; department?: strin
 }
 
 export async function getMarketData() {
+  if (useConvex) return dataConvex.getMarketData();
   try {
     return await api<
       Array<{
@@ -181,11 +198,16 @@ export async function getMarketData() {
 }
 
 export async function getTickerItems() {
+  if (useConvex) {
+    // Use Convex tickerItem table when available — for now, return []
+    return [];
+  }
   const rows = await api<BackendItem[]>("/api/v1/articles?limit=8");
   return rows.map((r, i) => ({ id: String(i + 1), text: `${r.title} ▸`, order: i, active: true }));
 }
 
 export async function searchArticles(query: string, options?: { limit?: number; section?: string }) {
+  if (useConvex) return dataConvex.searchArticles(query, options);
   const rows = await api<BackendItem[]>(`/api/v1/articles?limit=${Math.max(options?.limit || 20, 100)}`);
   const q = query.toLowerCase();
   return rows
@@ -196,6 +218,18 @@ export async function searchArticles(query: string, options?: { limit?: number; 
 }
 
 export async function getPlatformStats() {
+  if (useConvex) {
+    const stats = await dataConvex.getStats();
+    if (stats) {
+      return {
+        news: stats.articles,
+        jobs: stats.jobs,
+        tenders: stats.tenders,
+        internships: 0,
+        total: stats.total,
+      };
+    }
+  }
   return api<{ news: number; jobs: number; tenders: number; internships: number; total: number }>("/api/v1/stats");
 }
 
@@ -209,5 +243,14 @@ export async function getRssFeeds() {
 }
 
 export async function subscribeNewsletter(email: string, name?: string) {
+  if (useConvex) {
+    // Use Convex mutation directly — bypass the proxy
+    const { convexClient } = await import("@/lib/convex");
+    const { api } = await import("@convex/_generated/api");
+    if (convexClient) {
+      const result = await convexClient.mutation(api.mutations.subscribeNewsletter, { email, name });
+      return { email, name, active: true, id: (result as any)?.id };
+    }
+  }
   return { email, name, active: true };
 }

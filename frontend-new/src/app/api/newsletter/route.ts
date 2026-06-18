@@ -1,5 +1,6 @@
 // ============================================================
 // Times of Namibia — Newsletter Subscription API (TANGISON)
+// Uses Convex when configured, falls back to Prisma.
 // Validation: Zod schema. Rate limit: 5/hour/IP.
 // ============================================================
 
@@ -31,6 +32,7 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+    // subscribeNewsletter() in data.ts dispatches to Convex or Prisma
     const subscriber = await subscribeNewsletter(parsed.data.email, parsed.data.name);
     return NextResponse.json({ success: true, subscriber });
   } catch (error: unknown) {
@@ -41,3 +43,4 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+

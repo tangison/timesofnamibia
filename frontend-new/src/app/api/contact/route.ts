@@ -1,11 +1,14 @@
 // ============================================================
 // Times of Namibia — Contact Form API (TANGISON)
+// Uses Convex when configured, falls back to Prisma.
 // Validation: Zod schema with length caps. Rate limit: 5/hour/IP.
 // ============================================================
 
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
+import { convexClient } from "@/lib/convex";
+import { api } from "@convex/_generated/api";
 import { rateLimit } from "@/lib/auth";
 
 const ContactSchema = z.object({
@@ -44,6 +47,23 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Prefer Convex when configured
+    if (convexClient) {
+      const result = await convexClient.mutation(api.mutations.submitContactForm, {
+        name,
+        email,
+        category,
+        message,
+      });
+      return NextResponse.json({
+        success: true,
+        message: "Your enquiry has been received. We respond within 24 hours.",
+        id: (result as any)?.id ?? "convex",
+      });
+    }
+
+    // Fallback: Prisma
     const submission = await db.wireSubmission.create({
       data: {
         title: `Contact: ${name} — ${category}`.slice(0, 200),

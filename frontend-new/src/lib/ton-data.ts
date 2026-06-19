@@ -1,5 +1,24 @@
-// ========= TYPES =========
+// ============================================================
+// Times of Namibia — TON-specific data + types (TANGISON)
+//
+// TANGISON Iteration 4 Fix #14: This file previously defined a
+// DIVERGENT type system (different field names + types from data.ts
+// and dataConvex.ts). It now imports the canonical types from
+// @/lib/types and only keeps the TON-specific constants + initial data.
+//
+// The local Job/Tender/WireSubmission interfaces below are kept for
+// backwards compat with components that use slightly different shapes
+// (e.g. Tender.deadline: string vs Date). New code should import from
+// @/lib/types instead.
+// ============================================================
 
+// ========= TYPES (legacy — prefer @/lib/types) =========
+
+/**
+ * @deprecated Use `Job` from @/lib/types instead.
+ * This legacy type uses `region: string` (non-nullable) and a strict
+ * source union — kept only for backwards compat with JobScraperView.
+ */
 export interface Job {
   id: string;
   title: string;
@@ -13,6 +32,11 @@ export interface Job {
   url: string;
 }
 
+/**
+ * @deprecated Use `Tender` from @/lib/types instead.
+ * This legacy type uses `deadline: string` and flat array fields —
+ * kept only for backwards compat with TenderAnalysisView.
+ */
 export interface Tender {
   id: string;
   docId: string;
@@ -26,6 +50,11 @@ export interface Tender {
   status: "open" | "closing" | "closed";
 }
 
+/**
+ * @deprecated Use `WireSubmission` from @/lib/types instead.
+ * This legacy type uses `timestamp: string` and required `author` —
+ * kept only for backwards compat with ContributorDashboard.
+ */
 export interface WireSubmission {
   id: string;
   title: string;
@@ -63,22 +92,14 @@ export const JOB_SOURCES: Job["source"][] = [
   "CareerPortal",
 ];
 
-// ========= JOBS DATA =========
+// ========= INITIAL DATA (empty — populated at runtime via Convex) =========
 
 export const JOBS: Job[] = [];
 
-// ========= TENDER DATA =========
-
 export const TENDERS: Tender[] = [];
-
-// ========= WIRE SUBMISSIONS =========
 
 export const INITIAL_SUBMISSIONS: WireSubmission[] = [];
 
-// ========= TICKER ITEMS =========
-
-export const TICKER_ITEMS = [];
-
-// ========= FEATURED ARTICLE =========
+export const TICKER_ITEMS: never[] = [];
 
 export const FEATURED_ARTICLE = null;

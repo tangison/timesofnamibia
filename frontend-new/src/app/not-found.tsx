@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import TonLayout from "@/components/ton/TonLayout";
 import { FileQuestion, ArrowLeft, Search } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Page Not Found",
+  description: "The page you are looking for does not exist, has been moved, or is no longer available.",
+  robots: { index: false, follow: true }, // 404 page — never index
+};
 
 export default function NotFound() {
   return (

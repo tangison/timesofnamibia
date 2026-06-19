@@ -6,79 +6,24 @@
 //
 // Used automatically when NEXT_PUBLIC_CONVEX_URL is set.
 // Falls back to the FastAPI backend otherwise.
+//
+// TANGISON Iteration 4 Fix #14: Types now imported from @/lib/types
+// (single source of truth — was duplicated here).
 // ============================================================
 
 import { convexClient } from "@/lib/convex";
 import { api } from "@convex/_generated/api";
+import type {
+  Article,
+  Job,
+  Tender,
+  MarketDatum,
+} from "@/lib/types";
+
+// Re-export for backwards compat (callers may import from either location)
+export type { Article, Job, Tender, MarketDatum };
 
 const hasConvex = () => convexClient !== null;
-
-// --- Type shape returned by all getX() functions (matches mapArticle in data.ts) ---
-export interface Article {
-  id: string;
-  slug: string;
-  headline: string;
-  subheadline: string | null;
-  content: string;
-  excerpt: string | null;
-  source: string;
-  categorySlug: string | null;
-  section: string;
-  readingTime: number;
-  imageAlt: string | null;
-  imageGps: string | null;
-  imageUrl: string | null;
-  authorLine: string;
-  featured: boolean;
-  published: boolean;
-  publishedAt: Date;
-  views: number;
-  commentCount: number;
-  category: { id: string; name: string; slug: string; color: string | null } | null;
-  rssFeed: { id: string; name: string; url: string } | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface Job {
-  id: string;
-  title: string;
-  company: string;
-  location: string;
-  region: string | null;
-  source: string;
-  salary: string | null;
-  type: string | null;
-  url: string | null;
-  postedAgo: string | null;
-  scrapedAt: Date;
-  active: boolean;
-}
-
-export interface Tender {
-  id: string;
-  docId: string;
-  title: string;
-  department: string;
-  deadline: Date;
-  estimatedValue: string | null;
-  status: string;
-  createdAt?: Date;
-  summaries: Array<{ id: string; text: string; order: number }>;
-  keyDates: Array<{ id: string; text: string; order: number }>;
-  compliances: Array<{ id: string; requirement: string; order: number }>;
-}
-
-export interface MarketDatum {
-  id: string;
-  pair: string;
-  rate: string;
-  change: string;
-  direction: string;
-  source: string;
-  active: boolean;
-  updatedAt: Date;
-}
 
 // --- Mappers: Convex row → public shape ---
 

@@ -12,11 +12,26 @@ import { v } from "convex/values";
 
 const ADMIN_TOKEN = process.env.CONVEX_ADMIN_TOKEN;
 
+/**
+ * Constant-time string equality to prevent timing-attack brute-force
+ * of the admin token. Mirrors the pattern used in frontend auth.ts.
+ */
+function constantTimeEqual(a: string, b: string): boolean {
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) {
+    diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+  return diff === 0;
+}
+
 function requireAdmin(token: string | null) {
   if (!ADMIN_TOKEN) {
     throw new Error("CONVEX_ADMIN_TOKEN env var not configured");
   }
-  if (!token || token !== ADMIN_TOKEN) {
+  // TANGISON Iteration 4 Fix #10: Use constant-time comparison
+  // (was `token !== ADMIN_TOKEN` — vulnerable to timing attacks).
+  if (!token || !constantTimeEqual(token, ADMIN_TOKEN)) {
     throw new Error("Unauthorized: invalid admin token");
   }
 }

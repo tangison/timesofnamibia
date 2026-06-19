@@ -3,7 +3,9 @@ import TonLayout from "@/components/ton/TonLayout";
 import ArticleView from "@/components/ton/ArticleView";
 import { getArticleBySlug } from "@/lib/data";
 
-export const dynamic = "force-dynamic";
+// TANGISON Iteration 4 Fix #2: Restore ISR (was force-dynamic).
+// Articles don't change minute-by-minute; 5-min revalidate is plenty.
+export const revalidate = 300;
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>;
@@ -13,7 +15,11 @@ export async function generateMetadata({ params }: ArticlePageProps) {
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
   if (!article) {
-    return { title: "Article Not Found" };
+    // TANGISON Iteration 4 Fix #3: explicit noindex on missing articles
+    return {
+      title: "Article Not Found",
+      robots: { index: false, follow: true },
+    };
   }
   return {
     title: article.headline,
@@ -43,7 +49,16 @@ export async function generateMetadata({ params }: ArticlePageProps) {
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params;
-  const article = await getArticleBySlug(slug);
+
+  // TANGISON Iteration 4 Fix #3: wrap data fetch in try/catch so that
+  // when the backend is unreachable, we return a real 404 instead of an
+  // RSC error boundary (which was rendering an empty 200-OK page).
+  let article;
+  try {
+    article = await getArticleBySlug(slug);
+  } catch {
+    notFound();
+  }
 
   if (!article) {
     notFound();
@@ -87,6 +102,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   };
 
   // BreadcrumbList JSON-LD
+  // TANGISON Iteration 4 Fix #8: Use /section/SECTION for non-national sections
+  // (was /SECTION which 404s — politics, economy, mining, etc.)
+  const sectionUrl = article.section === "national"
+    ? "https://timesofnamibia.com"
+    : `https://timesofnamibia.com/section/${article.section}`;
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -103,7 +123,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               "@type": "ListItem",
               position: 2,
               name: article.section.charAt(0).toUpperCase() + article.section.slice(1),
-              item: `https://timesofnamibia.com/${article.section === "national" ? "" : article.section}`,
+              item: sectionUrl,
             },
           ]
         : []),
@@ -116,15 +136,20 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     ],
   };
 
+  // TANGISON Iteration 4 Fix #4: escape < in JSON-LD to prevent stored XSS
+  // via RSS-supplied headlines. Same pattern as layout.tsx safeJsonLd().
+  const safeJsonLd = (obj: unknown) =>
+    JSON.stringify(obj).replace(/</g, "\\u003c");
+
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }}
       />
       <TonLayout activePage={article.section || "national"}>
         <ArticleView article={article} />

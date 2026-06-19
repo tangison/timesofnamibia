@@ -36,8 +36,11 @@ export async function generateMetadata({ params }: SectionPageProps): Promise<Me
   const { slug } = await params;
   const meta = SECTION_META[slug] || SECTION_META.national;
 
+  // TANGISON Iteration 4 Fix #7: Don't manually append " — Times of Namibia"
+  // — the layout.tsx title template already does that. Otherwise the title
+  // becomes "Title — Times of Namibia — Times of Namibia" (double suffix).
   return {
-    title: `${meta.title} — Times of Namibia`,
+    title: meta.title,
     description: meta.description,
     alternates: { canonical: `/section/${slug}` },
     openGraph: {

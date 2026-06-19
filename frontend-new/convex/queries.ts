@@ -230,10 +230,22 @@ export const getStats = query({
 });
 
 // ── WIRE SUBMISSIONS (contact form + contributor) ────────────
+// TANGISON Iteration 4 Fix #6: This query is ADMIN-ONLY.
+// Wire submissions contain PII (submitter email + message body).
+// Public access enabled an email-harvesting + impersonation vector.
+// Use the admin-only variant below; the public variant returns []
 
 export const listWireSubmissions = query({
-  args: { limit: v.optional(v.number()) },
+  args: {
+    limit: v.optional(v.number()),
+    adminToken: v.optional(v.string()),
+  },
   handler: async (ctx, args) => {
+    // Require admin token to access wire submissions (PII protection).
+    const ADMIN_TOKEN = process.env.CONVEX_ADMIN_TOKEN;
+    if (!ADMIN_TOKEN || !args.adminToken || args.adminToken !== ADMIN_TOKEN) {
+      return [];
+    }
     const limit = Math.min(args.limit ?? 50, 200);
     return await ctx.db
       .query("wireSubmission")
@@ -244,10 +256,21 @@ export const listWireSubmissions = query({
 });
 
 // ── NEWSLETTER ───────────────────────────────────────────────
+// TANGISON Iteration 4 Fix (M-1): getSubscriberByEmail is admin-only.
+// Public access enabled subscription-status enumeration.
+// Public callers get `null` (no leak); the subscribeNewsletter mutation
+// handles its own dedup check internally.
 
 export const getSubscriberByEmail = query({
-  args: { email: v.string() },
+  args: {
+    email: v.string(),
+    adminToken: v.optional(v.string()),
+  },
   handler: async (ctx, args) => {
+    const ADMIN_TOKEN = process.env.CONVEX_ADMIN_TOKEN;
+    if (!ADMIN_TOKEN || !args.adminToken || args.adminToken !== ADMIN_TOKEN) {
+      return null;
+    }
     return await ctx.db
       .query("newsletterSubscriber")
       .withIndex("by_email", (q) => q.eq("email", args.email.toLowerCase()))

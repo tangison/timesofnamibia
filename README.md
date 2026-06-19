@@ -9,6 +9,9 @@ enrichment, and a Python data-agent that scrapes 30+ Namibian and African
 sources. Published by [TANGISON](https://tangison.com) — the applied AI
 laboratory that builds systems for African operating conditions.
 
+**Data backend**: Convex (preferred, real-time reactive queries) with automatic
+fallback to FastAPI + Postgres. See [Convex setup](#convex-setup) below.
+
 ---
 
 ## Repository layout
@@ -136,6 +139,61 @@ This site is a TANGISON news outlet. The brand system is applied via
 - **Voice**: Clear before clever. Direct before diplomatic. Confident without
   arrogance.
 - **Tagline**: "Applied AI. Built in Africa."
+
+---
+
+## Convex setup
+
+The site uses [Convex](https://convex.dev) as its preferred data backend
+(real-time reactive queries, end-to-end TypeScript). When
+`NEXT_PUBLIC_CONVEX_URL` is not set, the site falls back to FastAPI + Postgres.
+
+### One-time provisioning (free, ~2 minutes)
+
+```bash
+cd frontend-new
+npx convex dev
+```
+
+This will:
+1. Open your browser → sign in at **app.convex.dev** with GitHub (free, no credit card)
+2. Create a new Convex deployment
+3. Generate `convex/_generated/*` with full TypeScript types (overwrites the stubs)
+4. Push `convex/schema.ts` (26 tables) to your new deployment
+5. Print a URL like `https://happy-anon-123.convex.cloud`
+
+### Configure env vars
+
+Add the following to your `.env.local` (and to Vercel env vars for production):
+
+```bash
+NEXT_PUBLIC_CONVEX_URL=https://happy-anon-123.convex.cloud
+CONVEX_ADMIN_TOKEN=<generate with: python -c "import secrets; print(secrets.token_urlsafe(32))">
+```
+
+The `CONVEX_ADMIN_TOKEN` is used by the data-agent scraper to authenticate
+ingestion mutations (`ingestArticle`, `ingestJob`, `ingestTender`, etc.) in
+`convex/mutationsAdmin.ts`.
+
+### Redeploy
+
+After adding the env vars, redeploy:
+```bash
+vercel --prod
+```
+
+All data-layer calls will now route to Convex automatically.
+
+### Convex schema
+
+26 tables ported from the original Prisma schema:
+`user`, `category`, `tag`, `articleTag`, `article`, `media`, `articleMedia`,
+`articleRevision`, `comment`, `bookmark`, `articleView`, `rssFeed`, `rssItem`,
+`job`, `tender`, `tenderSummary`, `tenderKeyDate`, `tenderCompliance`,
+`wireSubmission`, `newsletterSubscriber`, `marketDatum`, `tickerItem`,
+`faqItem`, `page`, `advert`, `siteConfig`.
+
+See `frontend-new/convex/schema.ts` for the full schema with indexes.
 
 ---
 

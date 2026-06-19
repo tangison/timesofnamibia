@@ -1,10 +1,22 @@
 // ============================================================
 // Times of Namibia — RSS Ingestion Engine
-// Fetches RSS/Atom feeds, parses items, creates Articles
+// Fetches RSS/Atom feeds, parses items, creates Articles.
+//
+// TANGISON Iteration 4 Fix #12 (partial): Article creation now
+// dispatches to Convex (api.mutationsAdmin.ingestArticle) when
+// NEXT_PUBLIC_CONVEX_URL is set + CONVEX_ADMIN_TOKEN is configured.
+// Falls back to Prisma db.article.create() otherwise.
+//
+// TODO (post-Convex-provisioning): migrate RssFeed + RssItem CRUD
+// to Convex as well, then retire Prisma entirely.
 // ============================================================
 
 import Parser from "rss-parser";
 import { db } from "./db";
+import { convexClient } from "@/lib/convex";
+import { api } from "@convex/_generated/api";
+
+const CONVEX_ADMIN_TOKEN = process.env.CONVEX_ADMIN_TOKEN;
 
 const parser = new Parser({
   timeout: 15000,
@@ -162,7 +174,33 @@ export async function ingestFeed(feedId: string): Promise<IngestionResult> {
 
         const slug = generateSlug(rssItem.title, rssItem.pubDate || undefined);
 
-        // Check for slug collision
+        // TANGISON Iteration 4 Fix #12: prefer Convex admin mutation for article
+        // creation when configured. Falls back to Prisma otherwise.
+        if (convexClient && CONVEX_ADMIN_TOKEN) {
+          try {
+            await convexClient.mutation(api.mutationsAdmin.ingestArticle, {
+              adminToken: CONVEX_ADMIN_TOKEN,
+              slug,
+              headline: rssItem.title,
+              subheadline: generateExcerpt(rawContent, 180),
+              content: plainContent,
+              excerpt: generateExcerpt(rawContent, 250),
+              source: "rss",
+              section: feed.category?.toLowerCase() || "national",
+              categorySlug: feed.category?.toLowerCase() || undefined,
+              authorLine: rssItem.author || feed.name,
+              publishedAt: rssItem.pubDate ? rssItem.pubDate.getTime() : Date.now(),
+              rssGuid: guid,
+              readingTime: estimateReadingTime(plainContent),
+            });
+            result.articlesCreated++;
+          } catch (err) {
+            console.error(`[rss-ingestion] Convex ingest failed for "${rssItem.title}":`, err);
+          }
+          continue;
+        }
+
+        // Fallback: Prisma
         const slugExists = await db.article.findUnique({ where: { slug } });
         if (slugExists) continue;
 

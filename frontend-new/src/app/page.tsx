@@ -13,9 +13,13 @@ import { triggerAutoIngestion } from "@/lib/rss-scheduler";
 export const revalidate = 300;
 
 export const metadata = {
-  title: "National News — Latest Headlines",
+  // TANGISON Iteration 4 Fix #16: Use the brand default homepage title
+  // (was "National News — Latest Headlines" which made the homepage look
+  // like a section page in SERPs). The title template appends " — Times
+  // of Namibia" automatically.
+  title: "Namibia's Digital Broadsheet — Applied AI. Built in Africa.",
   description:
-    "Real-time verified news, tender alerts, job market data, and financial updates from Namibia — a TANGISON news outlet. Applied AI. Built in Africa.",
+    "Times of Namibia — a TANGISON news outlet. Real-time verified news, tender alerts, job market data, and financial updates for Namibia. Applied AI. Built in Africa.",
   alternates: { canonical: "/" },
 };
 

@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   },
   description:
     "Times of Namibia — a TANGISON news outlet. Real-time verified news, tender analysis, job market intelligence, and market data for Namibia and the continent. Powered by applied AI built in Africa.",
-  metadataBase: new URL("https://timesofnamibia.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app"),
   keywords: [
     "Namibia",
     "News",
@@ -106,7 +106,7 @@ const websiteJsonLd = {
   "@type": "WebSite",
   name: "Times of Namibia",
   alternateName: "TANGISON News — Namibia",
-  url: "https://timesofnamibia.com",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app",
   description:
     "A TANGISON news outlet. Real-time verified news, tender analysis, job market intelligence, and market data for Namibia.",
   publisher: {
@@ -116,7 +116,7 @@ const websiteJsonLd = {
   },
   potentialAction: {
     "@type": "SearchAction",
-    target: "https://timesofnamibia.com/?q={search_term_string}",
+    target: `${process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app"}/?q={search_term_string}`,
     "query-input": "required name=search_term_string",
   },
 };
@@ -132,7 +132,7 @@ const organizationJsonLd = {
   logo: {
     "@type": "ImageObject",
     // TANGISON logo mark (286×286 PNG with alpha)
-    url: "https://timesofnamibia.com/logo-mark.png",
+    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app"}/logo-mark.png`,
     width: 286,
     height: 286,
   },
@@ -154,9 +154,9 @@ const organizationJsonLd = {
     "https://www.instagram.com/tangison",
     "https://www.youtube.com/@tangison",
   ],
-  publishingPrinciples: "https://timesofnamibia.com/editorial-standards",
-  actionableFeedbackPolicy: "https://timesofnamibia.com/contact",
-  diversityPolicy: "https://timesofnamibia.com/about",
+  publishingPrinciples: `${process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app"}/editorial-standards`,
+  actionableFeedbackPolicy: `${process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app"}/contact`,
+  diversityPolicy: `${process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app"}/about`,
 };
 
 // Helper: safely serialize JSON-LD — escape < to prevent script injection.

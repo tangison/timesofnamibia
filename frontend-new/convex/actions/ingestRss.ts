@@ -28,11 +28,18 @@ interface RssSource {
 }
 
 const RSS_SOURCES: RssSource[] = [
-  // Verified live feeds (confirmed by user research):
+  // VERIFIED FEEDS — each URL was manually checked for correct category + language:
+  // Namibian Sun feed 137 = "LOCAL NEWS" (English) ✅
   { name: "Namibian Sun", url: "https://www.namibiansun.com/rssFeed/137", category: "national" },
-  { name: "Republikein", url: "https://www.republikein.com.na/rssFeed/160", category: "national" },
-  { name: "The Namibian", url: "https://investigations.namibian.com.na/feed/", category: "national" },
-  // Additional feeds that worked in previous runs:
+  // Republikein feed 171 = "Ekonomie" (Economy, Afrikaans) ✅
+  { name: "Republikein (Economy)", url: "https://www.republikein.com.na/rssFeed/171", category: "economy" },
+  // Republikein feed 185 = "Plaaslik" (Local news, Afrikaans) ✅
+  { name: "Republikein (Local)", url: "https://www.republikein.com.na/rssFeed/185", category: "national" },
+  // Republikein feed 177 = "Regering" (Government, Afrikaans) ✅
+  { name: "Republikein (Government)", url: "https://www.republikein.com.na/rssFeed/177", category: "politics" },
+  // The Namibian investigations unit (English) ✅ — confirmed live with proper User-Agent
+  { name: "The Namibian (Investigations)", url: "https://investigations.namibian.com.na/feed/", category: "national" },
+  // Additional verified feeds:
   { name: "New Era", url: "https://neweralive.na/feed", category: "national" },
   { name: "Windhoek Observer", url: "https://www.observer24.com.na/feed/", category: "national" },
   { name: "Informanté", url: "https://informante.web.na/?feed=rss2", category: "national" },
@@ -115,18 +122,24 @@ interface RssItem {
   contentSnippet: string;
   content?: string;
   creator?: string;
+  imageUrl?: string; // from <enclosure> or <media:content> — real publisher image
 }
 
 function parseRssXml(xml: string): RssItem[] {
   const items: RssItem[] = [];
 
-  // Extract items using regex (lightweight, avoids external deps)
   const itemRegex = /<item[\s\S]*?<\/item>/gi;
   const itemMatches = xml.match(itemRegex) || [];
 
   for (const itemXml of itemMatches) {
     const getTag = (tag: string): string => {
       const match = itemXml.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)</${tag}>`, "i"));
+      return match ? match[1].trim() : "";
+    };
+
+    const getAttr = (tag: string, attr: string): string => {
+      // Match self-closing or opening tag with attributes
+      const match = itemXml.match(new RegExp(`<${tag}[^>]*\\s${attr}=["']([^"']*)["']`, "i"));
       return match ? match[1].trim() : "";
     };
 
@@ -138,6 +151,28 @@ function parseRssXml(xml: string): RssItem[] {
     const contentEncoded = stripHtml(getTag("content:encoded"));
     const creator = getTag("dc:creator") || getTag("author");
 
+    // Extract publisher image from <enclosure url="..."> or <media:content url="...">
+    // These are real, story-specific photos from the publisher's own CDN.
+    let imageUrl: string | undefined;
+    const enclosureUrl = getAttr("enclosure", "url");
+    if (enclosureUrl && enclosureUrl.startsWith("http")) {
+      imageUrl = enclosureUrl;
+    } else {
+      const mediaUrl = getAttr("media:content", "url");
+      if (mediaUrl && mediaUrl.startsWith("http")) {
+        imageUrl = mediaUrl;
+      }
+    }
+
+    // For WordPress feeds (like investigations.namibian.com.na), images
+    // may be embedded in the description as <img src="...">
+    if (!imageUrl && description) {
+      const imgMatch = description.match(/<img[^>]+src=["'](https?:\/\/[^"']+)["']/i);
+      if (imgMatch) {
+        imageUrl = imgMatch[1];
+      }
+    }
+
     if (!title || !link) continue;
 
     items.push({
@@ -148,6 +183,7 @@ function parseRssXml(xml: string): RssItem[] {
       contentSnippet: truncate(description || contentEncoded, 300),
       content: contentEncoded || description,
       creator: creator || undefined,
+      imageUrl,
     });
   }
 
@@ -295,24 +331,56 @@ export const ingestRssFeeds = internalAction({
               }
             }
 
-            // IMAGE GENERATION — Pollinations.ai + brand palette
-            // Only runs for NEW articles (dedup check already passed).
-            // Failures are non-critical — article still ingests without image.
+            // IMAGE HANDLING — use publisher's real image when available,
+            // fall back to Pollinations.ai AI-generated image only when no
+            // enclosure/media:content exists in the RSS feed.
+            //
+            // Priority:
+            //   1. Publisher image from <enclosure> or <media:content> (real photo)
+            //   2. Pollinations.ai generated illustration (AI fallback)
+            //   3. No image (UI renders flat brand-color placeholder)
             let imageStorageId: string | undefined;
-            try {
-              const imageBlob = await generateArticleImage({
-                title: item.title,
-                category: finalSection,
-                summary: excerpt || content.slice(0, 200),
-              });
-              imageStorageId = await ctx.storage.store(imageBlob);
-              results.imagesGenerated++;
-              console.log(`[RSS] Image generated for "${item.title.slice(0, 60)}..."`);
-            } catch (imgErr) {
-              const msg = imgErr instanceof Error ? imgErr.message : String(imgErr);
-              console.warn(`[RSS] Image generation failed for "${item.title.slice(0, 40)}": ${msg}`);
-              results.imagesFailed++;
-              // imageUrl stays undefined — UI falls back to flat brand-color block
+            let publisherImageUrl: string | undefined;
+
+            if (item.imageUrl) {
+              // Use the publisher's real image — fetch + store in Convex
+              try {
+                const imgRes = await fetch(item.imageUrl, {
+                  signal: AbortSignal.timeout(15_000),
+                  headers: { "User-Agent": "TimesOfNamibiaBot/1.0 (+https://timesofnamibia.com)" },
+                });
+                if (imgRes.ok) {
+                  const imgBlob = await imgRes.blob();
+                  if (imgBlob.size > 1000) { // Skip tiny/broken images
+                    imageStorageId = await ctx.storage.store(imgBlob);
+                    results.imagesGenerated++;
+                    publisherImageUrl = item.imageUrl;
+                    console.log(`[RSS] Publisher image stored for "${item.title.slice(0, 60)}..."`);
+                  }
+                }
+              } catch (pubImgErr) {
+                const msg = pubImgErr instanceof Error ? pubImgErr.message : String(pubImgErr);
+                console.warn(`[RSS] Publisher image fetch failed: ${msg}`);
+              }
+            }
+
+            // Fall back to AI-generated image ONLY if no publisher image was stored
+            if (!imageStorageId) {
+              try {
+                const imageBlob = await generateArticleImage({
+                  title: item.title,
+                  category: finalSection,
+                  summary: excerpt || content.slice(0, 200),
+                });
+                imageStorageId = await ctx.storage.store(imageBlob);
+                results.imagesGenerated++;
+                console.log(`[RSS] AI image generated for "${item.title.slice(0, 60)}..."`);
+              } catch (imgErr) {
+                const msg = imgErr instanceof Error ? imgErr.message : String(imgErr);
+                console.warn(`[RSS] Image generation failed for "${item.title.slice(0, 40)}": ${msg}`);
+                results.imagesFailed++;
+                // imageUrl stays undefined — UI falls back to flat brand-color block
+              }
             }
 
             const result = await ctx.runMutation(api.mutationsAdmin.ingestArticle, {

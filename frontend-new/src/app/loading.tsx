@@ -1,50 +1,42 @@
 import TonLayout from "@/components/ton/TonLayout";
-import SkeletonCard from "@/components/ton/SkeletonCard";
 
+/**
+ * Loading state for the homepage.
+ *
+ * IMPORTANT: No visible "Loading..." text — this HTML is also served
+ * to crawlers during ISR revalidation. Use only silent visual skeleton
+ * elements (animate-pulse blocks) so it doesn't hurt SEO or perceived
+ * load speed.
+ */
 export default function HomeLoading() {
   return (
     <TonLayout activePage="national">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        {/* Above the fold label */}
-        <div className="flex items-center gap-3 pt-5 sm:pt-6 md:pt-8 pb-0">
-          <div className="flex-1 border-t border-ton-black/10" />
-          <div className="font-mono text-[8px] tracking-[0.3em] uppercase text-ton-black/20 font-normal animate-pulse">
-            Loading...
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-12">
+        {/* Hero skeleton */}
+        <div className="mb-16 border-b border-ton-black/10 pb-16">
+          <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
+            <div className="flex-1 space-y-6">
+              <div className="h-6 w-32 bg-ton-black/8 animate-pulse" />
+              <div className="h-12 w-full bg-ton-black/8 animate-pulse" />
+              <div className="h-12 w-3/4 bg-ton-black/8 animate-pulse" />
+              <div className="h-6 w-full bg-ton-black/5 animate-pulse" />
+              <div className="h-6 w-5/6 bg-ton-black/5 animate-pulse" />
+            </div>
+            <div className="w-full md:w-5/12 h-64 md:h-96 bg-ton-black/5 animate-pulse" />
           </div>
-          <div className="flex-1 border-t border-ton-black/10" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-0 py-4 sm:py-5 md:py-6">
-          {/* Left column skeleton */}
-          <div className="md:col-span-3 pr-0 md:pr-5 space-y-5">
-            <div className="border-t-2 border-ton-black/10 pt-2 mb-3">
-              <div className="h-3 w-20 bg-ton-black/8 animate-pulse" />
+        {/* Article grid skeleton */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="bg-ton-cream/50 p-6">
+              <div className="h-3 w-20 bg-ton-black/8 animate-pulse mb-4" />
+              <div className="h-5 w-full bg-ton-black/8 animate-pulse mb-2" />
+              <div className="h-5 w-3/4 bg-ton-black/8 animate-pulse mb-4" />
+              <div className="h-3 w-full bg-ton-black/5 animate-pulse mb-2" />
+              <div className="h-3 w-5/6 bg-ton-black/5 animate-pulse" />
             </div>
-            {Array.from({ length: 5 }).map((_, i) => (
-              <div key={i} className={`py-2.5 ${i > 0 ? "border-t border-ton-black/5" : ""}`}>
-                <div className="h-4 w-full bg-ton-black/8 animate-pulse mb-1" />
-                <div className="h-2.5 w-2/3 bg-ton-black/5 animate-pulse" />
-              </div>
-            ))}
-          </div>
-
-          {/* Center column skeleton */}
-          <div className="md:col-span-6 px-0 md:px-5 mt-5 md:mt-0">
-            <SkeletonCard lines={6} />
-          </div>
-
-          {/* Right column skeleton */}
-          <div className="md:col-span-3 pl-0 md:pl-5 mt-5 md:mt-0 space-y-5">
-            <div className="border-t-2 border-ton-black/10 pt-2 mb-3">
-              <div className="h-3 w-24 bg-ton-black/8 animate-pulse" />
-            </div>
-            {Array.from({ length: 5 }).map((_, i) => (
-              <div key={i} className={`py-2.5 ${i > 0 ? "border-t border-ton-black/5" : ""}`}>
-                <div className="h-4 w-full bg-ton-black/8 animate-pulse mb-1" />
-                <div className="h-2.5 w-1/2 bg-ton-black/5 animate-pulse" />
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
     </TonLayout>

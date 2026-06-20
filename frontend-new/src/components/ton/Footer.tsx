@@ -3,20 +3,20 @@ export default function Footer() {
     <footer className="bg-ton-black text-ton-cream mt-auto">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-6">
-          {/* Brand — real TANGISON logo (white variant for dark bg) */}
+          {/* Brand — TANGISON logo mark (white variant for dark bg) */}
           <div>
             <div className="mb-3">
               <img
-                src="/logo-white.webp"
+                src="/logo-mark-white.png"
                 alt="TANGISON — Applied AI. Built in Africa."
-                width={140}
-                height={46}
+                width={36}
+                height={36}
                 loading="lazy"
-                className="h-7 w-auto opacity-80"
+                className="w-9 h-9 opacity-80"
               />
             </div>
-            <p className="font-serif italic text-ton-cream/40 text-sm leading-relaxed">
-              Namibia. Informed. Instantly.
+            <p className="font-mono text-[10px] text-ton-cream/40 tracking-[0.15em] uppercase leading-relaxed">
+              Applied AI.<br />Built in Africa.
             </p>
           </div>
 

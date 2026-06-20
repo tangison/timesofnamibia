@@ -13,20 +13,22 @@ export default function manifest(): MetadataRoute.Manifest {
     orientation: "portrait-primary",
     icons: [
       {
-        src: "/apple-touch-icon.png",
-        sizes: "180x180",
+        src: "/logo-mark.png",
+        sizes: "192x192",
+        type: "image/png",
+        purpose: "maskable",
+      },
+      {
+        src: "/logo-mark.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "maskable",
+      },
+      {
+        src: "/logo-mark.png",
+        sizes: "286x286",
         type: "image/png",
         purpose: "any",
-      },
-      {
-        src: "/favicon-32.png",
-        sizes: "32x32",
-        type: "image/png",
-      },
-      {
-        src: "/favicon-48.ico",
-        sizes: "48x48",
-        type: "image/x-icon",
       },
     ],
     categories: ["news", "business", "education"],

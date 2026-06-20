@@ -47,7 +47,7 @@ export const metadata: Metadata = {
       "A TANGISON news outlet. Real-time verified news, tender analysis, job market intelligence, and market data for Namibia.",
     images: [
       {
-        url: "/og-default.svg",
+        url: "/og-default.png",
         width: 1200,
         height: 630,
         alt: "Times of Namibia — Applied AI. Built in Africa.",
@@ -59,13 +59,13 @@ export const metadata: Metadata = {
     title: "Times of Namibia — Applied AI. Built in Africa.",
     description:
       "A TANGISON news outlet. Real-time verified news, tender analysis, job market intelligence, and market data for Namibia.",
-    images: ["/og-default.svg"],
+    images: ["/og-default.png"],
   },
   icons: {
     icon: [
+      { url: "/logo-mark.png", sizes: "286x286", type: "image/png" },
       { url: "/favicon.ico", sizes: "any" },
       { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
-      { url: "/favicon-48.ico", sizes: "48x48" },
     ],
     apple: "/apple-touch-icon.png",
   },
@@ -112,10 +112,9 @@ const organizationJsonLd = {
   url: "https://tangison.com",
   logo: {
     "@type": "ImageObject",
-    // Google requires PNG/JPG ≥ 112×112 for publisher logo.
-    // Real TANGISON logo (874×286) — downloaded from tangison.com/images/logo.png
-    url: "https://timesofnamibia.com/logo.png",
-    width: 874,
+    // TANGISON logo mark (286×286 PNG with alpha)
+    url: "https://timesofnamibia.com/logo-mark.png",
+    width: 286,
     height: 286,
   },
   parentOrganization: {

@@ -80,8 +80,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       url: "https://tangison.com",
       logo: {
         "@type": "ImageObject",
-        url: "https://timesofnamibia.com/logo.png",
-        width: 874,
+        url: "https://timesofnamibia.com/logo-mark.png",
+        width: 286,
         height: 286,
       },
     },

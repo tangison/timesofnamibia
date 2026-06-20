@@ -7,9 +7,8 @@ const ALLOWED_PATHS = [
   "/api/",
   "/_next/",
   "/favicon",
-  "/logo.webp",
-  "/logo-white.webp",
-  "/logo.png",
+  "/logo-mark.png",
+  "/logo-mark-white.png",
   "/apple-touch-icon.png",
   "/robots.txt",
   "/sitemap.xml",
@@ -32,5 +31,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|favicon-32.png|favicon-48.ico|apple-touch-icon.png|logo.webp|logo-white.webp|logo.png|robots.txt).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|favicon-32.png|favicon-48.ico|favicon-48.png|favicon-192.png|apple-touch-icon.png|logo-mark.png|logo-mark-white.png|robots.txt).*)"],
 };

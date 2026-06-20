@@ -1,79 +1,52 @@
 import Image from "next/image";
 
+/**
+ * TANGISON Masthead — intentionally minimalistic.
+ *
+ * The wordmark "TIMES OF NAMIBIA" has been removed per brand direction.
+ * The TANGISON logo mark is now the sole brand identifier.
+ *
+ * Design principles applied:
+ * - Siegel+Gale: removed everything that does not add meaning
+ * - Pentagram: every element traces back to a strategic principle
+ * - Zero border-radius (TANGISON brand rule)
+ * - Generous whitespace
+ * - Monospace metadata (JetBrains Mono) for editorial authority
+ */
 export default function Masthead() {
-  const editionNumber = 127;
-
   return (
-    <header className="bg-ton-cream py-4 sm:py-5 md:py-6 ton-masthead">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
-        {/* Top thin rule — broadsheet tradition */}
-        <div className="border-t border-ton-black/20 mb-3 sm:mb-4" />
-
-        {/* Top info line — EST. WINDHOEK + edition box */}
-        <div className="flex items-center justify-center gap-3 sm:gap-4 mb-2 sm:mb-3">
-          <span className="font-mono text-[8px] sm:text-[9px] text-ton-black/25 tracking-[0.25em] uppercase">
-            Est. Windhoek
-          </span>
-          <span className="bg-ton-black text-ton-cream font-mono text-[8px] sm:text-[9px] font-bold tracking-wider px-2 py-0.5 leading-none">
-            No. {editionNumber}
-          </span>
-          <span className="font-mono text-[8px] sm:text-[9px] text-ton-black/25 tracking-[0.25em] uppercase">
-            Vol. I
-          </span>
-        </div>
-
-        {/* Thin decorative rule above title */}
-        <div className="border-t border-ton-black/30 mb-2 sm:mb-3" />
-
-        {/* Title — pure typographic authority */}
-        <div className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight text-ton-black leading-[0.9]">
-          TIMES OF NAMIBIA
-        </div>
-
-        {/* Short red accent rule — newspaper signature */}
-        <div className="flex justify-center mt-2 sm:mt-3">
-          <div className="w-12 sm:w-16 border-t border-ton-red" />
-        </div>
-
-        {/* Tagline — more confident, slightly larger */}
-        <div className="mt-2 sm:mt-2.5">
-          <span className="font-serif italic text-ton-black/45 text-xs sm:text-sm md:text-[15px] tracking-wide">
-            Namibia. Informed. Instantly.
-          </span>
-        </div>
-
-        {/* TANGISON publisher mark — real logo from tangison.com */}
-        <div className="flex items-center justify-center gap-2 mt-3 sm:mt-4">
-          <span className="font-mono text-[8px] sm:text-[9px] text-ton-black/35 tracking-[0.25em] uppercase">
-            A
-          </span>
+    <header className="bg-ton-cream py-6 sm:py-8 md:py-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between">
+        {/* Logo mark — sole brand identifier */}
+        <a href="/" aria-label="Times of Namibia — home" className="flex-shrink-0">
           <Image
-            src="/logo.webp"
-            alt="TANGISON — Applied AI. Built in Africa."
-            width={120}
-            height={39}
-            priority={false}
-            className="h-5 sm:h-6 w-auto opacity-70"
+            src="/logo-mark.png"
+            alt="Times of Namibia"
+            width={40}
+            height={40}
+            priority
+            className="w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11"
           />
-          <span className="font-mono text-[8px] sm:text-[9px] text-ton-black/35 tracking-[0.25em] uppercase">
-            Publication
+        </a>
+
+        {/* Edition metadata — right-aligned, monospace */}
+        <div className="flex items-center gap-3 sm:gap-4">
+          <span className="font-mono text-[8px] sm:text-[9px] text-ton-black/40 tracking-[0.25em] uppercase">
+            {new Date().toLocaleDateString("en-GB", {
+              day: "2-digit",
+              month: "short",
+              year: "numeric",
+            })}
+          </span>
+          <span className="font-mono text-[8px] sm:text-[9px] text-ton-black/40 tracking-[0.25em] uppercase hidden sm:inline">
+            Windhoek
           </span>
         </div>
+      </div>
 
-        {/* Date line */}
-        <div className="font-mono text-[8px] sm:text-[9px] text-ton-black/25 tracking-[0.2em] uppercase mt-1.5 sm:mt-2">
-          {new Date().toLocaleDateString("en-GB", {
-            weekday: "long",
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-          })}
-        </div>
-
-        {/* Bottom heavy rule — like a real newspaper */}
-        <div className="mt-3 sm:mt-4 border-t-2 sm:border-t-[3px] border-ton-black" />
-        {/* Secondary thin rule — broadsheet double-rule */}
-        <div className="border-t border-ton-black/20 mt-1" />
+      {/* Single thin rule — minimal broadsheet nod */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-4 sm:mt-5">
+        <div className="border-t border-ton-black/15" />
       </div>
     </header>
   );

@@ -147,7 +147,7 @@ export default function HomeView({
   const sidebarTenders = tenders.slice(0, 3);
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 tangison-fade">
       {/* ====== ABOVE THE FOLD label ====== */}
       <div className="flex items-center gap-3 pt-5 sm:pt-6 md:pt-8 pb-0">
         <div className="flex-1 border-t border-ton-black/10" />
@@ -164,7 +164,7 @@ export default function HomeView({
       <div className="grid grid-cols-1 md:grid-cols-12 gap-0 py-4 sm:py-5 md:py-6">
 
         {/* LEFT COLUMN — Sidebar Data */}
-        <div className="md:col-span-3 ton-column-rule pr-0 md:pr-5 space-y-5">
+        <div className="md:col-span-3 ton-column-rule pr-0 md:pr-5 space-y-5 tangison-enter tangison-stagger-1">
           {/* Job Scraper Summary */}
           <div>
             {/* Newspaper column header with rule */}
@@ -243,7 +243,7 @@ export default function HomeView({
         </div>
 
         {/* CENTER COLUMN — Main Article */}
-        <div className="md:col-span-6 ton-column-rule px-0 md:px-5 mt-5 md:mt-0">
+        <div className="md:col-span-6 ton-column-rule px-0 md:px-5 mt-5 md:mt-0 tangison-enter tangison-stagger-2">
           {featuredArticle ? (
             <article>
               {/* Category */}
@@ -336,7 +336,7 @@ export default function HomeView({
         </div>
 
         {/* RIGHT COLUMN */}
-        <div className="md:col-span-3 pl-0 md:pl-5 mt-5 md:mt-0 space-y-5">
+        <div className="md:col-span-3 pl-0 md:pl-5 mt-5 md:mt-0 space-y-5 tangison-enter tangison-stagger-3">
           {/* News in Brief (was Scraped Insights) */}
           <div>
             {/* Newspaper column header with rule */}

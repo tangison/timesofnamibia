@@ -8,6 +8,8 @@
  * @module
  */
 
+import type * as actions_ingestRss from "../actions/ingestRss.js";
+import type * as crons from "../crons.js";
 import type * as mutations from "../mutations.js";
 import type * as mutationsAdmin from "../mutationsAdmin.js";
 import type * as queries from "../queries.js";
@@ -19,6 +21,8 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  "actions/ingestRss": typeof actions_ingestRss;
+  crons: typeof crons;
   mutations: typeof mutations;
   mutationsAdmin: typeof mutationsAdmin;
   queries: typeof queries;

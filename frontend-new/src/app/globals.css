@@ -160,33 +160,93 @@
   }
   body {
     @apply bg-ton-cream text-ton-black font-sans;
-    /* Newspaper body text — generous line-height, tight letter-spacing */
     line-height: 1.7;
     letter-spacing: -0.01em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* Subtle paper grain texture */
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.015'/%3E%3C/svg%3E");
-    background-repeat: repeat;
-    background-size: 256px 256px;
+  }
+
+  /* TANGISON: Zero border-radius on ALL elements — brand rule */
+  * {
+    border-radius: 0 !important;
   }
 }
 
-/* ========= NEWSPAPER TYPOGRAPHY ========= */
+/* ========= TANGISON TYPOGRAPHY ========= */
 
-/* Serif body text should feel like broadsheet columns */
 .font-serif {
   letter-spacing: -0.02em;
 }
 
-/* Mono text should feel like a typesetter's marks */
 .font-mono {
   letter-spacing: 0.02em;
 }
 
-/* Headlines should be authoritative — extra tight tracking */
 h1, h2, h3 {
   letter-spacing: -0.03em;
+}
+
+/* ========= TANGISON MOTION PRINCIPLES ========= */
+/* Deliberate, not flashy. Architectural, not theatrical. */
+
+@keyframes tangison-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tangison-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes tangison-signal-travel {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Standard entrance: 0.8s, cubic-bezier fast-start gentle-settle */
+.tangison-enter {
+  animation: tangison-fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.tangison-fade {
+  animation: tangison-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Stagger delays for grid items (0.08s between items) */
+.tangison-stagger-1 { animation-delay: 0.08s; }
+.tangison-stagger-2 { animation-delay: 0.16s; }
+.tangison-stagger-3 { animation-delay: 0.24s; }
+.tangison-stagger-4 { animation-delay: 0.32s; }
+.tangison-stagger-5 { animation-delay: 0.40s; }
+.tangison-stagger-6 { animation-delay: 0.48s; }
+
+/* Signal travel — for loading bars + ticker accents */
+.tangison-signal {
+  animation: tangison-signal-travel 1.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .tangison-enter,
+  .tangison-fade,
+  .tangison-signal,
+  .tangison-stagger-1,
+  .tangison-stagger-2,
+  .tangison-stagger-3,
+  .tangison-stagger-4,
+  .tangison-stagger-5,
+  .tangison-stagger-6 {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 /* ========= TON TICKER ========= */

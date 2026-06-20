@@ -76,7 +76,8 @@ export default async function SectionPage({ params }: SectionPageProps) {
             </span>
             {category && (
               <span className="font-mono text-[9px] text-ton-black/20">
-                {category._count.articles} articles
+                {/* Part 1 Fix #4: Correct pluralization */}
+                {category._count.articles} {category._count.articles === 1 ? "article" : "articles"}
               </span>
             )}
           </div>

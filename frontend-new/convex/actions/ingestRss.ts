@@ -28,6 +28,7 @@ interface RssSource {
 }
 
 const RSS_SOURCES: RssSource[] = [
+  // ══ NAMIBIA (9 feeds) ═══════════════════════════════════════
   // VERIFIED FEEDS — each URL was manually checked for correct category + language:
   // Namibian Sun feed 137 = "LOCAL NEWS" (English) ✅
   { name: "Namibian Sun", url: "https://www.namibiansun.com/rssFeed/137", category: "national" },
@@ -44,6 +45,18 @@ const RSS_SOURCES: RssSource[] = [
   { name: "Windhoek Observer", url: "https://www.observer24.com.na/feed/", category: "national" },
   { name: "Informanté", url: "https://informante.web.na/?feed=rss2", category: "national" },
   { name: "Namibia Daily News", url: "https://namibiadailynews.info/feed/", category: "national" },
+
+  // ══ CHINA (2 feeds) ═════════════════════════════════════════
+  // SCMP — Hong Kong-based, editorially independent, English ✅
+  { name: "South China Morning Post", url: "https://www.scmp.com/rss/91/feed", category: "world" },
+  // China Daily — state-affiliated, business/general news, English ✅
+  { name: "China Daily", url: "https://www.chinadaily.com.cn/rss/world_rss.xml", category: "world" },
+
+  // ══ EUROPE (2 feeds) ═══════════════════════════════════════
+  // Telegraph — UK, right-leaning, English ✅
+  { name: "The Telegraph", url: "https://www.telegraph.co.uk/news/rss.xml", category: "world" },
+  // Euronews — pan-European, wire-style, English ✅
+  { name: "Euronews", url: "https://www.euronews.com/rss", category: "world" },
 ];
 
 // ── SECTION CLASSIFICATION KEYWORDS ──────────────────────────
@@ -79,16 +92,81 @@ function classifySection(title: string, content: string): string {
   return "national";
 }
 
-function stripHtml(html: string): string {
-  return html
+/**
+ * Comprehensive text cleaning for RSS content.
+ * Handles: CDATA stripping, HTML tag removal, ALL entity decoding
+ * (named, numeric decimal, and hex), whitespace normalization.
+ *
+ * Part 1 Fix #1 + #2: Previously only title/description were cleaned,
+ * and numeric entities like &#8230; and CDATA wrappers like
+ * <![CDATA[Correspondent]]> were not handled. Now applied to ALL fields.
+ */
+function cleanText(raw: string): string {
+  return raw
+    // Strip CDATA wrappers: <![CDATA[...]]> → ...
+    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
+    // Strip HTML tags
     .replace(/<[^>]*>/g, "")
+    // Decode named entities
     .replace(/&nbsp;/g, " ")
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
     .replace(/&#39;/g, "'")
+    // Decode numeric decimal entities: &#8230; → …
+    .replace(/&#(\d+);/g, (_m, code) => String.fromCharCode(parseInt(code, 10)))
+    // Decode hex entities: &#x2026; → …
+    .replace(/&#x([0-9a-fA-F]+);/g, (_m, code) => String.fromCharCode(parseInt(code, 16)))
+    // Normalize whitespace
     .replace(/\s+/g, " ")
+    .trim();
+}
+
+// Keep the old name as an alias for backwards compat
+const stripHtml = cleanText;
+
+/**
+ * Convert HTML content to plain text while preserving paragraph breaks.
+ * Converts <p>, <br>, <div> to double newlines, then strips remaining tags.
+ * Used for content:encoded so article bodies have proper paragraph structure.
+ *
+ * Part 1 Fix #7: Previously the raw RSS teaser was dumped as body text
+ * with no paragraph breaks. Now we extract content:encoded and format it.
+ */
+function htmlToParagraphs(html: string): string {
+  return html
+    // Strip CDATA first
+    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
+    // Convert block-level elements to paragraph breaks
+    .replace(/<\/p>/gi, "\n\n")
+    .replace(/<p[^>]*>/gi, "")
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/div>/gi, "\n\n")
+    .replace(/<div[^>]*>/gi, "")
+    .replace(/<\/h[1-6]>/gi, "\n\n")
+    .replace(/<h[1-6][^>]*>/gi, "")
+    .replace(/<\/li>/gi, "\n")
+    .replace(/<li[^>]*>/gi, "• ")
+    // Strip remaining HTML tags
+    .replace(/<[^>]*>/g, "")
+    // Decode entities
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&#39;/g, "'")
+    .replace(/&#(\d+);/g, (_m, code) => String.fromCharCode(parseInt(code, 10)))
+    .replace(/&#x([0-9a-fA-F]+);/g, (_m, code) => String.fromCharCode(parseInt(code, 16)))
+    // Normalize: collapse 3+ newlines to 2, trim each paragraph
+    .replace(/\n{3,}/g, "\n\n")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0)
+    .join("\n\n")
     .trim();
 }
 
@@ -105,6 +183,53 @@ function generateSlug(title: string): string {
 function estimateReadingTime(text: string): number {
   const words = text.split(/\s+/).length;
   return Math.max(1, Math.ceil(words / 220));
+}
+
+/**
+ * Part 3 — Content Sanity Check
+ * Runs against every newly ingested article and flags issues that
+ * indicate parsing problems. Articles that fail are quarantined
+ * (not published) and logged.
+ */
+function contentSanityCheck(article: {
+  title: string;
+  content: string;
+  authorLine?: string;
+  excerpt?: string;
+}): { passed: boolean; issues: string[] } {
+  const issues: string[] = [];
+  const allText = `${article.title} ${article.content} ${article.authorLine || ""} ${article.excerpt || ""}`;
+
+  // Check for literal CDATA markers
+  if (/<!\[CDATA\[/.test(allText)) {
+    issues.push("CDATA marker found in rendered text");
+  }
+
+  // Check for unescaped HTML entity patterns (numeric or named)
+  if (/&#\d+;/.test(allText) || /&#x[0-9a-fA-F]+;/.test(allText)) {
+    issues.push("Unescaped HTML entity pattern found");
+  }
+
+  // Check for raw HTML tags inside text fields
+  if (/<[a-zA-Z][^>]*>/.test(article.content)) {
+    issues.push("Raw HTML tag fragment found in content");
+  }
+
+  // Check for suspiciously short or template-looking placeholder text
+  if (article.content.length < 50) {
+    issues.push("Content suspiciously short (<50 chars)");
+  }
+
+  if (/Editorial photograph|no stock imagery|placeholder/i.test(article.content)) {
+    issues.push("Template placeholder text found in content");
+  }
+
+  // Check for empty/null author fields
+  if (!article.authorLine || article.authorLine.trim().length === 0) {
+    issues.push("Empty author field");
+  }
+
+  return { passed: issues.length === 0, issues };
 }
 
 function truncate(text: string, max: number): string {
@@ -143,13 +268,18 @@ function parseRssXml(xml: string): RssItem[] {
       return match ? match[1].trim() : "";
     };
 
-    const title = stripHtml(getTag("title"));
-    const link = getTag("link") || getTag("guid");
-    const pubDate = getTag("pubDate");
-    const guid = getTag("guid") || link;
-    const description = stripHtml(getTag("description"));
-    const contentEncoded = stripHtml(getTag("content:encoded"));
-    const creator = getTag("dc:creator") || getTag("author");
+    // Part 1 Fix #1 + #2: Apply cleanText to ALL text fields, not just title/description.
+    // Previously the creator/author field was left raw, so CDATA wrappers like
+    // <![CDATA[Correspondent]]> rendered literally in the byline.
+    const title = cleanText(getTag("title"));
+    const link = cleanText(getTag("link") || getTag("guid"));
+    const pubDate = getTag("pubDate"); // don't clean dates
+    const guid = cleanText(getTag("guid") || link);
+    const description = cleanText(getTag("description"));
+    // Part 1 Fix #7: Use htmlToParagraphs for content:encoded so article
+    // bodies have proper paragraph breaks instead of a raw text dump.
+    const contentEncoded = htmlToParagraphs(getTag("content:encoded"));
+    const creator = cleanText(getTag("dc:creator") || getTag("author"));
 
     // Extract publisher image from <enclosure url="..."> or <media:content url="...">
     // These are real, story-specific photos from the publisher's own CDN.
@@ -261,6 +391,7 @@ export const ingestRssFeeds = internalAction({
       articlesFound: 0,
       articlesInserted: 0,
       articlesDeduped: 0,
+      quarantined: 0,
       imagesGenerated: 0,
       imagesFailed: 0,
       errors: [] as string[],
@@ -298,7 +429,15 @@ export const ingestRssFeeds = internalAction({
         const items = parseRssXml(xml);
         console.log(`[RSS] ${source.name}: ${items.length} items found`);
 
-        for (const item of items) {
+        // Part 2: Per-source item cap — no single feed can flood the homepage.
+        // Each feed contributes at most 5 items per ingestion cycle.
+        const MAX_ITEMS_PER_FEED = 5;
+        const itemsToProcess = items.slice(0, MAX_ITEMS_PER_FEED);
+        if (items.length > MAX_ITEMS_PER_FEED) {
+          console.log(`[RSS] ${source.name}: capping to ${MAX_ITEMS_PER_FEED} items (had ${items.length})`);
+        }
+
+        for (const item of itemsToProcess) {
           results.articlesFound++;
 
           try {
@@ -381,6 +520,20 @@ export const ingestRssFeeds = internalAction({
                 results.imagesFailed++;
                 // imageUrl stays undefined — UI falls back to flat brand-color block
               }
+            }
+
+            // Part 3 — Content Sanity Check
+            // Run before insertion. Quarantine (skip) articles that fail.
+            const sanityCheck = contentSanityCheck({
+              title: item.title,
+              content: content.length > 50 ? content : item.contentSnippet,
+              authorLine: item.creator || source.name,
+              excerpt,
+            });
+            if (!sanityCheck.passed) {
+              results.quarantined++;
+              console.warn(`[RSS] QUARANTINED "${item.title.slice(0, 60)}..." — issues: ${sanityCheck.issues.join(", ")}`);
+              continue; // Skip — don't publish broken content
             }
 
             const result = await ctx.runMutation(api.mutationsAdmin.ingestArticle, {

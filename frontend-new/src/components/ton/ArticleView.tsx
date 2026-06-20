@@ -158,23 +158,10 @@ export default function ArticleView({ article }: ArticleViewProps) {
             )}
           </div>
         ) : (
-          <div className="mt-6 bg-ton-black/[0.03] aspect-[16/9] relative overflow-hidden border border-ton-black/8">
-            <div className="absolute inset-0 flex items-center justify-center px-8">
-              <p className="font-serif text-sm text-ton-black/25 italic text-center leading-relaxed max-w-lg">
-                {article.imageAlt || "Editorial photograph — no stock imagery. High-contrast grayscale image accompanying this report."}
-              </p>
-            </div>
-            {article.imageGps && (
-              <div className="absolute bottom-2 left-2 bg-ton-black text-ton-cream px-2 py-1">
-                <p className="font-mono text-[7px] sm:text-[8px] leading-tight">
-                  {article.imageGps}<br />
-                  {article.publishedAt
-                    ? new Date(article.publishedAt).toISOString().replace("T", " ").slice(0, 19) + " CAT"
-                    : ""}
-                </p>
-              </div>
-            )}
-          </div>
+          // Part 1 Fix #3: Silent colored block, zero visible text.
+          // Previously showed "Editorial photograph — no stock imagery..."
+          // as visible body copy, which looked careless.
+          <div className="mt-6 bg-ton-black/[0.04] aspect-[16/9] border border-ton-black/8" />
         )}
 
         {/* Content with Drop Cap */}

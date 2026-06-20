@@ -15,6 +15,7 @@
 import { action, internalAction } from "../_generated/server";
 import { v } from "convex/values";
 import { api, internal } from "../_generated/api";
+import { generateArticleImage } from "./imageGenerator";
 
 // ── RSS FEED SOURCES ─────────────────────────────────────────
 // 15 Namibian news outlets. Each URL is validated at runtime —
@@ -224,6 +225,8 @@ export const ingestRssFeeds = internalAction({
       articlesFound: 0,
       articlesInserted: 0,
       articlesDeduped: 0,
+      imagesGenerated: 0,
+      imagesFailed: 0,
       errors: [] as string[],
     };
 
@@ -262,12 +265,22 @@ export const ingestRssFeeds = internalAction({
         for (const item of items) {
           results.articlesFound++;
 
-          // Use the admin mutation to insert (handles dedup by guid + slug)
           try {
             const content = item.content || item.contentSnippet || item.title;
             const section = classifySection(item.title, content);
             const slug = generateSlug(item.title);
             const pubDate = item.pubDate ? new Date(item.pubDate).getTime() : Date.now();
+
+            // DEDUP CHECK — do this BEFORE image generation to avoid
+            // wasting Pollinations calls on articles we'll discard.
+            const exists = await ctx.runQuery(api.queries.checkArticleExists, {
+              slug,
+              rssGuid: item.guid,
+            });
+            if (exists) {
+              results.articlesDeduped++;
+              continue; // Skip — don't generate image for duplicates
+            }
 
             // Optional: AI summarisation (only if OpenRouter key is configured
             // and the content is substantial enough to warrant it)
@@ -280,6 +293,26 @@ export const ingestRssFeeds = internalAction({
                 excerpt = ai.summary;
                 finalSection = ai.section;
               }
+            }
+
+            // IMAGE GENERATION — Pollinations.ai + brand palette
+            // Only runs for NEW articles (dedup check already passed).
+            // Failures are non-critical — article still ingests without image.
+            let imageStorageId: string | undefined;
+            try {
+              const imageBlob = await generateArticleImage({
+                title: item.title,
+                category: finalSection,
+                summary: excerpt || content.slice(0, 200),
+              });
+              imageStorageId = await ctx.storage.store(imageBlob);
+              results.imagesGenerated++;
+              console.log(`[RSS] Image generated for "${item.title.slice(0, 60)}..."`);
+            } catch (imgErr) {
+              const msg = imgErr instanceof Error ? imgErr.message : String(imgErr);
+              console.warn(`[RSS] Image generation failed for "${item.title.slice(0, 40)}": ${msg}`);
+              results.imagesFailed++;
+              // imageUrl stays undefined — UI falls back to flat brand-color block
             }
 
             const result = await ctx.runMutation(api.mutationsAdmin.ingestArticle, {
@@ -295,6 +328,7 @@ export const ingestRssFeeds = internalAction({
               publishedAt: pubDate,
               rssGuid: item.guid,
               readingTime: estimateReadingTime(content),
+              ...(imageStorageId ? { imageStorageId } : {}),
             });
 
             if (result.deduped) {

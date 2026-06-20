@@ -46,6 +46,33 @@ export const getArticleBySlug = query({
   },
 });
 
+// ── DEDUP CHECK (for RSS ingestion — avoid wasting image gen calls) ─
+// Checks if an article already exists by slug OR rssGuid.
+
+export const checkArticleExists = query({
+  args: {
+    slug: v.string(),
+    rssGuid: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const bySlug = await ctx.db
+      .query("article")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .first();
+    if (bySlug) return true;
+
+    if (args.rssGuid) {
+      const byGuid = await ctx.db
+        .query("article")
+        .withIndex("by_rssGuid", (q) => q.eq("rssGuid", args.rssGuid))
+        .first();
+      if (byGuid) return true;
+    }
+
+    return false;
+  },
+});
+
 export const getFeaturedArticle = query({
   args: {},
   handler: async (ctx) => {

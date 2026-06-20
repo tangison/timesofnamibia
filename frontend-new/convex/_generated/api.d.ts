@@ -8,6 +8,7 @@
  * @module
  */
 
+import type * as actions_imageGenerator from "../actions/imageGenerator.js";
 import type * as actions_ingestRss from "../actions/ingestRss.js";
 import type * as crons from "../crons.js";
 import type * as mutations from "../mutations.js";
@@ -21,6 +22,7 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  "actions/imageGenerator": typeof actions_imageGenerator;
   "actions/ingestRss": typeof actions_ingestRss;
   crons: typeof crons;
   mutations: typeof mutations;

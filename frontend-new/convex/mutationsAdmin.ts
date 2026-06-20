@@ -51,6 +51,7 @@ export const ingestArticle = mutation({
     categorySlug: v.optional(v.string()),
     imageUrl: v.optional(v.string()),
     imageAlt: v.optional(v.string()),
+    imageStorageId: v.optional(v.id("_storage")),
     authorLine: v.optional(v.string()),
     publishedAt: v.optional(v.number()),
     rssFeedId: v.optional(v.id("rssFeed")),
@@ -81,6 +82,13 @@ export const ingestArticle = mutation({
       }
     }
 
+    // If a storage ID was provided (from image generation), get the URL
+    let imageUrl = args.imageUrl;
+    if (args.imageStorageId) {
+      const url = await ctx.storage.getUrl(args.imageStorageId);
+      if (url) imageUrl = url;
+    }
+
     const id = await ctx.db.insert("article", {
       slug: args.slug,
       headline: args.headline,
@@ -90,7 +98,7 @@ export const ingestArticle = mutation({
       source: args.source,
       section: args.section,
       categorySlug: args.categorySlug,
-      imageUrl: args.imageUrl,
+      imageUrl,
       imageAlt: args.imageAlt,
       authorLine: args.authorLine ?? "TANGISON Editorial",
       publishedAt: args.publishedAt ?? Date.now(),

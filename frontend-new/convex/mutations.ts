@@ -174,7 +174,8 @@ export const submitComment = mutation({
     // TANGISON Iteration 4 Fix #5: identity MUST come from Convex Auth,
     // never from a client-supplied `userId` arg.
     const identity = await ctx.auth.getUserIdentity();
-    if (!identity) {
+    const email = identity?.email;
+    if (!email) {
       throw new Error(
         "Authentication required to comment. Sign in via Convex Auth."
       );
@@ -182,7 +183,7 @@ export const submitComment = mutation({
 
     const user = await ctx.db
       .query("user")
-      .withIndex("by_email", (q) => q.eq("email", identity.email))
+      .withIndex("by_email", (q) => q.eq("email", email))
       .first();
 
     if (!user) {
@@ -220,13 +221,14 @@ export const toggleBookmark = mutation({
   handler: async (ctx, args) => {
     // TANGISON Iteration 4 Fix #5: identity MUST come from Convex Auth.
     const identity = await ctx.auth.getUserIdentity();
-    if (!identity) {
+    const email = identity?.email;
+    if (!email) {
       throw new Error("Authentication required to bookmark articles.");
     }
 
     const user = await ctx.db
       .query("user")
-      .withIndex("by_email", (q) => q.eq("email", identity.email))
+      .withIndex("by_email", (q) => q.eq("email", email))
       .first();
 
     if (!user) {

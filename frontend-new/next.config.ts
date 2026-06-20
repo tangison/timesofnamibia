@@ -7,6 +7,12 @@ const nextConfig: NextConfig = {
     ".space.z.ai",
   ],
   productionBrowserSourceMaps: false,
+  images: {
+    remotePatterns: [
+      { protocol: "https", hostname: "images.unsplash.com" },
+      { protocol: "https", hostname: "plus.unsplash.com" },
+    ],
+  },
   async headers() {
     return [
       {
@@ -34,15 +40,13 @@ const nextConfig: NextConfig = {
           },
           {
             key: "Content-Security-Policy",
-            // TANGISON: dropped 'unsafe-eval'. Allow Fontshare + GA + Convex domains.
-            // Iteration 4 Fix #9: Add *.convex.cloud to connect-src so client-side
-            // useQuery/useMutation calls work once Convex is provisioned.
+            // Times of Namibia: Google Fonts + GA + Convex + Unsplash.
             value: [
               "default-src 'self'",
               "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com",
-              "style-src 'self' 'unsafe-inline' https://api.fontshare.com",
-              "img-src 'self' data: blob: https:",
-              "font-src 'self' data: https://api.fontshare.com",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "img-src 'self' data: blob: https: https://images.unsplash.com",
+              "font-src 'self' data: https://fonts.gstatic.com https://fonts.googleapis.com",
               "connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://*.convex.cloud wss://*.convex.cloud",
               "frame-ancestors 'none'",
               "base-uri 'self'",

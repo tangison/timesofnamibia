@@ -1,53 +1,78 @@
-import Image from "next/image";
+"use client";
+
+import { motion } from "framer-motion";
+import { Search, Menu } from "lucide-react";
+import { useState } from "react";
+import OffCanvasMenu from "./OffCanvasMenu";
+
+const springTransition = {
+  type: "spring" as const,
+  stiffness: 100,
+  damping: 15,
+  mass: 1,
+};
 
 /**
- * TANGISON Masthead — intentionally minimalistic.
+ * Times of Namibia — Premium Masthead
  *
- * The wordmark "TIMES OF NAMIBIA" has been removed per brand direction.
- * The TANGISON logo mark is now the sole brand identifier.
- *
- * Design principles applied:
- * - Siegel+Gale: removed everything that does not add meaning
- * - Pentagram: every element traces back to a strategic principle
- * - Zero border-radius (TANGISON brand rule)
- * - Generous whitespace
- * - Monospace metadata (JetBrains Mono) for editorial authority
+ * Design: UnifrakturMaguntia wordmark (the classic newspaper blackletter),
+ * minimal navigation, dark-theme friendly. The wordmark IS the logo —
+ * no separate icon needed. The wordmark font itself is the brand mark.
  */
 export default function Masthead() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
-    <header className="bg-ton-cream py-6 sm:py-8 md:py-10">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between">
-        {/* Logo mark — sole brand identifier */}
-        <a href="/" aria-label="Times of Namibia — home" className="flex-shrink-0">
-          <Image
-            src="/logo-mark.png"
-            alt="Times of Namibia"
-            width={40}
-            height={40}
-            priority
-            className="w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11"
-          />
+    <>
+      <motion.header
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={springTransition}
+        className="sticky top-0 z-50 bg-ton-cream/95 backdrop-blur-md border-b border-ton-black/10 px-4 md:px-8 py-4 flex justify-between items-center"
+      >
+        {/* Wordmark — UnifrakturMaguntia blackletter */}
+        <a href="/" className="flex flex-col group">
+          <div
+            className="text-3xl md:text-5xl tracking-tight leading-none text-ton-black group-hover:text-ton-red transition-colors duration-500"
+            style={{ fontFamily: "var(--font-unifraktur), 'UnifrakturMaguntia', serif" }}
+          >
+            Times of Namibia
+          </div>
+          <div className="text-[0.55rem] md:text-xs font-bold tracking-[0.2em] uppercase mt-1 text-ton-black/40">
+            Unbiased News. Global Reach.
+          </div>
         </a>
 
-        {/* Edition metadata — right-aligned, monospace */}
-        <div className="flex items-center gap-3 sm:gap-4">
-          <span className="font-mono text-[8px] sm:text-[9px] text-ton-black/40 tracking-[0.25em] uppercase">
-            {new Date().toLocaleDateString("en-GB", {
-              day: "2-digit",
-              month: "short",
-              year: "numeric",
-            })}
-          </span>
-          <span className="font-mono text-[8px] sm:text-[9px] text-ton-black/40 tracking-[0.25em] uppercase hidden sm:inline">
-            Windhoek
-          </span>
-        </div>
-      </div>
+        {/* Navigation — hidden on mobile, premium tracking */}
+        <nav className="hidden lg:flex items-center gap-8 font-bold text-sm tracking-widest text-ton-black/70 uppercase">
+          <a href="/section/national" className="hover:text-ton-red transition-colors duration-300">News</a>
+          <a href="/section/economy" className="hover:text-ton-red transition-colors duration-300">Business</a>
+          <a href="/section/opinion" className="hover:text-ton-red transition-colors duration-300">Opinion</a>
+          <a href="/section/sport" className="hover:text-ton-red transition-colors duration-300">Sport</a>
+          <a href="/section/technology" className="hover:text-ton-red transition-colors duration-300">Tech</a>
+        </nav>
 
-      {/* Single thin rule — minimal broadsheet nod */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-4 sm:mt-5">
-        <div className="border-t border-ton-black/15" />
-      </div>
-    </header>
+        {/* Actions */}
+        <div className="flex items-center gap-4 md:gap-6 text-ton-black/70">
+          <button
+            className="hover:text-ton-red transition-colors duration-300"
+            aria-label="Search"
+            onClick={() => window.dispatchEvent(new CustomEvent("ton-search-open"))}
+          >
+            <Search size={22} />
+          </button>
+          <button
+            className="hover:text-ton-red transition-colors duration-300"
+            aria-label="Menu"
+            onClick={() => setMenuOpen(true)}
+          >
+            <Menu size={24} />
+          </button>
+        </div>
+      </motion.header>
+
+      {/* Premium Off-Canvas Menu */}
+      <OffCanvasMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
+    </>
   );
 }

@@ -27,21 +27,15 @@ interface RssSource {
 }
 
 const RSS_SOURCES: RssSource[] = [
-  { name: "The Namibian", url: "https://www.namibian.com.na/rssfeed.php", category: "national" },
-  { name: "Namibian Sun", url: "https://www.namibiansun.com/rss", category: "national" },
-  { name: "Republikein", url: "https://www.republikein.com.na/rss", category: "national" },
+  // Verified live feeds (confirmed by user research):
+  { name: "Namibian Sun", url: "https://www.namibiansun.com/rssFeed/137", category: "national" },
+  { name: "Republikein", url: "https://www.republikein.com.na/rssFeed/160", category: "national" },
+  { name: "The Namibian", url: "https://investigations.namibian.com.na/feed/", category: "national" },
+  // Additional feeds that worked in previous runs:
   { name: "New Era", url: "https://neweralive.na/feed", category: "national" },
   { name: "Windhoek Observer", url: "https://www.observer24.com.na/feed/", category: "national" },
   { name: "Informanté", url: "https://informante.web.na/?feed=rss2", category: "national" },
   { name: "Namibia Daily News", url: "https://namibiadailynews.info/feed/", category: "national" },
-  { name: "Namibia Economist", url: "https://economist.com.na/feed/", category: "economy" },
-  { name: "Allgemeine Zeitung", url: "https://www.az.com.na/feed", category: "national" },
-  { name: "NBC News", url: "https://nbcnews.na/feed", category: "national" },
-  { name: "Confidente", url: "https://confidentenamibia.com/feed/", category: "national" },
-  { name: "The Villager", url: "https://thevillager.com.na/feed/", category: "economy" },
-  { name: "Oshili24", url: "https://oshili24.com.na/feed/", category: "national" },
-  { name: "Namib Times", url: "https://namibtimes.net/feed/", category: "national" },
-  { name: "The Brief", url: "https://thebrief.com.na/feed/", category: "national" },
 ];
 
 // ── SECTION CLASSIFICATION KEYWORDS ──────────────────────────

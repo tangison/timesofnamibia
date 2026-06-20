@@ -1,15 +1,34 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono } from "next/font/google";
+import { Merriweather, Lato, JetBrains_Mono, UnifrakturMaguntia } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 
-// TANGISON brand typography:
-//   Display:  Cabinet Grotesk (Fontshare, free)
-//   Body:     Satoshi (Fontshare, free)
-//   Technical: JetBrains Mono (Google Fonts)
-// Fontshare fonts are loaded via <link> in <head> below because next/font
-// doesn't support Fontshare directly. The CSS variables --font-display
-// and --font-body are defined in globals.css.
+// Times of Namibia typography:
+//   Wordmark:  UnifrakturMaguntia (Google Fonts — the masthead "Times of Namibia")
+//   Headlines: Merriweather (Google Fonts — serif, authoritative)
+//   Body:      Lato (Google Fonts — clean sans-serif)
+//   Technical: JetBrains Mono (Google Fonts — monospace for labels/metadata)
+
+const merriweather = Merriweather({
+  variable: "--font-merriweather",
+  subsets: ["latin"],
+  weight: ["400", "700", "900"],
+  display: "swap",
+});
+
+const lato = Lato({
+  variable: "--font-lato",
+  subsets: ["latin"],
+  weight: ["400", "700", "900"],
+  display: "swap",
+});
+
+const unifrakturMaguntia = UnifrakturMaguntia({
+  variable: "--font-unifraktur",
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+});
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains",
@@ -153,16 +172,7 @@ export default function RootLayout({
   return (
     <html lang="en-NA" suppressHydrationWarning>
       <head>
-        {/* TANGISON brand typography — Cabinet Grotesk + Satoshi via Fontshare */}
-        <link
-          rel="preconnect"
-          href="https://api.fontshare.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,700,800,900&f[]=satoshi@300,400,500,700,900&display=swap"
-          rel="stylesheet"
-        />
+        {/* Fonts loaded via next/font/google (Merriweather, Lato, UnifrakturMaguntia, JetBrains Mono) */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: safeJsonLd(websiteJsonLd) }}
@@ -192,7 +202,7 @@ export default function RootLayout({
         )}
       </head>
       <body
-        className={`${jetbrainsMono.variable} antialiased`}
+        className={`${merriweather.variable} ${lato.variable} ${unifrakturMaguntia.variable} ${jetbrainsMono.variable} antialiased`}
       >
         {/* Skip to content — accessibility */}
         <a

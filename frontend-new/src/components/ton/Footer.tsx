@@ -1,168 +1,61 @@
+"use client";
+
+import { motion } from "framer-motion";
+import Image from "next/image";
+
+/**
+ * Times of Namibia — Minimalist Footer
+ *
+ * Dark themed. Namibian landscape image as subtle accent.
+ * No clutter — just the wordmark, tagline, essential links, and credit.
+ */
 export default function Footer() {
   return (
-    <footer className="bg-ton-black text-ton-cream mt-auto">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-6">
-          {/* Brand — TANGISON logo mark (white variant for dark bg) */}
-          <div>
-            <div className="mb-3">
-              <img
-                src="/logo-mark-white.png"
-                alt="TANGISON — Applied AI. Built in Africa."
-                width={36}
-                height={36}
-                loading="lazy"
-                className="w-9 h-9 opacity-80"
-              />
+    <footer className="relative bg-ton-black text-ton-cream mt-20 overflow-hidden">
+      {/* Namibian landscape — subtle top accent */}
+      <div className="relative h-32 overflow-hidden">
+        <Image
+          src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1920&q=80"
+          alt="Namibian desert landscape"
+          fill
+          className="object-cover opacity-30"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-ton-black via-ton-black/60 to-transparent" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-10">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+          {/* Wordmark + tagline */}
+          <div className="flex items-center gap-4">
+            <div>
+              <div
+                className="text-3xl text-ton-cream leading-none"
+                style={{ fontFamily: "var(--font-unifraktur), 'UnifrakturMaguntia', serif" }}
+              >
+                Times of Namibia
+              </div>
+              <div className="text-[0.55rem] font-bold tracking-[0.2em] uppercase mt-1.5 text-ton-cream/40">
+                Est. 2026 • Windhoek
+              </div>
             </div>
-            <p className="font-mono text-[10px] text-ton-cream/40 tracking-[0.15em] uppercase leading-relaxed">
-              Applied AI.<br />Built in Africa.
-            </p>
           </div>
 
-          {/* TON */}
-          <div>
-            <h4 className="font-mono text-[9px] font-bold tracking-widest uppercase text-ton-cream/30 mb-3">
-              TON
-            </h4>
-            <ul className="space-y-2">
-              <li>
-                <a href="/jobs" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
-                  Job Scraper
-                </a>
-              </li>
-              <li>
-                <a href="/tender" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
-                  Tender Analysis
-                </a>
-              </li>
-              <li>
-                <a href="/contributor" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
-                  Contributors
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Documents */}
-          <div>
-            <h4 className="font-mono text-[9px] font-bold tracking-widest uppercase text-ton-cream/30 mb-3">
-              Documents
-            </h4>
-            <ul className="space-y-2">
-              <li>
-                <a href="/business-plan" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
-                  Business Plan
-                </a>
-              </li>
-              <li>
-                <a href="/plan" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
-                  The Plan
-                </a>
-              </li>
-              <li>
-                <a href="/brand" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
-                  Brand System
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Company */}
-          <div>
-            <h4 className="font-mono text-[9px] font-bold tracking-widest uppercase text-ton-cream/30 mb-3">
-              Company
-            </h4>
-            <ul className="space-y-2">
-              <li>
-                <a href="/about" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
-                  About Times of Namibia
-                </a>
-              </li>
-              <li>
-                <a href="/editorial-standards" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
-                  Editorial Standards
-                </a>
-              </li>
-              <li>
-                <a href="/contact" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
-                  Contact
-                </a>
-              </li>
-              <li>
-                <a href="/privacy" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a href="/terms" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
-                  Terms of Service
-                </a>
-              </li>
-              <li>
-                <a href="/accessibility" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
-                  Accessibility
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* TANGISON */}
-          <div>
-            <h4 className="font-mono text-[9px] font-bold tracking-widest uppercase text-ton-cream/30 mb-3">
-              TANGISON
-            </h4>
-            <ul className="space-y-2">
-              <li>
-                <a
-                  href="https://tangison.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors"
-                >
-                  tangison.com
-                </a>
-              </li>
-              <li>
-                <a href="/about" className="font-sans text-sm text-ton-cream/50 hover:text-ton-cream transition-colors">
-                  About TANGISON
-                </a>
-              </li>
-            </ul>
-            <p className="font-sans text-[11px] text-ton-cream/25 mt-3 leading-relaxed">
-              Enterprise data pipelines powering TON&apos;s real-time intelligence.
-            </p>
-          </div>
+          {/* Minimal links */}
+          <nav className="flex flex-wrap gap-x-6 gap-y-2 text-xs font-bold uppercase tracking-widest text-ton-cream/60">
+            <a href="/about" className="hover:text-ton-red transition-colors">About</a>
+            <a href="/contact" className="hover:text-ton-red transition-colors">Contact</a>
+            <a href="/editorial-standards" className="hover:text-ton-red transition-colors">Ethics</a>
+            <a href="/privacy" className="hover:text-ton-red transition-colors">Privacy</a>
+            <a href="/terms" className="hover:text-ton-red transition-colors">Terms</a>
+            <a href="/tangison" className="hover:text-ton-red transition-colors">TANGISON</a>
+          </nav>
         </div>
 
-        {/* Identity */}
-        <div className="mt-8 pt-5 border-t border-ton-cream/10">
-          <h4 className="font-mono text-[9px] font-bold tracking-widest uppercase text-ton-cream/30 mb-2">
-            Identity
-          </h4>
-          <p className="font-sans text-xs text-ton-cream/30 leading-relaxed">
-            Built with Times OS v2.1. All data sourced from public government portals
-            and verified channels.
-          </p>
-          <div className="flex items-center gap-3 mt-3">
-            <a href="/feed.xml" className="font-mono text-[9px] text-ton-cream/25 hover:text-ton-cream/50 uppercase tracking-wider transition-colors">
-              RSS Feed
-            </a>
-            <span className="text-ton-cream/10">|</span>
-            <a href="/sitemap.xml" className="font-mono text-[9px] text-ton-cream/25 hover:text-ton-cream/50 uppercase tracking-wider transition-colors">
-              Sitemap
-            </a>
-          </div>
-        </div>
-
-        {/* Copyright */}
-        <div className="mt-5 pt-5 border-t border-ton-cream/10 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <p className="font-mono text-[9px] text-ton-cream/25 text-center sm:text-left">
-            &copy; 2026 Times of Namibia. All rights reserved.
-          </p>
-          <p className="font-mono text-[9px] text-ton-cream/25">
-            A TANGISON Publication
-          </p>
+        {/* Bottom bar */}
+        <div className="mt-8 pt-6 border-t border-ton-cream/10 flex flex-col sm:flex-row justify-between items-center gap-3 text-[10px] font-mono uppercase tracking-widest text-ton-cream/30">
+          <div>Powered by TANGISON Applied AI</div>
+          <div>© {new Date().getFullYear()} Times of Namibia. All rights reserved.</div>
         </div>
       </div>
     </footer>

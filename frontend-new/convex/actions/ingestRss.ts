@@ -320,13 +320,20 @@ function parseRssXml(xml: string): RssItem[] {
   return items;
 }
 
-// ── OPENROUTER AI SUMMARIZATION ──────────────────────────────
+// ── OPENROUTER AI SUMMARIZATION + BODY GENERATION ────────────
+
+interface AiResult {
+  summary: string;
+  section: string;
+  body?: string;      // 3-paragraph formatted body (when content:encoded is missing)
+  subheading?: string; // H2 subheading for the article page
+}
 
 async function summariseAndClassify(
   title: string,
   content: string,
   openRouterKey: string
-): Promise<{ summary: string; section: string } | null> {
+): Promise<AiResult | null> {
   try {
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
@@ -341,17 +348,23 @@ async function summariseAndClassify(
         messages: [
           {
             role: "system",
-            content: "You are a news editor for Times of Namibia. Given an article title and content, provide: (1) a 2-sentence summary, (2) classify into one of these sections: politics, economy, mining, energy, africa, world, sport, environment, technology, health, education, infrastructure, legal, culture, opinion, national. Respond in JSON format: {\"summary\": \"...\", \"section\": \"...\"}",
+            content: `You are a news editor for Times of Namibia. Given an article title and content, provide:
+1. A 2-sentence summary
+2. Classify into one of: politics, economy, mining, energy, africa, world, sport, environment, technology, health, education, infrastructure, legal, culture, opinion, national
+3. A short subheading (5-10 words, no quotes)
+4. A 3-paragraph article body based on the source content. Each paragraph should be 2-4 sentences. Separate paragraphs with \n\n. Do not include the title or subheading in the body. Write in a professional news style.
+
+Respond in JSON format: {"summary": "...", "section": "...", "subheading": "...", "body": "paragraph1\\n\\nparagraph2\\n\\nparagraph3"}`,
           },
           {
             role: "user",
             content: `Title: ${title}\n\nContent: ${truncate(content, 2000)}`,
           },
         ],
-        temperature: 0.3,
-        max_tokens: 200,
+        temperature: 0.4,
+        max_tokens: 600,
       }),
-      signal: AbortSignal.timeout(15_000),
+      signal: AbortSignal.timeout(20_000),
     });
 
     if (!response.ok) return null;
@@ -365,6 +378,8 @@ async function summariseAndClassify(
     return {
       summary: parsed.summary || truncate(content, 250),
       section: parsed.section || classifySection(title, content),
+      subheading: parsed.subheading || undefined,
+      body: parsed.body || undefined,
     };
   } catch {
     return null; // Non-critical — fall back to heuristic classification
@@ -457,16 +472,24 @@ export const ingestRssFeeds = internalAction({
               continue; // Skip — don't generate image for duplicates
             }
 
-            // Optional: AI summarisation (only if OpenRouter key is configured
-            // and the content is substantial enough to warrant it)
+            // AI summarisation + body generation + subheading
             let excerpt = item.contentSnippet;
             let finalSection = section;
+            let finalContent = content; // default to raw content
+            let subheading: string | undefined;
 
             if (openRouterKey && content.length > 200) {
               const ai = await summariseAndClassify(item.title, content, openRouterKey);
               if (ai) {
                 excerpt = ai.summary;
                 finalSection = ai.section;
+                subheading = ai.subheading;
+                // Use AI-generated body if the feed didn't provide content:encoded
+                // (most feeds only give a short description, so the AI body gives
+                // readers a proper 3-paragraph article instead of a 1-sentence teaser)
+                if (ai.body && ai.body.length > 100) {
+                  finalContent = ai.body;
+                }
               }
             }
 
@@ -526,7 +549,7 @@ export const ingestRssFeeds = internalAction({
             // Run before insertion. Quarantine (skip) articles that fail.
             const sanityCheck = contentSanityCheck({
               title: item.title,
-              content: content.length > 50 ? content : item.contentSnippet,
+              content: finalContent,
               authorLine: item.creator || source.name,
               excerpt,
             });
@@ -540,7 +563,8 @@ export const ingestRssFeeds = internalAction({
               adminToken,
               slug,
               headline: item.title,
-              content: content.length > 50 ? content : item.contentSnippet,
+              subheadline: subheading, // AI-generated H2 subheading
+              content: finalContent,    // AI-generated 3-paragraph body (or raw content)
               excerpt,
               source: source.name,
               section: finalSection,
@@ -548,7 +572,7 @@ export const ingestRssFeeds = internalAction({
               authorLine: item.creator || source.name,
               publishedAt: pubDate,
               rssGuid: item.guid,
-              readingTime: estimateReadingTime(content),
+              readingTime: estimateReadingTime(finalContent),
               ...(imageStorageId ? { imageStorageId } : {}),
             });
 

@@ -104,11 +104,11 @@ export default function ArticleView({ article }: ArticleViewProps) {
           {article.headline}
         </h1>
 
-        {/* Subheadline */}
+        {/* Subheadline — rendered as H2 for SEO + accessibility */}
         {article.subheadline && (
-          <p className="font-serif italic text-ton-black/40 text-base sm:text-lg mt-3 leading-relaxed max-w-2xl">
+          <h2 className="font-serif italic text-ton-black/50 text-lg sm:text-xl mt-3 leading-relaxed max-w-2xl font-normal">
             {article.subheadline}
-          </p>
+          </h2>
         )}
 
         {/* Byline + Date + Reading Time */}

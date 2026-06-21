@@ -286,3 +286,158 @@ export const upsertTickerItem = mutation({
     return { id };
   },
 });
+
+// ── NAMIBIA GUIDE ENTRY ──────────────────────────────────────
+
+export const ingestGuideEntry = mutation({
+  args: {
+    adminToken: v.string(),
+    slug: v.string(),
+    title: v.string(),
+    region: v.string(),
+    category: v.string(),
+    body: v.string(),
+    sources: v.array(v.object({
+      name: v.string(),
+      url: v.string(),
+      license: v.string(),
+    })),
+    images: v.array(v.object({
+      url: v.string(),
+      credit: v.string(),
+      sourceUrl: v.string(),
+      license: v.string(),
+    })),
+  },
+  handler: async (ctx, args) => {
+    requireAdmin(args.adminToken);
+
+    const existing = await ctx.db
+      .query("namibiaGuide")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .first();
+    if (existing) return { id: existing._id, deduped: true };
+
+    const id = await ctx.db.insert("namibiaGuide", {
+      slug: args.slug,
+      title: args.title,
+      region: args.region,
+      category: args.category,
+      body: args.body,
+      sources: args.sources,
+      images: args.images,
+      status: "draft",
+      origin: "system",
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    });
+    return { id, deduped: false };
+  },
+});
+
+// ── PUBLISH GUIDE ENTRY ──────────────────────────────────────
+
+export const publishGuideEntry = mutation({
+  args: { adminToken: v.string(), id: v.id("namibiaGuide") },
+  handler: async (ctx, args) => {
+    requireAdmin(args.adminToken);
+    await ctx.db.patch(args.id, { status: "published", updatedAt: Date.now() });
+    return { success: true };
+  },
+});
+
+// ── APPROVE CONTRIBUTION → GUIDE ENTRY ───────────────────────
+
+export const approveContribution = mutation({
+  args: {
+    adminToken: v.string(),
+    contributionId: v.id("contributions"),
+    moderatorNotes: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    requireAdmin(args.adminToken);
+
+    const contribution = await ctx.db.get(args.contributionId);
+    if (!contribution) throw new Error("Contribution not found");
+
+    // Copy into namibiaGuide as published
+    const slug = contribution.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+    const guideId = await ctx.db.insert("namibiaGuide", {
+      slug,
+      title: contribution.title,
+      region: contribution.region || "Unknown",
+      category: contribution.category || "culture",
+      body: contribution.body,
+      sources: [],
+      images: contribution.imageUrls.map((url) => ({
+        url,
+        credit: contribution.submitterName,
+        sourceUrl: "",
+        license: "Submitted",
+      })),
+      status: "published",
+      origin: "contribution",
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    });
+
+    // Mark contribution as approved
+    await ctx.db.patch(args.contributionId, {
+      status: "approved",
+      moderatorNotes: args.moderatorNotes,
+    });
+
+    return { guideId, success: true };
+  },
+});
+
+export const rejectContribution = mutation({
+  args: {
+    adminToken: v.string(),
+    contributionId: v.id("contributions"),
+    moderatorNotes: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    requireAdmin(args.adminToken);
+    await ctx.db.patch(args.contributionId, {
+      status: "rejected",
+      moderatorNotes: args.moderatorNotes,
+    });
+    return { success: true };
+  },
+});
+
+// ── INGESTION HEALTH ─────────────────────────────────────────
+
+export const updateIngestionHealth = mutation({
+  args: {
+    adminToken: v.string(),
+    articlesInserted: v.number(),
+    errors: v.array(v.string()),
+  },
+  handler: async (ctx, args) => {
+    requireAdmin(args.adminToken);
+
+    const existing = await ctx.db
+      .query("ingestionHealth")
+      .withIndex("by_key", (q) => q.eq("key", "rss_ingestion"))
+      .first();
+
+    if (existing) {
+      await ctx.db.patch(existing._id, {
+        lastSuccessfulRun: Date.now(),
+        articlesInserted: args.articlesInserted,
+        errors: args.errors,
+      });
+      return { id: existing._id };
+    }
+
+    const id = await ctx.db.insert("ingestionHealth", {
+      key: "rss_ingestion",
+      lastSuccessfulRun: Date.now(),
+      articlesInserted: args.articlesInserted,
+      errors: args.errors,
+    });
+    return { id };
+  },
+});

@@ -1,0 +1,66 @@
+// ============================================================
+// Times of Namibia — HTTP Actions (Part 5)
+//
+// Secret-protected HTTP endpoint for external cron triggers.
+// ============================================================
+
+import { httpAction } from "./_generated/server";
+import { httpRouter } from "convex/server";
+import { api, internal } from "./_generated/api";
+
+const http = httpRouter();
+
+http.route({
+  path: "/ingest",
+  method: "POST",
+  handler: httpAction(async (ctx, request) => {
+    const secret = request.headers.get("Authorization");
+    const expectedSecret = `Bearer ${process.env.INGEST_SECRET}`;
+
+    if (!secret || secret !== expectedSecret) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+
+    try {
+      const result = await ctx.runAction(internal.actions.ingestRss.ingestRssFeeds, {});
+      return new Response(JSON.stringify(result), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (err) {
+      return new Response(
+        JSON.stringify({ error: err instanceof Error ? err.message : "Unknown error" }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      );
+    }
+  }),
+});
+
+http.route({
+  path: "/health",
+  method: "GET",
+  handler: httpAction(async (ctx, _request) => {
+    try {
+      const health = await ctx.runQuery(api.queries.getIngestionHealth, {});
+      const lastRun = health?.lastSuccessfulRun;
+      const ago = lastRun ? `${Math.round((Date.now() - lastRun) / 60000)} minutes ago` : "never";
+
+      return new Response(
+        JSON.stringify({
+          status: "ok",
+          lastIngestion: ago,
+          articlesInserted: health?.articlesInserted ?? 0,
+          timestamp: new Date().toISOString(),
+        }),
+        { status: 200, headers: { "Content-Type": "application/json" } }
+      );
+    } catch {
+      return new Response(
+        JSON.stringify({ status: "ok", lastIngestion: "unknown" }),
+        { status: 200, headers: { "Content-Type": "application/json" } }
+      );
+    }
+  }),
+});
+
+export default http;

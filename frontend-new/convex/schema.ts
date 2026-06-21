@@ -374,4 +374,53 @@ export default defineSchema({
     createdAt: v.number(),
     updatedAt: v.number(),
   }).index("by_key", ["key"]),
+
+  // ── NAMIBIA GUIDE (Part 1 — evergreen info hub) ─────────────
+  namibiaGuide: defineTable({
+    slug: v.string(),
+    title: v.string(),
+    region: v.string(),
+    category: v.string(), // landscape | wildlife | coastal | culture | history
+    body: v.string(),
+    sources: v.array(v.object({
+      name: v.string(),
+      url: v.string(),
+      license: v.string(),
+    })),
+    images: v.array(v.object({
+      url: v.string(),
+      credit: v.string(),
+      sourceUrl: v.string(),
+      license: v.string(),
+    })),
+    status: v.string(), // draft | published
+    origin: v.string(), // system | contribution
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_slug", ["slug"])
+    .index("by_category", ["category"])
+    .index("by_status", ["status"]),
+
+  // ── COMMUNITY CONTRIBUTIONS (Part 2) ─────────────────────────
+  contributions: defineTable({
+    title: v.string(),
+    body: v.string(),
+    region: v.optional(v.string()),
+    category: v.optional(v.string()),
+    submitterName: v.string(),
+    submitterEmail: v.string(),
+    imageUrls: v.array(v.string()),
+    status: v.string(), // pending | approved | rejected
+    moderatorNotes: v.optional(v.string()),
+    submittedAt: v.number(),
+  }).index("by_status", ["status"]),
+
+  // ── INGESTION HEALTH (Part 5 — visibility) ──────────────────
+  ingestionHealth: defineTable({
+    key: v.string(),
+    lastSuccessfulRun: v.number(),
+    articlesInserted: v.number(),
+    errors: v.array(v.string()),
+  }).index("by_key", ["key"]),
 });

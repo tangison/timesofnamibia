@@ -16,6 +16,7 @@ import { action, internalAction } from "../_generated/server";
 import { v } from "convex/values";
 import { api, internal } from "../_generated/api";
 import { generateArticleImage } from "./imageGenerator";
+import { generateWithFallback } from "./aiProvider";
 
 // ── RSS FEED SOURCES ─────────────────────────────────────────
 // 15 Namibian news outlets. Each URL is validated at runtime —
@@ -321,57 +322,45 @@ function parseRssXml(xml: string): RssItem[] {
 }
 
 // ── OPENROUTER AI SUMMARIZATION + BODY GENERATION ────────────
+// Now uses generateWithFallback() — tries OpenRouter first,
+// falls back to Groq if OpenRouter is rate-limited or down.
 
 interface AiResult {
   summary: string;
   section: string;
-  body?: string;      // 3-paragraph formatted body (when content:encoded is missing)
-  subheading?: string; // H2 subheading for the article page
+  body?: string;
+  subheading?: string;
 }
 
 async function summariseAndClassify(
   title: string,
   content: string,
-  openRouterKey: string
+  _openRouterKey: string // kept for backwards compat, now uses generateWithFallback
 ): Promise<AiResult | null> {
   try {
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${openRouterKey}`,
-        "Content-Type": "application/json",
-        "HTTP-Referer": "https://timesofnamibia.com",
-        "X-Title": "Times of Namibia RSS Ingester",
-      },
-      body: JSON.stringify({
-        model: "meta-llama/llama-3.2-3b-instruct:free",
-        messages: [
-          {
-            role: "system",
-            content: `You are a news editor for Times of Namibia. Given an article title and content, provide:
+    const aiText = await generateWithFallback(
+      [
+        {
+          role: "system",
+          content: `You are a news editor for Times of Namibia. Given an article title and content, provide:
 1. A 2-sentence summary
 2. Classify into one of: politics, economy, mining, energy, africa, world, sport, environment, technology, health, education, infrastructure, legal, culture, opinion, national
 3. A short subheading (5-10 words, no quotes)
 4. A 3-paragraph article body based on the source content. Each paragraph should be 2-4 sentences. Separate paragraphs with \n\n. Do not include the title or subheading in the body. Write in a professional news style.
 
 Respond in JSON format: {"summary": "...", "section": "...", "subheading": "...", "body": "paragraph1\\n\\nparagraph2\\n\\nparagraph3"}`,
-          },
-          {
-            role: "user",
-            content: `Title: ${title}\n\nContent: ${truncate(content, 2000)}`,
-          },
-        ],
-        temperature: 0.4,
-        max_tokens: 600,
-      }),
-      signal: AbortSignal.timeout(20_000),
-    });
+        },
+        {
+          role: "user",
+          content: `Title: ${title}\n\nContent: ${truncate(content, 2000)}`,
+        },
+      ],
+      { maxTokens: 600, timeout: 20_000 }
+    );
 
-    if (!response.ok) return null;
+    if (!aiText) return null;
 
-    const data = await response.json();
-    const text = data.choices?.[0]?.message?.content || "";
-    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    const jsonMatch = aiText.match(/\{[\s\S]*\}/);
     if (!jsonMatch) return null;
 
     const parsed = JSON.parse(jsonMatch[0]);
@@ -382,7 +371,7 @@ Respond in JSON format: {"summary": "...", "section": "...", "subheading": "..."
       body: parsed.body || undefined,
     };
   } catch {
-    return null; // Non-critical — fall back to heuristic classification
+    return null;
   }
 }
 
@@ -596,6 +585,18 @@ export const ingestRssFeeds = internalAction({
     }
 
     console.log("[RSS] Ingestion complete:", results);
+
+    // Part 5: Record ingestion health for visibility
+    try {
+      await ctx.runMutation(api.mutationsAdmin.updateIngestionHealth, {
+        adminToken,
+        articlesInserted: results.articlesInserted,
+        errors: results.errors.slice(0, 10), // cap stored errors
+      });
+    } catch (healthErr) {
+      console.warn("[RSS] Failed to record health:", healthErr);
+    }
+
     return results;
   },
 });

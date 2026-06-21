@@ -255,3 +255,44 @@ export const toggleBookmark = mutation({
     return { bookmarked: true };
   },
 });
+
+// ── COMMUNITY CONTRIBUTION SUBMISSION ────────────────────────
+// Public mutation — no auth required, but rate-limited at the API layer.
+// Goes to status: "pending" — NEVER auto-publishes.
+
+export const submitContribution = mutation({
+  args: {
+    title: v.string(),
+    body: v.string(),
+    region: v.optional(v.string()),
+    category: v.optional(v.string()),
+    submitterName: v.string(),
+    submitterEmail: v.string(),
+    imageUrls: v.array(v.string()),
+  },
+  handler: async (ctx, args) => {
+    // Basic content floor — reject very short submissions
+    if (args.body.trim().split(/\s+/).length < 50) {
+      throw new Error("Contribution must be at least 50 words");
+    }
+
+    // Run the same sanity check used for RSS content
+    const allText = `${args.title} ${args.body} ${args.submitterName}`;
+    if (/<!\[CDATA\[/.test(allText)) {
+      throw new Error("Invalid content detected");
+    }
+
+    const id = await ctx.db.insert("contributions", {
+      title: args.title,
+      body: args.body,
+      region: args.region,
+      category: args.category,
+      submitterName: args.submitterName,
+      submitterEmail: args.submitterEmail.toLowerCase().trim(),
+      imageUrls: args.imageUrls,
+      status: "pending",
+      submittedAt: Date.now(),
+    });
+    return { id };
+  },
+});

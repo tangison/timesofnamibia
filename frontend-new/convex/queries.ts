@@ -304,3 +304,58 @@ export const getSubscriberByEmail = query({
       .first();
   },
 });
+
+// ── NAMIBIA GUIDE ────────────────────────────────────────────
+
+export const getGuideBySlug = query({
+  args: { slug: v.string() },
+  handler: async (ctx, args) => {
+    return await ctx.db
+      .query("namibiaGuide")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .first();
+  },
+});
+
+export const listPublishedGuides = query({
+  args: { category: v.optional(v.string()) },
+  handler: async (ctx, args) => {
+    let q = ctx.db
+      .query("namibiaGuide")
+      .filter((qf) => qf.eq(qf.field("status"), "published"));
+
+    if (args.category) {
+      q = q.filter((qf) => qf.eq(qf.field("category"), args.category!));
+    }
+
+    return await q.collect();
+  },
+});
+
+// ── COMMUNITY CONTRIBUTIONS ──────────────────────────────────
+
+export const listPendingContributions = query({
+  args: { adminToken: v.optional(v.string()) },
+  handler: async (ctx, args) => {
+    const ADMIN_TOKEN = process.env.CONVEX_ADMIN_TOKEN;
+    if (!ADMIN_TOKEN || !args.adminToken || args.adminToken !== ADMIN_TOKEN) {
+      return []; // Public callers get empty list (no PII leak)
+    }
+    return await ctx.db
+      .query("contributions")
+      .withIndex("by_status", (q) => q.eq("status", "pending"))
+      .collect();
+  },
+});
+
+// ── INGESTION HEALTH ─────────────────────────────────────────
+
+export const getIngestionHealth = query({
+  args: {},
+  handler: async (ctx) => {
+    return await ctx.db
+      .query("ingestionHealth")
+      .withIndex("by_key", (q) => q.eq("key", "rss_ingestion"))
+      .first();
+  },
+});

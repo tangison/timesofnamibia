@@ -1,21 +1,18 @@
 // ============================================================
 // Times of Namibia — Article Image Generator (TANGISON)
 //
-// Generates a Harvard Business Review-style minimalist editorial
-// illustration for each article using Pollinations.ai.
+// Two-step approach:
+//   1. AI picks ONE simple physical object symbolizing the story
+//   2. Pollinations generates a hyper-realistic studio photograph
+//      of that object — no people, no scenes, no text
 //
-// Brand palette is enforced via the prompt itself (navy #0B1D3A,
-// light gray #F2F2F2, muted tones) rather than post-processing
-// with sharp, because Convex's runtime doesn't support native
-// modules like sharp.
-//
-// Pipeline:
-//   1. Build prompt from {title, category, summary} with brand colors
-//   2. Fetch image from Pollinations.ai (no API key needed)
-//   3. Return Blob for Convex storage
+// This eliminates garbled text hallucinations that scene-style
+// prompts (meeting rooms, office portraits) were producing.
 // ============================================================
 
 "use node";
+
+import { generateWithFallback } from "./aiProvider";
 
 // ── TYPES ────────────────────────────────────────────────────
 
@@ -31,35 +28,64 @@ export interface ImageGenOptions {
   seed?: number;
 }
 
-// ── PROMPT BUILDER ───────────────────────────────────────────
-// Enforces HBR minimalist editorial style + brand palette in the
-// prompt itself. Pollinations/Flux will respect color hints.
+// ── STEP 1: Generate a concept (single physical object) ──────
 
-function buildImagePrompt({ title, category, summary }: ArticleInput): string {
+async function generateImageConcept(article: ArticleInput): Promise<string> {
+  const conceptText = await generateWithFallback(
+    [
+      {
+        role: "system",
+        content: `You pick ONE simple physical object that symbolizes a news story. Rules:
+- Maximum 3 words
+- Must be a concrete physical object (not abstract)
+- No people, no scenes, no buildings, no text, no documents, no screens
+- Examples: "a brass key" for secrets, "a folded paper airplane" for diplomacy, "a small potted plant" for growth, "a broken gavel" for legal dispute, "a crude oil barrel" for energy, "a gold coin" for economy
+Respond with ONLY the object name, nothing else.`,
+      },
+      {
+        role: "user",
+        content: `Story title: ${article.title}\nCategory: ${article.category}\nSummary: ${(article.summary || "").slice(0, 200)}`,
+      },
+    ],
+    { maxTokens: 20, timeout: 10_000 }
+  );
+
+  // Clean up the concept — take first line, strip quotes/periods
+  const concept = (conceptText || "a folded newspaper")
+    .split("\n")[0]
+    .replace(/["'.]/g, "")
+    .trim()
+    .toLowerCase();
+
+  return concept || "a folded newspaper";
+}
+
+// ── STEP 2: Build Pollinations prompt from the concept ───────
+
+function buildPhotographPrompt(concept: string): string {
   return [
-    `Minimalist editorial illustration representing a ${category} story: "${title}".`,
-    "Flat vector style, one or two clear focal elements only, large negative space.",
-    "No text, no numbers, no logos, no watermark, no human faces, no busy background.",
-    "High-end business magazine cover aesthetic.",
-    "Color palette: deep navy blue (#0B1D3A) for dark areas, light gray (#F2F2F2) for",
-    "backgrounds, muted mid-gray (#6D6D6D) for secondary elements. Restrained, muted,",
-    "desaturated tones — no bright saturated colors, no neon.",
-    "Calm lighting, professional and sophisticated composition.",
+    `Hyper-realistic studio photograph of ${concept}.`,
+    "Isolated on a clean light gray background (#F2F2F2).",
+    "Soft diffused studio lighting from upper left.",
+    "Shot from a 45-degree angle, shallow depth of field.",
+    "NO people, NO scenes, NO signage, NO documents, NO screens, NO text, NO numbers, NO letters, NO logos, NO watermark.",
+    "Muted, desaturated color palette with deep navy (#0B1D3A) shadows.",
+    "Professional product photography aesthetic.",
+    "Large negative space around the subject.",
   ].join(" ");
 }
 
 // ── POLLINATIONS.AI FETCH ────────────────────────────────────
 
 async function fetchPollinationsImage(
-  article: ArticleInput,
+  prompt: string,
   opts?: ImageGenOptions
 ): Promise<Blob> {
-  const prompt = buildImagePrompt(article);
   const encoded = encodeURIComponent(prompt);
 
   const params = new URLSearchParams({
     width: String(opts?.width ?? 1200),
-    height: String(opts?.height ?? 675), // 16:9 for hero card
+    height: String(opts?.height ?? 675),
     nologo: "true",
     model: "flux",
     ...(opts?.seed ? { seed: String(opts.seed) } : {}),
@@ -68,7 +94,7 @@ async function fetchPollinationsImage(
   const url = `https://image.pollinations.ai/prompt/${encoded}?${params.toString()}`;
 
   const res = await fetch(url, {
-    signal: AbortSignal.timeout(30_000), // generation can be slow
+    signal: AbortSignal.timeout(30_000),
     headers: {
       "User-Agent": "TimesOfNamibiaBot/1.0 (+https://timesofnamibia.com)",
     },
@@ -87,5 +113,11 @@ export async function generateArticleImage(
   article: ArticleInput,
   opts?: ImageGenOptions
 ): Promise<Blob> {
-  return fetchPollinationsImage(article, opts);
+  // Step 1: AI picks a concept object
+  const concept = await generateImageConcept(article);
+  console.log(`[image-gen] Concept for "${article.title.slice(0, 40)}": ${concept}`);
+
+  // Step 2: Build prompt + fetch image
+  const prompt = buildPhotographPrompt(concept);
+  return fetchPollinationsImage(prompt, opts);
 }

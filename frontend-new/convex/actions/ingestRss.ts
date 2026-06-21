@@ -25,39 +25,29 @@ import { generateWithFallback } from "./aiProvider";
 interface RssSource {
   name: string;
   url: string;
-  category: string; // default section if the article doesn't match a keyword
+  category: string;
+  isInternational: boolean;
 }
 
 const RSS_SOURCES: RssSource[] = [
   // ══ NAMIBIA (9 feeds) ═══════════════════════════════════════
-  // VERIFIED FEEDS — each URL was manually checked for correct category + language:
-  // Namibian Sun feed 137 = "LOCAL NEWS" (English) ✅
-  { name: "Namibian Sun", url: "https://www.namibiansun.com/rssFeed/137", category: "national" },
-  // Republikein feed 171 = "Ekonomie" (Economy, Afrikaans) ✅
-  { name: "Republikein (Economy)", url: "https://www.republikein.com.na/rssFeed/171", category: "economy" },
-  // Republikein feed 185 = "Plaaslik" (Local news, Afrikaans) ✅
-  { name: "Republikein (Local)", url: "https://www.republikein.com.na/rssFeed/185", category: "national" },
-  // Republikein feed 177 = "Regering" (Government, Afrikaans) ✅
-  { name: "Republikein (Government)", url: "https://www.republikein.com.na/rssFeed/177", category: "politics" },
-  // The Namibian investigations unit (English) ✅ — confirmed live with proper User-Agent
-  { name: "The Namibian (Investigations)", url: "https://investigations.namibian.com.na/feed/", category: "national" },
-  // Additional verified feeds:
-  { name: "New Era", url: "https://neweralive.na/feed", category: "national" },
-  { name: "Windhoek Observer", url: "https://www.observer24.com.na/feed/", category: "national" },
-  { name: "Informanté", url: "https://informante.web.na/?feed=rss2", category: "national" },
-  { name: "Namibia Daily News", url: "https://namibiadailynews.info/feed/", category: "national" },
+  { name: "Namibian Sun", url: "https://www.namibiansun.com/rssFeed/137", category: "national", isInternational: false },
+  { name: "Republikein (Economy)", url: "https://www.republikein.com.na/rssFeed/171", category: "economy", isInternational: false },
+  { name: "Republikein (Local)", url: "https://www.republikein.com.na/rssFeed/185", category: "national", isInternational: false },
+  { name: "Republikein (Government)", url: "https://www.republikein.com.na/rssFeed/177", category: "politics", isInternational: false },
+  { name: "The Namibian (Investigations)", url: "https://investigations.namibian.com.na/feed/", category: "national", isInternational: false },
+  { name: "New Era", url: "https://neweralive.na/feed", category: "national", isInternational: false },
+  { name: "Windhoek Observer", url: "https://www.observer24.com.na/feed/", category: "national", isInternational: false },
+  { name: "Informanté", url: "https://informante.web.na/?feed=rss2", category: "national", isInternational: false },
+  { name: "Namibia Daily News", url: "https://namibiadailynews.info/feed/", category: "national", isInternational: false },
 
-  // ══ CHINA (2 feeds) ═════════════════════════════════════════
-  // SCMP — Hong Kong-based, editorially independent, English ✅
-  { name: "South China Morning Post", url: "https://www.scmp.com/rss/91/feed", category: "world" },
-  // China Daily — state-affiliated, business/general news, English ✅
-  { name: "China Daily", url: "https://www.chinadaily.com.cn/rss/world_rss.xml", category: "world" },
+  // ══ CHINA (2 feeds) — INTERNATIONAL, capped at 2 items/cycle ══
+  { name: "South China Morning Post", url: "https://www.scmp.com/rss/91/feed", category: "world", isInternational: true },
+  { name: "China Daily", url: "https://www.chinadaily.com.cn/rss/world_rss.xml", category: "world", isInternational: true },
 
-  // ══ EUROPE (2 feeds) ═══════════════════════════════════════
-  // Telegraph — UK, right-leaning, English ✅
-  { name: "The Telegraph", url: "https://www.telegraph.co.uk/news/rss.xml", category: "world" },
-  // Euronews — pan-European, wire-style, English ✅
-  { name: "Euronews", url: "https://www.euronews.com/rss", category: "world" },
+  // ══ EUROPE (2 feeds) — INTERNATIONAL, capped at 2 items/cycle ══
+  { name: "The Telegraph", url: "https://www.telegraph.co.uk/news/rss.xml", category: "world", isInternational: true },
+  { name: "Euronews", url: "https://www.euronews.com/rss", category: "world", isInternational: true },
 ];
 
 // ── SECTION CLASSIFICATION KEYWORDS ──────────────────────────
@@ -433,12 +423,11 @@ export const ingestRssFeeds = internalAction({
         const items = parseRssXml(xml);
         console.log(`[RSS] ${source.name}: ${items.length} items found`);
 
-        // Part 2: Per-source item cap — no single feed can flood the homepage.
-        // Each feed contributes at most 5 items per ingestion cycle.
-        const MAX_ITEMS_PER_FEED = 5;
-        const itemsToProcess = items.slice(0, MAX_ITEMS_PER_FEED);
-        if (items.length > MAX_ITEMS_PER_FEED) {
-          console.log(`[RSS] ${source.name}: capping to ${MAX_ITEMS_PER_FEED} items (had ${items.length})`);
+        // Per-source item cap — international feeds capped at 2, Namibian at 5.
+        const MAX_ITEMS = source.isInternational ? 2 : 5;
+        const itemsToProcess = items.slice(0, MAX_ITEMS);
+        if (items.length > MAX_ITEMS) {
+          console.log(`[RSS] ${source.name}: capping to ${MAX_ITEMS} items (had ${items.length})`);
         }
 
         for (const item of itemsToProcess) {
@@ -463,15 +452,21 @@ export const ingestRssFeeds = internalAction({
 
             // AI summarisation + body generation + subheading
             let excerpt = item.contentSnippet;
-            let finalSection = section;
-            let finalContent = content; // default to raw content
+            // Force "world" category for international feeds — never let AI
+            // classify them as "national" or any Namibia-specific category.
+            let finalSection = source.isInternational ? "world" : section;
+            let finalContent = content;
             let subheading: string | undefined;
 
             if (openRouterKey && content.length > 200) {
               const ai = await summariseAndClassify(item.title, content, openRouterKey);
               if (ai) {
                 excerpt = ai.summary;
-                finalSection = ai.section;
+                // Only let AI override section for Namibian feeds.
+                // International feeds are ALWAYS "world".
+                if (!source.isInternational) {
+                  finalSection = ai.section;
+                }
                 subheading = ai.subheading;
                 // Use AI-generated body if the feed didn't provide content:encoded
                 // (most feeds only give a short description, so the AI body gives

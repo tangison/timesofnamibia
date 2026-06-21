@@ -12,11 +12,11 @@ import Image from "next/image";
 export default function Footer() {
   return (
     <footer className="relative bg-ton-black text-ton-cream mt-20 overflow-hidden">
-      {/* Namibian landscape — subtle top accent */}
+      {/* Namibian landscape — subtle top accent from Wikimedia Commons (free, CC-BY-SA) */}
       <div className="relative h-32 overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1920&q=80"
-          alt="Namibian desert landscape"
+          src="/og-default.png"
+          alt="Times of Namibia"
           fill
           className="object-cover opacity-30"
           sizes="100vw"

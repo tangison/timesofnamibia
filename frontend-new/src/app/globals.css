@@ -168,9 +168,15 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* TANGISON: Zero border-radius on ALL elements — brand rule */
-  * {
-    border-radius: 0 !important;
+  /* Buttons and tag pills get rounded styling; everything else stays sharp */
+  button,
+  a[class*="bg-ton-red"],
+  a[class*="bg-ton-black"],
+  span[class*="bg-ton-red"],
+  span[class*="bg-ton-black"],
+  .ton-share-btn,
+  .rounded-pill {
+    border-radius: 9999px !important;
   }
 }
 

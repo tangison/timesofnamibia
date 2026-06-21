@@ -51,11 +51,11 @@ export default function OffCanvasMenu({ open, onClose }: OffCanvasMenuProps) {
             transition={{ type: "spring", stiffness: 80, damping: 20, mass: 1 }}
             className="fixed top-0 right-0 bottom-0 w-full sm:w-[480px] bg-ton-cream z-[70] overflow-y-auto"
           >
-            {/* Header with Namibian landscape image */}
+            {/* Header with brand image */}
             <div className="relative h-48 overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=960&q=80"
-                alt="Namibian landscape"
+                src="/og-default.png"
+                alt="Times of Namibia"
                 fill
                 className="object-cover"
                 sizes="480px"

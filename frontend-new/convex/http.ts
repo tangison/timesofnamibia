@@ -2,6 +2,9 @@
 // Times of Namibia — HTTP Actions (Part 5)
 //
 // Secret-protected HTTP endpoint for external cron triggers.
+// Uses scheduler.runAfter(0) so the endpoint returns immediately
+// while ingestion runs in the background — prevents timeouts for
+// external callers like cron-job.org.
 // ============================================================
 
 import { httpAction } from "./_generated/server";
@@ -21,12 +24,15 @@ http.route({
       return new Response("Unauthorized", { status: 401 });
     }
 
+    // Schedule ingestion as a background job — return immediately
+    // so external callers (cron-job.org) don't time out waiting
+    // for the full RSS pipeline to complete.
     try {
-      const result = await ctx.runAction(internal.actions.ingestRss.ingestRssFeeds, {});
-      return new Response(JSON.stringify(result), {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      });
+      await ctx.scheduler.runAfter(0, internal.actions.ingestRss.ingestRssFeeds, {});
+      return new Response(
+        JSON.stringify({ status: "Ingestion started" }),
+        { status: 200, headers: { "Content-Type": "application/json" } }
+      );
     } catch (err) {
       return new Response(
         JSON.stringify({ error: err instanceof Error ? err.message : "Unknown error" }),

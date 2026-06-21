@@ -257,6 +257,16 @@ h1, h2, h3 {
   }
 }
 
+/* ========= SCROLLBAR HIDE (for horizontal nav) ========= */
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* ========= TON TICKER ========= */
 
 @keyframes ton-ticker {

@@ -441,3 +441,28 @@ export const updateIngestionHealth = mutation({
     return { id };
   },
 });
+
+// ── UPDATE ARTICLE CONTENT (for backfill) ────────────────────
+
+export const updateArticleContent = mutation({
+  args: {
+    adminToken: v.string(),
+    articleId: v.id("article"),
+    content: v.optional(v.string()),
+    subheadline: v.optional(v.string()),
+    excerpt: v.optional(v.string()),
+    section: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    requireAdmin(args.adminToken);
+
+    const updates: Record<string, any> = { updatedAt: Date.now() };
+    if (args.content) updates.content = args.content;
+    if (args.subheadline !== undefined) updates.subheadline = args.subheadline;
+    if (args.excerpt) updates.excerpt = args.excerpt;
+    if (args.section) updates.section = args.section;
+
+    await ctx.db.patch(args.articleId, updates);
+    return { success: true };
+  },
+});

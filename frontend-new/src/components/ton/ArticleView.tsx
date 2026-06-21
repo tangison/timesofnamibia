@@ -135,7 +135,7 @@ export default function ArticleView({ article }: ArticleViewProps) {
 
         {/* Share buttons */}
         <div className="mt-4 flex items-center gap-3">
-          <ShareButtons title={article.headline} url={`/article/${article.slug}`} />
+          <ShareButtons title={article.headline} url={`/article/${article.slug}`} articleContent={article.content} />
         </div>
 
         {/* Image area — if image exists */}
@@ -212,7 +212,7 @@ export default function ArticleView({ article }: ArticleViewProps) {
             <p>Published {formatDateTime(article.publishedAt)}</p>
             <p>Section: {article.section} &middot; {article.readingTime} min read</p>
           </div>
-          <ShareButtons title={article.headline} url={`/article/${article.slug}`} />
+          <ShareButtons title={article.headline} url={`/article/${article.slug}`} articleContent={article.content} />
         </div>
       </article>
     </div>

@@ -1,9 +1,30 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
 import ShareButtons from "./ShareButtons";
 import Breadcrumbs from "./Breadcrumbs";
 import { ArrowLeft } from "lucide-react";
+
+const springTransition = {
+  type: "spring" as const,
+  stiffness: 100,
+  damping: 15,
+  mass: 1,
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 },
+  },
+};
+
+const fadeUpItem = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: springTransition },
+};
 
 // ── TYPES matching Prisma model shapes ──────────────────────────
 
@@ -92,27 +113,44 @@ export default function ArticleView({ article }: ArticleViewProps) {
         />
       </div>
 
-      {/* Article container — broadsheet column style */}
-      <article className="max-w-3xl mx-auto py-6 sm:py-8 md:py-10">
+      {/* Article container — broadsheet column style with Framer Motion */}
+      <motion.article
+        initial="hidden"
+        animate="show"
+        variants={staggerContainer}
+        className="max-w-3xl mx-auto py-6 sm:py-8 md:py-10"
+      >
         {/* Category badge */}
-        <span className="bg-ton-red text-white font-mono text-[9px] tracking-widest uppercase px-2 py-0.5 font-bold">
+        <motion.span
+          variants={fadeUpItem}
+          className="bg-ton-red text-white font-mono text-[9px] tracking-widest uppercase px-2 py-0.5 font-bold"
+        >
           {article.category?.name || article.categorySlug || "News"}
-        </span>
+        </motion.span>
 
         {/* Headline */}
-        <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-[1.05] tracking-tight mt-4">
+        <motion.h1
+          variants={fadeUpItem}
+          className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-[1.05] tracking-tight mt-4"
+        >
           {article.headline}
-        </h1>
+        </motion.h1>
 
         {/* Subheadline — rendered as H2 for SEO + accessibility */}
         {article.subheadline && (
-          <h2 className="font-serif italic text-ton-black/50 text-lg sm:text-xl mt-3 leading-relaxed max-w-2xl font-normal">
+          <motion.h2
+            variants={fadeUpItem}
+            className="font-serif italic text-ton-black/50 text-lg sm:text-xl mt-3 leading-relaxed max-w-2xl font-normal"
+          >
             {article.subheadline}
-          </h2>
+          </motion.h2>
         )}
 
         {/* Byline + Date + Reading Time */}
-        <div className="mt-5 pb-4 border-b border-ton-black/10 flex items-center justify-between flex-wrap gap-2">
+        <motion.div
+          variants={fadeUpItem}
+          className="mt-5 pb-4 border-b border-ton-black/10 flex items-center justify-between flex-wrap gap-2"
+        >
           <div className="flex items-center gap-3 flex-wrap">
             <span className="font-sans text-sm text-ton-black/70 font-medium">
               {article.authorLine}
@@ -131,12 +169,12 @@ export default function ArticleView({ article }: ArticleViewProps) {
               {article.readingTime} min read
             </span>
           </div>
-        </div>
+        </motion.div>
 
         {/* Share buttons */}
-        <div className="mt-4 flex items-center gap-3">
+        <motion.div variants={fadeUpItem} className="mt-4 flex items-center gap-3">
           <ShareButtons title={article.headline} url={`/article/${article.slug}`} articleContent={article.content} />
-        </div>
+        </motion.div>
 
         {/* Image area — if image exists */}
         {article.imageUrl ? (
@@ -207,14 +245,14 @@ export default function ArticleView({ article }: ArticleViewProps) {
         )}
 
         {/* Article footer */}
-        <div className="mt-6 pt-4 border-t border-ton-black/10 flex items-center justify-between flex-wrap gap-3">
+        <motion.div variants={fadeUpItem} className="mt-6 pt-4 border-t border-ton-black/10 flex items-center justify-between flex-wrap gap-3">
           <div className="font-mono text-[9px] text-ton-black/20 space-y-0.5">
             <p>Published {formatDateTime(article.publishedAt)}</p>
             <p>Section: {article.section} &middot; {article.readingTime} min read</p>
           </div>
           <ShareButtons title={article.headline} url={`/article/${article.slug}`} articleContent={article.content} />
-        </div>
-      </article>
+        </motion.div>
+      </motion.article>
     </div>
   );
 }

@@ -3,12 +3,12 @@ import TonLayout from "@/components/ton/TonLayout";
 import TenderAnalysisView from "@/components/ton/TenderAnalysisView";
 
 export const metadata: Metadata = {
-  title: "Tender Analysis — Government Procurement Namibia",
+  title: "Tenders — Government Procurement Namibia",
   description:
     "Active government tenders, procurement opportunities, and contract analysis. Real-time scraped from Namibian government portals.",
   alternates: { canonical: "/tender" },
   openGraph: {
-    title: "Tender Analysis — Times of Namibia",
+    title: "Tenders — Times of Namibia",
     description: "Active government tenders and procurement opportunities in Namibia.",
     type: "website",
     locale: "en_NA",
@@ -16,9 +16,11 @@ export const metadata: Metadata = {
   },
 };
 
+export const revalidate = 600;
+
 export default function TenderPage() {
   return (
-    <TonLayout activePage="tender">
+    <TonLayout>
       <TenderAnalysisView />
     </TonLayout>
   );

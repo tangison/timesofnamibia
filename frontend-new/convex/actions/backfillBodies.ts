@@ -78,7 +78,33 @@ Respond as JSON: {"subheading": "...", "body": "paragraph1\\n\\nparagraph2\\n\\n
           continue;
         }
 
-        const parsed = JSON.parse(jsonMatch[0]);
+        // Sanitize control characters that break JSON.parse
+        const sanitizedJson = jsonMatch[0]
+          .replace(/[\x00-\x1f\x7f]/g, (char) => {
+            // Replace control chars with their escaped equivalents
+            if (char === "\n") return "\\n";
+            if (char === "\r") return "\\r";
+            if (char === "\t") return "\\t";
+            return "";
+          });
+
+        let parsed: any;
+        try {
+          parsed = JSON.parse(sanitizedJson);
+        } catch {
+          // If JSON still fails, try extracting body/subheading manually
+          const bodyMatch = aiText.match(/"body"\s*:\s*"([\s\S]*?)"\s*[,}]/);
+          const subMatch = aiText.match(/"subheading"\s*:\s*"([^"]*)"/);
+          if (!bodyMatch) {
+            failed++;
+            errors.push(`${article.headline.slice(0, 40)}: JSON parse failed`);
+            continue;
+          }
+          parsed = {
+            body: bodyMatch[1].replace(/\\n/g, "\n").replace(/\\"/g, '"'),
+            subheading: subMatch ? subMatch[1] : undefined,
+          };
+        }
 
         if (!parsed.body || parsed.body.length < 100) {
           failed++;

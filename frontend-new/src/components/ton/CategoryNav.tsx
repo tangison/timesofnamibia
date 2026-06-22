@@ -2,9 +2,8 @@
 
 /**
  * Category Navigation Bar — sticky below the masthead.
- * On ALL screen sizes, categories are horizontally scrollable.
- * No toggle/menu icon — just a clean scrollable strip.
- * Desktop also shows the "Contribute" button at the end.
+ * Pure white background. Horizontally scrollable on ALL screen sizes.
+ * No toggle, no hamburger, no collapse — just a clean scrollable strip.
  */
 const CATEGORIES = [
   { label: "National", slug: "national" },
@@ -23,9 +22,8 @@ const CATEGORIES = [
 
 export default function CategoryNav() {
   return (
-    <nav className="sticky top-[73px] z-40 bg-ton-cream/95 backdrop-blur-md border-b border-ton-black/10">
+    <nav className="sticky top-[73px] z-40 bg-white border-b border-ton-black/10">
       <div className="max-w-7xl mx-auto">
-        {/* Scrollable category strip — works on all screen sizes */}
         <div className="flex items-center gap-4 px-4 md:px-8 py-2.5 overflow-x-auto scrollbar-hide">
           {CATEGORIES.map((cat) => (
             <a
@@ -36,7 +34,6 @@ export default function CategoryNav() {
               {cat.label}
             </a>
           ))}
-          {/* Contribute button — desktop only (inline at end of scroll) */}
           <a
             href="/contribute"
             className="hidden lg:inline-flex font-mono text-[10px] font-bold uppercase tracking-widest bg-ton-red text-white px-4 py-1.5 hover:bg-ton-red/80 transition-colors flex-shrink-0"

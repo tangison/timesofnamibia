@@ -66,7 +66,7 @@ export const metadata: Metadata = {
       "A TANGISON news outlet. Real-time verified news, tender analysis, job market intelligence, and market data for Namibia.",
     images: [
       {
-        url: "/og-default.png",
+        url: "/brand-og.png",
         width: 1200,
         height: 630,
         alt: "Times of Namibia — Applied AI. Built in Africa.",
@@ -78,7 +78,7 @@ export const metadata: Metadata = {
     title: "Times of Namibia — Applied AI. Built in Africa.",
     description:
       "A TANGISON news outlet. Real-time verified news, tender analysis, job market intelligence, and market data for Namibia.",
-    images: ["/og-default.png"],
+    images: ["/brand-og.png"],
   },
   icons: {
     icon: [

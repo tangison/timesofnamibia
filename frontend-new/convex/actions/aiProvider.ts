@@ -22,10 +22,17 @@ interface GenerateOptions {
   timeout?: number;
 }
 
+// ── EDITORIAL VOICE (Part 5) ─────────────────────────────────
+// This prefix is prepended to every system prompt across the platform.
+// It enforces the Times of Namibia editorial voice: authoritative but
+// accessible, like a senior correspondent at a quality African broadsheet.
+
+export const EDITORIAL_VOICE = `You are writing for Times of Namibia, a quality African broadsheet. Authoritative but accessible. Write like a senior correspondent, not a wire-service robot. Sentences are varied in length. No bullet points in article bodies. Paragraphs are 2-4 sentences. Never use: "In conclusion", "It is worth noting", "Importantly", "Furthermore", "This article explores", "Delving into". Always use the active voice for news leads. First sentence must contain who, what, and where. Namibian proper nouns are always spelled correctly: Windhoek, Swakopmund, Oshakati, Rundu, Otjiwarongo, Lüderitz, Walvis Bay, Kavango, Khomas. Numbers: spell out one through nine, numerals for 10 and above, always include currency context (NAD/USD). Attribution: "said", "told reporters", "confirmed" — never "claimed" unless genuinely disputed.`;
+
 /**
  * Generate text with automatic fallback from OpenRouter to Groq.
  * If OpenRouter fails (rate limit, timeout, error), automatically
- * retries with Groq.
+ * retries with Groq. Prepends the editorial voice to system messages.
  */
 export async function generateWithFallback(
   messages: ChatMessage[],
@@ -34,6 +41,19 @@ export async function generateWithFallback(
   const openRouterKey = process.env.OPENROUTER_API_KEY;
   const groqKey = process.env.GROQ_API_KEY;
   const timeout = opts?.timeout ?? 20_000;
+
+  // Prepend editorial voice to the first system message
+  const augmentedMessages: ChatMessage[] = [...messages];
+  const sysIdx = augmentedMessages.findIndex((m) => m.role === "system");
+  if (sysIdx >= 0) {
+    augmentedMessages[sysIdx] = {
+      ...augmentedMessages[sysIdx],
+      content: `${EDITORIAL_VOICE}\n\n${augmentedMessages[sysIdx].content}`,
+    };
+  } else {
+    // If no system message, prepend one
+    augmentedMessages.unshift({ role: "system", content: EDITORIAL_VOICE });
+  }
 
   // Try OpenRouter first
   if (openRouterKey) {

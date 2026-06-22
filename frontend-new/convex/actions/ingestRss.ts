@@ -518,9 +518,14 @@ export const ingestRssFeeds = internalAction({
                   category: finalSection,
                   summary: excerpt || content.slice(0, 200),
                 });
-                imageStorageId = await ctx.storage.store(imageBlob);
-                results.imagesGenerated++;
-                console.log(`[RSS] AI image generated for "${item.title.slice(0, 60)}..."`);
+                if (imageBlob) {
+                  imageStorageId = await ctx.storage.store(imageBlob);
+                  results.imagesGenerated++;
+                  console.log(`[RSS] AI image generated for "${item.title.slice(0, 60)}..."`);
+                } else {
+                  results.imagesFailed++;
+                  console.warn(`[RSS] Image generation returned null for "${item.title.slice(0, 40)}"`);
+                }
               } catch (imgErr) {
                 const msg = imgErr instanceof Error ? imgErr.message : String(imgErr);
                 console.warn(`[RSS] Image generation failed for "${item.title.slice(0, 40)}": ${msg}`);

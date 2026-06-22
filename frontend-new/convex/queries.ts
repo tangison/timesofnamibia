@@ -359,3 +359,12 @@ export const getIngestionHealth = query({
       .first();
   },
 });
+
+// ── STORAGE URL (for image backfill) ─────────────────────────
+
+export const getStorageUrl = query({
+  args: { storageId: v.string() },
+  handler: async (ctx, args) => {
+    return await ctx.storage.getUrl(args.storageId as any);
+  },
+});

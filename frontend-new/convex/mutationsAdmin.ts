@@ -452,6 +452,7 @@ export const updateArticleContent = mutation({
     subheadline: v.optional(v.string()),
     excerpt: v.optional(v.string()),
     section: v.optional(v.string()),
+    imageStorageId: v.optional(v.id("_storage")),
   },
   handler: async (ctx, args) => {
     requireAdmin(args.adminToken);
@@ -461,6 +462,10 @@ export const updateArticleContent = mutation({
     if (args.subheadline !== undefined) updates.subheadline = args.subheadline;
     if (args.excerpt) updates.excerpt = args.excerpt;
     if (args.section) updates.section = args.section;
+    if (args.imageStorageId) {
+      const url = await ctx.storage.getUrl(args.imageStorageId);
+      if (url) updates.imageUrl = url;
+    }
 
     await ctx.db.patch(args.articleId, updates);
     return { success: true };

@@ -10,6 +10,7 @@
 
 import type * as actions_aiProvider from "../actions/aiProvider.js";
 import type * as actions_backfillBodies from "../actions/backfillBodies.js";
+import type * as actions_backfillImages from "../actions/backfillImages.js";
 import type * as actions_imageGenerator from "../actions/imageGenerator.js";
 import type * as actions_ingestRss from "../actions/ingestRss.js";
 import type * as actions_seedNamibiaGuide from "../actions/seedNamibiaGuide.js";
@@ -29,6 +30,7 @@ import type {
 declare const fullApi: ApiFromModules<{
   "actions/aiProvider": typeof actions_aiProvider;
   "actions/backfillBodies": typeof actions_backfillBodies;
+  "actions/backfillImages": typeof actions_backfillImages;
   "actions/imageGenerator": typeof actions_imageGenerator;
   "actions/ingestRss": typeof actions_ingestRss;
   "actions/seedNamibiaGuide": typeof actions_seedNamibiaGuide;

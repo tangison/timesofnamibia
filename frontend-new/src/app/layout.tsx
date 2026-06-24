@@ -64,6 +64,7 @@ export const metadata: Metadata = {
     title: "Times of Namibia — Applied AI. Built in Africa.",
     description:
       "A TANGISON news outlet. Real-time verified news, tender analysis, job market intelligence, and market data for Namibia.",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app",
     images: [
       {
         url: "/brand-og.png",

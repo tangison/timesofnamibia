@@ -68,7 +68,7 @@ export async function generateWithFallback(
         },
         body: JSON.stringify({
           model: opts?.model ?? "meta-llama/llama-3.2-3b-instruct:free",
-          messages,
+          messages: augmentedMessages,
           temperature: opts?.temperature ?? 0.4,
           max_tokens: opts?.maxTokens ?? 600,
         }),
@@ -96,7 +96,7 @@ export async function generateWithFallback(
         },
         body: JSON.stringify({
           model: opts?.fallbackModel ?? "llama-3.3-70b-versatile",
-          messages,
+          messages: augmentedMessages,
           temperature: opts?.temperature ?? 0.4,
           max_tokens: opts?.maxTokens ?? 600,
         }),

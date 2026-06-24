@@ -18,12 +18,9 @@ export const backfillImages = internalAction({
     const adminToken = process.env.CONVEX_ADMIN_TOKEN;
     if (!adminToken) return { error: "CONVEX_ADMIN_TOKEN not configured" };
 
-    // Get all articles (up to 200)
-    const articles = await ctx.runQuery(api.queries.listArticles, { limit: 200 });
-    
-    // Filter to only those without images
-    const needsImage = articles.filter((a: any) => !a.imageUrl);
-    console.log(`[backfill-images] ${needsImage.length} articles need images (out of ${articles.length})`);
+    // Get all articles without images (up to 500)
+    const needsImage = await ctx.runQuery(api.queries.listArticlesWithoutImages, { limit: 500 });
+    console.log(`[backfill-images] ${needsImage.length} articles need images`);
 
     let succeeded = 0;
     let failed = 0;
@@ -33,7 +30,7 @@ export const backfillImages = internalAction({
     const BATCH = 3;
     for (let i = 0; i < needsImage.length; i += BATCH) {
       const batch = needsImage.slice(i, i + BATCH);
-      
+
       // Process batch in parallel
       const results = await Promise.allSettled(
         batch.map(async (article: any) => {
@@ -48,18 +45,16 @@ export const backfillImages = internalAction({
           }
 
           const storageId = await ctx.storage.store(blob);
-          const url = await ctx.runQuery(api.queries.getStorageUrl, { storageId });
-          
-          if (url) {
-            await ctx.runMutation(api.mutationsAdmin.updateArticleContent, {
-              adminToken,
-              articleId: article._id,
-            });
-            // Update imageUrl separately via a direct storage approach
-            // Since updateArticleContent doesn't have imageUrl, we need to
-            // store it differently — use the article's imageStorageId field
-          }
-          
+
+          // Persist the imageStorageId to the article — this updates
+          // the article's imageUrl field via updateArticleContent's
+          // imageStorageId branch (which calls ctx.storage.getUrl).
+          await ctx.runMutation(api.mutationsAdmin.updateArticleContent, {
+            adminToken,
+            articleId: article._id,
+            imageStorageId: storageId,
+          });
+
           return { id: article._id, storageId };
         })
       );

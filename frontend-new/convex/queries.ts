@@ -368,3 +368,21 @@ export const getStorageUrl = query({
     return await ctx.storage.getUrl(args.storageId as any);
   },
 });
+
+// ── ARTICLES WITHOUT IMAGES (for backfill) ──────────────────
+// Returns all published, non-deleted articles that have no imageUrl.
+// Used by the backfillImages action to find work.
+
+export const listArticlesWithoutImages = query({
+  args: { limit: v.optional(v.number()) },
+  handler: async (ctx, args) => {
+    const limit = Math.min(args.limit ?? 500, 1000);
+    const all = await ctx.db
+      .query("article")
+      .filter((q) => q.eq(q.field("published"), true))
+      .filter((q) => q.eq(q.field("deletedAt"), undefined))
+      .filter((q) => q.eq(q.field("imageUrl"), undefined))
+      .take(limit);
+    return all;
+  },
+});

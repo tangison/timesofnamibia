@@ -11,7 +11,7 @@ interface ArticleCardProps {
     excerpt: string | null;
     summary?: string | null;
     section: string;
-    category?: string | null;
+    categoryField?: string | null;
     source: string;
     imageUrl: string | null;
     coverImage?: string | null;
@@ -56,7 +56,7 @@ export default function ArticleCard({ article, index = 0, variant = "default" }:
   const delay = (index % 6) * 0.08;
   const image = article.coverImage || article.imageUrl;
   const excerpt = article.summary || article.excerpt;
-  const section = article.category || article.section;
+  const section = article.categoryField || article.section;
 
   if (variant === "horizontal") {
     return (

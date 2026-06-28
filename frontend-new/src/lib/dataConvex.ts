@@ -60,7 +60,7 @@ function mapArticle(a: any): Article {
     coverImage: a.coverImage ?? null,
     sourceRegion: a.sourceRegion ?? null,
     originalUrl: a.originalUrl ?? null,
-    categoryFieldName: a.category ?? null,
+    categoryField: a.category ?? null,
   } as any;
 }
 

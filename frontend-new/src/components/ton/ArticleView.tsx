@@ -58,10 +58,10 @@ interface Article {
   featured: boolean;
   published: boolean;
   publishedAt: Date | null;
-  // Task 4 new fields
+  // Task 4 new fields (use categoryField to avoid clash with Category object below)
   body?: string | null;
   summary?: string | null;
-  category?: string | null;
+  categoryField?: string | null;
   coverImage?: string | null;
   sourceRegion?: string | null;
   originalUrl?: string | null;
@@ -109,7 +109,7 @@ export default function ArticleView({ article }: ArticleViewProps) {
   // Task 6: prefer new field names, fall back to legacy
   const heroImage = article.coverImage || article.imageUrl;
   const articleBody = article.body || article.content;
-  const section = article.category || article.section;
+  const section = (article as any).categoryField || article.section;
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6">

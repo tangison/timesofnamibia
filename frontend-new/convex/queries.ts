@@ -386,3 +386,36 @@ export const listArticlesWithoutImages = query({
     return all;
   },
 });
+
+// ── ARTICLES NEEDING SOCIAL PREP (Task 5) ───────────────────
+// Returns published articles where postedToSocial is false or undefined.
+
+export const listArticlesForSocial = query({
+  args: { limit: v.optional(v.number()) },
+  handler: async (ctx, args) => {
+    const limit = Math.min(args.limit ?? 20, 50);
+    const all = await ctx.db
+      .query("article")
+      .filter((q) => q.eq(q.field("published"), true))
+      .filter((q) => q.eq(q.field("deletedAt"), undefined))
+      .filter((q) => q.neq(q.field("postedToSocial"), true))
+      .order("desc")
+      .take(limit);
+    return all;
+  },
+});
+
+// ── SOCIAL QUEUE — pending posts (Task 5) ────────────────────
+// Returns pending social queue entries for external automation.
+
+export const listPendingSocialPosts = query({
+  args: { limit: v.optional(v.number()) },
+  handler: async (ctx, args) => {
+    const limit = Math.min(args.limit ?? 50, 200);
+    return await ctx.db
+      .query("socialQueue")
+      .withIndex("by_status_queuedAt", (q) => q.eq("status", "pending"))
+      .order("asc")
+      .take(limit);
+  },
+});

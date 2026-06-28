@@ -24,25 +24,32 @@ export async function generateMetadata({ params }: ArticlePageProps) {
   return {
     title: article.headline,
     description:
+      (article as any).summary ||
       article.excerpt ||
       article.subheadline ||
       `Read "${article.headline}" on Times of Namibia. Verified, timestamped, sourced.`,
     alternates: { canonical: `/article/${slug}` },
     openGraph: {
       title: article.headline,
-      description: article.excerpt || article.subheadline || undefined,
+      // Task 6: use summary as og:description
+      description: (article as any).summary || article.excerpt || article.subheadline || undefined,
       type: "article",
       publishedTime: article.publishedAt
         ? new Date(article.publishedAt).toISOString()
         : undefined,
       authors: [article.authorLine],
-      images: article.imageUrl ? [{ url: article.imageUrl, alt: article.imageAlt || article.headline }] : undefined,
+      // Task 6: use coverImage as og:image
+      images: ((article as any).coverImage || article.imageUrl)
+        ? [{ url: (article as any).coverImage || article.imageUrl, alt: article.imageAlt || article.headline }]
+        : undefined,
     },
     twitter: {
       card: "summary_large_image",
       title: article.headline,
-      description: article.excerpt || article.subheadline || undefined,
-      images: article.imageUrl ? [article.imageUrl] : undefined,
+      description: (article as any).summary || article.excerpt || article.subheadline || undefined,
+      images: ((article as any).coverImage || article.imageUrl)
+        ? [(article as any).coverImage || article.imageUrl]
+        : undefined,
     },
   };
 }

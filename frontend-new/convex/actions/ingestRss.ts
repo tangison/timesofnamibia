@@ -1,13 +1,15 @@
 // ============================================================
 // Times of Namibia — RSS Ingestion Action (TANGISON)
 //
-// Runs as a Convex scheduled action (cron) every 15 minutes.
-// Fetches 15 Namibian news RSS feeds, parses them, deduplicates
-// by guid, optionally summarises/classifies via OpenRouter, and
-// inserts new articles into the Convex `article` table.
-//
-// Error handling: each feed is fetched independently with a 10s
-// timeout. Failures are logged but don't crash the whole run.
+// Task 3 spec implementation:
+//   - 14 sources: 6 Namibian + 6 African + 2 Global
+//   - sourceRegion: "namibia" | "africa" | "world"
+//   - Per-region item caps: namibia=5, africa=3, world=2
+//   - Skip articles older than 48 hours
+//   - Deduplicate by URL/guid before processing
+//   - AI rewrite via OpenRouter (llama-3.3-70b) with editorial voice
+//   - Returns JSON: { headline, body, summary, category }
+//   - Image: publisher image if available, else Pollinations
 // ============================================================
 
 "use node";
@@ -18,87 +20,42 @@ import { api, internal } from "../_generated/api";
 import { generateArticleImage } from "./imageGenerator";
 import { generateWithFallback } from "./aiProvider";
 
-// ── RSS FEED SOURCES ─────────────────────────────────────────
-// 15 Namibian news outlets. Each URL is validated at runtime —
-// 404/403/invalid-XML feeds are silently skipped + logged.
+// ── RSS FEED SOURCES (Task 3 spec) ───────────────────────────
 
 interface RssSource {
   name: string;
   url: string;
-  category: string;
-  isInternational: boolean;
+  sourceRegion: "namibia" | "africa" | "world";
+  defaultCategory: string;
 }
 
 const RSS_SOURCES: RssSource[] = [
-  // ══ NAMIBIA (9 feeds) ═══════════════════════════════════════
-  { name: "Namibian Sun", url: "https://www.namibiansun.com/rssFeed/137", category: "national", isInternational: false },
-  { name: "Republikein (Economy)", url: "https://www.republikein.com.na/rssFeed/171", category: "economy", isInternational: false },
-  { name: "Republikein (Local)", url: "https://www.republikein.com.na/rssFeed/185", category: "national", isInternational: false },
-  { name: "Republikein (Government)", url: "https://www.republikein.com.na/rssFeed/177", category: "politics", isInternational: false },
-  { name: "The Namibian (Investigations)", url: "https://investigations.namibian.com.na/feed/", category: "national", isInternational: false },
-  { name: "New Era", url: "https://neweralive.na/feed", category: "national", isInternational: false },
-  { name: "Windhoek Observer", url: "https://www.observer24.com.na/feed/", category: "national", isInternational: false },
-  { name: "Informanté", url: "https://informante.web.na/?feed=rss2", category: "national", isInternational: false },
-  { name: "Namibia Daily News", url: "https://namibiadailynews.info/feed/", category: "national", isInternational: false },
+  // ══ NAMIBIA (6 sources) — ingest every 15 mins ═════════════
+  { name: "The Namibian", url: "https://www.namibian.com.na/rss", sourceRegion: "namibia", defaultCategory: "national" },
+  { name: "New Era Live", url: "https://neweralive.na/feed", sourceRegion: "namibia", defaultCategory: "national" },
+  { name: "Namibian Sun", url: "https://www.namibiansun.com/feed/", sourceRegion: "namibia", defaultCategory: "national" },
+  { name: "Confidente", url: "https://confidente.com.na/feed/", sourceRegion: "namibia", defaultCategory: "national" },
+  { name: "Windhoek Observer", url: "https://www.observer.com.na/feed", sourceRegion: "namibia", defaultCategory: "national" },
+  { name: "AllAfrica Namibia", url: "https://allafrica.com/namibia/index.xml", sourceRegion: "namibia", defaultCategory: "national" },
 
-  // ══ CHINA (2 feeds) — INTERNATIONAL, capped at 2 items/cycle ══
-  { name: "South China Morning Post", url: "https://www.scmp.com/rss/91/feed", category: "world", isInternational: true },
-  { name: "China Daily", url: "https://www.chinadaily.com.cn/rss/world_rss.xml", category: "world", isInternational: true },
+  // ══ AFRICA (6 sources) — ingest every 30 mins ══════════════
+  { name: "AllAfrica Africa", url: "https://allafrica.com/africa/index.xml", sourceRegion: "africa", defaultCategory: "africa" },
+  { name: "Mail & Guardian (SA)", url: "https://mg.co.za/feed/", sourceRegion: "africa", defaultCategory: "africa" },
+  { name: "Daily Maverick", url: "https://www.dailymaverick.co.za/feed/", sourceRegion: "africa", defaultCategory: "africa" },
+  { name: "The East African", url: "https://www.theeastafrican.co.ke/tea/rss", sourceRegion: "africa", defaultCategory: "africa" },
+  { name: "BBC Africa", url: "https://feeds.bbci.co.uk/news/world/africa/rss.xml", sourceRegion: "africa", defaultCategory: "africa" },
 
-  // ══ EUROPE (2 feeds) — INTERNATIONAL, capped at 2 items/cycle ══
-  { name: "The Telegraph", url: "https://www.telegraph.co.uk/news/rss.xml", category: "world", isInternational: true },
-  { name: "Euronews", url: "https://www.euronews.com/rss", category: "world", isInternational: true },
+  // ══ WORLD (2 sources) — ingest every 60 mins ═══════════════
+  { name: "Reuters World", url: "https://feeds.reuters.com/reuters/worldNews", sourceRegion: "world", defaultCategory: "world" },
+  { name: "Reuters Business", url: "https://feeds.reuters.com/reuters/businessNews", sourceRegion: "world", defaultCategory: "business" },
 ];
 
-// ── SECTION CLASSIFICATION KEYWORDS ──────────────────────────
-// Used to auto-classify articles into sections based on title + content.
+// ── TEXT CLEANING ────────────────────────────────────────────
 
-const SECTION_KEYWORDS: Record<string, string[]> = {
-  politics: ["politic", "parliament", "election", "minister", "cabinet", "government", "president", "swapo", "congress", "campaign"],
-  economy: ["economy", "economic", "finance", "bank", "inflation", "fiscal", "budget", "trade", "investment", "GDP", "treasury"],
-  mining: ["mine", "mining", "uranium", "diamond", "lithium", "gold", "copper", "rossing", "husab", "extractive"],
-  energy: ["energy", "power", "electric", "solar", "hydrogen", "wind", "gas", "oil", "renewable", "eskom", "nampower"],
-  africa: ["africa", "sadc", "AU ", "african union", "continental", "regional"],
-  world: ["world", "global", "international", "united nations", "UN ", "EU ", "US ", "China", "Russia"],
-  sport: ["sport", "football", "rugby", "cricket", "athletics", "netball", "brave warriors", "npl", "premier league"],
-  environment: ["environment", "climate", "wildlife", "conservation", "drought", "desert", "water", "park"],
-  technology: ["technology", "tech", "digital", "broadband", "internet", "AI", "artificial intelligence", "startup", "innovation"],
-  health: ["health", "hospital", "medical", "disease", "covid", "malaria", "clinic", "doctor", "patient"],
-  education: ["education", "school", "university", "unam", "nust", "student", "teacher", "exam", "curriculum"],
-  infrastructure: ["infrastructure", "road", "port", "airport", "railway", "bridge", "construction", "highway"],
-  tenders: ["tender", "bid", "procurement", "rfq", "contract award"],
-  jobs: ["job", "vacancy", "hiring", "position", "employment", "career"],
-  opinion: ["opinion", "editorial", "column", "commentary", "letter to the editor", "analysis"],
-  legal: ["court", "judge", "supreme court", "high court", "law", "legal", "justice", "ruling", "verdict"],
-  culture: ["culture", "art", "music", "festival", "heritage", "tradition", "exhibition", "gallery"],
-};
-
-// ── HELPERS ──────────────────────────────────────────────────
-
-function classifySection(title: string, content: string): string {
-  const blob = `${title} ${content}`.toLowerCase();
-  for (const [section, keywords] of Object.entries(SECTION_KEYWORDS)) {
-    if (keywords.some((kw) => blob.includes(kw))) return section;
-  }
-  return "national";
-}
-
-/**
- * Comprehensive text cleaning for RSS content.
- * Handles: CDATA stripping, HTML tag removal, ALL entity decoding
- * (named, numeric decimal, and hex), whitespace normalization.
- *
- * Part 1 Fix #1 + #2: Previously only title/description were cleaned,
- * and numeric entities like &#8230; and CDATA wrappers like
- * <![CDATA[Correspondent]]> were not handled. Now applied to ALL fields.
- */
 function cleanText(raw: string): string {
   return raw
-    // Strip CDATA wrappers: <![CDATA[...]]> → ...
     .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
-    // Strip HTML tags
     .replace(/<[^>]*>/g, "")
-    // Decode named entities
     .replace(/&nbsp;/g, " ")
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
@@ -106,31 +63,15 @@ function cleanText(raw: string): string {
     .replace(/&quot;/g, '"')
     .replace(/&apos;/g, "'")
     .replace(/&#39;/g, "'")
-    // Decode numeric decimal entities: &#8230; → …
     .replace(/&#(\d+);/g, (_m, code) => String.fromCharCode(parseInt(code, 10)))
-    // Decode hex entities: &#x2026; → …
     .replace(/&#x([0-9a-fA-F]+);/g, (_m, code) => String.fromCharCode(parseInt(code, 16)))
-    // Normalize whitespace
     .replace(/\s+/g, " ")
     .trim();
 }
 
-// Keep the old name as an alias for backwards compat
-const stripHtml = cleanText;
-
-/**
- * Convert HTML content to plain text while preserving paragraph breaks.
- * Converts <p>, <br>, <div> to double newlines, then strips remaining tags.
- * Used for content:encoded so article bodies have proper paragraph structure.
- *
- * Part 1 Fix #7: Previously the raw RSS teaser was dumped as body text
- * with no paragraph breaks. Now we extract content:encoded and format it.
- */
 function htmlToParagraphs(html: string): string {
   return html
-    // Strip CDATA first
     .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
-    // Convert block-level elements to paragraph breaks
     .replace(/<\/p>/gi, "\n\n")
     .replace(/<p[^>]*>/gi, "")
     .replace(/<br\s*\/?>/gi, "\n")
@@ -139,10 +80,8 @@ function htmlToParagraphs(html: string): string {
     .replace(/<\/h[1-6]>/gi, "\n\n")
     .replace(/<h[1-6][^>]*>/gi, "")
     .replace(/<\/li>/gi, "\n")
-    .replace(/<li[^>]*>/gi, "• ")
-    // Strip remaining HTML tags
+    .replace(/<li[^>]*>/gi, "- ")
     .replace(/<[^>]*>/g, "")
-    // Decode entities
     .replace(/&nbsp;/g, " ")
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
@@ -152,7 +91,6 @@ function htmlToParagraphs(html: string): string {
     .replace(/&#39;/g, "'")
     .replace(/&#(\d+);/g, (_m, code) => String.fromCharCode(parseInt(code, 10)))
     .replace(/&#x([0-9a-fA-F]+);/g, (_m, code) => String.fromCharCode(parseInt(code, 16)))
-    // Normalize: collapse 3+ newlines to 2, trim each paragraph
     .replace(/\n{3,}/g, "\n\n")
     .split("\n")
     .map((line) => line.trim())
@@ -176,59 +114,30 @@ function estimateReadingTime(text: string): number {
   return Math.max(1, Math.ceil(words / 220));
 }
 
-/**
- * Part 3 — Content Sanity Check
- * Runs against every newly ingested article and flags issues that
- * indicate parsing problems. Articles that fail are quarantined
- * (not published) and logged.
- */
-function contentSanityCheck(article: {
-  title: string;
-  content: string;
-  authorLine?: string;
-  excerpt?: string;
-}): { passed: boolean; issues: string[] } {
-  const issues: string[] = [];
-  const allText = `${article.title} ${article.content} ${article.authorLine || ""} ${article.excerpt || ""}`;
-
-  // Check for literal CDATA markers
-  if (/<!\[CDATA\[/.test(allText)) {
-    issues.push("CDATA marker found in rendered text");
-  }
-
-  // Check for unescaped HTML entity patterns (numeric or named)
-  if (/&#\d+;/.test(allText) || /&#x[0-9a-fA-F]+;/.test(allText)) {
-    issues.push("Unescaped HTML entity pattern found");
-  }
-
-  // Check for raw HTML tags inside text fields
-  if (/<[a-zA-Z][^>]*>/.test(article.content)) {
-    issues.push("Raw HTML tag fragment found in content");
-  }
-
-  // Check for suspiciously short or template-looking placeholder text
-  if (article.content.length < 50) {
-    issues.push("Content suspiciously short (<50 chars)");
-  }
-
-  if (/Editorial photograph|no stock imagery|placeholder/i.test(article.content)) {
-    issues.push("Template placeholder text found in content");
-  }
-
-  // Check for empty/null author fields
-  if (!article.authorLine || article.authorLine.trim().length === 0) {
-    issues.push("Empty author field");
-  }
-
-  return { passed: issues.length === 0, issues };
-}
-
 function truncate(text: string, max: number): string {
   if (text.length <= max) return text;
   return text.slice(0, max).replace(/\s+\S*$/, "") + "...";
 }
 
-// ── RSS PARSER (lightweight, no external dep needed) ─────────
+// ── CONTENT SANITY CHECK ─────────────────────────────────────
+
+function contentSanityCheck(article: {
+  title: string;
+  content: string;
+  authorLine?: string;
+}): { passed: boolean; issues: string[] } {
+  const issues: string[] = [];
+  const allText = `${article.title} ${article.content} ${article.authorLine || ""}`;
+
+  if (/<!\[CDATA\[/.test(allText)) issues.push("CDATA marker found");
+  if (/&#\d+;/.test(allText) || /&#x[0-9a-fA-F]+;/.test(allText)) issues.push("Unescaped entity");
+  if (/<[a-zA-Z][^>]*>/.test(article.content)) issues.push("Raw HTML in content");
+  if (article.content.length < 50) issues.push("Content too short");
+
+  return { passed: issues.length === 0, issues };
+}
+
+// ── RSS PARSER ───────────────────────────────────────────────
 
 interface RssItem {
   title: string;
@@ -238,12 +147,11 @@ interface RssItem {
   contentSnippet: string;
   content?: string;
   creator?: string;
-  imageUrl?: string; // from <enclosure> or <media:content> — real publisher image
+  imageUrl?: string;
 }
 
 function parseRssXml(xml: string): RssItem[] {
   const items: RssItem[] = [];
-
   const itemRegex = /<item[\s\S]*?<\/item>/gi;
   const itemMatches = xml.match(itemRegex) || [];
 
@@ -252,46 +160,30 @@ function parseRssXml(xml: string): RssItem[] {
       const match = itemXml.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)</${tag}>`, "i"));
       return match ? match[1].trim() : "";
     };
-
     const getAttr = (tag: string, attr: string): string => {
-      // Match self-closing or opening tag with attributes
       const match = itemXml.match(new RegExp(`<${tag}[^>]*\\s${attr}=["']([^"']*)["']`, "i"));
       return match ? match[1].trim() : "";
     };
 
-    // Part 1 Fix #1 + #2: Apply cleanText to ALL text fields, not just title/description.
-    // Previously the creator/author field was left raw, so CDATA wrappers like
-    // <![CDATA[Correspondent]]> rendered literally in the byline.
     const title = cleanText(getTag("title"));
     const link = cleanText(getTag("link") || getTag("guid"));
-    const pubDate = getTag("pubDate"); // don't clean dates
+    const pubDate = getTag("pubDate");
     const guid = cleanText(getTag("guid") || link);
     const description = cleanText(getTag("description"));
-    // Part 1 Fix #7: Use htmlToParagraphs for content:encoded so article
-    // bodies have proper paragraph breaks instead of a raw text dump.
     const contentEncoded = htmlToParagraphs(getTag("content:encoded"));
     const creator = cleanText(getTag("dc:creator") || getTag("author"));
 
-    // Extract publisher image from <enclosure url="..."> or <media:content url="...">
-    // These are real, story-specific photos from the publisher's own CDN.
     let imageUrl: string | undefined;
     const enclosureUrl = getAttr("enclosure", "url");
     if (enclosureUrl && enclosureUrl.startsWith("http")) {
       imageUrl = enclosureUrl;
     } else {
       const mediaUrl = getAttr("media:content", "url");
-      if (mediaUrl && mediaUrl.startsWith("http")) {
-        imageUrl = mediaUrl;
-      }
+      if (mediaUrl && mediaUrl.startsWith("http")) imageUrl = mediaUrl;
     }
-
-    // For WordPress feeds (like investigations.namibian.com.na), images
-    // may be embedded in the description as <img src="...">
     if (!imageUrl && description) {
       const imgMatch = description.match(/<img[^>]+src=["'](https?:\/\/[^"']+)["']/i);
-      if (imgMatch) {
-        imageUrl = imgMatch[1];
-      }
+      if (imgMatch) imageUrl = imgMatch[1];
     }
 
     if (!title || !link) continue;
@@ -311,41 +203,39 @@ function parseRssXml(xml: string): RssItem[] {
   return items;
 }
 
-// ── OPENROUTER AI SUMMARIZATION + BODY GENERATION ────────────
-// Now uses generateWithFallback() — tries OpenRouter first,
-// falls back to Groq if OpenRouter is rate-limited or down.
+// ── AI REWRITE (Task 1 spec) ─────────────────────────────────
+// Returns JSON: { headline, body, summary, category }
 
-interface AiResult {
+interface AiRewriteResult {
+  headline: string;
+  body: string;
   summary: string;
-  section: string;
-  body?: string;
-  subheading?: string;
+  category: string;
 }
 
-async function summariseAndClassify(
+async function rewriteArticle(
   title: string,
   content: string,
-  _openRouterKey: string // kept for backwards compat, now uses generateWithFallback
-): Promise<AiResult | null> {
+  sourceRegion: string
+): Promise<AiRewriteResult | null> {
   try {
     const aiText = await generateWithFallback(
       [
         {
           role: "system",
-          content: `You are a news editor for Times of Namibia. Given an article title and content, provide:
-1. A 2-sentence summary
-2. Classify into one of: politics, economy, mining, energy, africa, world, sport, environment, technology, health, education, infrastructure, legal, culture, opinion, national
-3. A short subheading (5-10 words, no quotes)
-4. A 3-paragraph article body based on the source content. Each paragraph should be 2-4 sentences. Separate paragraphs with \n\n. Do not include the title or subheading in the body. Write in a professional news style.
-
-Respond in JSON format: {"summary": "...", "section": "...", "subheading": "...", "body": "paragraph1\\n\\nparagraph2\\n\\nparagraph3"}`,
+          content: `You are the editorial AI for Times of Namibia, an African news outlet. Rewrite articles to be factual, clear, and locally relevant to Namibian and Southern African readers. Tone: professional but accessible. No fluff. No AI-sounding phrases. Active voice only. Max 400 words.`,
         },
         {
           role: "user",
-          content: `Title: ${title}\n\nContent: ${truncate(content, 2000)}`,
+          content: `Rewrite this article for a Namibian audience. Keep all facts. Localize where relevant. Generate: (1) rewritten body, (2) punchy headline under 10 words, (3) one-sentence summary for social media, (4) category tag from [Politics, Business, Sport, Africa, World, Tech, Health, Environment].
+
+Article title: ${title}
+Article body: ${truncate(content, 2000)}
+
+Return as JSON: { "headline": "", "body": "", "summary": "", "category": "" }`,
         },
       ],
-      { maxTokens: 600, timeout: 20_000 }
+      { maxTokens: 800, timeout: 30_000 }
     );
 
     if (!aiText) return null;
@@ -353,14 +243,38 @@ Respond in JSON format: {"summary": "...", "section": "...", "subheading": "..."
     const jsonMatch = aiText.match(/\{[\s\S]*\}/);
     if (!jsonMatch) return null;
 
-    const parsed = JSON.parse(jsonMatch[0]);
-    return {
-      summary: parsed.summary || truncate(content, 250),
-      section: parsed.section || classifySection(title, content),
-      subheading: parsed.subheading || undefined,
-      body: parsed.body || undefined,
+    // Sanitize control characters before JSON.parse
+    const sanitized = jsonMatch[0]
+      .replace(/[\x00-\x1f\x7f]/g, (ch) => {
+        const code = ch.charCodeAt(0);
+        return code === 10 || code === 13 ? ch : " ";
+      })
+      .replace(/\\(?!["\\/bfnrtu])/g, "\\\\");
+
+    const parsed = JSON.parse(sanitized);
+
+    // Normalize category to lowercase section name
+    const categoryMap: Record<string, string> = {
+      politics: "politics",
+      business: "economy",
+      sport: "sport",
+      africa: "africa",
+      world: "world",
+      tech: "technology",
+      technology: "technology",
+      health: "health",
+      environment: "environment",
     };
-  } catch {
+    const normalizedCategory = categoryMap[(parsed.category || "").toLowerCase()] || sourceRegion === "namibia" ? "national" : sourceRegion;
+
+    return {
+      headline: String(parsed.headline || title).slice(0, 200),
+      body: String(parsed.body || content).slice(0, 5000),
+      summary: String(parsed.summary || truncate(content, 200)).slice(0, 300),
+      category: normalizedCategory,
+    };
+  } catch (err) {
+    console.warn("[AI] Rewrite failed:", err instanceof Error ? err.message : err);
     return null;
   }
 }
@@ -368,15 +282,22 @@ Respond in JSON format: {"summary": "...", "section": "...", "subheading": "..."
 // ── MAIN INGESTION ACTION ────────────────────────────────────
 
 export const ingestRssFeeds = internalAction({
-  args: {},
-  handler: async (ctx) => {
-    const openRouterKey = process.env.OPENROUTER_API_KEY;
+  args: {
+    sourceRegion: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
     const adminToken = process.env.CONVEX_ADMIN_TOKEN;
-
     if (!adminToken) {
-      console.error("[RSS] CONVEX_ADMIN_TOKEN not configured — cannot ingest");
+      console.error("[RSS] CONVEX_ADMIN_TOKEN not configured");
       return { error: "CONVEX_ADMIN_TOKEN not configured" };
     }
+
+    // Filter sources by region if specified (Task 3 per-region cron)
+    const sourcesToProcess = args.sourceRegion
+      ? RSS_SOURCES.filter((s) => s.sourceRegion === args.sourceRegion)
+      : RSS_SOURCES;
+
+    console.log(`[RSS] Ingesting ${sourcesToProcess.length} sources${args.sourceRegion ? ` (region: ${args.sourceRegion})` : ""}`);
 
     const results = {
       feedsChecked: 0,
@@ -385,16 +306,20 @@ export const ingestRssFeeds = internalAction({
       articlesFound: 0,
       articlesInserted: 0,
       articlesDeduped: 0,
+      articlesSkippedOld: 0,
       quarantined: 0,
       imagesGenerated: 0,
       imagesFailed: 0,
       errors: [] as string[],
     };
 
-    for (const source of RSS_SOURCES) {
+    const FORTY_EIGHT_HOURS_MS = 48 * 60 * 60 * 1000;
+    const now = Date.now();
+
+    for (const source of sourcesToProcess) {
       results.feedsChecked++;
       try {
-        console.log(`[RSS] Fetching ${source.name}...`);
+        console.log(`[RSS] Fetching ${source.name} (${source.sourceRegion})...`);
 
         const response = await fetch(source.url, {
           headers: {
@@ -407,15 +332,14 @@ export const ingestRssFeeds = internalAction({
         if (!response.ok) {
           results.feedsFailed++;
           results.errors.push(`${source.name}: HTTP ${response.status}`);
-          console.warn(`[RSS] ${source.name} returned HTTP ${response.status} — skipping`);
+          console.warn(`[RSS] ${source.name} returned HTTP ${response.status}`);
           continue;
         }
 
         const xml = await response.text();
         if (!xml.includes("<item") && !xml.includes("<entry")) {
           results.feedsFailed++;
-          results.errors.push(`${source.name}: invalid XML (no items)`);
-          console.warn(`[RSS] ${source.name}: invalid XML — skipping`);
+          results.errors.push(`${source.name}: invalid XML`);
           continue;
         }
 
@@ -423,73 +347,56 @@ export const ingestRssFeeds = internalAction({
         const items = parseRssXml(xml);
         console.log(`[RSS] ${source.name}: ${items.length} items found`);
 
-        // Per-source item cap — international feeds capped at 2, Namibian at 5.
-        const MAX_ITEMS = source.isInternational ? 2 : 5;
+        // Per-region item caps
+        const MAX_ITEMS = source.sourceRegion === "namibia" ? 5 : source.sourceRegion === "africa" ? 3 : 2;
         const itemsToProcess = items.slice(0, MAX_ITEMS);
-        if (items.length > MAX_ITEMS) {
-          console.log(`[RSS] ${source.name}: capping to ${MAX_ITEMS} items (had ${items.length})`);
-        }
 
         for (const item of itemsToProcess) {
           results.articlesFound++;
 
           try {
-            const content = item.content || item.contentSnippet || item.title;
-            const section = classifySection(item.title, content);
-            const slug = generateSlug(item.title);
-            const pubDate = item.pubDate ? new Date(item.pubDate).getTime() : Date.now();
+            const pubDate = item.pubDate ? new Date(item.pubDate).getTime() : now;
 
-            // DEDUP CHECK — do this BEFORE image generation to avoid
-            // wasting Pollinations calls on articles we'll discard.
+            // Skip articles older than 48 hours (Task 3 spec)
+            if (now - pubDate > FORTY_EIGHT_HOURS_MS) {
+              results.articlesSkippedOld++;
+              continue;
+            }
+
+            const slug = generateSlug(item.title);
+            const originalUrl = item.link;
+
+            // Dedup check BEFORE image generation
             const exists = await ctx.runQuery(api.queries.checkArticleExists, {
               slug,
               rssGuid: item.guid,
             });
             if (exists) {
               results.articlesDeduped++;
-              continue; // Skip — don't generate image for duplicates
+              continue;
             }
 
-            // AI summarisation + body generation + subheading
-            let excerpt = item.contentSnippet;
-            // Force "world" category for international feeds — never let AI
-            // classify them as "national" or any Namibia-specific category.
-            let finalSection = source.isInternational ? "world" : section;
-            let finalContent = content;
-            let subheading: string | undefined;
+            const content = item.content || item.contentSnippet || item.title;
 
-            if (openRouterKey && content.length > 200) {
-              const ai = await summariseAndClassify(item.title, content, openRouterKey);
-              if (ai) {
-                excerpt = ai.summary;
-                // Only let AI override section for Namibian feeds.
-                // International feeds are ALWAYS "world".
-                if (!source.isInternational) {
-                  finalSection = ai.section;
-                }
-                subheading = ai.subheading;
-                // Use AI-generated body if the feed didn't provide content:encoded
-                // (most feeds only give a short description, so the AI body gives
-                // readers a proper 3-paragraph article instead of a 1-sentence teaser)
-                if (ai.body && ai.body.length > 100) {
-                  finalContent = ai.body;
-                }
-              }
+            // AI rewrite (Task 1 spec)
+            let headline = item.title;
+            let body = content;
+            let summary = item.contentSnippet;
+            let category = source.defaultCategory;
+
+            const aiResult = await rewriteArticle(item.title, content, source.sourceRegion);
+            if (aiResult) {
+              headline = aiResult.headline;
+              body = aiResult.body;
+              summary = aiResult.summary;
+              category = aiResult.category;
             }
 
-            // IMAGE HANDLING — use publisher's real image when available,
-            // fall back to Pollinations.ai AI-generated image only when no
-            // enclosure/media:content exists in the RSS feed.
-            //
-            // Priority:
-            //   1. Publisher image from <enclosure> or <media:content> (real photo)
-            //   2. Pollinations.ai generated illustration (AI fallback)
-            //   3. No image (UI renders flat brand-color placeholder)
+            // Image handling (Task 2 spec)
             let imageStorageId: string | undefined;
             let publisherImageUrl: string | undefined;
 
             if (item.imageUrl) {
-              // Use the publisher's real image — fetch + store in Convex
               try {
                 const imgRes = await fetch(item.imageUrl, {
                   signal: AbortSignal.timeout(15_000),
@@ -497,7 +404,7 @@ export const ingestRssFeeds = internalAction({
                 });
                 if (imgRes.ok) {
                   const imgBlob = await imgRes.blob();
-                  if (imgBlob.size > 1000) { // Skip tiny/broken images
+                  if (imgBlob.size > 1000) {
                     imageStorageId = await ctx.storage.store(imgBlob);
                     results.imagesGenerated++;
                     publisherImageUrl = item.imageUrl;
@@ -505,18 +412,17 @@ export const ingestRssFeeds = internalAction({
                   }
                 }
               } catch (pubImgErr) {
-                const msg = pubImgErr instanceof Error ? pubImgErr.message : String(pubImgErr);
-                console.warn(`[RSS] Publisher image fetch failed: ${msg}`);
+                console.warn(`[RSS] Publisher image fetch failed: ${pubImgErr instanceof Error ? pubImgErr.message : pubImgErr}`);
               }
             }
 
-            // Fall back to AI-generated image ONLY if no publisher image was stored
+            // Fall back to AI-generated image
             if (!imageStorageId) {
               try {
                 const imageBlob = await generateArticleImage({
-                  title: item.title,
-                  category: finalSection,
-                  summary: excerpt || content.slice(0, 200),
+                  title: headline,
+                  category,
+                  summary,
                 });
                 if (imageBlob) {
                   imageStorageId = await ctx.storage.store(imageBlob);
@@ -524,52 +430,51 @@ export const ingestRssFeeds = internalAction({
                   console.log(`[RSS] AI image generated for "${item.title.slice(0, 60)}..."`);
                 } else {
                   results.imagesFailed++;
-                  console.warn(`[RSS] Image generation returned null for "${item.title.slice(0, 40)}"`);
                 }
               } catch (imgErr) {
-                const msg = imgErr instanceof Error ? imgErr.message : String(imgErr);
-                console.warn(`[RSS] Image generation failed for "${item.title.slice(0, 40)}": ${msg}`);
+                console.warn(`[RSS] Image generation failed: ${imgErr instanceof Error ? imgErr.message : imgErr}`);
                 results.imagesFailed++;
-                // imageUrl stays undefined — UI falls back to flat brand-color block
               }
             }
 
-            // Part 3 — Content Sanity Check
-            // Run before insertion. Quarantine (skip) articles that fail.
+            // Content sanity check
             const sanityCheck = contentSanityCheck({
-              title: item.title,
-              content: finalContent,
+              title: headline,
+              content: body,
               authorLine: item.creator || source.name,
-              excerpt,
             });
             if (!sanityCheck.passed) {
               results.quarantined++;
-              console.warn(`[RSS] QUARANTINED "${item.title.slice(0, 60)}..." — issues: ${sanityCheck.issues.join(", ")}`);
-              continue; // Skip — don't publish broken content
+              console.warn(`[RSS] QUARANTINED "${headline.slice(0, 60)}..." — ${sanityCheck.issues.join(", ")}`);
+              continue;
             }
 
+            // Insert article with both legacy + new fields
             const result = await ctx.runMutation(api.mutationsAdmin.ingestArticle, {
               adminToken,
               slug,
-              headline: item.title,
-              subheadline: subheading, // AI-generated H2 subheading
-              content: finalContent,    // AI-generated 3-paragraph body (or raw content)
-              excerpt,
+              headline,
+              subheadline: summary,
+              content: body,
+              excerpt: summary,
               source: source.name,
-              section: finalSection,
-              categorySlug: finalSection,
+              section: category,
+              categorySlug: category,
               authorLine: item.creator || source.name,
               publishedAt: pubDate,
               rssGuid: item.guid,
-              readingTime: estimateReadingTime(finalContent),
+              readingTime: estimateReadingTime(body),
               ...(imageStorageId ? { imageStorageId } : {}),
+              // Task 4 new fields:
+              sourceRegion: source.sourceRegion,
+              originalUrl,
             });
 
             if (result.deduped) {
               results.articlesDeduped++;
             } else {
               results.articlesInserted++;
-              console.log(`[RSS] Inserted: "${item.title.slice(0, 60)}..." from ${source.name}`);
+              console.log(`[RSS] Inserted: "${headline.slice(0, 60)}..." from ${source.name} (${source.sourceRegion})`);
             }
           } catch (err) {
             const msg = err instanceof Error ? err.message : String(err);
@@ -586,12 +491,11 @@ export const ingestRssFeeds = internalAction({
 
     console.log("[RSS] Ingestion complete:", results);
 
-    // Part 5: Record ingestion health for visibility
     try {
       await ctx.runMutation(api.mutationsAdmin.updateIngestionHealth, {
         adminToken,
         articlesInserted: results.articlesInserted,
-        errors: results.errors.slice(0, 10), // cap stored errors
+        errors: results.errors.slice(0, 10),
       });
     } catch (healthErr) {
       console.warn("[RSS] Failed to record health:", healthErr);
@@ -601,7 +505,7 @@ export const ingestRssFeeds = internalAction({
   },
 });
 
-// ── MANUAL TRIGGER (for testing) ─────────────────────────────
+// ── MANUAL TRIGGER ───────────────────────────────────────────
 
 export const triggerRssIngestion = action({
   args: { adminToken: v.string() },

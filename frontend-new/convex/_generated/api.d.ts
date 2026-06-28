@@ -14,6 +14,7 @@ import type * as actions_backfillImages from "../actions/backfillImages.js";
 import type * as actions_imageGenerator from "../actions/imageGenerator.js";
 import type * as actions_ingestRss from "../actions/ingestRss.js";
 import type * as actions_seedNamibiaGuide from "../actions/seedNamibiaGuide.js";
+import type * as actions_socialQueue from "../actions/socialQueue.js";
 import type * as actions_synthesizeStory from "../actions/synthesizeStory.js";
 import type * as crons from "../crons.js";
 import type * as http from "../http.js";
@@ -34,6 +35,7 @@ declare const fullApi: ApiFromModules<{
   "actions/imageGenerator": typeof actions_imageGenerator;
   "actions/ingestRss": typeof actions_ingestRss;
   "actions/seedNamibiaGuide": typeof actions_seedNamibiaGuide;
+  "actions/socialQueue": typeof actions_socialQueue;
   "actions/synthesizeStory": typeof actions_synthesizeStory;
   crons: typeof crons;
   http: typeof http;

@@ -1,7 +1,13 @@
 // ============================================================
 // Times of Namibia — Convex Cron Jobs (TANGISON)
 //
-// Scheduled jobs that run on the Convex deployment automatically.
+// Task 3 spec: per-region cron intervals
+//   - Namibia sources: every 15 minutes
+//   - Africa sources: every 30 minutes
+//   - World sources: every 60 minutes
+//
+// The ingestRssFeeds action accepts a sourceRegion filter so we
+// can run each region independently on its own schedule.
 // ============================================================
 
 import { cronJobs } from "convex/server";
@@ -9,14 +15,28 @@ import { internal } from "./_generated/api";
 
 const crons = cronJobs();
 
-// ── RSS INGESTION — every 15 minutes ─────────────────────────
-// Fetches 15 Namibian news RSS feeds, parses, deduplicates, and
-// inserts new articles into the Convex `article` table.
+// Namibia: every 15 minutes
 crons.interval(
-  "ingest rss feeds",
+  "ingest namibia feeds",
   { minutes: 15 },
   internal.actions.ingestRss.ingestRssFeeds,
-  {}
+  { sourceRegion: "namibia" }
+);
+
+// Africa: every 30 minutes
+crons.interval(
+  "ingest africa feeds",
+  { minutes: 30 },
+  internal.actions.ingestRss.ingestRssFeeds,
+  { sourceRegion: "africa" }
+);
+
+// World: every 60 minutes
+crons.interval(
+  "ingest world feeds",
+  { minutes: 60 },
+  internal.actions.ingestRss.ingestRssFeeds,
+  { sourceRegion: "world" }
 );
 
 export default crons;

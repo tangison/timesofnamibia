@@ -87,10 +87,12 @@ export default function HomeView({
 }: HomeViewProps) {
   // Real-time article updates — poll every 30 seconds
   const [liveArticles, setLiveArticles] = useState(recentArticles);
+  // Task 6: category filter state
+  const [activeCategory, setActiveCategory] = useState<string>("all");
 
   useEffect(() => {
     setLiveArticles(recentArticles);
-    
+
     // Poll for new articles every 30 seconds
     const interval = setInterval(async () => {
       try {
@@ -107,24 +109,45 @@ export default function HomeView({
     return () => clearInterval(interval);
   }, [recentArticles]);
 
+  // Task 6: Category filter tabs
+  const CATEGORIES = [
+    { label: "All", value: "all" },
+    { label: "Politics", value: "politics" },
+    { label: "Business", value: "economy" },
+    { label: "Sport", value: "sport" },
+    { label: "Africa", value: "africa" },
+    { label: "World", value: "world" },
+    { label: "Tech", value: "technology" },
+    { label: "Health", value: "health" },
+    { label: "Environment", value: "environment" },
+  ];
+
+  // Filter articles by selected category
+  const filteredArticles = activeCategory === "all"
+    ? liveArticles
+    : liveArticles.filter(a => {
+        const cat = (a as any).category || a.section;
+        return cat === activeCategory;
+      });
+
   // Build carousel articles (featured + top 4 with images)
   const carouselArticles = [
     ...(featuredArticle ? [featuredArticle] : []),
-    ...liveArticles.filter(a => a.imageUrl && a.id !== featuredArticle?.id).slice(0, 4),
+    ...filteredArticles.filter(a => (a.imageUrl || (a as any).coverImage) && a.id !== featuredArticle?.id).slice(0, 4),
   ].slice(0, 5);
 
   // Grid articles (next 8 after carousel)
-  const gridArticles = liveArticles
+  const gridArticles = filteredArticles
     .filter(a => !carouselArticles.find(c => c.id === a.id))
     .slice(0, 8);
 
   // Sidebar articles (compact list)
-  const sidebarArticles = liveArticles
+  const sidebarArticles = filteredArticles
     .filter(a => !carouselArticles.find(c => c.id === a.id))
     .slice(8, 14);
 
   // Most read (articles with most content = proxy for engagement)
-  const mostRead = [...liveArticles].sort((a, b) => b.content.length - a.content.length).slice(0, 5);
+  const mostRead = [...filteredArticles].sort((a, b) => b.content.length - a.content.length).slice(0, 5);
 
   return (
     <div>
@@ -138,7 +161,7 @@ export default function HomeView({
 
       {/* Main Content Area */}
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-12">
-        
+
         {/* Market Data Strip */}
         {marketData.length > 0 && (
           <motion.div
@@ -161,10 +184,10 @@ export default function HomeView({
 
         {/* Main 3-column layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
+
           {/* LEFT — Latest News Grid (8 cols) */}
           <div className="lg:col-span-8">
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between mb-4">
               <h2 className="font-serif font-bold text-2xl text-ton-black border-l-4 border-ton-red pl-4">
                 Latest News
               </h2>
@@ -174,6 +197,23 @@ export default function HomeView({
               </span>
             </div>
 
+            {/* Task 6: Category filter tabs */}
+            <div className="mb-6 flex gap-2 overflow-x-auto scrollbar-hide pb-2 border-b border-ton-black/10">
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat.value}
+                  onClick={() => setActiveCategory(cat.value)}
+                  className={`flex-shrink-0 px-4 py-1.5 font-mono text-[10px] font-bold uppercase tracking-widest transition-all whitespace-nowrap ${
+                    activeCategory === cat.value
+                      ? "bg-ton-black text-white"
+                      : "text-ton-black/50 hover:text-ton-black border border-ton-black/10 hover:border-ton-black/30"
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+
             {/* Article Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {gridArticles.map((article, i) => (
@@ -181,13 +221,22 @@ export default function HomeView({
               ))}
             </div>
 
+            {/* Empty state */}
+            {gridArticles.length === 0 && (
+              <div className="py-12 text-center">
+                <p className="font-mono text-xs uppercase tracking-widest text-ton-black/30">
+                  No articles in this category yet
+                </p>
+              </div>
+            )}
+
             {/* Load More */}
             <div className="mt-8 text-center">
               <a
-                href="/section/national"
+                href={activeCategory === "all" ? "/section/national" : `/section/${activeCategory}`}
                 className="inline-flex items-center gap-2 border border-ton-black/15 px-6 py-3 font-mono text-xs uppercase tracking-widest text-ton-black/60 hover:bg-ton-black hover:text-white transition-all"
               >
-                View All News
+                View All {activeCategory !== "all" ? CATEGORIES.find(c => c.value === activeCategory)?.label : "News"}
                 <ChevronRight size={16} />
               </a>
             </div>

@@ -58,6 +58,13 @@ interface Article {
   featured: boolean;
   published: boolean;
   publishedAt: Date | null;
+  // Task 4 new fields
+  body?: string | null;
+  summary?: string | null;
+  category?: string | null;
+  coverImage?: string | null;
+  sourceRegion?: string | null;
+  originalUrl?: string | null;
   views: number;
   commentCount: number;
   category: Category | null;
@@ -99,14 +106,19 @@ export default function ArticleView({ article }: ArticleViewProps) {
   const isRss = article.source === "rss";
   const sectionLabel = article.section ? article.section.charAt(0).toUpperCase() + article.section.slice(1) : "News";
 
+  // Task 6: prefer new field names, fall back to legacy
+  const heroImage = article.coverImage || article.imageUrl;
+  const articleBody = article.body || article.content;
+  const section = article.category || article.section;
+
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6">
       {/* Breadcrumbs */}
       <div className="pt-5 sm:pt-6 md:pt-8">
         <Breadcrumbs
           items={[
-            ...(article.section
-              ? [{ label: sectionLabel, href: `/section/${article.section}` }]
+            ...(section
+              ? [{ label: section.charAt(0).toUpperCase() + section.slice(1), href: `/section/${section}` }]
               : []),
             { label: article.category?.name || article.categorySlug || "News" },
           ]}
@@ -120,13 +132,20 @@ export default function ArticleView({ article }: ArticleViewProps) {
         variants={staggerContainer}
         className="max-w-3xl mx-auto py-6 sm:py-8 md:py-10"
       >
-        {/* Category badge */}
-        <motion.span
-          variants={fadeUpItem}
-          className="bg-ton-red text-white font-mono text-[9px] tracking-widest uppercase px-2 py-0.5 font-bold"
-        >
-          {article.category?.name || article.categorySlug || "News"}
-        </motion.span>
+        {/* Category badge + Task 6 sourceRegion badge */}
+        <div className="flex items-center gap-3">
+          <motion.span
+            variants={fadeUpItem}
+            className="bg-ton-red text-white font-mono text-[9px] tracking-widest uppercase px-2 py-0.5 font-bold"
+          >
+            {article.category?.name || article.categorySlug || section || "News"}
+          </motion.span>
+          {article.sourceRegion && (
+            <motion.span variants={fadeUpItem} className="font-mono text-[9px] tracking-widest uppercase text-ton-black/40">
+              {article.sourceRegion === "namibia" ? "🇳🇦 Namibia" : article.sourceRegion === "africa" ? "🌍 Africa" : "🌐 World"}
+            </motion.span>
+          )}
+        </div>
 
         {/* Headline */}
         <motion.h1
@@ -173,14 +192,14 @@ export default function ArticleView({ article }: ArticleViewProps) {
 
         {/* Share buttons */}
         <motion.div variants={fadeUpItem} className="mt-4 flex items-center gap-3">
-          <ShareButtons title={article.headline} url={`/article/${article.slug}`} articleContent={article.content} />
+          <ShareButtons title={article.headline} url={`/article/${article.slug}`} articleContent={articleBody} />
         </motion.div>
 
-        {/* Image area — if image exists */}
-        {article.imageUrl ? (
+        {/* Image area — Task 6: use coverImage with fallback to imageUrl */}
+        {heroImage ? (
           <div className="mt-6 relative overflow-hidden border border-ton-black/8">
             <img
-              src={article.imageUrl}
+              src={heroImage}
               alt={article.imageAlt || article.headline}
               className="w-full aspect-[16/9] object-cover ton-article-image"
             />
@@ -196,15 +215,12 @@ export default function ArticleView({ article }: ArticleViewProps) {
             )}
           </div>
         ) : (
-          // Part 1 Fix #3: Silent colored block, zero visible text.
-          // Previously showed "Editorial photograph — no stock imagery..."
-          // as visible body copy, which looked careless.
           <div className="mt-6 bg-ton-black/[0.04] aspect-[16/9] border border-ton-black/8" />
         )}
 
-        {/* Content with Drop Cap */}
+        {/* Content with Drop Cap — Task 6: prefer body field */}
         <div className="mt-6">
-          {article.content.split("\n\n").map((para, i) => (
+          {articleBody.split("\n\n").map((para, i) => (
             <p
               key={i}
               className={`font-serif text-base sm:text-lg text-ton-black/60 leading-[1.8] mb-5 ${

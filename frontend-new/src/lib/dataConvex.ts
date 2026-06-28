@@ -54,7 +54,14 @@ function mapArticle(a: any): Article {
     rssFeed: null,
     createdAt: new Date(a.createdAt),
     updatedAt: new Date(a.updatedAt ?? a.createdAt),
-  };
+    // Task 4 new fields — pass through to frontend
+    body: a.body ?? null,
+    summary: a.summary ?? null,
+    coverImage: a.coverImage ?? null,
+    sourceRegion: a.sourceRegion ?? null,
+    originalUrl: a.originalUrl ?? null,
+    categoryFieldName: a.category ?? null,
+  } as any;
 }
 
 function mapJob(j: any): Job {

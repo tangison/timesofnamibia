@@ -99,4 +99,79 @@ http.route({
   }),
 });
 
+// ── /social-queue (Task 5) — returns pending social posts ──
+// External automation (n8n / Make.com) calls this GET endpoint to
+// retrieve pending posts, publishes them to each platform, then
+// calls POST /http/social-queue/{id}/status to mark them posted.
+http.route({
+  path: "/social-queue",
+  method: "GET",
+  handler: httpAction(async (ctx, request) => {
+    const secret = request.headers.get("Authorization");
+    const expectedSecret = `Bearer ${process.env.INGEST_SECRET}`;
+
+    if (!secret || secret !== expectedSecret) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+
+    try {
+      const url = new URL(request.url);
+      const limit = parseInt(url.searchParams.get("limit") || "50", 10);
+      const posts = await ctx.runQuery(api.queries.listPendingSocialPosts, { limit });
+
+      return new Response(
+        JSON.stringify({
+          count: posts.length,
+          posts: posts.map((p: any) => ({
+            id: p._id,
+            articleId: p.articleId,
+            imageUrl: p.imageUrl,
+            caption: p.caption,
+            hashtags: p.hashtags,
+            platforms: p.platforms,
+            queuedAt: new Date(p.queuedAt).toISOString(),
+          })),
+        }),
+        { status: 200, headers: { "Content-Type": "application/json" } }
+      );
+    } catch (err) {
+      return new Response(
+        JSON.stringify({ error: err instanceof Error ? err.message : "Unknown error" }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      );
+    }
+  }),
+});
+
+// ── /prepare-social (Task 5) — trigger prepareSocialPost action ──
+// Fire-and-forget: schedules the action that builds social packages
+// for all articles where postedToSocial is false.
+http.route({
+  path: "/prepare-social",
+  method: "POST",
+  handler: httpAction(async (ctx, request) => {
+    const secret = request.headers.get("Authorization");
+    const expectedSecret = `Bearer ${process.env.INGEST_SECRET}`;
+
+    if (!secret || secret !== expectedSecret) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+
+    try {
+      await ctx.scheduler.runAfter(0, internal.actions.socialQueue.prepareSocialPost, {
+        limit: 20,
+      });
+      return new Response(
+        JSON.stringify({ status: "Social preparation started" }),
+        { status: 200, headers: { "Content-Type": "application/json" } }
+      );
+    } catch (err) {
+      return new Response(
+        JSON.stringify({ error: err instanceof Error ? err.message : "Unknown error" }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      );
+    }
+  }),
+});
+
 export default http;

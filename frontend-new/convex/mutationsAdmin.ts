@@ -58,6 +58,14 @@ export const ingestArticle = mutation({
     rssGuid: v.optional(v.string()),
     featured: v.optional(v.boolean()),
     readingTime: v.optional(v.number()),
+    // Task 4 new fields:
+    body: v.optional(v.string()),
+    summary: v.optional(v.string()),
+    category: v.optional(v.string()),
+    coverImage: v.optional(v.string()),
+    sourceRegion: v.optional(v.string()),
+    originalUrl: v.optional(v.string()),
+    postedToSocial: v.optional(v.boolean()),
   },
   handler: async (ctx, args) => {
     requireAdmin(args.adminToken);
@@ -111,6 +119,14 @@ export const ingestArticle = mutation({
       commentCount: 0,
       createdAt: Date.now(),
       updatedAt: Date.now(),
+      // Task 4 new fields (write alongside legacy fields for backwards compat):
+      body: args.body ?? args.content,
+      summary: args.summary ?? args.excerpt,
+      category: args.category ?? args.section,
+      coverImage: imageUrl,
+      sourceRegion: args.sourceRegion,
+      originalUrl: args.originalUrl,
+      postedToSocial: args.postedToSocial ?? false,
     });
 
     return { id, deduped: false };
@@ -453,6 +469,14 @@ export const updateArticleContent = mutation({
     excerpt: v.optional(v.string()),
     section: v.optional(v.string()),
     imageStorageId: v.optional(v.id("_storage")),
+    // Task 4 new fields:
+    body: v.optional(v.string()),
+    summary: v.optional(v.string()),
+    category: v.optional(v.string()),
+    sourceRegion: v.optional(v.string()),
+    originalUrl: v.optional(v.string()),
+    postedToSocial: v.optional(v.boolean()),
+    socialPostedAt: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
     requireAdmin(args.adminToken);
@@ -464,10 +488,87 @@ export const updateArticleContent = mutation({
     if (args.section) updates.section = args.section;
     if (args.imageStorageId) {
       const url = await ctx.storage.getUrl(args.imageStorageId);
-      if (url) updates.imageUrl = url;
+      if (url) {
+        updates.imageUrl = url;
+        updates.coverImage = url; // Task 4 alias
+      }
     }
+    // Task 4 new fields
+    if (args.body) updates.body = args.body;
+    if (args.summary) updates.summary = args.summary;
+    if (args.category) updates.category = args.category;
+    if (args.sourceRegion !== undefined) updates.sourceRegion = args.sourceRegion;
+    if (args.originalUrl !== undefined) updates.originalUrl = args.originalUrl;
+    if (args.postedToSocial !== undefined) updates.postedToSocial = args.postedToSocial;
+    if (args.socialPostedAt !== undefined) updates.socialPostedAt = args.socialPostedAt;
 
     await ctx.db.patch(args.articleId, updates);
+    return { success: true };
+  },
+});
+
+// ── QUEUE SOCIAL POST (Task 5) ───────────────────────────────
+
+export const queueSocialPost = mutation({
+  args: {
+    adminToken: v.string(),
+    articleId: v.id("article"),
+    imageUrl: v.optional(v.string()),
+    caption: v.string(),
+    hashtags: v.array(v.string()),
+    platforms: v.array(v.string()),
+  },
+  handler: async (ctx, args) => {
+    requireAdmin(args.adminToken);
+
+    // Don't queue duplicates for the same article
+    const existing = await ctx.db
+      .query("socialQueue")
+      .withIndex("by_article", (q) => q.eq("articleId", args.articleId))
+      .filter((q) => q.eq(q.field("status"), "pending"))
+      .first();
+    if (existing) {
+      return { id: existing._id, deduped: true };
+    }
+
+    const id = await ctx.db.insert("socialQueue", {
+      articleId: args.articleId,
+      imageUrl: args.imageUrl,
+      caption: args.caption,
+      hashtags: args.hashtags,
+      platforms: args.platforms,
+      status: "pending",
+      queuedAt: Date.now(),
+    });
+
+    return { id, deduped: false };
+  },
+});
+
+// ── MARK SOCIAL POST STATUS (Task 5) ─────────────────────────
+// Called by external automation after posting to update status.
+
+export const updateSocialPostStatus = mutation({
+  args: {
+    adminToken: v.string(),
+    socialQueueId: v.id("socialQueue"),
+    status: v.string(), // "posted" | "failed"
+    postResults: v.optional(v.array(v.object({
+      platform: v.string(),
+      success: v.boolean(),
+      error: v.optional(v.string()),
+      postId: v.optional(v.string()),
+    }))),
+  },
+  handler: async (ctx, args) => {
+    requireAdmin(args.adminToken);
+
+    await ctx.db.patch(args.socialQueueId, {
+      status: args.status,
+      postedAt: args.status === "posted" ? Date.now() : undefined,
+      ...(args.postResults ? { postResults: args.postResults } : {}),
+    });
+
     return { success: true };
   },
 });

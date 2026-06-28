@@ -91,6 +91,17 @@ export default defineSchema({
     deletedAt: v.optional(v.number()),
     createdAt: v.number(),
     updatedAt: v.number(),
+    // ── Task 4 fields (upgrade spec) ──
+    // Aliases written alongside legacy fields for backwards compat.
+    // Frontend prefers these, falls back to legacy names.
+    body: v.optional(v.string()),           // == content
+    summary: v.optional(v.string()),        // == excerpt
+    category: v.optional(v.string()),       // == section
+    coverImage: v.optional(v.string()),     // == imageUrl
+    sourceRegion: v.optional(v.string()),   // "namibia" | "africa" | "world"
+    originalUrl: v.optional(v.string()),    // original RSS article URL
+    postedToSocial: v.optional(v.boolean()),// default false
+    socialPostedAt: v.optional(v.number()),
   })
     .index("by_slug", ["slug"])
     .index("by_published_section_publishedAt", ["published", "section", "publishedAt"])
@@ -99,7 +110,9 @@ export default defineSchema({
     .index("by_category", ["categoryId"])
     .index("by_author", ["authorId"])
     .index("by_rssFeed", ["rssFeedId"])
-    .index("by_rssGuid", ["rssGuid"]),
+    .index("by_rssGuid", ["rssGuid"])
+    .index("by_postedToSocial", ["postedToSocial"])
+    .index("by_sourceRegion", ["sourceRegion"]),
 
   // ── MEDIA ────────────────────────────────────────────────────
   media: defineTable({
@@ -423,4 +436,28 @@ export default defineSchema({
     articlesInserted: v.number(),
     errors: v.array(v.string()),
   }).index("by_key", ["key"]),
+
+  // ── SOCIAL QUEUE (Task 5) ───────────────────────────────────
+  // Pending social media posts prepared by the prepareSocialPost action.
+  // Consumed by an external automation (n8n / Make.com webhook) that
+  // reads /http/social-queue, posts to each platform, then deletes
+  // the queue entry (or marks it posted).
+  socialQueue: defineTable({
+    articleId: v.id("article"),
+    imageUrl: v.optional(v.string()),
+    caption: v.string(),
+    hashtags: v.array(v.string()),
+    platforms: v.array(v.string()), // "instagram" | "facebook" | "x"
+    status: v.string(), // "pending" | "posted" | "failed"
+    queuedAt: v.number(),
+    postedAt: v.optional(v.number()),
+    postResults: v.optional(v.array(v.object({
+      platform: v.string(),
+      success: v.boolean(),
+      error: v.optional(v.string()),
+      postId: v.optional(v.string()),
+    }))),
+  })
+    .index("by_status_queuedAt", ["status", "queuedAt"])
+    .index("by_article", ["articleId"]),
 });

@@ -342,7 +342,9 @@ async function processPlace(ctx: any, place: PlaceSeed): Promise<{ success: bool
       short_description: summary.extract.slice(0, 300),
       rich_description: summary.extract, // Phase 5 will enrich this
       seo_meta_description: summary.extract.slice(0, 160),
-      coordinates: summary.coordinates || { lat: -22.0, lng: 17.0 }, // default Namibia center
+      coordinates: summary.coordinates
+        ? { lat: summary.coordinates.lat, lng: summary.coordinates.lon }
+        : { lat: -22.0, lng: 17.0 }, // default Namibia center
       images: processedImages,
       key_facts: wikidataFacts.key_facts,
       best_time_to_visit: bestTimeToVisit,

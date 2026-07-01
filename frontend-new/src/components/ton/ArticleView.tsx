@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import ReactMarkdown from "react-markdown";
 import ShareToolbar from "./ShareToolbar";
 import Breadcrumbs from "./Breadcrumbs";
 
@@ -107,44 +108,50 @@ function regionLabel(region: string | null | undefined): string | null {
   return region.toUpperCase();
 }
 
-// Phase 1: Render Markdown body with H2 subheadings
-// Splits body on "## " prefixes and renders as <h2> elements,
-// other paragraphs as <p>.
+// Issue 2: Proper markdown renderer using react-markdown
+// Ensures ## becomes styled <h2>, not visible text.
+const markdownComponents = {
+  h1: ({ node, ...props }: any) => (
+    <h1 className="font-serif text-2xl sm:text-3xl font-bold text-ton-black mt-8 mb-4 leading-tight" {...props} />
+  ),
+  h2: ({ node, ...props }: any) => (
+    <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black mt-8 mb-4 leading-tight" {...props} />
+  ),
+  h3: ({ node, ...props }: any) => (
+    <h3 className="font-serif text-lg sm:text-xl font-bold text-ton-black mt-6 mb-3 leading-tight" {...props} />
+  ),
+  p: ({ node, ...props }: any) => (
+    <p className="font-serif text-base sm:text-lg text-ton-black/70 leading-[1.8] mb-5" {...props} />
+  ),
+  strong: ({ node, ...props }: any) => (
+    <strong className="font-bold text-ton-black" {...props} />
+  ),
+  em: ({ node, ...props }: any) => (
+    <em className="italic" {...props} />
+  ),
+  ul: ({ node, ...props }: any) => (
+    <ul className="list-disc pl-6 mb-5 space-y-1" {...props} />
+  ),
+  ol: ({ node, ...props }: any) => (
+    <ol className="list-decimal pl-6 mb-5 space-y-1" {...props} />
+  ),
+  li: ({ node, ...props }: any) => (
+    <li className="font-serif text-base text-ton-black/70 leading-[1.8]" {...props} />
+  ),
+  blockquote: ({ node, ...props }: any) => (
+    <blockquote className="border-l-4 border-ton-red pl-4 italic text-ton-black/60 my-4" {...props} />
+  ),
+  a: ({ node, ...props }: any) => (
+    <a className="text-ton-red hover:underline" {...props} />
+  ),
+};
+
 function renderBody(body: string) {
-  const blocks = body.split(/\n\n+/).filter((b) => b.trim().length > 0);
-  return blocks.map((block, i) => {
-    const trimmed = block.trim();
-    if (trimmed.startsWith("## ")) {
-      return (
-        <h2
-          key={i}
-          className="font-serif text-xl sm:text-2xl font-bold text-ton-black mt-8 mb-4 leading-tight"
-        >
-          {trimmed.replace(/^##\s+/, "")}
-        </h2>
-      );
-    }
-    if (trimmed.startsWith("### ")) {
-      return (
-        <h3
-          key={i}
-          className="font-serif text-lg sm:text-xl font-bold text-ton-black mt-6 mb-3 leading-tight"
-        >
-          {trimmed.replace(/^###\s+/, "")}
-        </h3>
-      );
-    }
-    return (
-      <p
-        key={i}
-        className={`font-serif text-base sm:text-lg text-ton-black/70 leading-[1.8] mb-5 ${
-          i === 0 ? "ton-dropcap" : ""
-        }`}
-      >
-        {trimmed}
-      </p>
-    );
-  });
+  return (
+    <div className="ton-article-body">
+      <ReactMarkdown components={markdownComponents}>{body}</ReactMarkdown>
+    </div>
+  );
 }
 
 // ── COMPONENT ───────────────────────────────────────────────────

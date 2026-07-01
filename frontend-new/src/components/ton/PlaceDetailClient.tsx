@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import ReactMarkdown from "react-markdown";
 import ShareToolbar from "./ShareToolbar";
 import { BrandedImageFallback } from "./BrandedImageFallback";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
@@ -52,30 +53,19 @@ export default function PlaceDetailClient({ place, relatedPlaces }: PlaceDetailC
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const heroImage = place.images[0];
 
+  const markdownComponents = {
+    h1: ({ node, ...props }: any) => <h1 className="font-serif text-2xl font-bold text-ton-black mt-8 mb-4" {...props} />,
+    h2: ({ node, ...props }: any) => <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black mt-8 mb-4 leading-tight" {...props} />,
+    h3: ({ node, ...props }: any) => <h3 className="font-serif text-lg font-bold text-ton-black mt-6 mb-3" {...props} />,
+    p: ({ node, ...props }: any) => <p className="font-serif text-base sm:text-lg text-ton-black/70 leading-[1.8] mb-5" {...props} />,
+    strong: ({ node, ...props }: any) => <strong className="font-bold text-ton-black" {...props} />,
+    ul: ({ node, ...props }: any) => <ul className="list-disc pl-6 mb-5 space-y-1" {...props} />,
+    ol: ({ node, ...props }: any) => <ol className="list-decimal pl-6 mb-5 space-y-1" {...props} />,
+    li: ({ node, ...props }: any) => <li className="font-serif text-base text-ton-black/70 leading-[1.8]" {...props} />,
+  };
+
   const renderDescription = (desc: string) => {
-    const blocks = desc.split(/\n\n+/).filter((b) => b.trim().length > 0);
-    return blocks.map((block, i) => {
-      const trimmed = block.trim();
-      if (trimmed.startsWith("## ")) {
-        return (
-          <h2 key={i} className="font-serif text-xl sm:text-2xl font-bold text-ton-black mt-8 mb-4 leading-tight">
-            {trimmed.replace(/^##\s+/, "")}
-          </h2>
-        );
-      }
-      if (trimmed.startsWith("### ")) {
-        return (
-          <h3 key={i} className="font-serif text-lg font-bold text-ton-black mt-6 mb-3">
-            {trimmed.replace(/^###\s+/, "")}
-          </h3>
-        );
-      }
-      return (
-        <p key={i} className="font-serif text-base sm:text-lg text-ton-black/70 leading-[1.8] mb-5">
-          {trimmed}
-        </p>
-      );
-    });
+    return <ReactMarkdown components={markdownComponents}>{desc}</ReactMarkdown>;
   };
 
   const openLightbox = (index: number) => setLightboxIndex(index);

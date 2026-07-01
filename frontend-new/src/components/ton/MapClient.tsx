@@ -1,7 +1,10 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { MapContainer, TileLayer, Marker, Popup, CircleMarker } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 
 interface MapPlace {
   _id: string;
@@ -33,23 +36,25 @@ const TYPE_LABELS: Record<string, string> = {
 
 export default function MapClient({ places }: { places: MapPlace[] }) {
   const [selectedPlace, setSelectedPlace] = useState<MapPlace | null>(null);
+  const [mounted, setMounted] = useState(false);
 
-  // Project lat/lng to x/y on a simple SVG map of Namibia
-  // Namibia bounds: lat -29 to -17, lng 11 to 25
-  const project = (lat: number, lng: number) => {
-    const x = ((lng - 11) / (25 - 11)) * 100;
-    const y = ((-17 - lat) / (-17 - (-29))) * 100;
-    return { x, y };
-  };
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  const placeMarkers = useMemo(() => {
-    return places
-      .filter((p) => p.coordinates && p.coordinates.lat && p.coordinates.lng)
-      .map((p) => ({
-        ...p,
-        pos: project(p.coordinates.lat, p.coordinates.lng),
-      }));
-  }, [places]);
+  const validPlaces = places.filter(
+    (p) => p.coordinates && p.coordinates.lat && p.coordinates.lng && !isNaN(p.coordinates.lat) && !isNaN(p.coordinates.lng)
+  );
+
+  // Don't render map on server - Leaflet requires window
+  if (!mounted) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-12">
+        <h1 className="font-serif text-4xl font-bold text-ton-black mb-3">Interactive Map of Namibia</h1>
+        <div className="w-full aspect-[4/3] bg-ton-navy/5 animate-pulse" />
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-12">
@@ -70,35 +75,50 @@ export default function MapClient({ places }: { places: MapPlace[] }) {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Map */}
+        {/* Map - real Leaflet + OpenStreetMap tiles */}
         <div className="lg:col-span-8">
-          <div className="relative w-full aspect-[4/3] bg-ton-navy/5 border border-ton-black/10 overflow-hidden">
-            <svg viewBox="0 0 100 100" className="w-full h-full" preserveAspectRatio="none">
-              {/* Namibia outline (simplified) */}
-              <path
-                d="M 5,10 L 15,5 L 30,3 L 50,2 L 70,3 L 85,5 L 92,15 L 95,30 L 93,50 L 90,70 L 85,85 L 75,92 L 60,95 L 40,93 L 20,90 L 10,80 L 5,60 Z"
-                fill="#0B1D3A"
-                opacity="0.1"
-                stroke="#0B1D3A"
-                strokeWidth="0.3"
+          <div className="w-full h-[500px] border border-ton-black/10 overflow-hidden">
+            <MapContainer
+              center={[-22.0, 17.0]}
+              zoom={6}
+              style={{ width: "100%", height: "100%" }}
+              scrollWheelZoom={false}
+            >
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-              {/* Markers */}
-              {placeMarkers.map((p) => (
-                <circle
-                  key={p._id}
-                  cx={p.pos.x}
-                  cy={p.pos.y}
-                  r="1.2"
-                  fill={TYPE_COLORS[p.type] || "#000"}
-                  stroke="#fff"
-                  strokeWidth="0.3"
-                  className="cursor-pointer hover:r-2 transition-all"
-                  onClick={() => setSelectedPlace(p)}
+              {validPlaces.map((place) => (
+                <CircleMarker
+                  key={place._id}
+                  center={[place.coordinates.lat, place.coordinates.lng]}
+                  radius={8}
+                  pathOptions={{
+                    color: TYPE_COLORS[place.type] || "#000",
+                    fillColor: TYPE_COLORS[place.type] || "#000",
+                    fillOpacity: 0.7,
+                  }}
+                  eventHandlers={{
+                    click: () => setSelectedPlace(place),
+                  }}
                 >
-                  <title>{p.name}</title>
-                </circle>
+                  <Popup>
+                    <div style={{ minWidth: "150px" }}>
+                      <strong>{place.name}</strong>
+                      <br />
+                      <span style={{ fontSize: "11px", color: "#666" }}>{place.region}</span>
+                      <br />
+                      <a
+                        href={`/know-namibia/${place.slug}`}
+                        style={{ fontSize: "11px", color: "#dc2626" }}
+                      >
+                        View Full Page
+                      </a>
+                    </div>
+                  </Popup>
+                </CircleMarker>
               ))}
-            </svg>
+            </MapContainer>
           </div>
         </div>
 

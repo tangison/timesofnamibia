@@ -62,14 +62,14 @@ Respond with ONLY the object phrase, nothing else.`;
 }
 
 // ── STEP 2: Build oil painting Pollinations prompt ──────────
-// Locked palette: navy blue, rust orange, cream. No text, no people.
+// Exact template per spec, with [1-2 concrete objects] filled in.
 
 function buildOilPaintingPrompt(concept: string): string {
-  return `${concept}, realistic oil painting, visible brushstrokes, ` +
-    `navy blue and rust orange and cream palette, ` +
-    `no text, no people unless factually required, ` +
-    `no watermarks, no logos, no words, no letters, no numbers. ` +
-    `Fine art editorial illustration style. Museum quality.`;
+  return `Oil painting, realistic representational style, visible textured brushstrokes, ` +
+    `painterly light and shadow, muted palette limited to navy blue, rust orange, and warm cream, ` +
+    `${concept}, single clear subject only, ` +
+    `no text, no logos, no watermark, no people unless the subject requires it, ` +
+    `gallery painting quality, cohesive composition`;
 }
 
 // ── STEP 3: Fetch from Pollinations ──────────────────────────

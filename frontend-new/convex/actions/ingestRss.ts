@@ -138,6 +138,54 @@ function classifySection(title: string, content: string): string {
   return "national";
 }
 
+// Issue 3: Newsworthiness scoring - ranks items so only the best 20 get processed
+function scoreNewsworthiness(item: RssItem, source: RssSource): number {
+  let score = 0;
+  const text = `${item.title} ${item.contentSnippet} ${item.content || ""}`.toLowerCase();
+  const titleLen = item.title.length;
+  const contentLen = (item.content || item.contentSnippet || "").length;
+
+  // Namibian sources get priority
+  if (source.sourceRegion === "namibia") score += 30;
+  else if (source.sourceRegion === "africa") score += 15;
+  else score += 5;
+
+  // Longer content = more substantive
+  if (contentLen > 500) score += 20;
+  else if (contentLen > 200) score += 10;
+  else if (contentLen < 50) score -= 10;
+
+  // Namibian place names boost
+  const namibiaKeywords = ["namibia", "windhoek", "swakopmund", "walvis", "oshakati", "rundu", "etosha", "swapo", "namibian", "nadal", "nad "];
+  for (const kw of namibiaKeywords) {
+    if (text.includes(kw)) {
+      score += 15;
+      break;
+    }
+  }
+
+  // Breaking news indicators
+  if (/\b(breaking|urgent|just in|update)\b/i.test(item.title)) score += 10;
+
+  // Penalize very short or clickbait titles
+  if (titleLen < 20) score -= 5;
+  if (titleLen > 150) score -= 5;
+
+  // Has a real publisher image = higher quality
+  if (item.imageUrl) score += 10;
+
+  // Recency bonus (newer = better)
+  if (item.pubDate) {
+    const hoursOld = (Date.now() - new Date(item.pubDate).getTime()) / (1000 * 60 * 60);
+    if (hoursOld < 6) score += 15;
+    else if (hoursOld < 12) score += 10;
+    else if (hoursOld < 24) score += 5;
+    else if (hoursOld > 36) score -= 10;
+  }
+
+  return score;
+}
+
 function truncate(text: string, max: number): string {
   if (text.length <= max) return text;
   return text.slice(0, max).replace(/\s+\S*$/, "") + "...";
@@ -399,6 +447,14 @@ export const ingestRssFeeds = internalAction({
     const FORTY_EIGHT_HOURS_MS = 48 * 60 * 60 * 1000;
     const now = Date.now();
 
+    // Issue 3: Collect all items first, then score and filter by newsworthiness
+    interface ScoredItem {
+      item: RssItem;
+      source: RssSource;
+      score: number;
+    }
+    const allScoredItems: ScoredItem[] = [];
+
     for (const source of sourcesToProcess) {
       results.feedsChecked++;
       try {
@@ -430,159 +486,159 @@ export const ingestRssFeeds = internalAction({
         const items = parseRssXml(xml);
         console.log(`[RSS] ${source.name}: ${items.length} items found`);
 
-        // Per-region item caps
-        const MAX_ITEMS = source.sourceRegion === "namibia" ? 5 : source.sourceRegion === "africa" ? 3 : 2;
-        const itemsToProcess = items.slice(0, MAX_ITEMS);
-
-        for (const item of itemsToProcess) {
-          results.articlesFound++;
-
-          try {
-            const pubDate = item.pubDate ? new Date(item.pubDate).getTime() : now;
-
-            // Skip articles older than 48 hours (Task 3 spec)
-            if (now - pubDate > FORTY_EIGHT_HOURS_MS) {
-              results.articlesSkippedOld++;
-              continue;
-            }
-
-            const slug = generateSlug(item.title);
-            const originalUrl = item.link;
-
-            // Dedup check BEFORE image generation
-            const exists = await ctx.runQuery(api.queries.checkArticleExists, {
-              slug,
-              rssGuid: item.guid,
-            });
-            if (exists) {
-              results.articlesDeduped++;
-              continue;
-            }
-
-            const content = item.content || item.contentSnippet || item.title;
-
-            // AI rewrite (Phase 1 spec - strict JSON with key_takeaways, seo_meta_description, H2 body)
-            let headline = item.title;
-            let body = content;
-            let summary = item.contentSnippet;
-            let category = source.defaultCategory;
-            let seoMetaDescription: string | undefined;
-            let keyTakeaways: string[] | undefined;
-
-            const aiResult = await rewriteArticle(item.title, content, source.sourceRegion);
-            if (aiResult) {
-              headline = aiResult.headline;
-              body = aiResult.body;
-              summary = aiResult.seo_meta_description || item.contentSnippet;
-              category = aiResult.category;
-              seoMetaDescription = aiResult.seo_meta_description;
-              keyTakeaways = aiResult.key_takeaways;
-            }
-
-            // Image handling - Phase 2: convert ALL images to WebP
-            let imageStorageId: string | undefined;
-            let publisherImageUrl: string | undefined;
-            const altText = generateArticleAltText(headline, category);
-
-            if (item.imageUrl) {
-              try {
-                const imgRes = await fetch(item.imageUrl, {
-                  signal: AbortSignal.timeout(15_000),
-                  headers: { "User-Agent": "TimesOfNamibiaBot/1.0 (+https://timesofnamibia.com)" },
-                });
-                if (imgRes.ok) {
-                  const imgBlob = await imgRes.blob();
-                  if (imgBlob.size > 1000) {
-                    // Phase 2: convert to WebP before storing
-                    const webpBlob = await convertToWebp(imgBlob);
-                    imageStorageId = await ctx.storage.store(webpBlob || imgBlob);
-                    results.imagesGenerated++;
-                    publisherImageUrl = item.imageUrl;
-                    console.log(`[RSS] Publisher image stored (WebP) for "${item.title.slice(0, 60)}..."`);
-                  }
-                }
-              } catch (pubImgErr) {
-                console.warn(`[RSS] Publisher image fetch failed: ${pubImgErr instanceof Error ? pubImgErr.message : pubImgErr}`);
-              }
-            }
-
-            // Fall back to AI-generated image (HBR minimalist flat vector)
-            if (!imageStorageId) {
-              try {
-                const imageBlob = await generateArticleImage({
-                  title: headline,
-                  category,
-                  summary,
-                });
-                if (imageBlob) {
-                  // Phase 2: convert AI image to WebP
-                  const webpBlob = await convertToWebp(imageBlob);
-                  imageStorageId = await ctx.storage.store(webpBlob || imageBlob);
-                  results.imagesGenerated++;
-                  console.log(`[RSS] AI image generated (WebP) for "${item.title.slice(0, 60)}..."`);
-                } else {
-                  results.imagesFailed++;
-                }
-              } catch (imgErr) {
-                console.warn(`[RSS] Image generation failed: ${imgErr instanceof Error ? imgErr.message : imgErr}`);
-                results.imagesFailed++;
-              }
-            }
-
-            // Content sanity check
-            const sanityCheck = contentSanityCheck({
-              title: headline,
-              content: body,
-              authorLine: item.creator || source.name,
-            });
-            if (!sanityCheck.passed) {
-              results.quarantined++;
-              console.warn(`[RSS] QUARANTINED "${headline.slice(0, 60)}..." - ${sanityCheck.issues.join(", ")}`);
-              continue;
-            }
-
-            // Insert article with both legacy + new fields
-            const result = await ctx.runMutation(api.mutationsAdmin.ingestArticle, {
-              adminToken,
-              slug,
-              headline,
-              subheadline: summary,
-              content: body,
-              excerpt: summary,
-              source: source.name,
-              section: category,
-              categorySlug: category,
-              authorLine: item.creator || source.name,
-              publishedAt: pubDate,
-              rssGuid: item.guid,
-              readingTime: estimateReadingTime(body),
-              ...(imageStorageId ? { imageStorageId } : {}),
-              // Task 4 new fields:
-              sourceRegion: source.sourceRegion,
-              originalUrl,
-              // Phase 1 new fields:
-              ...(seoMetaDescription ? { seo_meta_description: seoMetaDescription } : {}),
-              ...(keyTakeaways ? { key_takeaways: keyTakeaways } : {}),
-              // Phase 2 fields:
-              alt_text: altText,
-            });
-
-            if (result.deduped) {
-              results.articlesDeduped++;
-            } else {
-              results.articlesInserted++;
-              console.log(`[RSS] Inserted: "${headline.slice(0, 60)}..." from ${source.name} (${source.sourceRegion})`);
-            }
-          } catch (err) {
-            const msg = err instanceof Error ? err.message : String(err);
-            results.errors.push(`${source.name} / "${item.title.slice(0, 40)}": ${msg}`);
+        // Score each item by newsworthiness
+        for (const item of items) {
+          const pubDate = item.pubDate ? new Date(item.pubDate).getTime() : now;
+          if (now - pubDate > FORTY_EIGHT_HOURS_MS) {
+            results.articlesSkippedOld++;
+            continue;
           }
+
+          const score = scoreNewsworthiness(item, source);
+          allScoredItems.push({ item, source, score });
         }
       } catch (err) {
         results.feedsFailed++;
         const msg = err instanceof Error ? err.message : String(err);
         results.errors.push(`${source.name}: ${msg}`);
         console.warn(`[RSS] ${source.name} failed: ${msg}`);
+      }
+    }
+
+    // Sort by score descending, take top 20 per day (Issue 3)
+    allScoredItems.sort((a, b) => b.score - a.score);
+    const MAX_ARTICLES_PER_RUN = 20;
+    const itemsToProcess = allScoredItems.slice(0, MAX_ARTICLES_PER_RUN);
+    console.log(`[RSS] Scored ${allScoredItems.length} items, processing top ${itemsToProcess.length}`);
+
+    for (const { item, source } of itemsToProcess) {
+      results.articlesFound++;
+
+      try {
+        const pubDate = item.pubDate ? new Date(item.pubDate).getTime() : now;
+        const slug = generateSlug(item.title);
+        const originalUrl = item.link;
+
+        // Dedup check BEFORE image generation
+        const exists = await ctx.runQuery(api.queries.checkArticleExists, {
+          slug,
+          rssGuid: item.guid,
+        });
+        if (exists) {
+          results.articlesDeduped++;
+          continue;
+        }
+
+        const content = item.content || item.contentSnippet || item.title;
+
+        // AI rewrite (Phase 1 spec - strict JSON with key_takeaways, seo_meta_description, H2 body)
+        let headline = item.title;
+        let body = content;
+        let summary = item.contentSnippet;
+        let category = source.defaultCategory;
+        let seoMetaDescription: string | undefined;
+        let keyTakeaways: string[] | undefined;
+
+        const aiResult = await rewriteArticle(item.title, content, source.sourceRegion);
+        if (aiResult) {
+          headline = aiResult.headline;
+          body = aiResult.body;
+          summary = aiResult.seo_meta_description || item.contentSnippet;
+          category = aiResult.category;
+          seoMetaDescription = aiResult.seo_meta_description;
+          keyTakeaways = aiResult.key_takeaways;
+        }
+
+        // Image handling - real photos from RSS take priority (Issue 1)
+        let imageStorageId: string | undefined;
+        const altText = generateArticleAltText(headline, category);
+
+        if (item.imageUrl) {
+          try {
+            const imgRes = await fetch(item.imageUrl, {
+              signal: AbortSignal.timeout(15_000),
+              headers: { "User-Agent": "TimesOfNamibiaBot/1.0 (+https://timesofnamibia.com)" },
+            });
+            if (imgRes.ok) {
+              const imgBlob = await imgRes.blob();
+              if (imgBlob.size > 1000) {
+                const webpBlob = await convertToWebp(imgBlob);
+                imageStorageId = await ctx.storage.store(webpBlob || imgBlob);
+                results.imagesGenerated++;
+                console.log(`[RSS] Publisher image stored for "${item.title.slice(0, 60)}..."`);
+              }
+            }
+          } catch (pubImgErr) {
+            console.warn(`[RSS] Publisher image fetch failed: ${pubImgErr instanceof Error ? pubImgErr.message : pubImgErr}`);
+          }
+        }
+
+        // Fall back to AI oil painting only when no source image (Issue 1)
+        if (!imageStorageId) {
+          try {
+            const imageBlob = await generateArticleImage({
+              title: headline,
+              category,
+              summary,
+            });
+            if (imageBlob) {
+              const webpBlob = await convertToWebp(imageBlob);
+              imageStorageId = await ctx.storage.store(webpBlob || imageBlob);
+              results.imagesGenerated++;
+              console.log(`[RSS] Oil painting generated for "${item.title.slice(0, 60)}..."`);
+            } else {
+              results.imagesFailed++;
+            }
+          } catch (imgErr) {
+            console.warn(`[RSS] Image generation failed: ${imgErr instanceof Error ? imgErr.message : imgErr}`);
+            results.imagesFailed++;
+          }
+        }
+
+        // Content sanity check
+        const sanityCheck = contentSanityCheck({
+          title: headline,
+          content: body,
+          authorLine: item.creator || source.name,
+        });
+        if (!sanityCheck.passed) {
+          results.quarantined++;
+          console.warn(`[RSS] QUARANTINED "${headline.slice(0, 60)}..." - ${sanityCheck.issues.join(", ")}`);
+          continue;
+        }
+
+        // Insert article with both legacy + new fields
+        const result = await ctx.runMutation(api.mutationsAdmin.ingestArticle, {
+          adminToken,
+          slug,
+          headline,
+          subheadline: summary,
+          content: body,
+          excerpt: summary,
+          source: source.name,
+          section: category,
+          categorySlug: category,
+          authorLine: item.creator || source.name,
+          publishedAt: pubDate,
+          rssGuid: item.guid,
+          readingTime: estimateReadingTime(body),
+          ...(imageStorageId ? { imageStorageId } : {}),
+          sourceRegion: source.sourceRegion,
+          originalUrl,
+          ...(seoMetaDescription ? { seo_meta_description: seoMetaDescription } : {}),
+          ...(keyTakeaways ? { key_takeaways: keyTakeaways } : {}),
+          alt_text: altText,
+        });
+
+        if (result.deduped) {
+          results.articlesDeduped++;
+        } else {
+          results.articlesInserted++;
+          console.log(`[RSS] Inserted: "${headline.slice(0, 60)}..." from ${source.name} (${source.sourceRegion})`);
+        }
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        results.errors.push(`${source.name} / "${item.title.slice(0, 40)}": ${msg}`);
       }
     }
 

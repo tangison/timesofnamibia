@@ -257,11 +257,11 @@ async function processAndStoreImage(
     const imgBlob = await imgRes.blob();
     if (imgBlob.size < 1000) return null;
 
-    // Convert to WebP
+    // Convert to WebP - if sharp unavailable, use original blob
     const webpBlob = await convertToWebp(imgBlob);
-    if (!webpBlob) return null;
+    const blobToStore = webpBlob || imgBlob;
 
-    const storageId = await ctx.storage.store(webpBlob);
+    const storageId = await ctx.storage.store(blobToStore);
     const webpUrl = await ctx.runQuery(api.queries.getStorageUrl, { storageId });
 
     return {

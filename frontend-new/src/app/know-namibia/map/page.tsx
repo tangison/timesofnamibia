@@ -9,7 +9,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/know-namibia/map" },
 };
 
-export const revalidate = 3600;
+// Leaflet requires window - must be dynamic, no SSR
+export const dynamic = "force-dynamic";
 
 export default async function MapPage() {
   const places = await getDirectoryPlaces({ limit: 100 });

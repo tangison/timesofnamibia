@@ -14,6 +14,7 @@ import type * as actions_backfillImages from "../actions/backfillImages.js";
 import type * as actions_imageGenerator from "../actions/imageGenerator.js";
 import type * as actions_imageProcessor from "../actions/imageProcessor.js";
 import type * as actions_ingestRss from "../actions/ingestRss.js";
+import type * as actions_marketData from "../actions/marketData.js";
 import type * as actions_scrapeJobsTenders from "../actions/scrapeJobsTenders.js";
 import type * as actions_seedDirectory from "../actions/seedDirectory.js";
 import type * as actions_seedNamibiaGuide from "../actions/seedNamibiaGuide.js";
@@ -39,6 +40,7 @@ declare const fullApi: ApiFromModules<{
   "actions/imageGenerator": typeof actions_imageGenerator;
   "actions/imageProcessor": typeof actions_imageProcessor;
   "actions/ingestRss": typeof actions_ingestRss;
+  "actions/marketData": typeof actions_marketData;
   "actions/scrapeJobsTenders": typeof actions_scrapeJobsTenders;
   "actions/seedDirectory": typeof actions_seedDirectory;
   "actions/seedNamibiaGuide": typeof actions_seedNamibiaGuide;

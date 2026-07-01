@@ -520,6 +520,7 @@ export const updateArticleContent = mutation({
 // ── CLEAR ALL ARTICLES (Phase 1, Iteration 14) ───────────────
 // Permanently deletes all records from the article table.
 // Used before fresh ingestion to ensure clean state.
+// Repeatable reset script - Issue 5.
 
 export const clearAllArticles = mutation({
   args: { adminToken: v.string() },
@@ -532,6 +533,51 @@ export const clearAllArticles = mutation({
       deleted++;
     }
     return { deleted };
+  },
+});
+
+// ── FULL DATABASE RESET (Issue 5) ────────────────────────────
+// Wipes articles, jobs, tenders, market data, social queue.
+// Does NOT touch directory_places or advertisements (those are
+// expensive to re-seed). Returns counts of what was deleted.
+
+export const fullDatabaseReset = mutation({
+  args: { adminToken: v.string() },
+  handler: async (ctx, args) => {
+    requireAdmin(args.adminToken);
+    const results: Record<string, number> = {};
+
+    // Articles
+    const articles = await ctx.db.query("article").take(2000);
+    results.articles = articles.length;
+    for (const a of articles) await ctx.db.delete(a._id);
+
+    // Jobs
+    const jobs = await ctx.db.query("job").take(500);
+    results.jobs = jobs.length;
+    for (const j of jobs) await ctx.db.delete(j._id);
+
+    // Tenders
+    const tenders = await ctx.db.query("tender").take(500);
+    results.tenders = tenders.length;
+    for (const t of tenders) await ctx.db.delete(t._id);
+
+    // Market data
+    const markets = await ctx.db.query("marketDatum").take(100);
+    results.marketData = markets.length;
+    for (const m of markets) await ctx.db.delete(m._id);
+
+    // Social queue
+    const social = await ctx.db.query("socialQueue").take(500);
+    results.socialQueue = social.length;
+    for (const s of social) await ctx.db.delete(s._id);
+
+    // Ticker items
+    const tickers = await ctx.db.query("tickerItem").take(100);
+    results.tickerItems = tickers.length;
+    for (const t of tickers) await ctx.db.delete(t._id);
+
+    return { deleted: results, totalDeleted: Object.values(results).reduce((a, b) => a + b, 0) };
   },
 });
 

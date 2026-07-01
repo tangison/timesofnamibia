@@ -12,13 +12,13 @@ import Image from "next/image";
 export default function Footer() {
   return (
     <footer className="relative bg-ton-black text-ton-cream mt-20 overflow-hidden">
-      {/* Namibian landscape - subtle top accent from Wikimedia Commons (free, CC-BY-SA) */}
+      {/* Oil-painted banner accent - navy/rust/cream palette */}
       <div className="relative h-32 overflow-hidden">
         <Image
-          src="/og-default.png"
-          alt="Times of Namibia"
+          src="/banner-oil.webp"
+          alt="Times of Namibia editorial banner"
           fill
-          className="object-cover opacity-30"
+          className="object-cover opacity-40"
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ton-black via-ton-black/60 to-transparent" />

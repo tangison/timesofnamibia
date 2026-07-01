@@ -55,4 +55,12 @@ crons.interval(
   {}
 );
 
+// Issue 6: Market data fetcher - every 30 minutes
+crons.interval(
+  "fetch market data",
+  { minutes: 30 },
+  internal.actions.marketData.fetchMarketData,
+  {}
+);
+
 export default crons;

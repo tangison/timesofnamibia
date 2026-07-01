@@ -115,6 +115,29 @@ function estimateReadingTime(text: string): number {
   return Math.max(1, Math.ceil(words / 220));
 }
 
+// Keyword-based section classifier - safety net when AI category is missing or invalid
+const SECTION_KEYWORDS: Record<string, string[]> = {
+  politics: ["politic", "parliament", "election", "minister", "cabinet", "government", "president", "swapo", "congress", "campaign", "vote", "party", "ruling", "opposition"],
+  economy: ["economy", "economic", "finance", "bank", "inflation", "fiscal", "budget", "trade", "investment", "gdp", "treasury", "currency", "nasdaq", "stock", "market"],
+  mining: ["mine", "mining", "uranium", "diamond", "lithium", "gold", "copper", "rossing", "husab", "extractive", "ore", "mineral"],
+  energy: ["energy", "power", "electric", "solar", "hydrogen", "wind", "gas", "oil", "renewable", "eskom", "nampower", "offshore"],
+  sport: ["sport", "football", "rugby", "cricket", "athletics", "netball", "brave warriors", "npl", "premier league", "soccer", "world cup", "wimbledon", "tennis", "olympic"],
+  environment: ["environment", "climate", "wildlife", "conservation", "drought", "desert", "water", "park", "endangered", "poaching"],
+  technology: ["technology", "tech", "digital", "broadband", "internet", "ai", "artificial intelligence", "startup", "innovation", "cyber", "software"],
+  health: ["health", "hospital", "medical", "disease", "covid", "malaria", "clinic", "doctor", "patient", "vaccine", "outbreak"],
+  world: ["world", "global", "international", "united nations", "europe", "america", "asia", "russia", "china", "ukraine", "israel", "gaza", "european"],
+  africa: ["africa", "sadc", "african union", "continental", "regional", "zimbabwe", "south africa", "botswana", "angola", "zambia"],
+  opinion: ["opinion", "editorial", "column", "commentary", "letter to the editor", "analysis"],
+};
+
+function classifySection(title: string, content: string): string {
+  const blob = `${title} ${content}`.toLowerCase();
+  for (const [section, keywords] of Object.entries(SECTION_KEYWORDS)) {
+    if (keywords.some((kw) => blob.includes(kw))) return section;
+  }
+  return "national";
+}
+
 function truncate(text: string, max: number): string {
   if (text.length <= max) return text;
   return text.slice(0, max).replace(/\s+\S*$/, "") + "...";
@@ -248,7 +271,7 @@ async function rewriteArticle(
       [
         {
           role: "system",
-          content: `You are the editorial AI for Times of Namibia. You MUST respond with ONLY valid JSON - no markdown, no code fences, no commentary. The response must be a single JSON object with exactly these keys: "headline" (string, under 10 words, title case), "seo_meta_description" (string, max 160 chars, for Google snippet), "key_takeaways" (array of exactly 3 strings, one sentence each), "body" (string, 3-5 paragraphs with at least one "## " H2 subheading, max 400 words), "category" (one of: Politics, Business, Sport, Africa, World, Tech, Health, Environment). Never use banned phrases: ${BANNED_PHRASES.join(", ")}. No em dashes. ${localizationInstruction}`,
+          content: `You are the editorial AI for Times of Namibia. You MUST respond with ONLY valid JSON - no markdown, no code fences, no commentary. The response must be a single JSON object with exactly these keys: "headline" (string, under 10 words, title case), "seo_meta_description" (string, max 160 chars, for Google snippet), "key_takeaways" (array of exactly 3 strings, one sentence each), "body" (string, 3-5 paragraphs with at least one "## " H2 subheading, max 400 words), "category" (one of: Politics, Business, Sport, Africa, World, Tech, Health, Environment, Mining, Energy, Opinion). The category must match what the article is actually about - a World Cup football match is Sport, not National. Never use banned phrases: ${BANNED_PHRASES.join(", ")}. No em dashes. ${localizationInstruction}`,
         },
         {
           role: "user",
@@ -284,16 +307,35 @@ Respond with ONLY a JSON object:
     // Normalize category to lowercase section name
     const categoryMap: Record<string, string> = {
       politics: "politics",
+      political: "politics",
       business: "economy",
+      economy: "economy",
+      economic: "economy",
+      finance: "economy",
       sport: "sport",
+      sports: "sport",
       africa: "africa",
       world: "world",
+      international: "world",
+      global: "world",
       tech: "technology",
       technology: "technology",
+      digital: "technology",
       health: "health",
+      medical: "health",
       environment: "environment",
+      climate: "environment",
+      mining: "mining",
+      energy: "energy",
+      infrastructure: "infrastructure",
+      opinion: "opinion",
+      editorial: "opinion",
+      national: "national",
+      local: "national",
     };
-    const normalizedCategory = categoryMap[(parsed.category || "").toLowerCase()] || sourceRegion === "namibia" ? "national" : sourceRegion;
+    const aiCategory = categoryMap[(parsed.category || "").toLowerCase().trim()];
+    // Use AI category if valid, otherwise use keyword-based classifier, then fallback
+    const classifiedCategory = aiCategory || classifySection(title, content) || (sourceRegion === "namibia" ? "national" : sourceRegion);
 
     // Validate and clean each field, stripping banned phrases
     const headline = stripBannedPhrases(String(parsed.headline || title).slice(0, 200));
@@ -312,7 +354,7 @@ Respond with ONLY a JSON object:
       seo_meta_description: seoMetaDescription || truncate(content, 160),
       key_takeaways: keyTakeaways,
       body,
-      category: normalizedCategory,
+      category: classifiedCategory,
     };
   } catch (err) {
     console.warn("[AI] Rewrite failed:", err instanceof Error ? err.message : err);

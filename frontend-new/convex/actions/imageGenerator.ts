@@ -1,18 +1,20 @@
 // ============================================================
 // Times of Namibia - Article Image Generator (TANGISON)
 //
-// Phase 3 spec: HBR Minimalist Flat Vector Illustrations
-//   - Minimalist flat vector editorial illustration
-//   - Inspired by Harvard Business Review
-//   - Clean geometric shapes, muted navy/gray/cream palette
-//   - No text, no people, no 3D, no gradients
-//   - No hyper-realism or photography
+// Issue 1 fix: Oil painting style with locked palette.
+//   - Real photos from RSS are KEPT (best source)
+//   - AI-generated fallback uses oil painting prompt:
+//     "[1-2 concrete objects], realistic oil painting,
+//      visible brushstrokes, navy blue and rust orange
+//      and cream palette, no text, no people unless
+//      factually required"
 //   - 1200x630, model=flux, nologo=true
 //   - 45s timeout, 1 retry, random seed
-//   - Fallback: clean navy (#0B1D3A) div block (handled in UI)
 // ============================================================
 
 "use node";
+
+import { generateWithFallback } from "./aiProvider";
 
 export interface ArticleInput {
   title: string;
@@ -20,29 +22,57 @@ export interface ArticleInput {
   summary: string;
 }
 
-// ── BUILD PROMPT ─────────────────────────────────────────────
-// Phase 3 spec template:
-//   "Minimalist flat vector editorial illustration of [concept].
-//    Inspired by Harvard Business Review. Clean geometric shapes,
-//    muted navy/gray/cream palette. No text, no people, no 3D,
-//    no gradients."
+// ── STEP 1: Extract 1-2 concrete objects from the article ───
+// The AI picks simple physical objects that symbolize the story.
 
-function buildPollinationsPrompt(article: ArticleInput): string {
-  // Extract a concept from the headline - use the raw title
-  // but strip quotes and limit length
-  const concept = article.title
-    .replace(/["""]/g, "")
-    .replace(/[^a-zA-Z0-9\s,-]/g, "")
-    .slice(0, 120);
+async function getImageObjects(article: ArticleInput): Promise<string> {
+  const prompt = `Given this news headline and category, respond with ONLY a short noun phrase describing one or two simple concrete physical objects that symbolically represent the story. No people, no crowds, no buildings, no rooms, no screens, no documents, no maps, no flags. Think simple objects.
 
-  return `Minimalist flat vector editorial illustration of ${concept}. ` +
-    `Inspired by Harvard Business Review. ` +
-    `Clean geometric shapes, muted navy/gray/cream palette. ` +
-    `No text, no people, no 3D, no gradients, no photography, no photorealism. ` +
-    `Simple abstract symbolic composition. Professional editorial style.`;
+Examples:
+- War or conflict - a bronze arrowhead
+- Economy or budget - three stacked gold coins
+- Environment - a green seedling in dry earth
+- Technology - a glowing lightbulb
+- Politics or election - a wooden ballot box
+- Health - a red stethoscope
+- Mining - an uncut diamond
+- Energy - a white wind turbine blade
+- Sport - a worn leather football
+- Justice or law - a wooden gavel
+- Transport - a folded paper airplane
+- Water - a glass of clear water
+
+Headline: "${article.title}"
+Category: ${article.category}
+
+Respond with ONLY the object phrase, nothing else.`;
+
+  const result = await generateWithFallback(
+    [{ role: "user", content: prompt }],
+    { maxTokens: 40, timeout: 10_000 }
+  );
+
+  const concept = (result || "a folded newspaper")
+    .split("\n")[0]
+    .replace(/["'.]/g, "")
+    .trim()
+    .toLowerCase();
+
+  return concept || "a folded newspaper";
 }
 
-// ── FETCH FROM POLLINATIONS ──────────────────────────────────
+// ── STEP 2: Build oil painting Pollinations prompt ──────────
+// Locked palette: navy blue, rust orange, cream. No text, no people.
+
+function buildOilPaintingPrompt(concept: string): string {
+  return `${concept}, realistic oil painting, visible brushstrokes, ` +
+    `navy blue and rust orange and cream palette, ` +
+    `no text, no people unless factually required, ` +
+    `no watermarks, no logos, no words, no letters, no numbers. ` +
+    `Fine art editorial illustration style. Museum quality.`;
+}
+
+// ── STEP 3: Fetch from Pollinations ──────────────────────────
 // 45s timeout, 1 retry, random seed, model=flux
 
 async function fetchPollinationsImage(prompt: string): Promise<Blob | null> {
@@ -73,9 +103,15 @@ async function fetchPollinationsImage(prompt: string): Promise<Blob | null> {
 export async function generateArticleImage(
   article: ArticleInput
 ): Promise<Blob | null> {
-  const prompt = buildPollinationsPrompt(article);
-  console.log(`[image-gen] HBR prompt for "${article.title.slice(0, 40)}": ${prompt.slice(0, 120)}...`);
+  // Step 1: AI picks concrete objects
+  const concept = await getImageObjects(article);
+  console.log(`[image-gen] Oil painting concept for "${article.title.slice(0, 40)}": ${concept}`);
 
+  // Step 2: Build oil painting prompt
+  const prompt = buildOilPaintingPrompt(concept);
+  console.log(`[image-gen] Prompt: ${prompt.slice(0, 120)}...`);
+
+  // Step 3: Fetch image with retry
   const blob = await fetchPollinationsImage(prompt);
 
   if (!blob) {

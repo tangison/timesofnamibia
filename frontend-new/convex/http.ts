@@ -255,4 +255,56 @@ http.route({
   }),
 });
 
+// ── /full-reset (Issue 5) - wipe articles, jobs, tenders, market data ──
+http.route({
+  path: "/full-reset",
+  method: "POST",
+  handler: httpAction(async (ctx, request) => {
+    const secret = request.headers.get("Authorization");
+    const expectedSecret = `Bearer ${process.env.INGEST_SECRET}`;
+    if (!secret || secret !== expectedSecret) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+    try {
+      const result = await ctx.runMutation(api.mutationsAdmin.fullDatabaseReset, {
+        adminToken: process.env.CONVEX_ADMIN_TOKEN!,
+      });
+      return new Response(
+        JSON.stringify({ status: "Database reset complete", ...result }),
+        { status: 200, headers: { "Content-Type": "application/json" } }
+      );
+    } catch (err) {
+      return new Response(
+        JSON.stringify({ error: err instanceof Error ? err.message : "Unknown error" }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      );
+    }
+  }),
+});
+
+// ── /fetch-market-data (Issue 6) - trigger market data fetch ──
+http.route({
+  path: "/fetch-market-data",
+  method: "POST",
+  handler: httpAction(async (ctx, request) => {
+    const secret = request.headers.get("Authorization");
+    const expectedSecret = `Bearer ${process.env.INGEST_SECRET}`;
+    if (!secret || secret !== expectedSecret) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+    try {
+      await ctx.scheduler.runAfter(0, internal.actions.marketData.fetchMarketData, {});
+      return new Response(
+        JSON.stringify({ status: "Market data fetch started" }),
+        { status: 200, headers: { "Content-Type": "application/json" } }
+      );
+    } catch (err) {
+      return new Response(
+        JSON.stringify({ error: err instanceof Error ? err.message : "Unknown error" }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      );
+    }
+  }),
+});
+
 export default http;

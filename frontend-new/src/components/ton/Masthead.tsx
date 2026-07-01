@@ -13,7 +13,7 @@ const springTransition = {
 };
 
 /**
- * Times of Namibia — Premium Masthead
+ * Times of Namibia - Premium Masthead
  *
  * Mobile: wordmark on line 1, search + menu icons on line 2 (compact, two-line layout).
  * Desktop: wordmark left, nav center, actions right (single line).
@@ -29,7 +29,7 @@ export default function Masthead() {
         transition={springTransition}
         className="sticky top-0 z-50 bg-ton-cream/95 backdrop-blur-md border-b border-ton-black/10"
       >
-        {/* Mobile layout — two lines */}
+        {/* Mobile layout - two lines */}
         <div className="lg:hidden">
           {/* Line 1: Wordmark */}
           <div className="px-4 pt-3 pb-1">
@@ -64,7 +64,7 @@ export default function Masthead() {
           </div>
         </div>
 
-        {/* Desktop layout — single line */}
+        {/* Desktop layout - single line */}
         <div className="hidden lg:flex items-center justify-between px-8 py-4">
           {/* Wordmark */}
           <a href="/" className="flex flex-col group">

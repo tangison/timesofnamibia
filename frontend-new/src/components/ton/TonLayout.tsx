@@ -5,7 +5,7 @@ import ReadingProgress from "./ReadingProgress";
 import CategoryNav from "./CategoryNav";
 
 /**
- * Times of Namibia — Premium Layout
+ * Times of Namibia - Premium Layout
  *
  * Structure:
  *   - ReadingProgress (subtle bar at top)

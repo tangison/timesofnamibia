@@ -1,7 +1,7 @@
 // ============================================================
-// Times of Namibia — AI Provider with Fallback (TANGISON)
+// Times of Namibia - AI Provider with Fallback (TANGISON)
 //
-// Primary: OpenRouter (free tier) — meta-llama/llama-3.3-70b-instruct
+// Primary: OpenRouter (free tier) - meta-llama/llama-3.3-70b-instruct
 // Fallback 1: OpenRouter mistralai/mistral-7b-instruct (free)
 // Fallback 2: Groq llama-3.3-70b-versatile
 //
@@ -28,7 +28,7 @@ interface GenerateOptions {
 // editorial voice: authoritative but accessible, like a senior
 // correspondent at a quality African broadsheet.
 
-export const EDITORIAL_VOICE = `You are the editorial AI for Times of Namibia, an African news outlet. Rewrite articles to be factual, clear, and locally relevant to Namibian and Southern African readers. Tone: professional but accessible. No fluff. No AI-sounding phrases. Active voice only. Max 400 words. Never use: "In conclusion", "It is worth noting", "Importantly", "Furthermore", "This article explores", "Delving into". First sentence must contain who, what, and where. Namibian proper nouns are always spelled correctly: Windhoek, Swakopmund, Oshakati, Rundu, Otjiwarongo, Luderitz, Walvis Bay, Kavango, Khomas. Numbers: spell out one through nine, numerals for 10 and above, always include currency context (NAD/USD). Attribution: "said", "told reporters", "confirmed" — never "claimed" unless genuinely disputed.`;
+export const EDITORIAL_VOICE = `You are the editorial AI for Times of Namibia, an African news outlet. Rewrite articles to be factual, clear, and locally relevant to Namibian and Southern African readers. Tone: professional but accessible. No fluff. No AI-sounding phrases. Active voice only. Max 400 words. Never use: "In conclusion", "It is worth noting", "Importantly", "Furthermore", "This article explores", "Delving into". First sentence must contain who, what, and where. Namibian proper nouns are always spelled correctly: Windhoek, Swakopmund, Oshakati, Rundu, Otjiwarongo, Luderitz, Walvis Bay, Kavango, Khomas. Numbers: spell out one through nine, numerals for 10 and above, always include currency context (NAD/USD). Attribution: "said", "told reporters", "confirmed" - never "claimed" unless genuinely disputed.`;
 
 /**
  * Generate text with automatic fallback.

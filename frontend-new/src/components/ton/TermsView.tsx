@@ -106,7 +106,7 @@ export default function TermsView() {
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-3">
               Permission is granted to temporarily access and read the materials on the Times of
               Namibia platform for personal, non-commercial, non-automated use. This is the
-              license granted to you — it is limited, revocable, and non-exclusive.
+              license granted to you - it is limited, revocable, and non-exclusive.
             </p>
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8]">
               You may share links to individual articles via the TumaOS WhatsApp pipeline or other
@@ -169,7 +169,7 @@ export default function TermsView() {
             </span>
             <p className="font-serif text-sm text-ton-black/50 leading-relaxed mt-2">
               We verify before we publish. Every datum carries its source, timestamp, and
-              verification status. When errors occur, they are corrected transparently — never
+              verification status. When errors occur, they are corrected transparently - never
               silently.
             </p>
           </div>

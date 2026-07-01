@@ -3,7 +3,7 @@ import TonLayout from "@/components/ton/TonLayout";
 /**
  * Loading state for the homepage.
  *
- * IMPORTANT: No visible "Loading..." text — this HTML is also served
+ * IMPORTANT: No visible "Loading..." text - this HTML is also served
  * to crawlers during ISR revalidation. Use only silent visual skeleton
  * elements (animate-pulse blocks) so it doesn't hurt SEO or perceived
  * load speed.

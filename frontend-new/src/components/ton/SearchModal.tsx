@@ -39,7 +39,7 @@ const searchData: SearchItem[] = [
     title: "Brand System & Visual Identity",
     category: "Pages",
     href: "/brand",
-    snippet: "The TON brand guidelines — typography, colour system, and editorial design principles.",
+    snippet: "The TON brand guidelines - typography, colour system, and editorial design principles.",
   },
   {
     title: "Business Plan 2025–2030",
@@ -48,7 +48,7 @@ const searchData: SearchItem[] = [
     snippet: "Strategic roadmap for building Namibia's first open-access digital newspaper platform.",
   },
   {
-    title: "The Plan — Our Roadmap",
+    title: "The Plan - Our Roadmap",
     category: "Pages",
     href: "/plan",
     snippet: "A detailed execution timeline covering technology, content strategy, and community growth.",
@@ -69,7 +69,7 @@ const searchData: SearchItem[] = [
     title: "Tender Analysis & Insights",
     category: "Tenders",
     href: "/tender",
-    snippet: "Data-driven analysis of Namibia's public procurement landscape — trends, values, and awardees.",
+    snippet: "Data-driven analysis of Namibia's public procurement landscape - trends, values, and awardees.",
   },
 ];
 

@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — Community Contribution API
+// Times of Namibia - Community Contribution API
 // Rate limited: 3/hour/IP. Validates + forwards to Convex.
 // ============================================================
 

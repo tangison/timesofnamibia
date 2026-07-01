@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import Breadcrumbs from "./Breadcrumbs";
 
 const CATEGORIES = [
-  "Editorial Desk — Tips & Story Submissions",
+  "Editorial Desk - Tips & Story Submissions",
   "Times OS Technical Support",
   "Business & Partnerships",
   "Contributor Programme",
@@ -132,7 +132,7 @@ export default function ContactView() {
             Contact
           </h1>
           <p className="font-serif italic text-ton-black/50 text-sm sm:text-base mt-2 max-w-xl">
-            Reach the desk. Every channel, every department. No automated responses — just the editorial floor.
+            Reach the desk. Every channel, every department. No automated responses - just the editorial floor.
           </p>
         </div>
       </div>

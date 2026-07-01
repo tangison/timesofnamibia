@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — Admin Auth Helper
+// Times of Namibia - Admin Auth Helper
 // Shared gate for admin-only API routes.
 // ============================================================
 

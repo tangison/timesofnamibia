@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — Empty State Component
+// Times of Namibia - Empty State Component
 // Ghost state for pages with no data
 // ============================================================
 
@@ -75,7 +75,7 @@ export default function EmptyState({ type = "generic", title, description, actio
 
       {/* Timestamp */}
       <p className="font-mono text-[8px] text-ton-black/15 uppercase tracking-wider mt-3">
-        Times OS — Data engine active
+        Times OS - Data engine active
       </p>
 
       {/* Action */}

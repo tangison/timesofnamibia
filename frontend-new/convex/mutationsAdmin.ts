@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — Convex admin mutations (TANGISON)
+// Times of Namibia - Convex admin mutations (TANGISON)
 //
 // Ingestion endpoints used by the data-agent scraper.
 // SECURITY: guarded by CONVEX_ADMIN_TOKEN check.
@@ -30,7 +30,7 @@ function requireAdmin(token: string | null) {
     throw new Error("CONVEX_ADMIN_TOKEN env var not configured");
   }
   // TANGISON Iteration 4 Fix #10: Use constant-time comparison
-  // (was `token !== ADMIN_TOKEN` — vulnerable to timing attacks).
+  // (was `token !== ADMIN_TOKEN` - vulnerable to timing attacks).
   if (!token || !constantTimeEqual(token, ADMIN_TOKEN)) {
     throw new Error("Unauthorized: invalid admin token");
   }
@@ -66,6 +66,9 @@ export const ingestArticle = mutation({
     sourceRegion: v.optional(v.string()),
     originalUrl: v.optional(v.string()),
     postedToSocial: v.optional(v.boolean()),
+    // Phase 1 fields:
+    seo_meta_description: v.optional(v.string()),
+    key_takeaways: v.optional(v.array(v.string())),
   },
   handler: async (ctx, args) => {
     requireAdmin(args.adminToken);
@@ -127,6 +130,9 @@ export const ingestArticle = mutation({
       sourceRegion: args.sourceRegion,
       originalUrl: args.originalUrl,
       postedToSocial: args.postedToSocial ?? false,
+      // Phase 1 fields:
+      seo_meta_description: args.seo_meta_description,
+      key_takeaways: args.key_takeaways,
     });
 
     return { id, deduped: false };

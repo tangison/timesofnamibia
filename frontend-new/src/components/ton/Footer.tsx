@@ -4,15 +4,15 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 /**
- * Times of Namibia — Minimalist Footer
+ * Times of Namibia - Minimalist Footer
  *
  * Dark themed. Namibian landscape image as subtle accent.
- * No clutter — just the wordmark, tagline, essential links, and credit.
+ * No clutter - just the wordmark, tagline, essential links, and credit.
  */
 export default function Footer() {
   return (
     <footer className="relative bg-ton-black text-ton-cream mt-20 overflow-hidden">
-      {/* Namibian landscape — subtle top accent from Wikimedia Commons (free, CC-BY-SA) */}
+      {/* Namibian landscape - subtle top accent from Wikimedia Commons (free, CC-BY-SA) */}
       <div className="relative h-32 overflow-hidden">
         <Image
           src="/og-default.png"

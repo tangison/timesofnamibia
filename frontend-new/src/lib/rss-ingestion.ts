@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — RSS Ingestion Engine
+// Times of Namibia - RSS Ingestion Engine
 // Fetches RSS/Atom feeds, parses items, creates Articles.
 //
 // TANGISON Iteration 4 Fix #12 (partial): Article creation now

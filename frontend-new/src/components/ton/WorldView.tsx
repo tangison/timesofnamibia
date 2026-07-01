@@ -183,7 +183,7 @@ export default function WorldView({ articles }: WorldViewProps) {
         <div className="h-px bg-ton-black/8 mb-5" />
         <p className="font-serif text-sm text-ton-black/50 leading-relaxed mb-5">
           Every article on the World Desk carries a credibility badge indicating the verification
-          status and nature of the source. This is not decoration — it is the structural integrity
+          status and nature of the source. This is not decoration - it is the structural integrity
           of international reporting.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -217,7 +217,7 @@ export default function WorldView({ articles }: WorldViewProps) {
         </div>
       </div>
 
-      {/* Featured Article — 3-Column Layout */}
+      {/* Featured Article - 3-Column Layout */}
       <div className="mb-8 sm:mb-10 border-t-4 border-ton-black pt-6">
         <div className="flex items-center gap-3 mb-5">
           <span className="bg-ton-red text-white font-mono text-[9px] tracking-widest uppercase px-2 py-0.5 font-bold">
@@ -230,7 +230,7 @@ export default function WorldView({ articles }: WorldViewProps) {
         <div className="h-px bg-ton-black/8 mb-5" />
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-0">
-          {/* Left — Main featured article */}
+          {/* Left - Main featured article */}
           <div className="md:col-span-7 ton-column-rule pr-0 md:pr-5">
             <article>
               <div className="flex items-center gap-2 mb-3">
@@ -256,7 +256,7 @@ export default function WorldView({ articles }: WorldViewProps) {
               <div className="mt-4 bg-ton-black/[0.03] aspect-[16/9] relative overflow-hidden border border-ton-black/8">
                 <div className="absolute inset-0 flex items-center justify-center px-8">
                   <p className="font-serif text-sm text-ton-black/25 italic text-center leading-relaxed max-w-lg">
-                    {featuredArticle.imageAlt || "Editorial photograph — no stock imagery. High-contrast grayscale image accompanying this report."}
+                    {featuredArticle.imageAlt || "Editorial photograph - no stock imagery. High-contrast grayscale image accompanying this report."}
                   </p>
                 </div>
                 {featuredArticle.imageGps && (
@@ -291,7 +291,7 @@ export default function WorldView({ articles }: WorldViewProps) {
             </article>
           </div>
 
-          {/* Right — remaining articles */}
+          {/* Right - remaining articles */}
           <div className="md:col-span-5 pl-0 md:pl-5 mt-5 md:mt-0">
             <div className="border-t-2 border-ton-black pt-2 mb-3">
               <div className="flex items-center justify-between">
@@ -342,12 +342,12 @@ export default function WorldView({ articles }: WorldViewProps) {
         </div>
       </div>
 
-      {/* World Desk — Reading Room */}
+      {/* World Desk - Reading Room */}
       <div className="mb-8 sm:mb-10 border-t-4 border-ton-black pt-6">
         <div className="flex items-center gap-3 mb-4">
           <Newspaper className="w-4 h-4 text-ton-red" />
           <h2 className="font-serif text-lg sm:text-xl font-bold text-ton-black">
-            World Desk — Reading Room
+            World Desk - Reading Room
           </h2>
         </div>
         <div className="h-px bg-ton-black/8 mb-5" />
@@ -401,7 +401,7 @@ export default function WorldView({ articles }: WorldViewProps) {
           International coverage sourced, verified, and timestamped. Every datum carries its proof.
         </blockquote>
         <p className="font-mono text-[10px] text-ton-black/25 mt-3 tracking-wider">
-          Powered by Times OS v2.1 — TANGISON
+          Powered by Times OS v2.1 - TANGISON
         </p>
       </div>
     </div>

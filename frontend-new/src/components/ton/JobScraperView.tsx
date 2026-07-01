@@ -263,7 +263,7 @@ export default function JobScraperView() {
 
                   {/* Actions row */}
                   <div className="flex items-center gap-3 mt-3">
-                    <ShareButtons title={`${job.title} — ${job.company}`} />
+                    <ShareButtons title={`${job.title} - ${job.company}`} />
                     <button className="font-mono text-[10px] font-bold uppercase tracking-widest bg-ton-red text-white px-4 py-2 hover:bg-ton-red/90 transition-colors flex items-center gap-1.5">
                       <ExternalLink className="w-3 h-3" />
                       Apply Now

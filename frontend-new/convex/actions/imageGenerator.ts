@@ -1,12 +1,15 @@
 // ============================================================
-// Times of Namibia — Article Image Generator (TANGISON)
+// Times of Namibia - Article Image Generator (TANGISON)
 //
-// Task 2 spec implementation:
-//   - If article has a real publisher image URL from RSS, use it.
-//   - Otherwise generate via Pollinations with editorial photojournalism prompt.
-//   - 1200x630 (OG image ratio), model=flux, nologo=true, enhance=true
-//   - 45s timeout, 1 retry, random seed for uniqueness.
-//   - No text, no watermarks, photojournalism aesthetic.
+// Phase 3 spec: HBR Minimalist Flat Vector Illustrations
+//   - Minimalist flat vector editorial illustration
+//   - Inspired by Harvard Business Review
+//   - Clean geometric shapes, muted navy/gray/cream palette
+//   - No text, no people, no 3D, no gradients
+//   - No hyper-realism or photography
+//   - 1200x630, model=flux, nologo=true
+//   - 45s timeout, 1 retry, random seed
+//   - Fallback: clean navy (#0B1D3A) div block (handled in UI)
 // ============================================================
 
 "use node";
@@ -18,23 +21,34 @@ export interface ArticleInput {
 }
 
 // ── BUILD PROMPT ─────────────────────────────────────────────
-// Per Task 2 spec:
-//   "{headline}, Namibia, Southern Africa, editorial news photo style,
-//    clean minimalist composition, no text, no watermarks,
-//    photojournalism aesthetic, natural lighting"
+// Phase 3 spec template:
+//   "Minimalist flat vector editorial illustration of [concept].
+//    Inspired by Harvard Business Review. Clean geometric shapes,
+//    muted navy/gray/cream palette. No text, no people, no 3D,
+//    no gradients."
 
 function buildPollinationsPrompt(article: ArticleInput): string {
-  const headline = article.title.replace(/[""]/g, "").slice(0, 120);
-  return `${headline}, Namibia, Southern Africa, editorial news photo style, clean minimalist composition, no text, no watermarks, photojournalism aesthetic, natural lighting`;
+  // Extract a concept from the headline - use the raw title
+  // but strip quotes and limit length
+  const concept = article.title
+    .replace(/["""]/g, "")
+    .replace(/[^a-zA-Z0-9\s,-]/g, "")
+    .slice(0, 120);
+
+  return `Minimalist flat vector editorial illustration of ${concept}. ` +
+    `Inspired by Harvard Business Review. ` +
+    `Clean geometric shapes, muted navy/gray/cream palette. ` +
+    `No text, no people, no 3D, no gradients, no photography, no photorealism. ` +
+    `Simple abstract symbolic composition. Professional editorial style.`;
 }
 
 // ── FETCH FROM POLLINATIONS ──────────────────────────────────
-// 45s timeout, 1 retry, random seed, model=flux, enhance=true
+// 45s timeout, 1 retry, random seed, model=flux
 
 async function fetchPollinationsImage(prompt: string): Promise<Blob | null> {
   const encoded = encodeURIComponent(prompt);
   const seed = Math.floor(Math.random() * 999999);
-  const url = `https://image.pollinations.ai/prompt/${encoded}?width=1200&height=630&model=flux&nologo=true&enhance=true&seed=${seed}`;
+  const url = `https://image.pollinations.ai/prompt/${encoded}?width=1200&height=630&model=flux&nologo=true&seed=${seed}`;
 
   for (let attempt = 1; attempt <= 2; attempt++) {
     try {
@@ -60,7 +74,7 @@ export async function generateArticleImage(
   article: ArticleInput
 ): Promise<Blob | null> {
   const prompt = buildPollinationsPrompt(article);
-  console.log(`[image-gen] Prompt for "${article.title.slice(0, 40)}": ${prompt.slice(0, 100)}...`);
+  console.log(`[image-gen] HBR prompt for "${article.title.slice(0, 40)}": ${prompt.slice(0, 120)}...`);
 
   const blob = await fetchPollinationsImage(prompt);
 

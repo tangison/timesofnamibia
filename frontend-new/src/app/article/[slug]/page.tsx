@@ -24,6 +24,7 @@ export async function generateMetadata({ params }: ArticlePageProps) {
   return {
     title: article.headline,
     description:
+      (article as any).seo_meta_description ||
       (article as any).summary ||
       article.excerpt ||
       article.subheadline ||
@@ -31,8 +32,8 @@ export async function generateMetadata({ params }: ArticlePageProps) {
     alternates: { canonical: `/article/${slug}` },
     openGraph: {
       title: article.headline,
-      // Task 6: use summary as og:description
-      description: (article as any).summary || article.excerpt || article.subheadline || undefined,
+      // Phase 1: use seo_meta_description (max 160 chars) as og:description
+      description: (article as any).seo_meta_description || (article as any).summary || article.excerpt || article.subheadline || undefined,
       type: "article",
       publishedTime: article.publishedAt
         ? new Date(article.publishedAt).toISOString()
@@ -46,7 +47,7 @@ export async function generateMetadata({ params }: ArticlePageProps) {
     twitter: {
       card: "summary_large_image",
       title: article.headline,
-      description: (article as any).summary || article.excerpt || article.subheadline || undefined,
+      description: (article as any).seo_meta_description || (article as any).summary || article.excerpt || article.subheadline || undefined,
       images: ((article as any).coverImage || article.imageUrl)
         ? [(article as any).coverImage || article.imageUrl]
         : undefined,
@@ -71,12 +72,14 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     notFound();
   }
 
-  // JSON-LD structured data for article
+  // Phase 1: Enhanced NewsArticle JSON-LD for rich Google snippets
+  const articleImage = (article as any).coverImage || article.imageUrl;
+  const seoDesc = (article as any).seo_meta_description || article.excerpt || article.subheadline;
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
     headline: article.headline,
-    description: article.excerpt || article.subheadline || undefined,
+    description: seoDesc,
     author: {
       "@type": "Person",
       name: article.authorLine,
@@ -100,9 +103,20 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       "@type": "WebPage",
       "@id": `${process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app"}/article/${slug}`,
     },
-    image: article.imageUrl || undefined,
+    // Phase 1: image as ImageObject for rich snippets
+    image: articleImage
+      ? {
+          "@type": "ImageObject",
+          url: articleImage,
+          alt: article.imageAlt || article.headline,
+        }
+      : undefined,
     articleSection: article.section || "News",
     wordCount: article.content.split(/\s+/).length,
+    // Phase 1: key takeaways as alternative headline for SEO
+    ...((article as any).key_takeaways?.length
+      ? { alternativeHeadline: (article as any).key_takeaways.join(". ") }
+      : {}),
     ...(article.source === "rss" && article.rssFeed
       ? { sourceOrganization: { "@type": "Organization", name: article.rssFeed.name } }
       : {}),
@@ -110,7 +124,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   // BreadcrumbList JSON-LD
   // TANGISON Iteration 4 Fix #8: Use /section/SECTION for non-national sections
-  // (was /SECTION which 404s — politics, economy, mining, etc.)
+  // (was /SECTION which 404s - politics, economy, mining, etc.)
   const sectionUrl = article.section === "national"
     ? process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app"
     : `${process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app"}/section/${article.section}`;

@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — Convex queries (TANGISON)
+// Times of Namibia - Convex queries (TANGISON)
 // All read operations for articles, jobs, tenders, market data,
 // RSS feeds, newsletter, wire submissions.
 // ============================================================
@@ -46,7 +46,7 @@ export const getArticleBySlug = query({
   },
 });
 
-// ── DEDUP CHECK (for RSS ingestion — avoid wasting image gen calls) ─
+// ── DEDUP CHECK (for RSS ingestion - avoid wasting image gen calls) ─
 // Checks if an article already exists by slug OR rssGuid.
 
 export const checkArticleExists = query({
@@ -97,7 +97,7 @@ export const searchArticles = query({
     const term = args.q.toLowerCase().trim();
     if (!term) return [];
 
-    // Convex doesn't have built-in full-text search yet — use filter with
+    // Convex doesn't have built-in full-text search yet - use filter with
     // contains on headline + excerpt. For larger datasets, consider
     // external search (Algolia, Typesense).
     const candidates = await ctx.db
@@ -405,7 +405,7 @@ export const listArticlesForSocial = query({
   },
 });
 
-// ── SOCIAL QUEUE — pending posts (Task 5) ────────────────────
+// ── SOCIAL QUEUE - pending posts (Task 5) ────────────────────
 // Returns pending social queue entries for external automation.
 
 export const listPendingSocialPosts = query({

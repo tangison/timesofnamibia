@@ -4,7 +4,7 @@ import { ArrowLeft, FileText, ExternalLink, Clock } from "lucide-react";
 const DOCUMENTS = [
   {
     title: "Business Plan",
-    description: "Strategic Business Plan 2026-2028. The constitutional document of Times of Namibia — covering operations, financials, print materials, and the founding manifesto.",
+    description: "Strategic Business Plan 2026-2028. The constitutional document of Times of Namibia - covering operations, financials, print materials, and the founding manifesto.",
     format: "HTML",
     status: "Available" as const,
     href: "/business-plan",
@@ -18,7 +18,7 @@ const DOCUMENTS = [
   },
   {
     title: "Brand System",
-    description: "Visual identity guidelines — the 3-color palette, typography hierarchy, imagery rules, print specifications, and the TON-GI global identity system prompt.",
+    description: "Visual identity guidelines - the 3-color palette, typography hierarchy, imagery rules, print specifications, and the TON-GI global identity system prompt.",
     format: "HTML",
     status: "Available" as const,
     href: "/brand",
@@ -52,7 +52,7 @@ export default function DocumentsView() {
             Documents
           </h1>
           <p className="font-serif italic text-ton-black/50 text-sm sm:text-base mt-2 max-w-xl">
-            The institutional archive. Every document, every specification, every protocol — catalogued and accessible.
+            The institutional archive. Every document, every specification, every protocol - catalogued and accessible.
           </p>
         </div>
 

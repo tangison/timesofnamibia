@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Times of Namibia — A TANGISON Publication",
+    name: "Times of Namibia - A TANGISON Publication",
     short_name: "Times of Namibia",
     description:
       "A TANGISON news outlet. Real-time verified news, tender analysis, job market intelligence, and market data for Namibia. Applied AI. Built in Africa.",

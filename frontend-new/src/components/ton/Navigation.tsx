@@ -34,7 +34,7 @@ export default function Navigation({ activePage }: { activePage?: string }) {
             );
           })}
         </div>
-        {/* Thin bottom rule — section divider */}
+        {/* Thin bottom rule - section divider */}
         <div className="border-b border-ton-black/8" />
       </div>
     </nav>

@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Radio } from "lucide-react";
 
 /**
- * Breaking News Ticker — scrolls horizontally, fetches latest articles
+ * Breaking News Ticker - scrolls horizontally, fetches latest articles
  * from the API every 60 seconds for real-time updates.
  */
 export default function BreakingTicker() {

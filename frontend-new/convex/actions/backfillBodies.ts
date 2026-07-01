@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — Backfill AI Bodies (Convex Action)
+// Times of Namibia - Backfill AI Bodies (Convex Action)
 //
 // Generates AI bodies + subheadings for articles that predate
 // the body-generation feature. Runs on Convex's servers where

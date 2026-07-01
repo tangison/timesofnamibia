@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — Convex Schema (TANGISON)
+// Times of Namibia - Convex Schema (TANGISON)
 //
 // Ported from the Prisma schema. Key changes:
 //   - All tables use Convex's `defineTable()` + index() instead of @@index
@@ -102,6 +102,9 @@ export default defineSchema({
     originalUrl: v.optional(v.string()),    // original RSS article URL
     postedToSocial: v.optional(v.boolean()),// default false
     socialPostedAt: v.optional(v.number()),
+    // ── Phase 1 fields (Tangison Audit Autonomous Loop) ──
+    seo_meta_description: v.optional(v.string()),  // max 160 chars, for Google snippet
+    key_takeaways: v.optional(v.array(v.string())), // exactly 3 bullet points
   })
     .index("by_slug", ["slug"])
     .index("by_published_section_publishedAt", ["published", "section", "publishedAt"])
@@ -388,7 +391,7 @@ export default defineSchema({
     updatedAt: v.number(),
   }).index("by_key", ["key"]),
 
-  // ── NAMIBIA GUIDE (Part 1 — evergreen info hub) ─────────────
+  // ── NAMIBIA GUIDE (Part 1 - evergreen info hub) ─────────────
   namibiaGuide: defineTable({
     slug: v.string(),
     title: v.string(),
@@ -429,7 +432,7 @@ export default defineSchema({
     submittedAt: v.number(),
   }).index("by_status", ["status"]),
 
-  // ── INGESTION HEALTH (Part 5 — visibility) ──────────────────
+  // ── INGESTION HEALTH (Part 5 - visibility) ──────────────────
   ingestionHealth: defineTable({
     key: v.string(),
     lastSuccessfulRun: v.number(),

@@ -41,7 +41,7 @@ export default function AccessibilityView() {
           Information is a right. Access to that information is non-negotiable.
         </blockquote>
         <p className="font-mono text-[10px] text-ton-black/30 mt-4 tracking-wider">
-          WCAG 2.1 Level AA — TANGISON
+          WCAG 2.1 Level AA - TANGISON
         </p>
       </div>
 
@@ -66,7 +66,7 @@ export default function AccessibilityView() {
         </div>
 
         <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-4">
-          Conformance with WCAG 2.1 Level AA is not a destination — it is a process. We audit our
+          Conformance with WCAG 2.1 Level AA is not a destination - it is a process. We audit our
           platform regularly, implement improvements, and welcome feedback from readers who encounter
           barriers. Accessibility is not an afterthought at TON; it is a design principle embedded in
           the Broadsheet Digital philosophy from the first line of code.
@@ -139,7 +139,7 @@ export default function AccessibilityView() {
             {
               icon: Contrast,
               title: "High Contrast",
-              desc: "The TON palette — cream (#F9F8F6) on black (#111111) — exceeds WCAG AAA contrast ratios. Text is always rendered against backgrounds that provide sufficient contrast for readability.",
+              desc: "The TON palette - cream (#F9F8F6) on black (#111111) - exceeds WCAG AAA contrast ratios. Text is always rendered against backgrounds that provide sufficient contrast for readability.",
             },
             {
               icon: Minimize,
@@ -196,7 +196,7 @@ export default function AccessibilityView() {
               is tracked.
             </p>
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-4">
-              Accessibility is not compliance — it is respect. We treat every reader&rsquo;s access
+              Accessibility is not compliance - it is respect. We treat every reader&rsquo;s access
               need as a design requirement, not an edge case.
             </p>
             <div className="bg-ton-black/[0.02] p-4 border border-ton-black/8">

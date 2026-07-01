@@ -1,6 +1,6 @@
 export const metadata = {
-  robots: { index: false, follow: true }, // internal page — not for public indexing
-  title: "Maintenance — Times of Namibia",
+  robots: { index: false, follow: true }, // internal page - not for public indexing
+  title: "Maintenance - Times of Namibia",
   description: "Times of Namibia is currently undergoing scheduled maintenance.",
 };
 

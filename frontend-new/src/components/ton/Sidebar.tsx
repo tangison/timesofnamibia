@@ -73,7 +73,7 @@ function SidebarSection({
 
   return (
     <div className="mb-1">
-      {/* Section header — collapsible */}
+      {/* Section header - collapsible */}
       <button
         onClick={() => setCollapsed(!collapsed)}
         className={`w-full flex items-center justify-between px-3 py-2 text-left hover:bg-ton-black/[0.03] dark:hover:bg-white/[0.03] transition-colors ${
@@ -131,7 +131,7 @@ function SidebarSection({
   );
 }
 
-/* ─── Hamburger Trigger — rendered inside UtilityNav ─── */
+/* ─── Hamburger Trigger - rendered inside UtilityNav ─── */
 
 export function SidebarTrigger() {
   const handleOpen = () => {
@@ -150,7 +150,7 @@ export function SidebarTrigger() {
   );
 }
 
-/* ─── Main Sidebar Panel — rendered once in TonLayout ─── */
+/* ─── Main Sidebar Panel - rendered once in TonLayout ─── */
 
 export default function Sidebar({ activePage }: { activePage?: string }) {
   const [isOpen, setIsOpen] = useState(false);

@@ -5,7 +5,7 @@ import { FileQuestion, ArrowLeft, Search } from "lucide-react";
 export const metadata: Metadata = {
   title: "Page Not Found",
   description: "The page you are looking for does not exist, has been moved, or is no longer available.",
-  robots: { index: false, follow: true }, // 404 page — never index
+  robots: { index: false, follow: true }, // 404 page - never index
 };
 
 export default function NotFound() {
@@ -16,7 +16,7 @@ export default function NotFound() {
         <div className="flex items-center justify-center gap-3 mb-6">
           <span className="w-12 h-[1px] bg-ton-red" />
           <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-ton-red font-bold">
-            404 — Not Found
+            404 - Not Found
           </span>
           <span className="w-12 h-[1px] bg-ton-red" />
         </div>
@@ -64,7 +64,7 @@ export default function NotFound() {
         {/* Thin rule */}
         <div className="mt-12 pt-6 border-t border-ton-black/8">
           <p className="font-serif italic text-ton-black/20 text-sm">
-            Times of Namibia — Namibia. Informed. Instantly.
+            Times of Namibia - Namibia. Informed. Instantly.
           </p>
         </div>
       </div>

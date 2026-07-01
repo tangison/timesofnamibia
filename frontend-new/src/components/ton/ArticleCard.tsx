@@ -30,21 +30,19 @@ const springTransition = {
   mass: 1,
 };
 
-// Task 6: sourceRegion badge — flag emoji for each region
+// Phase 2: sourceRegion badge - text labels only, no emojis (NAM/AFR/WLD)
 function RegionBadge({ region }: { region: string | null | undefined }) {
   if (!region) return null;
-  const emoji = region === "namibia" ? "🇳🇦" : region === "africa" ? "🌍" : "🌐";
-  const label = region === "namibia" ? "Namibia" : region === "africa" ? "Africa" : "World";
+  const label = region === "namibia" ? "NAM" : region === "africa" ? "AFR" : "WLD";
   return (
-    <span className="inline-flex items-center gap-1 font-mono text-[8px] font-bold uppercase tracking-widest text-ton-black/40">
-      <span>{emoji}</span>
-      <span>{label}</span>
+    <span className="inline-flex items-center gap-1 font-mono text-[8px] font-bold uppercase tracking-widest text-ton-black/40 border border-ton-black/15 px-1 py-0.5">
+      {label}
     </span>
   );
 }
 
 /**
- * Article Card — reusable card component with 3 variants:
+ * Article Card - reusable card component with 3 variants:
  * - default: vertical card with image on top
  * - compact: smaller card for sidebar
  * - horizontal: horizontal layout for lists
@@ -124,7 +122,7 @@ export default function ArticleCard({ article, index = 0, variant = "default" }:
     );
   }
 
-  // Default variant — vertical card with image
+  // Default variant - vertical card with image
   return (
     <motion.a
       href={`/article/${article.slug}`}
@@ -149,10 +147,10 @@ export default function ArticleCard({ article, index = 0, variant = "default" }:
         <span className="absolute top-2 left-2 bg-ton-red text-white font-mono text-[8px] font-bold uppercase tracking-widest px-2 py-0.5">
           {section}
         </span>
-        {/* Task 6: sourceRegion badge */}
+        {/* Phase 2: sourceRegion text badge (no emoji) */}
         {article.sourceRegion && (
-          <span className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm font-mono text-[8px] font-bold uppercase tracking-widest px-2 py-0.5">
-            {article.sourceRegion === "namibia" ? "🇳🇦" : article.sourceRegion === "africa" ? "🌍" : "🌐"}
+          <span className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm font-mono text-[8px] font-bold uppercase tracking-widest px-2 py-0.5 border border-ton-black/10">
+            {article.sourceRegion === "namibia" ? "NAM" : article.sourceRegion === "africa" ? "AFR" : "WLD"}
           </span>
         )}
       </div>

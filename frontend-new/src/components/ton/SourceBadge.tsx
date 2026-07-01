@@ -61,7 +61,7 @@ export default function SourceBadge({
       {config.label}
       {showDescription && (
         <span className="font-sans font-normal text-[8px] tracking-normal normal-case opacity-60 ml-1">
-          — {config.description}
+          - {config.description}
         </span>
       )}
     </span>

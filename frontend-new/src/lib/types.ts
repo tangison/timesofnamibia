@@ -1,11 +1,11 @@
 // ============================================================
-// Times of Namibia — Shared domain types (TANGISON)
+// Times of Namibia - Shared domain types (TANGISON)
 //
 // TANGISON Iteration 4 Fix #14: Single source of truth for domain types.
 // Previously there were three divergent type systems:
 //   - src/lib/data.ts (implicit, via mapArticle return type)
 //   - src/lib/dataConvex.ts (explicit Article/Job/Tender/MarketDatum)
-//   - src/lib/ton-data.ts (divergent — different field names + types)
+//   - src/lib/ton-data.ts (divergent - different field names + types)
 //
 // Now everything imports from here. Mappers in data.ts and dataConvex.ts
 // return these exact types.

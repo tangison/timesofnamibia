@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — Convex Cron Jobs (TANGISON)
+// Times of Namibia - Convex Cron Jobs (TANGISON)
 //
 // Task 3 spec: per-region cron intervals
 //   - Namibia sources: every 15 minutes
@@ -37,6 +37,14 @@ crons.interval(
   { minutes: 60 },
   internal.actions.ingestRss.ingestRssFeeds,
   { sourceRegion: "world" }
+);
+
+// Phase 4: Jobs & Tenders scraper - every 60 minutes
+crons.interval(
+  "scrape jobs and tenders",
+  { minutes: 60 },
+  internal.actions.scrapeJobsTenders.scrapeJobsTenders,
+  {}
 );
 
 export default crons;

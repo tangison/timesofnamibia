@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — RSS Ingestion Action (TANGISON)
+// Times of Namibia - RSS Ingestion Action (TANGISON)
 //
 // Task 3 spec implementation:
 //   - 14 sources: 6 Namibian + 6 African + 2 Global
@@ -30,7 +30,7 @@ interface RssSource {
 }
 
 const RSS_SOURCES: RssSource[] = [
-  // ══ NAMIBIA (6 sources) — ingest every 15 mins ═════════════
+  // ══ NAMIBIA (6 sources) - ingest every 15 mins ═════════════
   { name: "The Namibian", url: "https://www.namibian.com.na/rss", sourceRegion: "namibia", defaultCategory: "national" },
   { name: "New Era Live", url: "https://neweralive.na/feed", sourceRegion: "namibia", defaultCategory: "national" },
   { name: "Namibian Sun", url: "https://www.namibiansun.com/feed/", sourceRegion: "namibia", defaultCategory: "national" },
@@ -38,14 +38,14 @@ const RSS_SOURCES: RssSource[] = [
   { name: "Windhoek Observer", url: "https://www.observer.com.na/feed", sourceRegion: "namibia", defaultCategory: "national" },
   { name: "AllAfrica Namibia", url: "https://allafrica.com/namibia/index.xml", sourceRegion: "namibia", defaultCategory: "national" },
 
-  // ══ AFRICA (6 sources) — ingest every 30 mins ══════════════
+  // ══ AFRICA (6 sources) - ingest every 30 mins ══════════════
   { name: "AllAfrica Africa", url: "https://allafrica.com/africa/index.xml", sourceRegion: "africa", defaultCategory: "africa" },
   { name: "Mail & Guardian (SA)", url: "https://mg.co.za/feed/", sourceRegion: "africa", defaultCategory: "africa" },
   { name: "Daily Maverick", url: "https://www.dailymaverick.co.za/feed/", sourceRegion: "africa", defaultCategory: "africa" },
   { name: "The East African", url: "https://www.theeastafrican.co.ke/tea/rss", sourceRegion: "africa", defaultCategory: "africa" },
   { name: "BBC Africa", url: "https://feeds.bbci.co.uk/news/world/africa/rss.xml", sourceRegion: "africa", defaultCategory: "africa" },
 
-  // ══ WORLD (2 sources) — ingest every 60 mins ═══════════════
+  // ══ WORLD (2 sources) - ingest every 60 mins ═══════════════
   { name: "Reuters World", url: "https://feeds.reuters.com/reuters/worldNews", sourceRegion: "world", defaultCategory: "world" },
   { name: "Reuters Business", url: "https://feeds.reuters.com/reuters/businessNews", sourceRegion: "world", defaultCategory: "business" },
 ];
@@ -203,14 +203,33 @@ function parseRssXml(xml: string): RssItem[] {
   return items;
 }
 
-// ── AI REWRITE (Task 1 spec) ─────────────────────────────────
-// Returns JSON: { headline, body, summary, category }
+// ── AI REWRITE (Phase 1 spec) ────────────────────────────────
+// Returns strict JSON: { headline, seo_meta_description, key_takeaways[], body, category }
+// Body must have 3-5 short paragraphs with at least one H2 subheading (Markdown ## ).
+// Namibian context injected for international articles.
 
 interface AiRewriteResult {
   headline: string;
+  seo_meta_description: string;
+  key_takeaways: string[];
   body: string;
-  summary: string;
   category: string;
+}
+
+const BANNED_PHRASES = [
+  "delve", "tapestry", "moreover", "crucial", "landscape", "realm",
+  "it is worth noting", "importantly", "furthermore", "in conclusion",
+  "this article explores",
+];
+
+function stripBannedPhrases(text: string): string {
+  let cleaned = text;
+  for (const phrase of BANNED_PHRASES) {
+    const regex = new RegExp(`\\b${phrase}\\b`, "gi");
+    cleaned = cleaned.replace(regex, "");
+  }
+  // Collapse double spaces left behind
+  return cleaned.replace(/[ ]{2,}/g, " ").replace(/ [.,]/g, "$1").trim();
 }
 
 async function rewriteArticle(
@@ -219,28 +238,42 @@ async function rewriteArticle(
   sourceRegion: string
 ): Promise<AiRewriteResult | null> {
   try {
+    const isInternational = sourceRegion !== "namibia";
+    const localizationInstruction = isInternational
+      ? `This article is from an international source (${sourceRegion}). Inject Namibian context naturally into the body. For example, tie global sports events to Namibian athletes or interests, connect world economy news to Namibia's mining or trade sectors, and reference Windhoek, Swakopmund, or Namibian institutions where relevant. Do not force the connection if it makes no sense.`
+      : `This article is from a Namibian source. Keep the local context intact and ensure Namibian place names are spelled correctly: Windhoek, Swakopmund, Oshakati, Rundu, Otjiwarongo, Luderitz, Walvis Bay, Kavango, Khomas.`;
+
     const aiText = await generateWithFallback(
       [
         {
           role: "system",
-          content: `You are the editorial AI for Times of Namibia, an African news outlet. Rewrite articles to be factual, clear, and locally relevant to Namibian and Southern African readers. Tone: professional but accessible. No fluff. No AI-sounding phrases. Active voice only. Max 400 words.`,
+          content: `You are the editorial AI for Times of Namibia, a premium African news publication inspired by Harvard Business Review. Rewrite articles to be factual, clear, and locally relevant. Tone: authoritative but accessible, like a senior correspondent. Active voice only. No fluff. Never use these phrases: ${BANNED_PHRASES.join(", ")}. No em dashes. Use standard hyphens or periods only. ${localizationInstruction}`,
         },
         {
           role: "user",
-          content: `Rewrite this article for a Namibian audience. Keep all facts. Localize where relevant. Generate: (1) rewritten body, (2) punchy headline under 10 words, (3) one-sentence summary for social media, (4) category tag from [Politics, Business, Sport, Africa, World, Tech, Health, Environment].
+          content: `Rewrite this article. Keep all facts. Generate exactly these fields as strict JSON:
+
+1. "headline": punchy, under 10 words, title case
+2. "seo_meta_description": max 160 characters, compelling, for Google search snippet
+3. "key_takeaways": array of exactly 3 short bullet points (one sentence each)
+4. "body": 3 to 5 short paragraphs. MUST include at least one Markdown H2 subheading using "## " prefix. Each paragraph is 2 to 4 sentences. Total max 400 words.
+5. "category": one of [Politics, Business, Sport, Africa, World, Tech, Health, Environment]
 
 Article title: ${title}
 Article body: ${truncate(content, 2000)}
 
-Return as JSON: { "headline": "", "body": "", "summary": "", "category": "" }`,
+Return ONLY valid JSON, no markdown code fences:
+{ "headline": "", "seo_meta_description": "", "key_takeaways": ["", "", ""], "body": "", "category": "" }`,
         },
       ],
-      { maxTokens: 800, timeout: 30_000 }
+      { maxTokens: 1000, timeout: 30_000 }
     );
 
     if (!aiText) return null;
 
-    const jsonMatch = aiText.match(/\{[\s\S]*\}/);
+    // Strip markdown code fences if present
+    let jsonStr = aiText.replace(/```json\s*/gi, "").replace(/```\s*/g, "");
+    const jsonMatch = jsonStr.match(/\{[\s\S]*\}/);
     if (!jsonMatch) return null;
 
     // Sanitize control characters before JSON.parse
@@ -267,10 +300,23 @@ Return as JSON: { "headline": "", "body": "", "summary": "", "category": "" }`,
     };
     const normalizedCategory = categoryMap[(parsed.category || "").toLowerCase()] || sourceRegion === "namibia" ? "national" : sourceRegion;
 
+    // Validate and clean each field, stripping banned phrases
+    const headline = stripBannedPhrases(String(parsed.headline || title).slice(0, 200));
+    const seoMetaDescription = stripBannedPhrases(String(parsed.seo_meta_description || "").slice(0, 160));
+    const keyTakeaways = Array.isArray(parsed.key_takeaways)
+      ? parsed.key_takeaways.slice(0, 3).map((t: any) => stripBannedPhrases(String(t).slice(0, 200)))
+      : [];
+    // Ensure exactly 3 takeaways
+    while (keyTakeaways.length < 3) {
+      keyTakeaways.push("See full article for details.");
+    }
+    const body = stripBannedPhrases(String(parsed.body || content).slice(0, 5000));
+
     return {
-      headline: String(parsed.headline || title).slice(0, 200),
-      body: String(parsed.body || content).slice(0, 5000),
-      summary: String(parsed.summary || truncate(content, 200)).slice(0, 300),
+      headline,
+      seo_meta_description: seoMetaDescription || truncate(content, 160),
+      key_takeaways: keyTakeaways,
+      body,
       category: normalizedCategory,
     };
   } catch (err) {
@@ -378,18 +424,22 @@ export const ingestRssFeeds = internalAction({
 
             const content = item.content || item.contentSnippet || item.title;
 
-            // AI rewrite (Task 1 spec)
+            // AI rewrite (Phase 1 spec - strict JSON with key_takeaways, seo_meta_description, H2 body)
             let headline = item.title;
             let body = content;
             let summary = item.contentSnippet;
             let category = source.defaultCategory;
+            let seoMetaDescription: string | undefined;
+            let keyTakeaways: string[] | undefined;
 
             const aiResult = await rewriteArticle(item.title, content, source.sourceRegion);
             if (aiResult) {
               headline = aiResult.headline;
               body = aiResult.body;
-              summary = aiResult.summary;
+              summary = aiResult.seo_meta_description || item.contentSnippet;
               category = aiResult.category;
+              seoMetaDescription = aiResult.seo_meta_description;
+              keyTakeaways = aiResult.key_takeaways;
             }
 
             // Image handling (Task 2 spec)
@@ -445,7 +495,7 @@ export const ingestRssFeeds = internalAction({
             });
             if (!sanityCheck.passed) {
               results.quarantined++;
-              console.warn(`[RSS] QUARANTINED "${headline.slice(0, 60)}..." — ${sanityCheck.issues.join(", ")}`);
+              console.warn(`[RSS] QUARANTINED "${headline.slice(0, 60)}..." - ${sanityCheck.issues.join(", ")}`);
               continue;
             }
 
@@ -468,6 +518,9 @@ export const ingestRssFeeds = internalAction({
               // Task 4 new fields:
               sourceRegion: source.sourceRegion,
               originalUrl,
+              // Phase 1 new fields:
+              ...(seoMetaDescription ? { seo_meta_description: seoMetaDescription } : {}),
+              ...(keyTakeaways ? { key_takeaways: keyTakeaways } : {}),
             });
 
             if (result.deduped) {

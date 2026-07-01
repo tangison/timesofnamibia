@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — Convex data layer (TANGISON)
+// Times of Namibia - Convex data layer (TANGISON)
 //
 // Wraps Convex queries so they return the same shapes as the
 // existing FastAPI-backed functions in data.ts.
@@ -8,7 +8,7 @@
 // Falls back to the FastAPI backend otherwise.
 //
 // TANGISON Iteration 4 Fix #14: Types now imported from @/lib/types
-// (single source of truth — was duplicated here).
+// (single source of truth - was duplicated here).
 // ============================================================
 
 import { convexClient } from "@/lib/convex";
@@ -54,13 +54,16 @@ function mapArticle(a: any): Article {
     rssFeed: null,
     createdAt: new Date(a.createdAt),
     updatedAt: new Date(a.updatedAt ?? a.createdAt),
-    // Task 4 new fields — pass through to frontend
+    // Task 4 new fields - pass through to frontend
     body: a.body ?? null,
     summary: a.summary ?? null,
     coverImage: a.coverImage ?? null,
     sourceRegion: a.sourceRegion ?? null,
     originalUrl: a.originalUrl ?? null,
     categoryField: a.category ?? null,
+    // Phase 1 fields
+    seo_meta_description: a.seo_meta_description ?? null,
+    key_takeaways: a.key_takeaways ?? null,
   } as any;
 }
 

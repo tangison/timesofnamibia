@@ -168,7 +168,7 @@ export default function TenderAnalysisView() {
           </h2>
 
           <div className="mb-6">
-            <ShareButtons title={`${selectedTenderData.title} — ${selectedTenderData.docId}`} />
+            <ShareButtons title={`${selectedTenderData.title} - ${selectedTenderData.docId}`} />
           </div>
 
           {/* 3-Bullet Summary */}
@@ -179,7 +179,7 @@ export default function TenderAnalysisView() {
             <ul className="space-y-2.5">
               {selectedTenderData.summaries.map((s) => (
                 <li key={s.id} className="font-serif text-sm text-ton-black/70 flex items-start gap-2.5">
-                  <span className="text-ton-red font-bold mt-0.5">—</span>
+                  <span className="text-ton-red font-bold mt-0.5">-</span>
                   {s.text}
                 </li>
               ))}
@@ -296,13 +296,13 @@ export default function TenderAnalysisView() {
                         <ul className="space-y-1.5 mt-2">
                           {tender.summaries.map((s) => (
                             <li key={s.id} className="font-sans text-xs text-ton-black/60 flex items-start gap-1.5">
-                              <span className="text-ton-red">—</span>
+                              <span className="text-ton-red">-</span>
                               {s.text}
                             </li>
                           ))}
                         </ul>
                         <div className="mt-2">
-                          <ShareButtons title={`${tender.title} — ${tender.docId}`} />
+                          <ShareButtons title={`${tender.title} - ${tender.docId}`} />
                         </div>
                       </div>
                     )}
@@ -325,7 +325,7 @@ export default function TenderAnalysisView() {
       <div className="mt-8 text-center">
         <span className="inline-flex items-center gap-2 font-mono text-[10px] text-ton-black/30 uppercase tracking-wider">
           <Cpu className="w-3.5 h-3.5 text-ton-red" />
-          Powered by Times OS v2.1 — TANGISON
+          Powered by Times OS v2.1 - TANGISON
         </span>
       </div>
     </div>

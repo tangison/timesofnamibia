@@ -1,9 +1,9 @@
 "use client";
 
 /**
- * Category Navigation Bar — sticky below the masthead.
+ * Category Navigation Bar - sticky below the masthead.
  * Pure white background. Horizontally scrollable on ALL screen sizes.
- * No toggle, no hamburger, no collapse — just a clean scrollable strip.
+ * No toggle, no hamburger, no collapse - just a clean scrollable strip.
  */
 const CATEGORIES = [
   { label: "National", slug: "national" },

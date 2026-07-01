@@ -17,7 +17,7 @@ interface CarouselArticle {
 }
 
 /**
- * Hero Carousel — auto-rotating featured articles with Ken Burns effect,
+ * Hero Carousel - auto-rotating featured articles with Ken Burns effect,
  * navigation arrows, and dot indicators.
  */
 export default function HeroCarousel({ articles }: { articles: CarouselArticle[] }) {

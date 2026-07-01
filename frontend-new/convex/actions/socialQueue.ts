@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — Social Media Queue (Task 5)
+// Times of Namibia - Social Media Queue (Task 5)
 //
 // prepareSocialPost action:
 //   1. Queries articles where postedToSocial === false

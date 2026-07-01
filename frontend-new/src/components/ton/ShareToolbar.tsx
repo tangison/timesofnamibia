@@ -1,29 +1,31 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Share2, Headphones, Square, Link2, Check } from "lucide-react";
 
-interface ShareButtonsProps {
+interface ShareToolbarProps {
   title: string;
   url?: string;
-  /** Full article text to read aloud via TTS. If not provided, only the title is read. */
   articleContent?: string;
 }
 
 /**
- * Share buttons with working TTS via the Web Speech API.
+ * Phase 2: Sticky ShareToolbar
  *
- * The Listen button reads the article aloud using the browser's built-in
- * speech synthesis. On the article page, pass the full article content
- * via `articleContent` prop for a complete reading experience.
+ * Placed at the top and bottom of the article body. Sticks to the top
+ * of the viewport when scrolling through the article.
+ *
+ * Includes:
+ *   - Copy Link button (navigator.clipboard, shows "Copied!" state)
+ *   - Listen button (Web Speech API TTS)
+ *   - WhatsApp share link
  */
-export default function ShareButtons({ title, url, articleContent }: ShareButtonsProps) {
+export default function ShareToolbar({ title, url, articleContent }: ShareToolbarProps) {
   const [ttsState, setTtsState] = useState<"idle" | "playing">("idle");
   const [copied, setCopied] = useState(false);
   const [supported, setSupported] = useState(true);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
-  // Resolve the URL on the client (avoids hydration mismatch)
   const [shareUrl, setShareUrl] = useState<string | undefined>(url);
   useEffect(() => {
     if (!url && typeof window !== "undefined") {
@@ -31,14 +33,12 @@ export default function ShareButtons({ title, url, articleContent }: ShareButton
     }
   }, [url]);
 
-  // Check if Web Speech API is available
   useEffect(() => {
     if (typeof window === "undefined" || !window.speechSynthesis) {
       setSupported(false);
     }
   }, []);
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => {
       if (typeof window !== "undefined" && window.speechSynthesis) {
@@ -60,19 +60,16 @@ export default function ShareButtons({ title, url, articleContent }: ShareButton
       return;
     }
 
-    // If already playing, stop
     if (ttsState === "playing") {
       window.speechSynthesis.cancel();
       setTtsState("idle");
       return;
     }
 
-    // Build the text to read: title + content (if available)
     const fullText = articleContent
       ? `${title}. ${articleContent}`
       : title;
 
-    // Clean up the text - remove HTML tags, extra whitespace, etc.
     const cleanText = fullText
       .replace(/<[^>]*>/g, "")
       .replace(/&nbsp;/g, " ")
@@ -81,17 +78,16 @@ export default function ShareButtons({ title, url, articleContent }: ShareButton
       .replace(/&gt;/g, "greater than")
       .replace(/&quot;/g, "")
       .replace(/&#39;/g, "'")
+      .replace(/#{1,6}\s/g, "")
       .replace(/\n{2,}/g, ". ")
       .replace(/\n/g, " ")
       .replace(/\s+/g, " ")
       .trim();
 
-    // Split into chunks if very long (Web Speech API has limits ~32k chars)
     const maxChunkSize = 3000;
     const chunks: string[] = [];
     let remaining = cleanText;
     while (remaining.length > maxChunkSize) {
-      // Find a good break point (end of sentence)
       let breakPoint = remaining.lastIndexOf(". ", maxChunkSize);
       if (breakPoint === -1) breakPoint = maxChunkSize;
       chunks.push(remaining.slice(0, breakPoint + 1));
@@ -99,12 +95,9 @@ export default function ShareButtons({ title, url, articleContent }: ShareButton
     }
     chunks.push(remaining);
 
-    // Cancel any existing speech
     window.speechSynthesis.cancel();
-
     setTtsState("playing");
 
-    // Speak each chunk sequentially
     let chunkIndex = 0;
     const speakNext = () => {
       if (chunkIndex >= chunks.length) {
@@ -117,7 +110,6 @@ export default function ShareButtons({ title, url, articleContent }: ShareButton
       utterance.pitch = 1.0;
       utterance.volume = 1.0;
 
-      // Try to find a good English voice
       const voices = window.speechSynthesis.getVoices();
       const preferredVoice =
         voices.find((v) => v.lang.startsWith("en") && v.name.includes("Google")) ||
@@ -160,14 +152,14 @@ export default function ShareButtons({ title, url, articleContent }: ShareButton
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       } catch {
-        alert("Copy failed. Please copy the URL from your browser's address bar.");
+        alert("Copy failed. Please copy the URL from your browser address bar.");
       }
       document.body.removeChild(textarea);
     }
   };
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 flex-wrap">
       <button
         onClick={handleWhatsApp}
         aria-label="Share on WhatsApp"
@@ -181,7 +173,7 @@ export default function ShareButtons({ title, url, articleContent }: ShareButton
         disabled={!supported}
         aria-label={ttsState === "playing" ? "Stop listening" : "Listen to article"}
         aria-pressed={ttsState === "playing"}
-        className="ton-share-btn flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-widest bg-ton-black text-ton-cream px-3 py-1.5 hover:bg-ton-black/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="ton-share-btn flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-widest bg-ton-navy text-white px-3 py-1.5 hover:bg-ton-navy/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {ttsState === "playing" ? (
           <Square className="w-3 h-3" aria-hidden="true" />
@@ -193,10 +185,10 @@ export default function ShareButtons({ title, url, articleContent }: ShareButton
       <button
         onClick={handleCopyLink}
         aria-label={copied ? "Link copied" : "Copy article link"}
-        className="ton-share-btn flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-widest bg-ton-cream text-ton-black border border-ton-black px-3 py-1.5 hover:bg-ton-black hover:text-ton-cream transition-colors"
+        className="ton-share-btn flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-widest bg-transparent text-ton-black border border-ton-black/30 px-3 py-1.5 hover:bg-ton-black hover:text-white transition-colors"
       >
         {copied ? <Check className="w-3 h-3" aria-hidden="true" /> : <Link2 className="w-3 h-3" aria-hidden="true" />}
-        {copied ? "Copied" : "Copy link"}
+        {copied ? "Copied!" : "Copy Link"}
       </button>
     </div>
   );

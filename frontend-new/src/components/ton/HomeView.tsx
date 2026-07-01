@@ -85,15 +85,40 @@ export default function HomeView({
   tenders,
   marketData,
 }: HomeViewProps) {
-  // Real-time article updates — poll every 30 seconds
+  // Real-time article updates - poll every 30 seconds
   const [liveArticles, setLiveArticles] = useState(recentArticles);
-  // Task 6: category filter state
+  // Phase 2: category filter state - dynamically queries Convex
   const [activeCategory, setActiveCategory] = useState<string>("all");
+  const [categoryLoading, setCategoryLoading] = useState(false);
 
+  // Phase 2: When category changes, fetch filtered articles from the API
+  // (which queries Convex with the section filter) - no page reload.
   useEffect(() => {
-    setLiveArticles(recentArticles);
+    if (activeCategory === "all") {
+      setLiveArticles(recentArticles);
+      return;
+    }
 
-    // Poll for new articles every 30 seconds
+    setCategoryLoading(true);
+    fetch(`/api/articles?limit=20&section=${activeCategory}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.articles?.length > 0) {
+          setLiveArticles(data.articles);
+        } else {
+          setLiveArticles([]);
+        }
+      })
+      .catch(() => {
+        // Silent fail, keep current articles
+      })
+      .finally(() => setCategoryLoading(false));
+  }, [activeCategory, recentArticles]);
+
+  // Poll for new articles every 30 seconds (only when on "all" tab)
+  useEffect(() => {
+    if (activeCategory !== "all") return;
+
     const interval = setInterval(async () => {
       try {
         const res = await fetch("/api/articles?limit=20");
@@ -107,9 +132,9 @@ export default function HomeView({
     }, 30_000);
 
     return () => clearInterval(interval);
-  }, [recentArticles]);
+  }, [activeCategory]);
 
-  // Task 6: Category filter tabs
+  // Phase 2: Category filter tabs
   const CATEGORIES = [
     { label: "All", value: "all" },
     { label: "Politics", value: "politics" },
@@ -122,13 +147,8 @@ export default function HomeView({
     { label: "Environment", value: "environment" },
   ];
 
-  // Filter articles by selected category
-  const filteredArticles = activeCategory === "all"
-    ? liveArticles
-    : liveArticles.filter(a => {
-        const cat = (a as any).category || a.section;
-        return cat === activeCategory;
-      });
+  // Phase 2: articles are already filtered server-side via Convex query
+  const filteredArticles = liveArticles;
 
   // Build carousel articles (featured + top 4 with images)
   const carouselArticles = [
@@ -185,7 +205,7 @@ export default function HomeView({
         {/* Main 3-column layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-          {/* LEFT — Latest News Grid (8 cols) */}
+          {/* LEFT - Latest News Grid (8 cols) */}
           <div className="lg:col-span-8">
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-serif font-bold text-2xl text-ton-black border-l-4 border-ton-red pl-4">
@@ -197,8 +217,8 @@ export default function HomeView({
               </span>
             </div>
 
-            {/* Task 6: Category filter tabs */}
-            <div className="mb-6 flex gap-2 overflow-x-auto scrollbar-hide pb-2 border-b border-ton-black/10">
+            {/* Phase 2: Category filter tabs - dynamically queries Convex */}
+            <div className="mb-6 flex items-center gap-2 overflow-x-auto scrollbar-hide pb-2 border-b border-ton-black/10">
               {CATEGORIES.map((cat) => (
                 <button
                   key={cat.value}
@@ -212,6 +232,11 @@ export default function HomeView({
                   {cat.label}
                 </button>
               ))}
+              {categoryLoading && (
+                <span className="flex-shrink-0 font-mono text-[9px] text-ton-black/30 uppercase tracking-widest animate-pulse">
+                  Loading...
+                </span>
+              )}
             </div>
 
             {/* Article Grid */}
@@ -242,7 +267,7 @@ export default function HomeView({
             </div>
           </div>
 
-          {/* RIGHT — Sidebar (4 cols) */}
+          {/* RIGHT - Sidebar (4 cols) */}
           <div className="lg:col-span-4 space-y-8">
             
             {/* Most Read */}

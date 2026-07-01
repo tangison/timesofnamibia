@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — Web-Search Story Synthesis (Part 3)
+// Times of Namibia - Web-Search Story Synthesis (Part 3)
 //
 // Uses Tavily API to search for a topic, then synthesizes an
 // original multi-source-cited article via AI.
@@ -97,7 +97,7 @@ export const synthesizeStory = internalAction({
           role: "system",
           content: `You are a news editor for Times of Namibia. Write an original news article based on the source snippets below.
 Rules:
-- Synthesize across ALL sources — do not closely follow the structure or wording of any single one.
+- Synthesize across ALL sources - do not closely follow the structure or wording of any single one.
 - Do not invent facts not present in the source material.
 - At the end, list every source used as "Sources: [Name](url), [Name](url)".
 - 4-5 paragraphs, written in a professional news style.

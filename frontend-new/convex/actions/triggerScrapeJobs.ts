@@ -9,6 +9,7 @@
 
 import { action, internalAction } from "../_generated/server";
 import { v } from "convex/values";
+import { internal } from "../_generated/api";
 
 const VERCEL_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app";
 

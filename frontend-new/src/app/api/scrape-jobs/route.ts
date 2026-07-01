@@ -1,12 +1,14 @@
 // ============================================================
 // Times of Namibia - /api/scrape-jobs (Phase 2, Iteration 12)
 //
-// Hybrid Playwright + Search API scraper for Namibian jobs and
+// Hybrid Search API + Playwright scraper for Namibian jobs and
 // tenders. Runs in the Node.js runtime (not edge).
 //
 // Step 1: Use Tavily Search API to discover live links for
 //         "Namibia government tenders" and "Namibia jobs"
-// Step 2: Launch Playwright to render JS-heavy portals
+// Step 2: If Playwright + chromium available, render JS-heavy
+//         portals. Otherwise, use the search result snippets
+//         directly as the scraped data.
 // Step 3: Extract title, entity, deadline, url, type
 // Step 4: Upsert into Convex jobs and tender tables
 //
@@ -15,7 +17,6 @@
 // ============================================================
 
 import { NextRequest, NextResponse } from "next/server";
-import { chromium } from "playwright-core";
 import { convexClient } from "@/lib/convex";
 import { api } from "@convex/_generated/api";
 
@@ -72,12 +73,24 @@ async function searchTavily(query: string, maxResults = 8): Promise<{ title: str
   }
 }
 
-// ── PLAYWRIGHT SCRAPER ───────────────────────────────────────
+// ── PLAYWRIGHT SCRAPER (optional) ────────────────────────────
+// Playwright requires chromium to be installed on the host. On
+// Vercel serverless, chromium is not available by default, so
+// this function gracefully falls back to search snippets if
+// Playwright cannot launch.
 
 async function scrapeWithPlaywright(urls: { url: string; type: "job" | "tender" }[]): Promise<ScrapedItem[]> {
-  const items: ScrapedItem[] = [];
+  let chromium: any = null;
+  try {
+    chromium = (await import("playwright-core")).chromium;
+  } catch {
+    console.warn("[scrape-jobs] playwright-core not available - using search snippets only");
+    return [];
+  }
 
+  const items: ScrapedItem[] = [];
   let browser;
+
   try {
     browser = await chromium.launch({
       headless: true,
@@ -89,13 +102,10 @@ async function scrapeWithPlaywright(urls: { url: string; type: "job" | "tender" 
       try {
         await page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
         await page.goto(url, { waitUntil: "domcontentloaded", timeout: 20_000 });
-        await page.waitForTimeout(2000); // allow JS to render
+        await page.waitForTimeout(2000);
 
-        // Extract items from the page - look for common job/tender patterns
         const pageItems = await page.evaluate((pageType: string) => {
           const results: { title: string; url: string; deadline?: string; entity?: string; location?: string; estimatedValue?: string }[] = [];
-
-          // Try multiple selectors for job/tender listings
           const selectors = [
             "article", ".job-item", ".tender-item", ".listing",
             ".vacancy", ".procurement", ".card", "tr",
@@ -107,15 +117,13 @@ async function scrapeWithPlaywright(urls: { url: string; type: "job" | "tender" 
             if (elements.length === 0) continue;
 
             elements.forEach((el, idx) => {
-              if (idx >= 10) return; // limit per page
+              if (idx >= 10) return;
               const text = el.textContent || "";
               const link = el.querySelector("a");
               const title = (el.querySelector("h1, h2, h3, h4, .title, strong") as HTMLElement)?.textContent?.trim() || text.slice(0, 120).trim();
               const href = link?.href || "";
-
               if (!title || title.length < 5) return;
 
-              // Try to extract deadline from text
               const deadlineMatch = text.match(/(?:closing|deadline|apply\s+by)[:\s]+(\d{1,2}\s+\w+\s+\d{4})/i);
               const valueMatch = text.match(/(?:NAD|N\$)\s*[\d,.]+/i);
               const locationMatch = text.match(/(?:location|based\s+in)[:\s]+([^,\n]+)/i);
@@ -130,9 +138,8 @@ async function scrapeWithPlaywright(urls: { url: string; type: "job" | "tender" 
               });
             });
 
-            if (results.length > 0) break; // use first selector that yields results
+            if (results.length > 0) break;
           }
-
           return results;
         }, type);
 
@@ -148,7 +155,7 @@ async function scrapeWithPlaywright(urls: { url: string; type: "job" | "tender" 
           });
         }
 
-        console.log(`[scrape-jobs] Scraped ${pageItems.length} items from ${url}`);
+        console.log(`[scrape-jobs] Playwright scraped ${pageItems.length} items from ${url}`);
       } catch (err) {
         console.warn(`[scrape-jobs] Failed to scrape ${url}:`, err instanceof Error ? err.message : err);
       } finally {
@@ -156,7 +163,8 @@ async function scrapeWithPlaywright(urls: { url: string; type: "job" | "tender" 
       }
     }
   } catch (err) {
-    console.error("[scrape-jobs] Playwright launch failed:", err instanceof Error ? err.message : err);
+    console.warn("[scrape-jobs] Playwright launch failed, falling back to search snippets:", err instanceof Error ? err.message : err);
+    return [];
   } finally {
     if (browser) {
       await browser.close();
@@ -164,6 +172,35 @@ async function scrapeWithPlaywright(urls: { url: string; type: "job" | "tender" 
   }
 
   return items;
+}
+
+// ── BUILD ITEMS FROM SEARCH SNIPPETS ─────────────────────────
+// Used as fallback when Playwright is unavailable. Extracts
+// structured data from the Tavily search result snippets.
+
+function buildItemsFromSearchResults(
+  results: { title: string; url: string; content: string }[],
+  type: "job" | "tender"
+): ScrapedItem[] {
+  return results.map((r) => {
+    const deadlineMatch = r.content.match(/(?:closing|deadline|apply\s+by)[:\s]+(\d{1,2}\s+\w+\s+\d{4})/i);
+    const valueMatch = r.content.match(/(?:NAD|N\$)\s*[\d,.]+/i);
+    const locationMatch = r.content.match(/(?:location|based\s+in)[:\s]+([^,\n.]+)/i);
+    let entity = "Unknown";
+    try {
+      entity = new URL(r.url).hostname.replace("www.", "").replace(/\.[a-z]{2,}$/, "");
+    } catch {}
+
+    return {
+      title: r.title.slice(0, 200),
+      entity,
+      deadline: deadlineMatch?.[1],
+      url: r.url,
+      type,
+      location: locationMatch?.[1]?.trim(),
+      estimatedValue: valueMatch?.[0],
+    };
+  });
 }
 
 // ── UPSERT TO CONVEX ─────────────────────────────────────────
@@ -225,21 +262,31 @@ export async function POST(_request: NextRequest) {
   console.log("[scrape-jobs] Starting hybrid search + Playwright scrape...");
 
   // Step 1: Search API discovery
-  const [tenderUrls, jobUrls] = await Promise.all([
-    searchTavily("Namibia government tenders site:gov.na OR site:mof.gov.na OR site:eprocurement.gov.na", 6),
-    searchTavily("Namibia jobs site:vacancymail.co.na OR site:gov.na OR site:nipam.gov.na", 6),
+  const [tenderResults, jobResults] = await Promise.all([
+    searchTavily("Namibia government tenders 2026", 6),
+    searchTavily("Namibia jobs vacancies 2026", 6),
   ]);
 
-  console.log(`[scrape-jobs] Found ${tenderUrls.length} tender URLs, ${jobUrls.length} job URLs`);
+  console.log(`[scrape-jobs] Found ${tenderResults.length} tender results, ${jobResults.length} job results`);
 
-  // Step 2: Playwright scrape
+  // Step 2: Try Playwright scrape (may fail gracefully on Vercel)
   const urlsToScrape = [
-    ...tenderUrls.map((r) => ({ url: r.url, type: "tender" as const })),
-    ...jobUrls.map((r) => ({ url: r.url, type: "job" as const })),
+    ...tenderResults.map((r) => ({ url: r.url, type: "tender" as const })),
+    ...jobResults.map((r) => ({ url: r.url, type: "job" as const })),
   ];
 
-  const scrapedItems = await scrapeWithPlaywright(urlsToScrape);
-  console.log(`[scrape-jobs] Scraped ${scrapedItems.length} total items`);
+  let scrapedItems = await scrapeWithPlaywright(urlsToScrape);
+
+  // Step 2b: If Playwright yielded nothing, use search snippets directly
+  if (scrapedItems.length === 0) {
+    console.log("[scrape-jobs] Playwright yielded no items - using search snippets as fallback");
+    scrapedItems = [
+      ...buildItemsFromSearchResults(tenderResults, "tender"),
+      ...buildItemsFromSearchResults(jobResults, "job"),
+    ];
+  }
+
+  console.log(`[scrape-jobs] Total items to upsert: ${scrapedItems.length}`);
 
   // Step 3: Upsert to Convex
   const result = await upsertToConvex(scrapedItems);
@@ -248,7 +295,7 @@ export async function POST(_request: NextRequest) {
 
   return NextResponse.json({
     success: true,
-    discoveredUrls: { tenders: tenderUrls.length, jobs: jobUrls.length },
+    discoveredUrls: { tenders: tenderResults.length, jobs: jobResults.length },
     scraped: scrapedItems.length,
     inserted: result,
   });

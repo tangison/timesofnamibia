@@ -39,11 +39,19 @@ crons.interval(
   { sourceRegion: "world" }
 );
 
-// Phase 4: Jobs & Tenders scraper - every 60 minutes
+// Phase 4: Jobs & Tenders RSS scraper - every 60 minutes
 crons.interval(
   "scrape jobs and tenders",
   { minutes: 60 },
   internal.actions.scrapeJobsTenders.scrapeJobsTenders,
+  {}
+);
+
+// Phase 2 (Iteration 12): Playwright + Search API scraper - every 12 hours
+crons.interval(
+  "playwright scrape jobs tenders",
+  { hours: 12 },
+  internal.actions.triggerScrapeJobs.triggerScrapeJobsRoute,
   {}
 );
 

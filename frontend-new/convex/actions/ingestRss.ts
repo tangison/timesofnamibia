@@ -247,26 +247,20 @@ async function rewriteArticle(
       [
         {
           role: "system",
-          content: `You are the editorial AI for Times of Namibia, a premium African news publication inspired by Harvard Business Review. Rewrite articles to be factual, clear, and locally relevant. Tone: authoritative but accessible, like a senior correspondent. Active voice only. No fluff. Never use these phrases: ${BANNED_PHRASES.join(", ")}. No em dashes. Use standard hyphens or periods only. ${localizationInstruction}`,
+          content: `You are the editorial AI for Times of Namibia. You MUST respond with ONLY valid JSON - no markdown, no code fences, no commentary. The response must be a single JSON object with exactly these keys: "headline" (string, under 10 words, title case), "seo_meta_description" (string, max 160 chars, for Google snippet), "key_takeaways" (array of exactly 3 strings, one sentence each), "body" (string, 3-5 paragraphs with at least one "## " H2 subheading, max 400 words), "category" (one of: Politics, Business, Sport, Africa, World, Tech, Health, Environment). Never use banned phrases: ${BANNED_PHRASES.join(", ")}. No em dashes. ${localizationInstruction}`,
         },
         {
           role: "user",
-          content: `Rewrite this article. Keep all facts. Generate exactly these fields as strict JSON:
-
-1. "headline": punchy, under 10 words, title case
-2. "seo_meta_description": max 160 characters, compelling, for Google search snippet
-3. "key_takeaways": array of exactly 3 short bullet points (one sentence each)
-4. "body": 3 to 5 short paragraphs. MUST include at least one Markdown H2 subheading using "## " prefix. Each paragraph is 2 to 4 sentences. Total max 400 words.
-5. "category": one of [Politics, Business, Sport, Africa, World, Tech, Health, Environment]
+          content: `Rewrite this article for a Namibian audience. Keep all facts.
 
 Article title: ${title}
 Article body: ${truncate(content, 2000)}
 
-Return ONLY valid JSON, no markdown code fences:
+Respond with ONLY a JSON object:
 { "headline": "", "seo_meta_description": "", "key_takeaways": ["", "", ""], "body": "", "category": "" }`,
         },
       ],
-      { maxTokens: 1000, timeout: 30_000 }
+      { maxTokens: 1000, timeout: 30_000, forceJson: true }
     );
 
     if (!aiText) return null;

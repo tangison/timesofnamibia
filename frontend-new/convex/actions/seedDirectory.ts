@@ -300,7 +300,7 @@ async function processPlace(ctx: any, place: PlaceSeed): Promise<{ success: bool
     }
 
     // Process and store images (convert to WebP)
-    const processedImages = [];
+    const processedImages: Array<{ url: string; webp_url: string; caption: string; source: string; license: string; alt_text: string; width?: number; height?: number }> = [];
     for (const img of commonsImages.slice(0, 5)) {
       const processed = await processAndStoreImage(
         ctx, img.url, place.title, img.caption, img.license, img.source

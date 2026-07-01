@@ -69,6 +69,8 @@ export const ingestArticle = mutation({
     // Phase 1 fields:
     seo_meta_description: v.optional(v.string()),
     key_takeaways: v.optional(v.array(v.string())),
+    // Phase 2 fields:
+    alt_text: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     requireAdmin(args.adminToken);
@@ -133,6 +135,8 @@ export const ingestArticle = mutation({
       // Phase 1 fields:
       seo_meta_description: args.seo_meta_description,
       key_takeaways: args.key_takeaways,
+      // Phase 2 fields:
+      alt_text: args.alt_text,
     });
 
     return { id, deduped: false };
@@ -509,6 +513,167 @@ export const updateArticleContent = mutation({
     if (args.socialPostedAt !== undefined) updates.socialPostedAt = args.socialPostedAt;
 
     await ctx.db.patch(args.articleId, updates);
+    return { success: true };
+  },
+});
+
+// ── CLEAR ALL ARTICLES (Phase 1, Iteration 14) ───────────────
+// Permanently deletes all records from the article table.
+// Used before fresh ingestion to ensure clean state.
+
+export const clearAllArticles = mutation({
+  args: { adminToken: v.string() },
+  handler: async (ctx, args) => {
+    requireAdmin(args.adminToken);
+    const articles = await ctx.db.query("article").take(2000);
+    let deleted = 0;
+    for (const article of articles) {
+      await ctx.db.delete(article._id);
+      deleted++;
+    }
+    return { deleted };
+  },
+});
+
+// ── CLEAR ALL DIRECTORY PLACES (Phase 4 helper) ──────────────
+
+export const clearAllDirectoryPlaces = mutation({
+  args: { adminToken: v.string() },
+  handler: async (ctx, args) => {
+    requireAdmin(args.adminToken);
+    const places = await ctx.db.query("directory_places").take(200);
+    let deleted = 0;
+    for (const place of places) {
+      await ctx.db.delete(place._id);
+      deleted++;
+    }
+    return { deleted };
+  },
+});
+
+// ── INGEST DIRECTORY PLACE (Phase 4) ─────────────────────────
+
+export const ingestDirectoryPlace = mutation({
+  args: {
+    adminToken: v.string(),
+    slug: v.string(),
+    name: v.string(),
+    type: v.string(),
+    region: v.string(),
+    short_description: v.string(),
+    rich_description: v.string(),
+    seo_meta_description: v.string(),
+    coordinates: v.object({ lat: v.number(), lng: v.number() }),
+    images: v.array(v.object({
+      url: v.string(),
+      webp_url: v.optional(v.string()),
+      caption: v.string(),
+      source: v.string(),
+      license: v.string(),
+      width: v.optional(v.number()),
+      height: v.optional(v.number()),
+      alt_text: v.string(),
+    })),
+    key_facts: v.array(v.object({ label: v.string(), value: v.string() })),
+    best_time_to_visit: v.string(),
+    activities: v.array(v.string()),
+    official_url: v.string(),
+    booking_url: v.optional(v.string()),
+    related_places: v.array(v.string()),
+    gallery_featured: v.boolean(),
+  },
+  handler: async (ctx, args) => {
+    requireAdmin(args.adminToken);
+    const existing = await ctx.db
+      .query("directory_places")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .first();
+    if (existing) {
+      await ctx.db.patch(existing._id, {
+        short_description: args.short_description,
+        rich_description: args.rich_description,
+        seo_meta_description: args.seo_meta_description,
+        images: args.images,
+        key_facts: args.key_facts,
+        best_time_to_visit: args.best_time_to_visit,
+        activities: args.activities,
+        booking_url: args.booking_url,
+        related_places: args.related_places,
+        gallery_featured: args.gallery_featured,
+        updated_at: Date.now(),
+      });
+      return { id: existing._id, deduped: true };
+    }
+    const id = await ctx.db.insert("directory_places", {
+      slug: args.slug,
+      name: args.name,
+      type: args.type,
+      region: args.region,
+      short_description: args.short_description,
+      rich_description: args.rich_description,
+      seo_meta_description: args.seo_meta_description,
+      coordinates: args.coordinates,
+      images: args.images,
+      key_facts: args.key_facts,
+      best_time_to_visit: args.best_time_to_visit,
+      activities: args.activities,
+      official_url: args.official_url,
+      booking_url: args.booking_url,
+      related_places: args.related_places,
+      gallery_featured: args.gallery_featured,
+      created_at: Date.now(),
+      updated_at: Date.now(),
+    });
+    return { id, deduped: false };
+  },
+});
+
+// ── INGEST ADVERTISEMENT (Phase 8) ───────────────────────────
+
+export const ingestAdvertisement = mutation({
+  args: {
+    adminToken: v.string(),
+    imageUrl: v.string(),
+    targetUrl: v.string(),
+    placement: v.string(),
+    alt_text: v.string(),
+  },
+  handler: async (ctx, args) => {
+    requireAdmin(args.adminToken);
+    const id = await ctx.db.insert("advertisements", {
+      imageUrl: args.imageUrl,
+      targetUrl: args.targetUrl,
+      placement: args.placement,
+      isActive: true,
+      impressions: 0,
+      clicks: 0,
+      alt_text: args.alt_text,
+      created_at: Date.now(),
+    });
+    return { id };
+  },
+});
+
+// ── TRACK AD IMPRESSION (Phase 8) ────────────────────────────
+
+export const trackAdImpression = mutation({
+  args: { adId: v.id("advertisements") },
+  handler: async (ctx, args) => {
+    const ad = await ctx.db.get(args.adId);
+    if (!ad) return { success: false };
+    await ctx.db.patch(args.adId, { impressions: ad.impressions + 1 });
+    return { success: true };
+  },
+});
+
+// ── TRACK AD CLICK (Phase 8) ─────────────────────────────────
+
+export const trackAdClick = mutation({
+  args: { adId: v.id("advertisements") },
+  handler: async (ctx, args) => {
+    const ad = await ctx.db.get(args.adId);
+    if (!ad) return { success: false };
+    await ctx.db.patch(args.adId, { clicks: ad.clicks + 1 });
     return { success: true };
   },
 });

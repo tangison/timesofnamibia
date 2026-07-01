@@ -419,3 +419,63 @@ export const listPendingSocialPosts = query({
       .take(limit);
   },
 });
+
+// ── DIRECTORY PLACES (Phase 4, Iteration 14) ────────────────
+
+export const getDirectoryPlace = query({
+  args: { slug: v.string() },
+  handler: async (ctx, args) => {
+    return await ctx.db
+      .query("directory_places")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .first();
+  },
+});
+
+export const listDirectoryPlaces = query({
+  args: {
+    limit: v.optional(v.number()),
+    type: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const limit = Math.min(args.limit ?? 100, 200);
+    if (args.type) {
+      return await ctx.db
+        .query("directory_places")
+        .withIndex("by_type", (q) => q.eq("type", args.type!))
+        .take(limit);
+    }
+    return await ctx.db.query("directory_places").take(limit);
+  },
+});
+
+export const searchDirectoryPlaces = query({
+  args: { q: v.string(), limit: v.optional(v.number()) },
+  handler: async (ctx, args) => {
+    const limit = Math.min(args.limit ?? 20, 50);
+    const term = args.q.toLowerCase().trim();
+    if (!term) return [];
+    const all = await ctx.db.query("directory_places").take(200);
+    return all
+      .filter((p) =>
+        p.name.toLowerCase().includes(term) ||
+        p.region.toLowerCase().includes(term) ||
+        p.type.toLowerCase().includes(term)
+      )
+      .slice(0, limit);
+  },
+});
+
+// ── ADVERTISEMENTS (Phase 8) ────────────────────────────────
+
+export const getActiveAd = query({
+  args: { placement: v.string() },
+  handler: async (ctx, args) => {
+    return await ctx.db
+      .query("advertisements")
+      .withIndex("by_placement_active", (q) =>
+        q.eq("placement", args.placement).eq("isActive", true)
+      )
+      .first();
+  },
+});

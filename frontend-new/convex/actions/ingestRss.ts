@@ -19,6 +19,7 @@ import { v } from "convex/values";
 import { api, internal } from "../_generated/api";
 import { generateArticleImage } from "./imageGenerator";
 import { generateWithFallback } from "./aiProvider";
+import { convertToWebp, generateArticleAltText } from "./imageProcessor";
 
 // ── RSS FEED SOURCES (Task 3 spec) ───────────────────────────
 
@@ -436,9 +437,10 @@ export const ingestRssFeeds = internalAction({
               keyTakeaways = aiResult.key_takeaways;
             }
 
-            // Image handling (Task 2 spec)
+            // Image handling - Phase 2: convert ALL images to WebP
             let imageStorageId: string | undefined;
             let publisherImageUrl: string | undefined;
+            const altText = generateArticleAltText(headline, category);
 
             if (item.imageUrl) {
               try {
@@ -449,10 +451,12 @@ export const ingestRssFeeds = internalAction({
                 if (imgRes.ok) {
                   const imgBlob = await imgRes.blob();
                   if (imgBlob.size > 1000) {
-                    imageStorageId = await ctx.storage.store(imgBlob);
+                    // Phase 2: convert to WebP before storing
+                    const webpBlob = await convertToWebp(imgBlob);
+                    imageStorageId = await ctx.storage.store(webpBlob || imgBlob);
                     results.imagesGenerated++;
                     publisherImageUrl = item.imageUrl;
-                    console.log(`[RSS] Publisher image stored for "${item.title.slice(0, 60)}..."`);
+                    console.log(`[RSS] Publisher image stored (WebP) for "${item.title.slice(0, 60)}..."`);
                   }
                 }
               } catch (pubImgErr) {
@@ -460,7 +464,7 @@ export const ingestRssFeeds = internalAction({
               }
             }
 
-            // Fall back to AI-generated image
+            // Fall back to AI-generated image (HBR minimalist flat vector)
             if (!imageStorageId) {
               try {
                 const imageBlob = await generateArticleImage({
@@ -469,9 +473,11 @@ export const ingestRssFeeds = internalAction({
                   summary,
                 });
                 if (imageBlob) {
-                  imageStorageId = await ctx.storage.store(imageBlob);
+                  // Phase 2: convert AI image to WebP
+                  const webpBlob = await convertToWebp(imageBlob);
+                  imageStorageId = await ctx.storage.store(webpBlob || imageBlob);
                   results.imagesGenerated++;
-                  console.log(`[RSS] AI image generated for "${item.title.slice(0, 60)}..."`);
+                  console.log(`[RSS] AI image generated (WebP) for "${item.title.slice(0, 60)}..."`);
                 } else {
                   results.imagesFailed++;
                 }
@@ -515,6 +521,8 @@ export const ingestRssFeeds = internalAction({
               // Phase 1 new fields:
               ...(seoMetaDescription ? { seo_meta_description: seoMetaDescription } : {}),
               ...(keyTakeaways ? { key_takeaways: keyTakeaways } : {}),
+              // Phase 2 fields:
+              alt_text: altText,
             });
 
             if (result.deduped) {

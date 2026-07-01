@@ -203,4 +203,56 @@ http.route({
   }),
 });
 
+// ── /seed-directory (Phase 4) - trigger directory seed ──
+http.route({
+  path: "/seed-directory",
+  method: "POST",
+  handler: httpAction(async (ctx, request) => {
+    const secret = request.headers.get("Authorization");
+    const expectedSecret = `Bearer ${process.env.INGEST_SECRET}`;
+    if (!secret || secret !== expectedSecret) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+    try {
+      await ctx.scheduler.runAfter(0, internal.actions.seedDirectory.seedDirectoryPlaces, {});
+      return new Response(
+        JSON.stringify({ status: "Directory seed started" }),
+        { status: 200, headers: { "Content-Type": "application/json" } }
+      );
+    } catch (err) {
+      return new Response(
+        JSON.stringify({ error: err instanceof Error ? err.message : "Unknown error" }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      );
+    }
+  }),
+});
+
+// ── /clear-articles (Phase 1) - clear all articles ──
+http.route({
+  path: "/clear-articles",
+  method: "POST",
+  handler: httpAction(async (ctx, request) => {
+    const secret = request.headers.get("Authorization");
+    const expectedSecret = `Bearer ${process.env.INGEST_SECRET}`;
+    if (!secret || secret !== expectedSecret) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+    try {
+      const result = await ctx.runMutation(api.mutationsAdmin.clearAllArticles, {
+        adminToken: process.env.CONVEX_ADMIN_TOKEN!,
+      });
+      return new Response(
+        JSON.stringify({ status: "Articles cleared", deleted: result.deleted }),
+        { status: 200, headers: { "Content-Type": "application/json" } }
+      );
+    } catch (err) {
+      return new Response(
+        JSON.stringify({ error: err instanceof Error ? err.message : "Unknown error" }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      );
+    }
+  }),
+});
+
 export default http;

@@ -105,6 +105,9 @@ export default defineSchema({
     // ── Phase 1 fields (Tangison Audit Autonomous Loop) ──
     seo_meta_description: v.optional(v.string()),  // max 160 chars, for Google snippet
     key_takeaways: v.optional(v.array(v.string())), // exactly 3 bullet points
+    // ── Phase 2 fields (Iteration 14: WebP + alt text) ──
+    alt_text: v.optional(v.string()),              // descriptive alt text for hero image
+    webp_image_url: v.optional(v.string()),        // WebP-converted image URL
   })
     .index("by_slug", ["slug"])
     .index("by_published_section_publishedAt", ["published", "section", "publishedAt"])
@@ -441,17 +444,13 @@ export default defineSchema({
   }).index("by_key", ["key"]),
 
   // ── SOCIAL QUEUE (Task 5) ───────────────────────────────────
-  // Pending social media posts prepared by the prepareSocialPost action.
-  // Consumed by an external automation (n8n / Make.com webhook) that
-  // reads /http/social-queue, posts to each platform, then deletes
-  // the queue entry (or marks it posted).
   socialQueue: defineTable({
     articleId: v.id("article"),
     imageUrl: v.optional(v.string()),
     caption: v.string(),
     hashtags: v.array(v.string()),
-    platforms: v.array(v.string()), // "instagram" | "facebook" | "x"
-    status: v.string(), // "pending" | "posted" | "failed"
+    platforms: v.array(v.string()),
+    status: v.string(),
     queuedAt: v.number(),
     postedAt: v.optional(v.number()),
     postResults: v.optional(v.array(v.object({
@@ -463,4 +462,57 @@ export default defineSchema({
   })
     .index("by_status_queuedAt", ["status", "queuedAt"])
     .index("by_article", ["articleId"]),
+
+  // ── DIRECTORY PLACES (Phase 4, Iteration 14) ────────────────
+  // Namibian national directory - 48+ places seeded from Wikimedia.
+  directory_places: defineTable({
+    slug: v.string(),
+    name: v.string(),
+    type: v.string(), // park | landmark | town | wildlife | geological | cultural
+    region: v.string(),
+    short_description: v.string(),
+    rich_description: v.string(),
+    seo_meta_description: v.string(),
+    coordinates: v.object({
+      lat: v.number(),
+      lng: v.number(),
+    }),
+    images: v.array(v.object({
+      url: v.string(),
+      webp_url: v.optional(v.string()),
+      caption: v.string(),
+      source: v.string(),
+      license: v.string(),
+      width: v.optional(v.number()),
+      height: v.optional(v.number()),
+      alt_text: v.string(),
+    })),
+    key_facts: v.array(v.object({
+      label: v.string(),
+      value: v.string(),
+    })),
+    best_time_to_visit: v.string(),
+    activities: v.array(v.string()),
+    official_url: v.string(),
+    booking_url: v.optional(v.string()),
+    related_places: v.array(v.string()), // slugs
+    gallery_featured: v.boolean(),
+    created_at: v.number(),
+    updated_at: v.number(),
+  })
+    .index("by_slug", ["slug"])
+    .index("by_type", ["type"])
+    .index("by_region", ["region"]),
+
+  // ── ADVERTISEMENTS (Phase 8, Iteration 14) ──────────────────
+  advertisements: defineTable({
+    imageUrl: v.string(),            // WebP URL
+    targetUrl: v.string(),
+    placement: v.string(),           // popup | sidebar | in-article
+    isActive: v.boolean(),
+    impressions: v.number(),
+    clicks: v.number(),
+    alt_text: v.string(),
+    created_at: v.number(),
+  }).index("by_placement_active", ["placement", "isActive"]),
 });

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Merriweather, Lato, JetBrains_Mono, UnifrakturMaguntia } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
+import AdPopup from "@/components/ton/AdPopup";
 
 // Times of Namibia typography:
 //   Wordmark:  UnifrakturMaguntia (Google Fonts - the masthead "Times of Namibia")
@@ -214,6 +215,7 @@ export default function RootLayout({
         </a>
         {children}
         <Toaster position="bottom-right" richColors />
+        <AdPopup />
       </body>
     </html>
   );

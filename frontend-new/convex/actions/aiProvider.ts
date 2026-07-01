@@ -38,26 +38,32 @@ interface GenerateOptions {
 
 export const EDITORIAL_VOICE = `You are the editorial AI for Times of Namibia, a premium African news publication inspired by Harvard Business Review. Rewrite articles to be factual, clear, and locally relevant. Tone: authoritative but accessible, like a senior correspondent. Active voice only. No fluff. No em dashes - use standard hyphens or periods only. Never use these banned phrases: delve, tapestry, moreover, crucial, landscape, realm, it is worth noting, importantly, furthermore, in conclusion, this article explores. Namibian proper nouns are always spelled correctly: Windhoek, Swakopmund, Oshakati, Rundu, Otjiwarongo, Luderitz, Walvis Bay, Kavango, Khomas. Numbers: spell out one through nine, numerals for 10 and above, always include currency context (NAD/USD). Attribution: said, told reporters, confirmed - never claimed unless genuinely disputed.`;
 
-// ── FREE MODELS ARRAY ────────────────────────────────────────
-// All free-tier OpenRouter models. Round-robin cycled on every call.
+// ── MODEL ARRAY ──────────────────────────────────────────────
+// Round-robin cycled on every call. Includes both :free variants
+// (which may be rate-limited or unavailable) and paid fallbacks
+// (which are always available). On 429/503, immediately retries
+// with the next model in the array.
 
-const FREE_MODELS = [
-  "meta-llama/llama-3.1-8b-instruct:free",
-  "google/gemma-2-9b-it:free",
-  "mistralai/mistral-7b-instruct:free",
+const MODELS = [
+  "meta-llama/llama-3.3-70b-instruct:free",
+  "meta-llama/llama-3.2-3b-instruct:free",
   "mistralai/mistral-nemo:free",
-  "qwen/qwen-2-7b-instruct:free",
-  "microsoft/phi-3-mini-4k-instruct:free",
+  "qwen/qwen-2.5-7b-instruct:free",
+  // Working fallbacks (paid but cheap):
+  "meta-llama/llama-3.3-70b-instruct",
+  "meta-llama/llama-3.2-3b-instruct",
+  "mistralai/mistral-nemo",
+  "qwen/qwen-2.5-7b-instruct",
 ];
 
 // Round-robin state - persists across calls within the same Convex
 // action invocation. Starts at a random index to distribute load
 // evenly across concurrent invocations.
-let modelIndex = Math.floor(Math.random() * FREE_MODELS.length);
+let modelIndex = Math.floor(Math.random() * MODELS.length);
 
 function getNextModel(): string {
-  const model = FREE_MODELS[modelIndex % FREE_MODELS.length];
-  modelIndex = (modelIndex + 1) % FREE_MODELS.length;
+  const model = MODELS[modelIndex % MODELS.length];
+  modelIndex = (modelIndex + 1) % MODELS.length;
   return model;
 }
 
@@ -130,11 +136,11 @@ export async function generateWithFallback(
     augmentedMessages.unshift({ role: "system", content: EDITORIAL_VOICE });
   }
 
-  // ── Phase 1: Round-robin through ALL free OpenRouter models ──
+  // ── Phase 1: Round-robin through all OpenRouter models ──
   if (openRouterKey) {
-    // Try every free model. On 429 (rate limit) or 503 (service
+    // Try every model. On 429 (rate limit) or 503 (service
     // unavailable), immediately retry with the next model. No pauses.
-    for (let i = 0; i < FREE_MODELS.length; i++) {
+    for (let i = 0; i < MODELS.length; i++) {
       const model = getNextModel();
       const result = await callOpenRouterModel(model, augmentedMessages, openRouterKey, opts);
 
@@ -145,16 +151,16 @@ export async function generateWithFallback(
 
       // 429 = rate limited, 503 = service unavailable -> try next model
       if (result.status === 429 || result.status === 503) {
-        console.warn(`[AI] ${model} returned ${result.status} - cycling to next free model`);
+        console.warn(`[AI] ${model} returned ${result.status} - cycling to next model`);
         continue;
       }
 
       // Other errors (400, 401, timeout) - also try next model
-      console.warn(`[AI] ${model} failed: ${result.error} - trying next free model`);
+      console.warn(`[AI] ${model} failed: ${result.error} - trying next model`);
       continue;
     }
 
-    console.warn("[AI] All free OpenRouter models exhausted");
+    console.warn("[AI] All OpenRouter models exhausted");
   }
 
   // ── Final fallback: Groq (only if all free models fail) ──

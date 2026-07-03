@@ -89,9 +89,9 @@ async function callOpenRouterFree(
       max_tokens: opts?.maxTokens ?? 1000,
     };
 
-    if (opts?.forceJson) {
-      body.response_format = { type: "json_object" };
-    }
+    // Note: openrouter/free does not support response_format json_object.
+    // JSON is enforced via the system prompt instead.
+    // The response is parsed with regex fallback in the caller.
 
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
@@ -176,9 +176,7 @@ export async function generateWithFallback(
         max_tokens: opts?.maxTokens ?? 1000,
       };
 
-      if (opts?.forceJson) {
-        body.response_format = { type: "json_object" };
-      }
+      // Note: response_format not used - JSON enforced via prompt.
 
       const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",

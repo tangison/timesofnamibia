@@ -21,6 +21,7 @@ import type * as actions_seedNamibiaGuide from "../actions/seedNamibiaGuide.js";
 import type * as actions_socialQueue from "../actions/socialQueue.js";
 import type * as actions_synthesizeStory from "../actions/synthesizeStory.js";
 import type * as actions_triggerScrapeJobs from "../actions/triggerScrapeJobs.js";
+import type * as actions_uploadPlaceImages from "../actions/uploadPlaceImages.js";
 import type * as crons from "../crons.js";
 import type * as http from "../http.js";
 import type * as mutations from "../mutations.js";
@@ -47,6 +48,7 @@ declare const fullApi: ApiFromModules<{
   "actions/socialQueue": typeof actions_socialQueue;
   "actions/synthesizeStory": typeof actions_synthesizeStory;
   "actions/triggerScrapeJobs": typeof actions_triggerScrapeJobs;
+  "actions/uploadPlaceImages": typeof actions_uploadPlaceImages;
   crons: typeof crons;
   http: typeof http;
   mutations: typeof mutations;

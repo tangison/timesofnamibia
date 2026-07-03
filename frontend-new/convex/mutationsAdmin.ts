@@ -597,6 +597,46 @@ export const clearAllDirectoryPlaces = mutation({
   },
 });
 
+// ── UPDATE DIRECTORY PLACE IMAGES (Issue: Fill missing images) ──
+
+export const updateDirectoryPlaceImages = mutation({
+  args: {
+    adminToken: v.string(),
+    slug: v.string(),
+    images: v.array(v.object({
+      url: v.string(),
+      webp_url: v.optional(v.string()),
+      caption: v.string(),
+      source: v.string(),
+      license: v.string(),
+      width: v.optional(v.number()),
+      height: v.optional(v.number()),
+      alt_text: v.string(),
+    })),
+  },
+  handler: async (ctx, args) => {
+    requireAdmin(args.adminToken);
+    const place = await ctx.db
+      .query("directory_places")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .first();
+    if (!place) {
+      return { success: false, error: "Place not found" };
+    }
+    // Merge new images with existing ones (avoid duplicates by URL)
+    const existingUrls = new Set(place.images.map((img) => img.url));
+    const newImages = args.images.filter((img) => !existingUrls.has(img.url));
+    const allImages = [...place.images, ...newImages];
+
+    await ctx.db.patch(place._id, {
+      images: allImages,
+      gallery_featured: allImages.length > 0,
+      updated_at: Date.now(),
+    });
+    return { success: true, imageCount: allImages.length };
+  },
+});
+
 // ── INGEST DIRECTORY PLACE (Phase 4) ─────────────────────────
 
 export const ingestDirectoryPlace = mutation({

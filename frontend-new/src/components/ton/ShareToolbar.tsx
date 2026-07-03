@@ -28,7 +28,11 @@ export default function ShareToolbar({ title, url, articleContent }: ShareToolba
 
   const [shareUrl, setShareUrl] = useState<string | undefined>(url);
   useEffect(() => {
-    if (!url && typeof window !== "undefined") {
+    if (typeof window === "undefined") return;
+    // If url is a relative path like /article/slug, convert to absolute
+    if (url && url.startsWith("/")) {
+      setShareUrl(`${window.location.origin}${url}`);
+    } else if (!url) {
       setShareUrl(window.location.href);
     }
   }, [url]);
@@ -78,7 +82,12 @@ export default function ShareToolbar({ title, url, articleContent }: ShareToolba
       .replace(/&gt;/g, "greater than")
       .replace(/&quot;/g, "")
       .replace(/&#39;/g, "'")
+      .replace(/&[a-z]+;/g, "")
+      .replace(/&#\d+;/g, "")
       .replace(/#{1,6}\s/g, "")
+      .replace(/\*\*([^*]+)\*\*/g, "$1")
+      .replace(/\*([^*]+)\*/g, "$1")
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
       .replace(/\n{2,}/g, ". ")
       .replace(/\n/g, " ")
       .replace(/\s+/g, " ")

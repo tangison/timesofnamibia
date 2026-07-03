@@ -487,6 +487,10 @@ export const updateArticleContent = mutation({
     originalUrl: v.optional(v.string()),
     postedToSocial: v.optional(v.boolean()),
     socialPostedAt: v.optional(v.number()),
+    // Phase 1 + 2 fields (for backfill):
+    seo_meta_description: v.optional(v.string()),
+    key_takeaways: v.optional(v.array(v.string())),
+    alt_text: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     requireAdmin(args.adminToken);
@@ -511,6 +515,10 @@ export const updateArticleContent = mutation({
     if (args.originalUrl !== undefined) updates.originalUrl = args.originalUrl;
     if (args.postedToSocial !== undefined) updates.postedToSocial = args.postedToSocial;
     if (args.socialPostedAt !== undefined) updates.socialPostedAt = args.socialPostedAt;
+    // Phase 1 + 2 fields (for backfill)
+    if (args.seo_meta_description !== undefined) updates.seo_meta_description = args.seo_meta_description;
+    if (args.key_takeaways !== undefined) updates.key_takeaways = args.key_takeaways;
+    if (args.alt_text !== undefined) updates.alt_text = args.alt_text;
 
     await ctx.db.patch(args.articleId, updates);
     return { success: true };

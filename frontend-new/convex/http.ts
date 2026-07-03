@@ -307,4 +307,31 @@ http.route({
   }),
 });
 
+// ── /backfill-content (Issue: Fix unrewritten articles) ──
+http.route({
+  path: "/backfill-content",
+  method: "POST",
+  handler: httpAction(async (ctx, request) => {
+    const secret = request.headers.get("Authorization");
+    const expectedSecret = `Bearer ${process.env.INGEST_SECRET}`;
+    if (!secret || secret !== expectedSecret) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+    try {
+      await ctx.scheduler.runAfter(0, internal.actions.backfillContent.backfillArticleContent, {
+        limit: 50,
+      });
+      return new Response(
+        JSON.stringify({ status: "Content backfill started" }),
+        { status: 200, headers: { "Content-Type": "application/json" } }
+      );
+    } catch (err) {
+      return new Response(
+        JSON.stringify({ error: err instanceof Error ? err.message : "Unknown error" }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      );
+    }
+  }),
+});
+
 export default http;

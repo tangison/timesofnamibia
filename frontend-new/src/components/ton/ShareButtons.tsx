@@ -26,7 +26,11 @@ export default function ShareButtons({ title, url, articleContent }: ShareButton
   // Resolve the URL on the client (avoids hydration mismatch)
   const [shareUrl, setShareUrl] = useState<string | undefined>(url);
   useEffect(() => {
-    if (!url && typeof window !== "undefined") {
+    if (typeof window === "undefined") return;
+    // If url is a relative path like /article/slug, convert to absolute
+    if (url && url.startsWith("/")) {
+      setShareUrl(`${window.location.origin}${url}`);
+    } else if (!url) {
       setShareUrl(window.location.href);
     }
   }, [url]);

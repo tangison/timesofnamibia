@@ -479,3 +479,23 @@ export const getActiveAd = query({
       .first();
   },
 });
+
+// ── ARTICLES NEEDING REWRITE (Issue: Fix unrewritten articles) ──
+
+export const listArticlesNeedingRewrite = query({
+  args: { limit: v.optional(v.number()) },
+  handler: async (ctx, args) => {
+    const limit = Math.min(args.limit ?? 50, 200);
+    const all = await ctx.db
+      .query("article")
+      .filter((q) => q.eq(q.field("published"), true))
+      .filter((q) => q.eq(q.field("deletedAt"), undefined))
+      .order("desc")
+      .take(limit * 3); // over-fetch to filter
+
+    // Filter to articles missing key_takeaways or seo_meta_description
+    return all
+      .filter((a: any) => !a.key_takeaways || a.key_takeaways.length === 0 || !a.seo_meta_description)
+      .slice(0, limit);
+  },
+});

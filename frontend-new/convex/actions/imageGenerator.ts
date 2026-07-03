@@ -65,11 +65,12 @@ Respond with ONLY the object phrase, nothing else.`;
 // Exact template per spec, with [1-2 concrete objects] filled in.
 
 function buildOilPaintingPrompt(concept: string): string {
-  return `Oil painting, realistic representational style, visible textured brushstrokes, ` +
-    `painterly light and shadow, muted palette limited to navy blue, rust orange, and warm cream, ` +
-    `${concept}, single clear subject only, ` +
-    `no text, no logos, no watermark, no people unless the subject requires it, ` +
-    `gallery painting quality, cohesive composition`;
+  return `Minimalist flat illustration, simple geometric shapes, ` +
+    `limited color palette of navy blue, rust orange, and warm cream, ` +
+    `${concept}, clean vector-style linework, ` +
+    `no gradients, no text, no logos, no faces, no realistic detail, ` +
+    `editorial illustration style, business-report aesthetic, ` +
+    `icon-like clarity, professional and clean`;
 }
 
 // ── STEP 3: Fetch from Pollinations ──────────────────────────

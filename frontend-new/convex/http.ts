@@ -334,4 +334,54 @@ http.route({
   }),
 });
 
+// ── /scrape-real-tenders (Section 3) - trigger real tenders scraper ──
+http.route({
+  path: "/scrape-real-tenders",
+  method: "POST",
+  handler: httpAction(async (ctx, request) => {
+    const secret = request.headers.get("Authorization");
+    const expectedSecret = `Bearer ${process.env.INGEST_SECRET}`;
+    if (!secret || secret !== expectedSecret) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+    try {
+      await ctx.scheduler.runAfter(0, internal.actions.scrapeTendersReal.scrapeTenders, {});
+      return new Response(
+        JSON.stringify({ status: "Tenders scrape started" }),
+        { status: 200, headers: { "Content-Type": "application/json" } }
+      );
+    } catch (err) {
+      return new Response(
+        JSON.stringify({ error: err instanceof Error ? err.message : "Unknown error" }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      );
+    }
+  }),
+});
+
+// ── /scrape-real-jobs (Section 4) - trigger real jobs scraper ──
+http.route({
+  path: "/scrape-real-jobs",
+  method: "POST",
+  handler: httpAction(async (ctx, request) => {
+    const secret = request.headers.get("Authorization");
+    const expectedSecret = `Bearer ${process.env.INGEST_SECRET}`;
+    if (!secret || secret !== expectedSecret) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+    try {
+      await ctx.scheduler.runAfter(0, internal.actions.scrapeJobsReal.scrapeJobs, {});
+      return new Response(
+        JSON.stringify({ status: "Jobs scrape started" }),
+        { status: 200, headers: { "Content-Type": "application/json" } }
+      );
+    } catch (err) {
+      return new Response(
+        JSON.stringify({ error: err instanceof Error ? err.message : "Unknown error" }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      );
+    }
+  }),
+});
+
 export default http;

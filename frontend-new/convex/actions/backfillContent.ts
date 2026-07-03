@@ -21,6 +21,9 @@ const BANNED_PHRASES = [
   "delve", "tapestry", "moreover", "crucial", "landscape", "realm",
   "it is worth noting", "importantly", "furthermore", "in conclusion",
   "this article explores",
+  // Additional banned phrases per user feedback:
+  "in today's world", "this underscores", "plays a crucial role",
+  "stands as a testament", "in the ever-evolving landscape of",
 ];
 
 function stripBannedPhrases(text: string): string {

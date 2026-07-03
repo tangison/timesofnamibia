@@ -292,6 +292,9 @@ const BANNED_PHRASES = [
   "delve", "tapestry", "moreover", "crucial", "landscape", "realm",
   "it is worth noting", "importantly", "furthermore", "in conclusion",
   "this article explores",
+  // Additional banned phrases per user feedback:
+  "in today's world", "this underscores", "plays a crucial role",
+  "stands as a testament", "in the ever-evolving landscape of",
 ];
 
 function stripBannedPhrases(text: string): string {
@@ -505,11 +508,18 @@ export const ingestRssFeeds = internalAction({
       }
     }
 
-    // Sort by score descending, take top 20 per day (Issue 3)
+    // Issue 2: Quality threshold, not daily quota.
+    // Only process items that score above MIN_QUALITY_SCORE.
+    // If fewer items clear the bar, publish fewer articles that day.
+    // Never lower the bar to hit a volume target.
+    const MIN_QUALITY_SCORE = 30; // minimum newsworthiness score to process
+    const MAX_ARTICLES_PER_RUN = 20; // hard ceiling to respect API budget
     allScoredItems.sort((a, b) => b.score - a.score);
-    const MAX_ARTICLES_PER_RUN = 20;
-    const itemsToProcess = allScoredItems.slice(0, MAX_ARTICLES_PER_RUN);
-    console.log(`[RSS] Scored ${allScoredItems.length} items, processing top ${itemsToProcess.length}`);
+
+    // Filter by quality threshold, then cap at MAX_ARTICLES_PER_RUN
+    const qualityItems = allScoredItems.filter((s) => s.score >= MIN_QUALITY_SCORE);
+    const itemsToProcess = qualityItems.slice(0, MAX_ARTICLES_PER_RUN);
+    console.log(`[RSS] Scored ${allScoredItems.length} items, ${qualityItems.length} passed quality threshold (>= ${MIN_QUALITY_SCORE}), processing ${itemsToProcess.length}`);
 
     for (const { item, source } of itemsToProcess) {
       results.articlesFound++;

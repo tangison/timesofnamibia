@@ -1,21 +1,13 @@
 // ============================================================
-// Times of Namibia - AI Provider with Load-Balancing Router
+// Times of Namibia - AI Provider with OpenRouter Free Router
 //
-// Phase 1 (Iteration 12): Traffic-free load balancing across ALL
-// free OpenRouter models. Round-robin cycling with 429/503 retry.
-// Falls back to Groq only if every free model fails.
+// Uses openrouter/free auto-selecting router that picks from
+// currently-available free models. Self-adjusts as specific
+// free models get deprecated or rate-limited.
 //
-// Models (all free tier):
-//   - meta-llama/llama-3.1-8b-instruct:free
-//   - google/gemma-2-9b-it:free
-//   - mistralai/mistral-7b-instruct:free
-//   - mistralai/mistral-nemo:free
-//   - qwen/qwen-2-7b-instruct:free
-//   - microsoft/phi-3-mini-4k-instruct:free
-//
-// Strategy: round-robin starting index, on 429/503 immediately
-// retry with next model. No pauses. Structured JSON output forced
-// via response_format when supported.
+// Free tier: ~20 req/min, ~200 req/day (shared across all free models)
+// Built-in exponential backoff + request logging.
+// Groq as secondary fallback (if key is fixed).
 // ============================================================
 
 "use node";
@@ -33,59 +25,70 @@ interface GenerateOptions {
 }
 
 // ── EDITORIAL VOICE ──────────────────────────────────────────
-// Prepended to every system prompt. Enforces the Times of Namibia
-// editorial voice and bans all AI slop words per spec.
+export const EDITORIAL_VOICE = `You are the editorial AI for Times of Namibia, a premium African news publication inspired by Harvard Business Review. Rewrite articles to be factual, clear, and locally relevant. Tone: authoritative but accessible, like a senior correspondent. Active voice only. No fluff. No em dashes - use standard hyphens or periods only. Never use these banned phrases: delve, tapestry, moreover, crucial, landscape, realm, it is worth noting, importantly, furthermore, in conclusion, this article explores, in today's world, this underscores, plays a crucial role, stands as a testament, in the ever-evolving landscape of. Namibian proper nouns are always spelled correctly: Windhoek, Swakopmund, Oshakati, Rundu, Otjiwarongo, Luderitz, Walvis Bay, Kavango, Khomas. Numbers: spell out one through nine, numerals for 10 and above, always include currency context (NAD/USD). Attribution: said, told reporters, confirmed - never claimed unless genuinely disputed.`;
 
-export const EDITORIAL_VOICE = `You are the editorial AI for Times of Namibia, a premium African news publication inspired by Harvard Business Review. Rewrite articles to be factual, clear, and locally relevant. Tone: authoritative but accessible, like a senior correspondent. Active voice only. No fluff. No em dashes - use standard hyphens or periods only. Never use these banned phrases: delve, tapestry, moreover, crucial, landscape, realm, it is worth noting, importantly, furthermore, in conclusion, this article explores. Namibian proper nouns are always spelled correctly: Windhoek, Swakopmund, Oshakati, Rundu, Otjiwarongo, Luderitz, Walvis Bay, Kavango, Khomas. Numbers: spell out one through nine, numerals for 10 and above, always include currency context (NAD/USD). Attribution: said, told reporters, confirmed - never claimed unless genuinely disputed.`;
+// ── RATE LIMIT TRACKING ──────────────────────────────────────
+// Track requests to stay within free tier limits
+let requestCount = 0;
+let lastRequestTime = Date.now();
+const MAX_REQUESTS_PER_MINUTE = 18; // leave buffer below 20
+const MAX_REQUESTS_PER_DAY = 180; // leave buffer below 200
+let dailyRequestCount = 0;
+let dailyResetTime = Date.now() + 24 * 60 * 60 * 1000;
 
-// ── MODEL ARRAY ──────────────────────────────────────────────
-// Round-robin cycled on every call. Includes both :free variants
-// (which may be rate-limited or unavailable) and paid fallbacks
-// (which are always available). On 429/503, immediately retries
-// with the next model in the array.
+function canMakeRequest(): boolean {
+  const now = Date.now();
+  // Reset daily counter
+  if (now > dailyResetTime) {
+    dailyRequestCount = 0;
+    dailyResetTime = now + 24 * 60 * 60 * 1000;
+  }
+  // Reset per-minute window
+  if (now - lastRequestTime > 60_000) {
+    requestCount = 0;
+    lastRequestTime = now;
+  }
+  return requestCount < MAX_REQUESTS_PER_MINUTE && dailyRequestCount < MAX_REQUESTS_PER_DAY;
+}
 
-const MODELS = [
-  "meta-llama/llama-3.3-70b-instruct:free",
-  "meta-llama/llama-3.2-3b-instruct:free",
-  "mistralai/mistral-nemo:free",
-  "qwen/qwen-2.5-7b-instruct:free",
-  // Working fallbacks (paid but cheap):
-  "meta-llama/llama-3.3-70b-instruct",
-  "meta-llama/llama-3.2-3b-instruct",
-  "mistralai/mistral-nemo",
-  "qwen/qwen-2.5-7b-instruct",
-];
+function recordRequest(): void {
+  requestCount++;
+  dailyRequestCount++;
+  lastRequestTime = Date.now();
+}
 
-// Round-robin state - persists across calls within the same Convex
-// action invocation. Starts at a random index to distribute load
-// evenly across concurrent invocations.
-let modelIndex = Math.floor(Math.random() * MODELS.length);
-
-function getNextModel(): string {
-  const model = MODELS[modelIndex % MODELS.length];
-  modelIndex = (modelIndex + 1) % MODELS.length;
-  return model;
+async function waitForRateLimit(): Promise<void> {
+  // Exponential backoff if we hit rate limit
+  let attempts = 0;
+  while (!canMakeRequest() && attempts < 5) {
+    const delay = Math.min(2000 * Math.pow(2, attempts), 30000);
+    console.log(`[AI] Rate limit reached, waiting ${delay}ms (attempt ${attempts + 1})`);
+    await new Promise((r) => setTimeout(r, delay));
+    attempts++;
+  }
 }
 
 // ── SINGLE MODEL CALL ────────────────────────────────────────
 
-async function callOpenRouterModel(
-  model: string,
+async function callOpenRouterFree(
   messages: ChatMessage[],
   openRouterKey: string,
   opts?: GenerateOptions
-): Promise<{ text: string; status: number; error?: string }> {
+): Promise<{ text: string; status: number; error?: string; errorBody?: string }> {
   const timeout = opts?.timeout ?? 30_000;
+
+  // Wait for rate limit if needed
+  await waitForRateLimit();
+  recordRequest();
 
   try {
     const body: Record<string, unknown> = {
-      model,
+      model: "openrouter/free",
       messages,
       temperature: opts?.temperature ?? 0.4,
       max_tokens: opts?.maxTokens ?? 1000,
     };
 
-    // Force structured JSON output when requested
     if (opts?.forceJson) {
       body.response_format = { type: "json_object" };
     }
@@ -103,11 +106,14 @@ async function callOpenRouterModel(
     });
 
     if (!response.ok) {
-      return { text: "", status: response.status, error: `HTTP ${response.status}` };
+      const errorBody = await response.text().catch(() => "unknown");
+      return { text: "", status: response.status, error: `HTTP ${response.status}`, errorBody };
     }
 
     const data = await response.json();
     const text = data.choices?.[0]?.message?.content || "";
+    const modelUsed = data.model || "unknown";
+    console.log(`[AI] Success with ${modelUsed}`);
     return { text, status: 200 };
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
@@ -136,34 +142,31 @@ export async function generateWithFallback(
     augmentedMessages.unshift({ role: "system", content: EDITORIAL_VOICE });
   }
 
-  // ── Phase 1: Round-robin through all OpenRouter models ──
+  // ── Primary: OpenRouter free router ──
   if (openRouterKey) {
-    // Try every model. On 429 (rate limit) or 503 (service
-    // unavailable), immediately retry with the next model. No pauses.
-    for (let i = 0; i < MODELS.length; i++) {
-      const model = getNextModel();
-      const result = await callOpenRouterModel(model, augmentedMessages, openRouterKey, opts);
+    // Try with exponential backoff on rate limit errors
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const result = await callOpenRouterFree(augmentedMessages, openRouterKey, opts);
 
       if (result.status === 200 && result.text.length > 10) {
-        console.log(`[AI] Success with ${model}`);
         return result.text;
       }
 
-      // 429 = rate limited, 503 = service unavailable -> try next model
+      // 429 = rate limited, 503 = service unavailable -> backoff and retry
       if (result.status === 429 || result.status === 503) {
-        console.warn(`[AI] ${model} returned ${result.status} - cycling to next model`);
+        const backoff = Math.min(3000 * Math.pow(2, attempt), 30000);
+        console.warn(`[AI] OpenRouter free returned ${result.status} - backing off ${backoff}ms (attempt ${attempt + 1}/3). Error: ${result.errorBody?.slice(0, 200)}`);
+        await new Promise((r) => setTimeout(r, backoff));
         continue;
       }
 
-      // Other errors (400, 401, timeout) - also try next model
-      console.warn(`[AI] ${model} failed: ${result.error} - trying next model`);
-      continue;
+      // Other errors (400, 401, timeout) - log and try Groq
+      console.warn(`[AI] OpenRouter free failed: ${result.error}. Error body: ${result.errorBody?.slice(0, 200)}`);
+      break;
     }
-
-    console.warn("[AI] All OpenRouter models exhausted");
   }
 
-  // ── Final fallback: Groq (only if all free models fail) ──
+  // ── Secondary fallback: Groq (only if key is fixed) ──
   if (groqKey) {
     try {
       const body: Record<string, unknown> = {
@@ -194,11 +197,15 @@ export async function generateWithFallback(
           console.log("[AI] Success with Groq fallback");
           return text;
         }
+      } else {
+        const errorBody = await response.text().catch(() => "unknown");
+        console.warn(`[AI] Groq failed: HTTP ${response.status}. Body: ${errorBody.slice(0, 200)}`);
       }
     } catch (err) {
       console.error("[AI] Groq also failed:", err instanceof Error ? err.message : err);
     }
   }
 
+  console.error("[AI] All AI providers failed");
   return null;
 }

@@ -47,11 +47,19 @@ crons.interval(
   {}
 );
 
-// Phase 2 (Iteration 12): Playwright + Search API scraper - every 12 hours
+// Section 3: Real tenders scraper - daily (24 hours)
 crons.interval(
-  "playwright scrape jobs tenders",
-  { hours: 12 },
-  internal.actions.triggerScrapeJobs.triggerScrapeJobsRoute,
+  "scrape real tenders",
+  { hours: 24 },
+  internal.actions.scrapeTendersReal.scrapeTenders,
+  {}
+);
+
+// Section 4: Real jobs scraper - daily (24 hours)
+crons.interval(
+  "scrape real jobs",
+  { hours: 24 },
+  internal.actions.scrapeJobsReal.scrapeJobs,
   {}
 );
 

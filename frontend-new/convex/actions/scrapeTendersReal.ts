@@ -116,7 +116,7 @@ async function scrapeSource(source: typeof SOURCES[0]): Promise<ScrapedTender[]>
     for (const row of tableRows.slice(0, 20)) {
       const cells = row.match(/<t[d][^>]*>([\s\S]*?)<\/t[d]>/gi) || [];
       if (cells.length >= 2) {
-        const title = cells[0].replace(/<[^>]*>/g, "").trim();
+        const title = (cells[0] || "").replace(/<[^>]*>/g, "").trim();
         const deadlineText = cells[cells.length - 1].replace(/<[^>]*>/g, "").trim();
         const linkMatch = row.match(/href="([^"]*)"/i);
 

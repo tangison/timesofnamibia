@@ -73,7 +73,7 @@ function timeAgo(date: string | Date): string {
 function getMarketIcon(direction: string) {
   if (direction === "up") return <ArrowUpRight size={14} className="text-emerald-600" />;
   if (direction === "down") return <ArrowDownRight size={14} className="text-red-600" />;
-  return <Minus size={14} className="text-ton-black/30" />;
+  return <Minus size={14} className="text-ton-black/45" />;
 }
 
 // ── COMPONENT ────────────────────────────────────────────────
@@ -211,7 +211,7 @@ export default function HomeView({
               <h2 className="font-serif font-bold text-2xl text-ton-black border-l-4 border-ton-red pl-4">
                 Latest News
               </h2>
-              <span className="text-xs font-mono text-ton-black/30 uppercase tracking-wider flex items-center gap-1">
+              <span className="text-xs font-mono text-ton-black/45 uppercase tracking-wider flex items-center gap-1">
                 <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
                 Live
               </span>
@@ -223,6 +223,8 @@ export default function HomeView({
                 <button
                   key={cat.value}
                   onClick={() => setActiveCategory(cat.value)}
+                  aria-label={`Filter by ${cat.label}`}
+                  aria-pressed={activeCategory === cat.value}
                   className={`flex-shrink-0 px-4 py-1.5 font-mono text-[10px] font-bold uppercase tracking-widest transition-all whitespace-nowrap ${
                     activeCategory === cat.value
                       ? "bg-ton-black text-white"
@@ -233,7 +235,7 @@ export default function HomeView({
                 </button>
               ))}
               {categoryLoading && (
-                <span className="flex-shrink-0 font-mono text-[9px] text-ton-black/30 uppercase tracking-widest animate-pulse">
+                <span className="flex-shrink-0 font-mono text-[9px] text-ton-black/45 uppercase tracking-widest animate-pulse">
                   Loading...
                 </span>
               )}
@@ -249,7 +251,7 @@ export default function HomeView({
             {/* Empty state */}
             {gridArticles.length === 0 && (
               <div className="py-12 text-center">
-                <p className="font-mono text-xs uppercase tracking-widest text-ton-black/30">
+                <p className="font-mono text-xs uppercase tracking-widest text-ton-black/45">
                   No articles in this category yet
                 </p>
               </div>
@@ -293,7 +295,7 @@ export default function HomeView({
                       <h4 className="font-serif font-bold text-sm text-ton-black group-hover:text-ton-red transition-colors leading-snug line-clamp-2">
                         {article.headline}
                       </h4>
-                      <span className="font-mono text-[10px] text-ton-black/30 uppercase tracking-wider mt-1 block">
+                      <span className="font-mono text-[10px] text-ton-black/45 uppercase tracking-wider mt-1 block">
                         {article.source} • {timeAgo(article.publishedAt)}
                       </span>
                     </div>

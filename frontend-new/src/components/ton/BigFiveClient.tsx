@@ -86,7 +86,7 @@ export default function BigFiveClient({ places }: { places: any[] }) {
 
       {places.length === 0 && (
         <div className="py-16 text-center">
-          <p className="font-mono text-xs uppercase tracking-widest text-ton-black/30">
+          <p className="font-mono text-xs uppercase tracking-widest text-ton-black/45">
             Wildlife data loading. Please check back shortly.
           </p>
         </div>

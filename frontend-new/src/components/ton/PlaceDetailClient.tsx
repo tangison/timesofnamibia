@@ -80,7 +80,7 @@ export default function PlaceDetailClient({ place, relatedPlaces }: PlaceDetailC
         <Link href="/know-namibia" className="font-mono text-[10px] uppercase tracking-widest text-ton-black/40 hover:text-ton-red transition-colors">
           Know Namibia
         </Link>
-        <span className="font-mono text-[10px] text-ton-black/20 mx-2">/</span>
+        <span className="font-mono text-[10px] text-ton-black/40 mx-2">/</span>
         <span className="font-mono text-[10px] uppercase tracking-widest text-ton-black/60">{place.name}</span>
       </div>
 

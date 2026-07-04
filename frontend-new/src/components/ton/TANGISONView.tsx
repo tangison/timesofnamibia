@@ -43,7 +43,7 @@ export default function TANGISONView() {
         <blockquote className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-ton-black leading-tight mt-4">
           Information Density Over Engagement Metrics
         </blockquote>
-        <p className="font-mono text-[10px] text-ton-black/30 mt-4 tracking-widest uppercase">
+        <p className="font-mono text-[10px] text-ton-black/45 mt-4 tracking-widest uppercase">
           TANGISON - Windhoek, Namibia
         </p>
       </div>
@@ -101,7 +101,7 @@ export default function TANGISONView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section I // Who We Are</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -149,7 +149,7 @@ export default function TANGISONView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section II // Products & Systems</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -192,7 +192,7 @@ export default function TANGISONView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section III // Broadsheet Digital</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -205,7 +205,7 @@ export default function TANGISONView() {
           <blockquote className="font-serif text-2xl sm:text-3xl font-bold text-ton-black leading-tight mt-5">
             tangison.com
           </blockquote>
-          <p className="font-mono text-[10px] text-ton-black/20 mt-4 tracking-wider">
+          <p className="font-mono text-[10px] text-ton-black/40 mt-4 tracking-wider">
             Windhoek, Namibia &middot; A TANGISON Publication
           </p>
           <a
@@ -218,7 +218,7 @@ export default function TANGISONView() {
           </a>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>About TANGISON // End</span>
           <span>&copy; TANGISON</span>
         </div>

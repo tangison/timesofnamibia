@@ -55,7 +55,7 @@ export default function BusinessPlanView() {
               <Download className="w-3 h-3" />
               Download HTML
             </button>
-            <span className="font-mono text-[8px] text-ton-black/25 uppercase tracking-wider">
+            <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-wider">
               A4 Optimized
             </span>
           </div>
@@ -64,12 +64,12 @@ export default function BusinessPlanView() {
         <div className="flex items-center gap-4 mt-3">
           <a
             href="/"
-            className="font-mono text-[9px] text-ton-black/30 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
+            className="font-mono text-[9px] text-ton-black/45 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
           >
             <ArrowLeft className="w-3 h-3" />
             Newsroom
           </a>
-          <span className="font-mono text-[9px] text-ton-black/20">Doc_Ref: TON-BP-2026-01</span>
+          <span className="font-mono text-[9px] text-ton-black/40">Doc_Ref: TON-BP-2026-01</span>
         </div>
       </div>
 
@@ -79,7 +79,7 @@ export default function BusinessPlanView() {
         {/* ===== PAGE 1: TITLE & EXECUTIVE SUMMARY ===== */}
         <section className="ton-bp-page border-t-4 border-ton-black pt-6 mb-10 sm:mb-14">
           <div className="flex items-center justify-between mb-5">
-            <span className="font-mono text-[8px] text-ton-black/25 uppercase tracking-widest">Doc_Ref: TON-BP-2026-01</span>
+            <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">Doc_Ref: TON-BP-2026-01</span>
             <span className="font-mono text-[8px] text-ton-red font-bold uppercase tracking-widest">Confidential // Print Edition</span>
           </div>
 
@@ -91,7 +91,7 @@ export default function BusinessPlanView() {
             <p className="font-mono text-[10px] sm:text-xs text-ton-black/40 mt-2.5 tracking-wider uppercase">
               Strategic Business Plan // 2026 - 2028
             </p>
-            <p className="font-mono text-[9px] text-ton-black/20 mt-1 tracking-wider uppercase">
+            <p className="font-mono text-[9px] text-ton-black/40 mt-1 tracking-wider uppercase">
               A TANGISON Publication
             </p>
           </div>
@@ -145,10 +145,10 @@ export default function BusinessPlanView() {
           {/* Imagery description */}
           <div className="mt-6 pt-5 border-t border-ton-black/8">
             <div className="bg-ton-black/[0.02] p-5 sm:p-6">
-              <span className="font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">Visual Anchor</span>
+              <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">Visual Anchor</span>
               <div className="h-44 sm:h-56 bg-ton-black/[0.04] mt-2.5 flex items-center justify-center border border-ton-black/6">
                 <div className="text-center px-6">
-                  <p className="font-serif text-sm text-ton-black/20 italic max-w-md mx-auto leading-relaxed">
+                  <p className="font-serif text-sm text-ton-black/40 italic max-w-md mx-auto leading-relaxed">
                     High-contrast aerial photograph of the Central Plateau at dawn. Grayscale. The vast gravel plains stretching toward the escarpment, shot from 800m altitude. GPS overlay: 22.56 S, 17.08 E. Timestamp in JetBrains Mono within a black rectangular box at bottom-left. No colour. No people. Just land and light.
                   </p>
                 </div>
@@ -159,7 +159,7 @@ export default function BusinessPlanView() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+          <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
             <span>Page 01 // Executive Summary</span>
             <span>&copy; TANGISON</span>
           </div>
@@ -204,7 +204,7 @@ export default function BusinessPlanView() {
                   <tr key={i} className="border-b border-ton-black/5">
                     <td className="font-serif text-sm py-2.5 pr-3 text-ton-black font-semibold">{row.region}</td>
                     <td className="font-mono text-[10px] py-2.5 pr-3">
-                      <span className={row.status === "Active" ? "text-ton-red font-bold" : row.status === "Staging" ? "text-ton-black/30" : "text-ton-black/15"}>
+                      <span className={row.status === "Active" ? "text-ton-red font-bold" : row.status === "Staging" ? "text-ton-black/45" : "text-ton-black/40"}>
                         {row.status}
                       </span>
                     </td>
@@ -258,10 +258,10 @@ export default function BusinessPlanView() {
           {/* Imagery */}
           <div className="mt-6 pt-5 border-t border-ton-black/8">
             <div className="bg-ton-black/[0.02] p-5">
-              <span className="font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">System Integration Visual</span>
+              <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">System Integration Visual</span>
               <div className="h-36 sm:h-44 bg-ton-black/[0.04] mt-2.5 flex items-center justify-center border border-ton-black/6">
                 <div className="text-center px-6">
-                  <p className="font-serif text-xs text-ton-black/20 italic max-w-md mx-auto leading-relaxed">
+                  <p className="font-serif text-xs text-ton-black/40 italic max-w-md mx-auto leading-relaxed">
                     Close-up of server rack LEDs in a darkened data centre. Grayscale. Green and amber indicator lights captured in sharp focus with shallow depth of field. Timestamp overlay in JetBrains Mono at bottom-right within a black box. The image conveys infrastructure, reliability, and the physical reality behind digital data.
                   </p>
                 </div>
@@ -272,7 +272,7 @@ export default function BusinessPlanView() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+          <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
             <span>Page 02 // Operations & Technology</span>
             <span>&copy; TANGISON</span>
           </div>
@@ -340,7 +340,7 @@ export default function BusinessPlanView() {
                       <tr key={i} className="border-b border-ton-black/5">
                         <td className="font-mono text-[10px] py-2.5 pr-3 text-ton-black/50">{row.period}</td>
                         <td className="font-serif text-sm py-2.5 pr-3 text-ton-black font-bold">{row.revenue}</td>
-                        <td className="font-sans text-[10px] py-2.5 text-ton-black/30">{row.status}</td>
+                        <td className="font-sans text-[10px] py-2.5 text-ton-black/45">{row.status}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -361,10 +361,10 @@ export default function BusinessPlanView() {
           {/* Imagery */}
           <div className="mt-5 pt-5 border-t border-ton-black/8">
             <div className="bg-ton-black/[0.02] p-5">
-              <span className="font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">Financial Visual</span>
+              <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">Financial Visual</span>
               <div className="h-32 sm:h-40 bg-ton-black/[0.04] mt-2.5 flex items-center justify-center border border-ton-black/6">
                 <div className="text-center px-6">
-                  <p className="font-serif text-xs text-ton-black/20 italic max-w-md mx-auto leading-relaxed">
+                  <p className="font-serif text-xs text-ton-black/40 italic max-w-md mx-auto leading-relaxed">
                     Wide shot of the Windhoek skyline at dusk, shot from the Auas Mountains looking north. Grayscale. The city lights form a grid pattern against the darkening sky. GPS overlay: 22.57 S, 17.08 E. The image represents commerce, concentration, and the urban core of Namibian economic activity.
                   </p>
                 </div>
@@ -375,7 +375,7 @@ export default function BusinessPlanView() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+          <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
             <span>Page 03 // Financial Roadmap</span>
             <span>&copy; TANGISON</span>
           </div>
@@ -467,10 +467,10 @@ export default function BusinessPlanView() {
           {/* Print imagery */}
           <div className="mt-5 pt-5 border-t border-ton-black/8">
             <div className="bg-ton-black/[0.02] p-5">
-              <span className="font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">Print Material Visual</span>
+              <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">Print Material Visual</span>
               <div className="h-32 sm:h-40 bg-ton-black/[0.04] mt-2.5 flex items-center justify-center border border-ton-black/6">
                 <div className="text-center px-6">
-                  <p className="font-serif text-xs text-ton-black/20 italic max-w-md mx-auto leading-relaxed">
+                  <p className="font-serif text-xs text-ton-black/40 italic max-w-md mx-auto leading-relaxed">
                     Flat-lay photograph of a printed Broadside on a concrete surface. Grayscale. The A3 sheet shows sharp black typography on cream stock, with column rules and editorial borders clearly visible. A hand with a wedding ring holds the top corner. GPS overlay: 22.57 S, 17.08 E. The image conveys tactility, authority, and the physical reality of print in a digital age.
                   </p>
                 </div>
@@ -481,7 +481,7 @@ export default function BusinessPlanView() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+          <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
             <span>Page 04 // Print Materials & Social Output</span>
             <span>&copy; TANGISON</span>
           </div>
@@ -494,7 +494,7 @@ export default function BusinessPlanView() {
             <blockquote className="font-serif italic text-xl sm:text-2xl md:text-3xl text-ton-black/50 leading-relaxed mt-5 max-w-3xl mx-auto">
               &ldquo;Information is the only currency that appreciates when shared correctly.&rdquo;
             </blockquote>
-            <p className="font-mono text-[10px] text-ton-black/20 mt-4 tracking-wider">
+            <p className="font-mono text-[10px] text-ton-black/40 mt-4 tracking-wider">
               - TANGISON Editorial Board
             </p>
           </div>
@@ -502,23 +502,23 @@ export default function BusinessPlanView() {
           {/* Signatory Block */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             <div className="pt-5 border-t border-ton-black/8">
-              <span className="font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">Authorised By</span>
+              <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">Authorised By</span>
               <p className="font-serif text-base font-bold text-ton-black mt-2">TANGISON</p>
-              <p className="font-mono text-[10px] text-ton-black/30 mt-0.5">Editorial & Architectural Board</p>
+              <p className="font-mono text-[10px] text-ton-black/45 mt-0.5">Editorial & Architectural Board</p>
               <div className="h-px bg-ton-black/15 mt-5 mb-1.5" />
-              <p className="font-mono text-[8px] text-ton-black/15 uppercase tracking-widest">Signature</p>
+              <p className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">Signature</p>
             </div>
             <div className="pt-5 border-t border-ton-black/8">
-              <span className="font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">Date of Issue</span>
+              <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">Date of Issue</span>
               <p className="font-serif text-base font-bold text-ton-black mt-2">
                 {new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" })}
               </p>
-              <p className="font-mono text-[10px] text-ton-black/30 mt-0.5">Document Reference: TON-BP-2026-01</p>
+              <p className="font-mono text-[10px] text-ton-black/45 mt-0.5">Document Reference: TON-BP-2026-01</p>
               <p className="font-mono text-[10px] text-ton-red mt-0.5">Classification: Confidential</p>
             </div>
           </div>
 
-          <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+          <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
             <span>Page 05 // Final Directive</span>
             <span>End of Document</span>
           </div>

@@ -34,7 +34,7 @@ export default function EditorialStandardsView() {
         <blockquote className="font-serif italic text-xl sm:text-2xl md:text-3xl text-ton-black/50 leading-relaxed max-w-3xl mx-auto">
           &ldquo;The standard is the standard. There are no exceptions, no shortcuts, no editorial conveniences that override the protocol.&rdquo;
         </blockquote>
-        <p className="font-mono text-[10px] text-ton-black/30 mt-4 tracking-widest uppercase">
+        <p className="font-mono text-[10px] text-ton-black/45 mt-4 tracking-widest uppercase">
           TANGISON Editorial Board
         </p>
       </div>
@@ -78,7 +78,7 @@ export default function EditorialStandardsView() {
                 ))}
               </div>
               <div className="mt-3 pt-3 border-t border-ton-cream/8">
-                <p className="font-mono text-[9px] text-ton-cream/30 uppercase tracking-wider">
+                <p className="font-mono text-[9px] text-ton-cream/45 uppercase tracking-wider">
                   If any point fails → Flagged as Unverified. Never buried.
                 </p>
               </div>
@@ -86,7 +86,7 @@ export default function EditorialStandardsView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Standard I // Verification Protocol</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -133,7 +133,7 @@ export default function EditorialStandardsView() {
           </p>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Standard II // The 6-Second Rule</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -169,7 +169,7 @@ export default function EditorialStandardsView() {
           ))}
         </div>
 
-        <div className="flex items-center justify-between mt-4 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-4 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Standard III // Regional Accuracy</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -210,7 +210,7 @@ export default function EditorialStandardsView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Standard IV // Source Attribution</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -256,7 +256,7 @@ export default function EditorialStandardsView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Standard V // No Engagement Bait</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -301,7 +301,7 @@ export default function EditorialStandardsView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Standard VI // The Stoic Observer</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -343,7 +343,7 @@ export default function EditorialStandardsView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Standard VII // Contributor Standards</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -384,7 +384,7 @@ export default function EditorialStandardsView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Standard VIII // Correction Policy</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -433,7 +433,7 @@ export default function EditorialStandardsView() {
         {/* Overlay example */}
         <div className="mt-6 bg-ton-black/3 p-4">
           <div className="bg-ton-black/5 h-32 flex items-center justify-center border border-ton-black/8 relative">
-            <p className="font-mono text-[10px] text-ton-black/20 uppercase tracking-widest">[ Image Area ]</p>
+            <p className="font-mono text-[10px] text-ton-black/40 uppercase tracking-widest">[ Image Area ]</p>
             <div className="absolute bottom-2 left-2 bg-ton-black text-ton-cream px-2 py-1">
               <p className="font-mono text-[7px] leading-tight">
                 WINDHOEK CBD // 22.57 S, 17.08 E<br/>
@@ -443,7 +443,7 @@ export default function EditorialStandardsView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Standard IX // Imagery Standards</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -501,7 +501,7 @@ export default function EditorialStandardsView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Standard X // Print Standards</span>
           <span>&copy; TANGISON</span>
         </div>

@@ -250,7 +250,7 @@ export default function TechnologyPage() {
         ))}
 
         <div className="mt-16 pt-8 border-t border-ton-black/10">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-ton-black/30 text-center">
+          <p className="font-mono text-[10px] uppercase tracking-widest text-ton-black/45 text-center">
             This page is maintained in the same repository as the code it documents.
             <br />
             If a technology is added, removed, or replaced, this page is updated in the same commit.

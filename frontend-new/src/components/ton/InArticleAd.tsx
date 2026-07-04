@@ -18,7 +18,7 @@ export default function InArticleAd({ imageUrl, targetUrl, altText }: InArticleA
 
   return (
     <div className="my-8 py-4 border-y border-ton-black/10">
-      <p className="font-mono text-[8px] uppercase tracking-widest text-ton-black/20 text-center mb-3">
+      <p className="font-mono text-[8px] uppercase tracking-widest text-ton-black/40 text-center mb-3">
         Advertisement
       </p>
       <a

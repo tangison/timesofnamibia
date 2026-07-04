@@ -509,7 +509,7 @@ export default function BrandSystemView() {
                   className={`font-mono text-[9px] uppercase tracking-wider px-2.5 py-1 transition-colors ${
                     copyFormat === fmt
                       ? "bg-ton-black text-ton-cream font-bold"
-                      : "text-ton-black/30 hover:text-ton-black/60"
+                      : "text-ton-black/45 hover:text-ton-black/60"
                   }`}
                 >
                   {fmt}
@@ -535,7 +535,7 @@ export default function BrandSystemView() {
         <blockquote className="font-serif italic text-2xl sm:text-3xl md:text-4xl text-ton-black/60 leading-relaxed">
           &ldquo;Every pixel must inform.&rdquo;
         </blockquote>
-        <p className="font-mono text-[10px] text-ton-black/30 mt-4 tracking-widest uppercase">
+        <p className="font-mono text-[10px] text-ton-black/45 mt-4 tracking-widest uppercase">
           Times of Namibia Design Philosophy - TANGISON
         </p>
       </div>
@@ -554,7 +554,7 @@ export default function BrandSystemView() {
           </div>
           <button
             onClick={handleCopyColors}
-            className="flex items-center gap-1.5 font-mono text-[9px] text-ton-black/30 hover:text-ton-black/60 uppercase tracking-wider transition-colors"
+            className="flex items-center gap-1.5 font-mono text-[9px] text-ton-black/45 hover:text-ton-black/60 uppercase tracking-wider transition-colors"
           >
             <Copy className="w-3 h-3" />
             Copy Colors
@@ -739,7 +739,7 @@ export default function BrandSystemView() {
             {/* Overlay example */}
             <div className="mt-6 bg-ton-black/3 p-4">
               <div className="bg-ton-black/5 h-32 flex items-center justify-center border border-ton-black/8 relative">
-                <p className="font-mono text-[10px] text-ton-black/20 uppercase tracking-widest">[ Image Area ]</p>
+                <p className="font-mono text-[10px] text-ton-black/40 uppercase tracking-widest">[ Image Area ]</p>
                 <div className="absolute bottom-2 left-2 bg-ton-black text-ton-cream px-2 py-1">
                   <p className="font-mono text-[7px] leading-tight">
                     WINDHOEK CBD // 22.57 S, 17.08 E<br/>
@@ -833,7 +833,7 @@ export default function BrandSystemView() {
               const success = await copyToClipboard(generateBrandSystemCSS());
               if (success) toast.success("CSS copied to clipboard!");
             }}
-            className="flex items-center gap-1.5 font-mono text-[9px] text-ton-black/30 hover:text-ton-black/60 uppercase tracking-wider transition-colors"
+            className="flex items-center gap-1.5 font-mono text-[9px] text-ton-black/45 hover:text-ton-black/60 uppercase tracking-wider transition-colors"
           >
             <Copy className="w-3 h-3" />
             Copy CSS
@@ -865,7 +865,7 @@ export default function BrandSystemView() {
               const success = await copyToClipboard(generateBrandSystemTailwind());
               if (success) toast.success("Tailwind config copied to clipboard!");
             }}
-            className="flex items-center gap-1.5 font-mono text-[9px] text-ton-black/30 hover:text-ton-black/60 uppercase tracking-wider transition-colors"
+            className="flex items-center gap-1.5 font-mono text-[9px] text-ton-black/45 hover:text-ton-black/60 uppercase tracking-wider transition-colors"
           >
             <Copy className="w-3 h-3" />
             Copy Config
@@ -936,7 +936,7 @@ export default function BrandSystemView() {
 
       {/* Masthead Preview */}
       <div className="py-8 sm:py-10 text-center border-t border-ton-black/8">
-        <span className="font-mono text-[9px] text-ton-black/20 tracking-widest uppercase">
+        <span className="font-mono text-[9px] text-ton-black/40 tracking-widest uppercase">
           Masthead
         </span>
         <div className="font-serif text-4xl sm:text-6xl md:text-8xl font-bold tracking-tight text-ton-black mt-3">

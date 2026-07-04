@@ -147,7 +147,7 @@ export default function ContributorDashboard() {
             <ArrowLeft className="w-3 h-3" />
             Newsroom
           </a>
-          <span className="font-mono text-[9px] text-ton-black/20">TANGISON</span>
+          <span className="font-mono text-[9px] text-ton-black/40">TANGISON</span>
         </div>
       </div>
 
@@ -247,16 +247,16 @@ export default function ContributorDashboard() {
                   <Label className="font-mono text-[10px] uppercase tracking-wider text-ton-black/50">
                     Verification Status
                   </Label>
-                  <p className="font-mono text-[10px] text-ton-black/30 mt-0.5">
+                  <p className="font-mono text-[10px] text-ton-black/45 mt-0.5">
                     {verified ? "Source verified and cross-referenced" : "Awaiting verification"}
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className={`font-mono text-[10px] ${!verified ? "text-ton-red" : "text-ton-black/30"}`}>
+                  <span className={`font-mono text-[10px] ${!verified ? "text-ton-red" : "text-ton-black/45"}`}>
                     Unverified
                   </span>
                   <Switch checked={verified} onCheckedChange={setVerified} />
-                  <span className={`font-mono text-[10px] ${verified ? "text-emerald-600" : "text-ton-black/30"}`}>
+                  <span className={`font-mono text-[10px] ${verified ? "text-emerald-600" : "text-ton-black/45"}`}>
                     Verified
                   </span>
                 </div>
@@ -278,12 +278,12 @@ export default function ContributorDashboard() {
         <div className="lg:col-span-3">
           <div className="flex items-center justify-between mb-5">
             <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-ton-black/30" />
+              <Clock className="w-4 h-4 text-ton-black/45" />
               <h2 className="font-mono text-[10px] font-bold tracking-widest uppercase text-ton-black/50">
                 Recent Submissions
               </h2>
             </div>
-            <span className="font-mono text-[10px] text-ton-black/30">
+            <span className="font-mono text-[10px] text-ton-black/45">
               {submissions.length} wires
             </span>
           </div>
@@ -327,7 +327,7 @@ export default function ContributorDashboard() {
                   </p>
 
                   {/* Meta */}
-                  <div className="flex items-center gap-3 mt-2.5 font-mono text-[10px] text-ton-black/30 flex-wrap">
+                  <div className="flex items-center gap-3 mt-2.5 font-mono text-[10px] text-ton-black/45 flex-wrap">
                     <span className="flex items-center gap-1">
                       <User className="w-3 h-3" />
                       {wire.author}

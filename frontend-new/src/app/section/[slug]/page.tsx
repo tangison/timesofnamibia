@@ -74,7 +74,7 @@ export default async function SectionPage({ params }: SectionPageProps) {
               {slug}
             </span>
             {articles.length > 0 && (
-              <span className="font-mono text-[9px] text-ton-black/20">
+              <span className="font-mono text-[9px] text-ton-black/40">
                 {articles.length} {articles.length === 1 ? "article" : "articles"}
               </span>
             )}
@@ -128,7 +128,7 @@ export default async function SectionPage({ params }: SectionPageProps) {
                       {featuredArticle.excerpt}
                     </p>
                   )}
-                  <div className="flex items-center gap-3 mt-3 text-[10px] font-mono text-ton-black/30 uppercase tracking-wider">
+                  <div className="flex items-center gap-3 mt-3 text-[10px] font-mono text-ton-black/45 uppercase tracking-wider">
                     <span>{featuredArticle.source}</span>
                     <span className="flex items-center gap-1">
                       <Clock size={12} />

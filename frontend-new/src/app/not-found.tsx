@@ -24,7 +24,7 @@ export default function NotFound() {
         {/* Icon */}
         <div className="flex items-center justify-center mb-6">
           <div className="w-20 h-20 border-2 border-ton-black/10 flex items-center justify-center">
-            <FileQuestion className="w-10 h-10 text-ton-black/15" />
+            <FileQuestion className="w-10 h-10 text-ton-black/40" />
           </div>
         </div>
 
@@ -39,7 +39,7 @@ export default function NotFound() {
         </p>
 
         {/* Editorial detail */}
-        <p className="font-mono text-[9px] text-ton-black/20 uppercase tracking-wider mt-3">
+        <p className="font-mono text-[9px] text-ton-black/40 uppercase tracking-wider mt-3">
           If you believe this is an error, contact editorial@timesofnamibia.com
         </p>
 
@@ -63,7 +63,7 @@ export default function NotFound() {
 
         {/* Thin rule */}
         <div className="mt-12 pt-6 border-t border-ton-black/8">
-          <p className="font-serif italic text-ton-black/20 text-sm">
+          <p className="font-serif italic text-ton-black/40 text-sm">
             Times of Namibia - Namibia. Informed. Instantly.
           </p>
         </div>

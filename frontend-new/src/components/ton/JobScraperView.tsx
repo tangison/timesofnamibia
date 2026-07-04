@@ -139,7 +139,7 @@ export default function JobScraperView() {
         </p>
         <div className="flex items-center gap-4 mt-4">
           <Breadcrumbs items={[{ label: "Job Scraper" }]} />
-          <span className="font-mono text-[9px] text-ton-black/20">TANGISON</span>
+          <span className="font-mono text-[9px] text-ton-black/40">TANGISON</span>
         </div>
       </div>
 
@@ -225,7 +225,7 @@ export default function JobScraperView() {
                     <span className={`font-mono text-[10px] px-2 py-0.5 border rounded-none font-semibold ${sourceColor(job.source)}`}>
                       {job.source}
                     </span>
-                    <span className="font-mono text-[10px] text-ton-black/30 px-2 py-0.5 border border-ton-black/10 rounded-none">
+                    <span className="font-mono text-[10px] text-ton-black/45 px-2 py-0.5 border border-ton-black/10 rounded-none">
                       {job.type || "Full-time"}
                     </span>
                   </div>

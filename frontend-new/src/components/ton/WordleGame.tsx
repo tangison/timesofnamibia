@@ -133,14 +133,14 @@ function evaluateGuess(guess: string, target: string): LetterState[] {
 const STATE_COLORS: Record<LetterState, string> = {
   correct: "bg-ton-navy text-white border-ton-navy",
   present: "bg-ton-red text-white border-ton-red",
-  absent: "bg-ton-black/10 text-ton-black/30 border-ton-black/10",
+  absent: "bg-ton-black/10 text-ton-black/45 border-ton-black/10",
   empty: "bg-white text-ton-black border-ton-black/20",
 };
 
 const KEY_COLORS: Record<LetterState, string> = {
   correct: "bg-ton-navy text-white",
   present: "bg-ton-red text-white",
-  absent: "bg-ton-black/10 text-ton-black/30",
+  absent: "bg-ton-black/10 text-ton-black/45",
   empty: "bg-ton-black/5 text-ton-black",
 };
 
@@ -307,7 +307,7 @@ export default function WordleGame() {
         ))}
       </div>
 
-      <p className="mt-6 text-center font-mono text-[10px] uppercase tracking-widest text-ton-black/30">
+      <p className="mt-6 text-center font-mono text-[10px] uppercase tracking-widest text-ton-black/45">
         Same word for everyone each day. Type or tap letters.
       </p>
     </div>

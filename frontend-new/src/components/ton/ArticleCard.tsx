@@ -85,7 +85,7 @@ export default function ArticleCard({ article, index = 0, variant = "default" }:
           <h3 className="font-serif font-bold text-sm text-ton-black leading-snug mt-1 group-hover:text-ton-red transition-colors line-clamp-2">
             {article.headline}
           </h3>
-          <div className="flex items-center gap-2 mt-2 text-[10px] font-mono text-ton-black/30 uppercase tracking-wider">
+          <div className="flex items-center gap-2 mt-2 text-[10px] font-mono text-ton-black/45 uppercase tracking-wider">
             <span>{article.source}</span>
             <span>•</span>
             <span>{timeAgo(article.publishedAt)}</span>
@@ -113,7 +113,7 @@ export default function ArticleCard({ article, index = 0, variant = "default" }:
         <h3 className="font-serif font-bold text-sm text-ton-black leading-snug mt-1 group-hover:text-ton-red transition-colors line-clamp-2">
           {article.headline}
         </h3>
-        <div className="flex items-center gap-2 mt-1 text-[10px] font-mono text-ton-black/30 uppercase tracking-wider">
+        <div className="flex items-center gap-2 mt-1 text-[10px] font-mono text-ton-black/45 uppercase tracking-wider">
           <span>{article.source}</span>
           <span>•</span>
           <span>{timeAgo(article.publishedAt)}</span>
@@ -165,7 +165,7 @@ export default function ArticleCard({ article, index = 0, variant = "default" }:
             {excerpt}
           </p>
         )}
-        <div className="flex items-center justify-between text-[10px] font-mono text-ton-black/30 uppercase tracking-wider pt-3 border-t border-ton-black/5">
+        <div className="flex items-center justify-between text-[10px] font-mono text-ton-black/45 uppercase tracking-wider pt-3 border-t border-ton-black/5">
           <span className="flex items-center gap-2">
             {article.source}
             {article.sourceRegion && <RegionBadge region={article.sourceRegion} />}

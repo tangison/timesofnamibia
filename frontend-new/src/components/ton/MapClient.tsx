@@ -134,7 +134,7 @@ export default function MapClient({ places }: { places: MapPlace[] }) {
               </span>
               <h3 className="font-serif font-bold text-lg text-ton-black mt-2 mb-2">{selectedPlace.name}</h3>
               <p className="font-sans text-sm text-ton-black/50 mb-3">{selectedPlace.region}</p>
-              <p className="font-mono text-[9px] text-ton-black/30 mb-4">
+              <p className="font-mono text-[9px] text-ton-black/45 mb-4">
                 {selectedPlace.coordinates.lat.toFixed(4)}, {selectedPlace.coordinates.lng.toFixed(4)}
               </p>
               <Link
@@ -146,7 +146,7 @@ export default function MapClient({ places }: { places: MapPlace[] }) {
             </div>
           ) : (
             <div className="border border-ton-black/10 p-5 text-center">
-              <p className="font-mono text-[10px] uppercase tracking-widest text-ton-black/30">
+              <p className="font-mono text-[10px] uppercase tracking-widest text-ton-black/45">
                 Click a marker to see details
               </p>
             </div>

@@ -170,7 +170,7 @@ export default function ThePlanView() {
         <div className="flex items-center gap-4 mt-3">
           <a
             href="/"
-            className="font-mono text-[9px] text-ton-black/30 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
+            className="font-mono text-[9px] text-ton-black/45 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
           >
             <ArrowLeft className="w-3 h-3" />
             Newsroom
@@ -183,7 +183,7 @@ export default function ThePlanView() {
         <blockquote className="font-serif italic text-xl sm:text-2xl md:text-3xl text-ton-black/50 leading-relaxed">
           &ldquo;Minimalism as Power. Every process that doesn&apos;t inform the reader or the system is deleted.&rdquo;
         </blockquote>
-        <p className="font-mono text-[9px] text-ton-black/20 mt-3 tracking-widest uppercase">
+        <p className="font-mono text-[9px] text-ton-black/40 mt-3 tracking-widest uppercase">
           Operational Ethos - Times of Namibia
         </p>
       </div>
@@ -196,7 +196,7 @@ export default function ThePlanView() {
         <p className="font-serif text-base sm:text-lg text-ton-cream/70 leading-relaxed">
           If a strategy, image, or document is too heavy to be understood in 6 seconds, it is flawed.
         </p>
-        <p className="font-sans text-sm text-ton-cream/30 mt-2 leading-relaxed">
+        <p className="font-sans text-sm text-ton-cream/45 mt-2 leading-relaxed">
           This principle governs every decision in The Plan. Every phase, every task, every deliverable must
           pass the 6-second comprehension test. The 3G Logic is not a metaphor - it is a measurement standard.
         </p>
@@ -246,12 +246,12 @@ export default function ThePlanView() {
 
           {/* Imagery Description */}
           <div className="bg-ton-black/[0.02] p-4 sm:p-5 mb-4">
-            <span className="font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+            <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
               Phase {phase.number} Imagery
             </span>
             <div className="h-28 sm:h-36 bg-ton-black/[0.04] mt-2 flex items-center justify-center border border-ton-black/6 mb-2.5">
               <div className="text-center px-5">
-                <p className="font-serif text-xs text-ton-black/15 italic line-clamp-3">
+                <p className="font-serif text-xs text-ton-black/40 italic line-clamp-3">
                   {phase.imagery.description.substring(0, 100)}...
                 </p>
               </div>
@@ -263,7 +263,7 @@ export default function ThePlanView() {
               <span className="font-mono text-[8px] text-ton-red font-bold uppercase tracking-widest">
                 Overlay Specification
               </span>
-              <p className="font-sans text-xs text-ton-black/30 leading-relaxed mt-1">
+              <p className="font-sans text-xs text-ton-black/45 leading-relaxed mt-1">
                 {phase.imagery.overlay}
               </p>
             </div>
@@ -320,7 +320,7 @@ export default function ThePlanView() {
             </h3>
             <div className="bg-ton-black/[0.02] p-4">
               <div className="bg-ton-black/[0.04] h-36 flex items-center justify-center border border-ton-black/6 mb-2.5 relative">
-                <p className="font-mono text-[9px] text-ton-black/15 uppercase tracking-widest">[ Image Area ]</p>
+                <p className="font-mono text-[9px] text-ton-black/40 uppercase tracking-widest">[ Image Area ]</p>
                 <div className="absolute bottom-2 left-2 bg-ton-black text-ton-cream px-2 py-1">
                   <p className="font-mono text-[7px] leading-tight">
                     LOCATION NAME // 00.00 S, 00.00 E<br/>
@@ -328,7 +328,7 @@ export default function ThePlanView() {
                   </p>
                 </div>
               </div>
-              <p className="font-sans text-xs text-ton-black/30 leading-relaxed">
+              <p className="font-sans text-xs text-ton-black/45 leading-relaxed">
                 The overlay sits at bottom-left (default) or bottom-right (variant). Black rectangular box.
                 JetBrains Mono 8pt. GPS coordinates in uppercase. Timestamp in ISO-8601 with CAT timezone.
                 Sharp corners. No border-radius. The overlay is mandatory on every published image.
@@ -363,7 +363,7 @@ export default function ThePlanView() {
           <div className="bg-ton-black text-ton-cream font-mono text-[9px] font-bold px-2 py-0.5 tracking-widest">TON</div>
           <div className="bg-ton-red text-white font-mono text-[9px] font-bold px-2 py-0.5 tracking-widest">PLAN</div>
         </div>
-        <p className="font-mono text-[9px] text-ton-black/20 tracking-widest uppercase">
+        <p className="font-mono text-[9px] text-ton-black/40 tracking-widest uppercase">
           A TANGISON Publication // {new Date().getFullYear()}
         </p>
       </div>

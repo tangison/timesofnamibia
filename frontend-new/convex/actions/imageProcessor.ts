@@ -16,6 +16,7 @@
 
 let sharpModule: any = null;
 try {
+// eslint-disable-next-line @typescript-eslint/no-require-imports
   sharpModule = require("sharp");
 } catch (err) {
   console.warn("[webp] sharp not available on this platform - images will be stored in original format");

@@ -267,10 +267,10 @@ export default function ArticleView({ article }: ArticleViewProps) {
             )}
           </div>
           <div className="flex items-center gap-3">
-            <span className="font-mono text-[10px] text-ton-black/25">
+            <span className="font-mono text-[10px] text-ton-black/40">
               {formatDate(article.publishedAt)}
             </span>
-            <span className="font-mono text-[10px] text-ton-black/15">
+            <span className="font-mono text-[10px] text-ton-black/40">
               {article.readingTime} min read
             </span>
           </div>
@@ -354,7 +354,7 @@ export default function ArticleView({ article }: ArticleViewProps) {
           variants={fadeUpItem}
           className="mt-6 pt-4 border-t border-ton-black/10 flex items-center justify-between flex-wrap gap-3"
         >
-          <div className="font-mono text-[9px] text-ton-black/20 space-y-0.5">
+          <div className="font-mono text-[9px] text-ton-black/40 space-y-0.5">
             <p>Published {formatDateTime(article.publishedAt)}</p>
             <p>Section: {article.section} - {article.readingTime} min read</p>
           </div>

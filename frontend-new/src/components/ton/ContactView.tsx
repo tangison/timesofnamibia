@@ -183,7 +183,7 @@ export default function ContactView() {
                 <p className="font-serif text-sm text-ton-black/60 leading-relaxed mt-1">
                   Windhoek, Namibia
                 </p>
-                <p className="font-mono text-[10px] text-ton-black/30 mt-1">
+                <p className="font-mono text-[10px] text-ton-black/45 mt-1">
                   22.57 S, 17.08 E
                 </p>
               </div>
@@ -228,7 +228,7 @@ export default function ContactView() {
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full bg-ton-cream border border-ton-black/15 px-3 py-2.5 font-sans text-sm text-ton-black placeholder:text-ton-black/20 focus:outline-none focus:border-ton-black/40 transition-colors"
+                  className="w-full bg-ton-cream border border-ton-black/15 px-3 py-2.5 font-sans text-sm text-ton-black placeholder:text-ton-black/40 focus:outline-none focus:border-ton-black/40 transition-colors"
                   placeholder="Full name"
                   required
                   minLength={2}
@@ -245,7 +245,7 @@ export default function ContactView() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-ton-cream border border-ton-black/15 px-3 py-2.5 font-sans text-sm text-ton-black placeholder:text-ton-black/20 focus:outline-none focus:border-ton-black/40 transition-colors"
+                  className="w-full bg-ton-cream border border-ton-black/15 px-3 py-2.5 font-sans text-sm text-ton-black placeholder:text-ton-black/40 focus:outline-none focus:border-ton-black/40 transition-colors"
                   placeholder="email@example.com"
                   required
                 />
@@ -288,12 +288,12 @@ export default function ContactView() {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   rows={6}
-                  className="w-full bg-ton-cream border border-ton-black/15 px-3 py-2.5 font-sans text-sm text-ton-black placeholder:text-ton-black/20 focus:outline-none focus:border-ton-black/40 transition-colors resize-y"
+                  className="w-full bg-ton-cream border border-ton-black/15 px-3 py-2.5 font-sans text-sm text-ton-black placeholder:text-ton-black/40 focus:outline-none focus:border-ton-black/40 transition-colors resize-y"
                   placeholder="Include source attribution where applicable..."
                   required
                   minLength={10}
                 />
-                <p className="font-mono text-[8px] text-ton-black/15 mt-1">
+                <p className="font-mono text-[8px] text-ton-black/40 mt-1">
                   {message.length} characters (minimum 10)
                 </p>
               </div>
@@ -310,7 +310,7 @@ export default function ContactView() {
             </form>
           )}
 
-          <p className="font-mono text-[8px] text-ton-black/20 uppercase tracking-wider mt-3">
+          <p className="font-mono text-[8px] text-ton-black/40 uppercase tracking-wider mt-3">
             All enquiries are reviewed by the editorial desk. Response within 24 hours.
           </p>
         </div>
@@ -318,7 +318,7 @@ export default function ContactView() {
 
       {/* Footer Note */}
       <div className="py-6 text-center border-t border-ton-black/8">
-        <p className="font-serif italic text-ton-black/30 text-sm">
+        <p className="font-serif italic text-ton-black/45 text-sm">
           Times of Namibia is a TANGISON publication.
         </p>
         <a

@@ -33,6 +33,7 @@ async function launchBrowser() {
   // TECH DEBT: @sparticuz/chromium is pinned to v121 because v149+ changed the
   // export API (class-based). Review in 1-2 months for security updates or
   // migration to the new API. See package.json for the pin.
+// eslint-disable-next-line @typescript-eslint/no-require-imports
   const chromium: any = require("@sparticuz/chromium");
   // Dynamic import for puppeteer-core - serverExternalPackages config
   // in next.config.ts prevents Vercel from bundling it

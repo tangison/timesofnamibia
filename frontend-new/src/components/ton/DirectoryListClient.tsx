@@ -78,13 +78,13 @@ export default function DirectoryListClient({ places }: { places: DirectoryPlace
       {/* Search bar */}
       <div className="max-w-2xl mx-auto mb-8">
         <div className="relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-ton-black/30" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-ton-black/45" />
           <input
             type="text"
             placeholder="Search places, regions, or types..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 border border-ton-black/15 bg-white font-sans text-sm text-ton-black placeholder:text-ton-black/30 focus:outline-none focus:border-ton-red transition-colors"
+            className="w-full pl-12 pr-4 py-3 border border-ton-black/15 bg-white font-sans text-sm text-ton-black placeholder:text-ton-black/45 focus:outline-none focus:border-ton-red transition-colors"
           />
         </div>
       </div>
@@ -120,7 +120,7 @@ export default function DirectoryListClient({ places }: { places: DirectoryPlace
       </div>
 
       {/* Results count */}
-      <p className="font-mono text-[10px] uppercase tracking-widest text-ton-black/30 mb-6">
+      <p className="font-mono text-[10px] uppercase tracking-widest text-ton-black/45 mb-6">
         {filteredPlaces.length} {filteredPlaces.length === 1 ? "place" : "places"} found
       </p>
 
@@ -162,7 +162,7 @@ export default function DirectoryListClient({ places }: { places: DirectoryPlace
                   <p className="font-sans text-sm text-ton-black/50 leading-relaxed mb-3 line-clamp-2">
                     {place.short_description}
                   </p>
-                  <div className="flex items-center justify-between text-[10px] font-mono text-ton-black/30 uppercase tracking-wider pt-3 border-t border-ton-black/5">
+                  <div className="flex items-center justify-between text-[10px] font-mono text-ton-black/45 uppercase tracking-wider pt-3 border-t border-ton-black/5">
                     <span>{place.region}</span>
                     <span className="text-ton-red">Explore</span>
                   </div>
@@ -176,7 +176,7 @@ export default function DirectoryListClient({ places }: { places: DirectoryPlace
       {/* Empty state */}
       {filteredPlaces.length === 0 && (
         <div className="py-16 text-center">
-          <p className="font-mono text-xs uppercase tracking-widest text-ton-black/30">
+          <p className="font-mono text-xs uppercase tracking-widest text-ton-black/45">
             No places found matching your search
           </p>
         </div>

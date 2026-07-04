@@ -35,13 +35,13 @@ const COMPOSITION_MODIFIERS = [
 const recentModifiers: string[] = [];
 
 function selectCompositionModifier(slug?: string): string {
-  let pool = [...COMPOSITION_MODIFIERS];
+  const pool = [...COMPOSITION_MODIFIERS];
 
   // Remove recently used modifiers from pool
   const available = pool.filter((m) => !recentModifiers.includes(m));
 
   // If all have been used recently, reset and start fresh
-  let candidates = available.length > 0 ? available : pool;
+  const candidates = available.length > 0 ? available : pool;
 
   // If slug provided, use hash-based selection for determinism
   if (slug) {

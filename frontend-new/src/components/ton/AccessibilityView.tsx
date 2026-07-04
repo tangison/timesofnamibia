@@ -39,7 +39,7 @@ export default function AccessibilityView() {
         <blockquote className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-ton-black leading-tight mt-3 max-w-3xl mx-auto">
           Information is a right. Access to that information is non-negotiable.
         </blockquote>
-        <p className="font-mono text-[10px] text-ton-black/30 mt-4 tracking-wider">
+        <p className="font-mono text-[10px] text-ton-black/45 mt-4 tracking-wider">
           WCAG 2.1 Level AA - TANGISON
         </p>
       </div>
@@ -96,7 +96,7 @@ export default function AccessibilityView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section 01 // WCAG Commitment</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -170,7 +170,7 @@ export default function AccessibilityView() {
           ))}
         </div>
 
-        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section 02 // Accessibility Features</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -204,17 +204,17 @@ export default function AccessibilityView() {
               </h3>
               <div className="space-y-1.5 font-mono text-[10px]">
                 <div className="flex items-center justify-between border-b border-ton-black/5 pb-1.5">
-                  <span className="text-ton-black/30">Email</span>
+                  <span className="text-ton-black/45">Email</span>
                   <span className="text-ton-black font-semibold">
                     accessibility@timesofnamibia.com
                   </span>
                 </div>
                 <div className="flex items-center justify-between border-b border-ton-black/5 pb-1.5">
-                  <span className="text-ton-black/30">Response Time</span>
+                  <span className="text-ton-black/45">Response Time</span>
                   <span className="text-ton-black font-semibold">Within 5 business days</span>
                 </div>
                 <div className="flex items-center justify-between pb-1.5">
-                  <span className="text-ton-black/30">Publisher</span>
+                  <span className="text-ton-black/45">Publisher</span>
                   <span className="text-ton-black font-semibold">TANGISON</span>
                 </div>
               </div>
@@ -250,7 +250,7 @@ export default function AccessibilityView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section 03 // Contact & Feedback</span>
           <span>&copy; TANGISON</span>
         </div>

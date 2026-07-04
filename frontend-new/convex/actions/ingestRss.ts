@@ -341,7 +341,7 @@ Respond with ONLY a JSON object:
     if (!aiText) return null;
 
     // Strip markdown code fences if present
-    let jsonStr = aiText.replace(/```json\s*/gi, "").replace(/```\s*/g, "");
+    const jsonStr = aiText.replace(/```json\s*/gi, "").replace(/```\s*/g, "");
     const jsonMatch = jsonStr.match(/\{[\s\S]*\}/);
     if (!jsonMatch) return null;
 

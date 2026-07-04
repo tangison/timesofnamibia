@@ -293,7 +293,7 @@ export default function SudokuGame() {
         </button>
       </div>
 
-      <p className="mt-8 text-center font-mono text-[10px] uppercase tracking-widest text-ton-black/30">
+      <p className="mt-8 text-center font-mono text-[10px] uppercase tracking-widest text-ton-black/45">
         Click a cell, then tap a number. Same puzzle for everyone each day.
       </p>
     </div>

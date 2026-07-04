@@ -36,7 +36,7 @@ export default function MaintenancePage() {
           </p>
 
           {/* Timestamp */}
-          <p className="font-mono text-[9px] text-ton-black/15 uppercase tracking-wider mt-6">
+          <p className="font-mono text-[9px] text-ton-black/40 uppercase tracking-wider mt-6">
             Times OS v2.1 &middot; Windhoek, Namibia
           </p>
         </div>

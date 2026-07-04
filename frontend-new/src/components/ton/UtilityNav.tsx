@@ -11,7 +11,7 @@ export default function UtilityNav() {
 
   return (
     <div className="ton-utility-nav bg-ton-cream dark:bg-ton-black border-b border-ton-black/8 dark:border-white/8 px-4 sm:px-6 py-1.5">
-      <div className="max-w-6xl mx-auto flex items-center justify-between font-mono text-[8px] sm:text-[9px] text-ton-black/30 dark:text-white/30 tracking-wider uppercase">
+      <div className="max-w-6xl mx-auto flex items-center justify-between font-mono text-[8px] sm:text-[9px] text-ton-black/45 dark:text-white/30 tracking-wider uppercase">
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Sidebar hamburger trigger */}
           <SidebarTrigger />
@@ -25,7 +25,7 @@ export default function UtilityNav() {
             <span className="hidden sm:inline">Search</span>
           </button>
           <span className="text-ton-black/10 dark:text-white/10">|</span>
-          <span className="text-ton-black/20 dark:text-white/20">
+          <span className="text-ton-black/40 dark:text-white/20">
             Vol. I &middot; No. 127
           </span>
           <span className="text-ton-black/10 dark:text-white/10">|</span>

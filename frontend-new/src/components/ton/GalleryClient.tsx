@@ -101,7 +101,7 @@ export default function GalleryClient({ places }: { places: any[] }) {
 
       {filteredImages.length === 0 && (
         <div className="py-16 text-center">
-          <p className="font-mono text-xs uppercase tracking-widest text-ton-black/30">No images found</p>
+          <p className="font-mono text-xs uppercase tracking-widest text-ton-black/45">No images found</p>
         </div>
       )}
 

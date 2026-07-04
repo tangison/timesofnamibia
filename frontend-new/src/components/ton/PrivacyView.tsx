@@ -89,7 +89,7 @@ export default function PrivacyView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section 01 // Information We Collect</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -134,7 +134,7 @@ export default function PrivacyView() {
           </p>
         </div>
 
-        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section 02 // How We Use Your Information</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -194,7 +194,7 @@ export default function PrivacyView() {
           ))}
         </div>
 
-        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section 03 // Data Protection Rights</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -220,7 +220,7 @@ export default function PrivacyView() {
               navigation, access to secure areas, and load balancing. The platform cannot function
               without them. No consent is required.
             </p>
-            <p className="font-mono text-[8px] text-ton-cream/25 mt-3">
+            <p className="font-mono text-[8px] text-ton-cream/40 mt-3">
               Duration: Session / 1 year
             </p>
           </div>
@@ -233,7 +233,7 @@ export default function PrivacyView() {
               pages visited, time spent, and error occurrences. All analytics data is anonymised and
               aggregated. No individual reader is tracked.
             </p>
-            <p className="font-mono text-[8px] text-ton-cream/25 mt-3">
+            <p className="font-mono text-[8px] text-ton-cream/40 mt-3">
               Duration: 2 years / Opt-out available
             </p>
           </div>
@@ -246,13 +246,13 @@ export default function PrivacyView() {
               settings. These cookies enhance the reading experience but are not essential for
               platform operation. Consent is required.
             </p>
-            <p className="font-mono text-[8px] text-ton-cream/25 mt-3">
+            <p className="font-mono text-[8px] text-ton-cream/40 mt-3">
               Duration: 1 year / Consent required
             </p>
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section 04 // Cookies</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -281,15 +281,15 @@ export default function PrivacyView() {
               </h3>
               <div className="space-y-1.5 font-mono text-[10px]">
                 <div className="flex items-center justify-between border-b border-ton-black/5 pb-1.5">
-                  <span className="text-ton-black/30">Email</span>
+                  <span className="text-ton-black/45">Email</span>
                   <span className="text-ton-black font-semibold">privacy@timesofnamibia.com</span>
                 </div>
                 <div className="flex items-center justify-between border-b border-ton-black/5 pb-1.5">
-                  <span className="text-ton-black/30">Publisher</span>
+                  <span className="text-ton-black/45">Publisher</span>
                   <span className="text-ton-black font-semibold">TANGISON</span>
                 </div>
                 <div className="flex items-center justify-between pb-1.5">
-                  <span className="text-ton-black/30">Jurisdiction</span>
+                  <span className="text-ton-black/45">Jurisdiction</span>
                   <span className="text-ton-black font-semibold">Republic of Namibia</span>
                 </div>
               </div>
@@ -325,7 +325,7 @@ export default function PrivacyView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section 05 // Contact & Governance</span>
           <span>&copy; TANGISON</span>
         </div>

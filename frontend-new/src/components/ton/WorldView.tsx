@@ -255,7 +255,7 @@ export default function WorldView({ articles }: WorldViewProps) {
               {/* Image description */}
               <div className="mt-4 bg-ton-black/[0.03] aspect-[16/9] relative overflow-hidden border border-ton-black/8">
                 <div className="absolute inset-0 flex items-center justify-center px-8">
-                  <p className="font-serif text-sm text-ton-black/25 italic text-center leading-relaxed max-w-lg">
+                  <p className="font-serif text-sm text-ton-black/40 italic text-center leading-relaxed max-w-lg">
                     {featuredArticle.imageAlt || "Editorial photograph - no stock imagery. High-contrast grayscale image accompanying this report."}
                   </p>
                 </div>
@@ -275,7 +275,7 @@ export default function WorldView({ articles }: WorldViewProps) {
                   <span className="font-sans text-xs text-ton-black/60">
                     {featuredArticle.authorLine || featuredArticle.source}
                   </span>
-                  <span className="font-mono text-[10px] text-ton-black/25">
+                  <span className="font-mono text-[10px] text-ton-black/40">
                     {formatDate(featuredArticle.publishedAt)}
                   </span>
                 </div>
@@ -308,7 +308,7 @@ export default function WorldView({ articles }: WorldViewProps) {
                   className={`py-3 ${i > 0 ? "border-t border-ton-black/5" : ""}`}
                 >
                   <div className="flex items-center gap-2 mb-1.5">
-                    <span className="font-mono text-[8px] text-ton-black/30 uppercase tracking-wider">
+                    <span className="font-mono text-[8px] text-ton-black/45 uppercase tracking-wider">
                       {article.category?.name || article.categorySlug || "News"}
                     </span>
                     <SourceBadge type={inferBadge(article.source, article.featured)} />
@@ -323,8 +323,8 @@ export default function WorldView({ articles }: WorldViewProps) {
                       {article.source}
                     </span>
                     <div className="flex items-center gap-2">
-                      <Clock className="w-2.5 h-2.5 text-ton-black/15" />
-                      <span className="font-mono text-[9px] text-ton-black/25">
+                      <Clock className="w-2.5 h-2.5 text-ton-black/40" />
+                      <span className="font-mono text-[9px] text-ton-black/40">
                         {formatTimeAgo(article.publishedAt)}
                       </span>
                     </div>
@@ -334,7 +334,7 @@ export default function WorldView({ articles }: WorldViewProps) {
             </div>
 
             {/* Article count footer */}
-            <div className="mt-4 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest flex items-center justify-between">
+            <div className="mt-4 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest flex items-center justify-between">
               <span>{articles.length} articles // World Desk</span>
               <span>&copy; TANGISON</span>
             </div>
@@ -360,7 +360,7 @@ export default function WorldView({ articles }: WorldViewProps) {
             <p className="font-serif text-2xl font-bold text-ton-black mt-1">
               {articles.length}
             </p>
-            <p className="font-sans text-[10px] text-ton-black/30 mt-1">
+            <p className="font-sans text-[10px] text-ton-black/45 mt-1">
               Verified international reports
             </p>
           </div>
@@ -371,7 +371,7 @@ export default function WorldView({ articles }: WorldViewProps) {
             <p className="font-serif text-2xl font-bold text-ton-black mt-1">
               {new Set(articles.map((a) => a.source)).size}
             </p>
-            <p className="font-sans text-[10px] text-ton-black/30 mt-1">
+            <p className="font-sans text-[10px] text-ton-black/45 mt-1">
               Distinct wire services & agencies
             </p>
           </div>
@@ -383,9 +383,9 @@ export default function WorldView({ articles }: WorldViewProps) {
               {articles.length > 0
                 ? Math.round(articles.reduce((sum, a) => sum + a.readingTime, 0) / articles.length)
                 : 0}
-              <span className="text-sm font-normal text-ton-black/30 ml-1">min</span>
+              <span className="text-sm font-normal text-ton-black/45 ml-1">min</span>
             </p>
-            <p className="font-sans text-[10px] text-ton-black/30 mt-1">
+            <p className="font-sans text-[10px] text-ton-black/45 mt-1">
               Average article depth
             </p>
           </div>
@@ -400,7 +400,7 @@ export default function WorldView({ articles }: WorldViewProps) {
         <blockquote className="font-serif italic text-lg sm:text-xl md:text-2xl text-ton-black/40 leading-relaxed mt-3 max-w-2xl mx-auto">
           International coverage sourced, verified, and timestamped. Every datum carries its proof.
         </blockquote>
-        <p className="font-mono text-[10px] text-ton-black/25 mt-3 tracking-wider">
+        <p className="font-mono text-[10px] text-ton-black/40 mt-3 tracking-wider">
           Powered by Times OS v2.1 - TANGISON
         </p>
       </div>

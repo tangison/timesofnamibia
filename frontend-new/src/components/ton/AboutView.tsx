@@ -55,7 +55,7 @@ export default function AboutView() {
         <blockquote className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-ton-black leading-tight mt-4">
           Namibia. Informed. Instantly.
         </blockquote>
-        <p className="font-mono text-[10px] text-ton-black/30 mt-4 tracking-widest uppercase">
+        <p className="font-mono text-[10px] text-ton-black/45 mt-4 tracking-widest uppercase">
           Times of Namibia - TANGISON
         </p>
       </div>
@@ -66,7 +66,7 @@ export default function AboutView() {
           <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black">
             I. The Founding Vision
           </h2>
-          <span className="font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">Est. TANGISON</span>
+          <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">Est. TANGISON</span>
         </div>
         <div className="h-px bg-ton-black/8 mb-5" />
 
@@ -114,10 +114,10 @@ export default function AboutView() {
         {/* Imagery placeholder */}
         <div className="mt-6 pt-5 border-t border-ton-black/8">
           <div className="bg-ton-black/[0.02] p-5 sm:p-6">
-            <span className="font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">Visual Anchor</span>
+            <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">Visual Anchor</span>
             <div className="h-44 sm:h-56 bg-ton-black/[0.04] mt-2.5 flex items-center justify-center border border-ton-black/6">
               <div className="text-center px-6">
-                <p className="font-serif text-sm text-ton-black/20 italic max-w-md mx-auto leading-relaxed">
+                <p className="font-serif text-sm text-ton-black/40 italic max-w-md mx-auto leading-relaxed">
                   Aerial photograph of Windhoek at first light, shot from the Khomas Hochland plateau looking east. Grayscale. The city grid emerges from the darkness in sharp geometric lines, with the Auas Mountains silhouetted behind. GPS overlay: 22.34 S, 17.08 E. Timestamp in JetBrains Mono within a black rectangular box at bottom-left. No colour. No people. Just structure and dawn.
                 </p>
               </div>
@@ -128,7 +128,7 @@ export default function AboutView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section I // Founding Vision</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -174,7 +174,7 @@ export default function AboutView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section II // Broadsheet Digital</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -240,10 +240,10 @@ export default function AboutView() {
         {/* Imagery */}
         <div className="mt-6 pt-5 border-t border-ton-black/8">
           <div className="bg-ton-black/[0.02] p-5">
-            <span className="font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">System Visual</span>
+            <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">System Visual</span>
             <div className="h-36 sm:h-44 bg-ton-black/[0.04] mt-2.5 flex items-center justify-center border border-ton-black/6">
               <div className="text-center px-6">
-                <p className="font-serif text-xs text-ton-black/20 italic max-w-md mx-auto leading-relaxed">
+                <p className="font-serif text-xs text-ton-black/40 italic max-w-md mx-auto leading-relaxed">
                   Close-up of server rack LEDs in a darkened data centre. Grayscale. Green and amber indicator lights captured in sharp focus with shallow depth of field. Timestamp overlay in JetBrains Mono at bottom-right within a black box. The image conveys infrastructure, reliability, and the physical reality behind digital data.
                 </p>
               </div>
@@ -254,7 +254,7 @@ export default function AboutView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section III // Times OS</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -299,7 +299,7 @@ export default function AboutView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section IV // TumaOS</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -335,8 +335,8 @@ export default function AboutView() {
                   <td className="font-mono text-[10px] py-2.5 pr-3">
                     <span className={
                       row.status === "Active" ? "text-ton-red font-bold" :
-                      row.status === "Staging" ? "text-ton-black/30" :
-                      "text-ton-black/15"
+                      row.status === "Staging" ? "text-ton-black/45" :
+                      "text-ton-black/40"
                     }>
                       {row.status}
                     </span>
@@ -348,7 +348,7 @@ export default function AboutView() {
           </table>
         </div>
 
-        <div className="flex items-center justify-between mt-4 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-4 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section V // Regional Coverage</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -402,7 +402,7 @@ export default function AboutView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section VI // TANGISON</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -453,10 +453,10 @@ export default function AboutView() {
         {/* Imagery */}
         <div className="mt-6 pt-5 border-t border-ton-black/8">
           <div className="bg-ton-black/[0.02] p-5">
-            <span className="font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">Print Material Visual</span>
+            <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">Print Material Visual</span>
             <div className="h-32 sm:h-40 bg-ton-black/[0.04] mt-2.5 flex items-center justify-center border border-ton-black/6">
               <div className="text-center px-6">
-                <p className="font-serif text-xs text-ton-black/20 italic max-w-md mx-auto leading-relaxed">
+                <p className="font-serif text-xs text-ton-black/40 italic max-w-md mx-auto leading-relaxed">
                   Flat-lay photograph of a printed Broadside on a concrete surface. Grayscale. The A3 sheet shows sharp black typography on cream stock, with column rules and editorial borders clearly visible. A hand holds the top corner. GPS overlay: 22.57 S, 17.08 E. The image conveys tactility, authority, and the physical reality of print in a digital age.
                 </p>
               </div>
@@ -467,7 +467,7 @@ export default function AboutView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section VII // The Broadside</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -480,12 +480,12 @@ export default function AboutView() {
           <blockquote className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-ton-black leading-tight mt-5">
             Namibia. Informed. Instantly.
           </blockquote>
-          <p className="font-mono text-[10px] text-ton-black/20 mt-4 tracking-wider">
+          <p className="font-mono text-[10px] text-ton-black/40 mt-4 tracking-wider">
             - TANGISON Editorial Board
           </p>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>About Times of Namibia // End</span>
           <span>&copy; TANGISON</span>
         </div>

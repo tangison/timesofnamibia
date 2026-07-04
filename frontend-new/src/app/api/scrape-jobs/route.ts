@@ -28,6 +28,7 @@ const JOB_SOURCES = [
 ];
 
 async function launchBrowser() {
+// eslint-disable-next-line @typescript-eslint/no-require-imports
   const chromium: any = require("@sparticuz/chromium");
   // Dynamic import for puppeteer-core - serverExternalPackages config
   // in next.config.ts prevents Vercel from bundling it

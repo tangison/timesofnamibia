@@ -148,19 +148,19 @@ export default function SearchModal() {
       >
         {/* Input Area */}
         <div className="flex items-center gap-3 px-4 py-3 border-b border-ton-black/10 dark:border-white/10">
-          <Search className="w-4 h-4 text-ton-black/30 dark:text-white/30 flex-shrink-0" />
+          <Search className="w-4 h-4 text-ton-black/45 dark:text-white/30 flex-shrink-0" />
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search Times of Namibia…"
-            className="flex-1 bg-transparent font-mono text-sm text-ton-black dark:text-ton-cream placeholder:text-ton-black/25 dark:placeholder:text-white/25 outline-none"
+            className="flex-1 bg-transparent font-mono text-sm text-ton-black dark:text-ton-cream placeholder:text-ton-black/40 dark:placeholder:text-white/25 outline-none"
             style={{ borderRadius: 0 }}
           />
           <button
             onClick={closeModal}
-            className="flex items-center gap-1 font-mono text-[9px] uppercase tracking-wider text-ton-black/25 dark:text-white/25 hover:text-ton-red dark:hover:text-ton-red transition-colors px-1.5 py-1 border border-ton-black/10 dark:border-white/10"
+            className="flex items-center gap-1 font-mono text-[9px] uppercase tracking-wider text-ton-black/40 dark:text-white/25 hover:text-ton-red dark:hover:text-ton-red transition-colors px-1.5 py-1 border border-ton-black/10 dark:border-white/10"
             style={{ borderRadius: 0 }}
           >
             Esc
@@ -171,7 +171,7 @@ export default function SearchModal() {
         <div className="max-h-96 overflow-y-auto ton-scrollbar">
           {results.length === 0 ? (
             <div className="px-4 py-8 text-center">
-              <p className="font-mono text-xs text-ton-black/30 dark:text-white/30 uppercase tracking-wider">
+              <p className="font-mono text-xs text-ton-black/45 dark:text-white/30 uppercase tracking-wider">
                 No results for &ldquo;{query}&rdquo;
               </p>
             </div>
@@ -206,10 +206,10 @@ export default function SearchModal() {
 
         {/* Footer hint */}
         <div className="px-4 py-2 border-t border-ton-black/[0.06] dark:border-white/[0.06] flex items-center justify-between">
-          <span className="font-mono text-[8px] uppercase tracking-wider text-ton-black/20 dark:text-white/20">
+          <span className="font-mono text-[8px] uppercase tracking-wider text-ton-black/40 dark:text-white/20">
             {results.length} result{results.length !== 1 ? "s" : ""}
           </span>
-          <span className="font-mono text-[8px] uppercase tracking-wider text-ton-black/20 dark:text-white/20">
+          <span className="font-mono text-[8px] uppercase tracking-wider text-ton-black/40 dark:text-white/20">
             Ctrl+K to toggle
           </span>
         </div>

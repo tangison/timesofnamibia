@@ -106,14 +106,14 @@ export default function TenderAnalysisView() {
         </p>
         <div className="flex items-center gap-4 mt-4">
           <Breadcrumbs items={[{ label: "The Tender Edge" }]} />
-          <span className="font-mono text-[9px] text-ton-black/20">TANGISON</span>
+          <span className="font-mono text-[9px] text-ton-black/40">TANGISON</span>
         </div>
       </div>
 
       {/* Upload Zone */}
       <div className="py-8 sm:py-10 mb-8 sm:mb-10 border-t border-b border-dashed border-ton-black/15 text-center">
         <div className="flex flex-col items-center">
-          <Upload className="w-8 h-8 text-ton-black/30 mb-3" />
+          <Upload className="w-8 h-8 text-ton-black/45 mb-3" />
           <h2 className="font-serif text-lg sm:text-xl font-semibold text-ton-black">
             Upload Tender Document
           </h2>
@@ -309,9 +309,9 @@ export default function TenderAnalysisView() {
                   </div>
                   <div className="flex-shrink-0 mt-2">
                     {isExpanded ? (
-                      <ChevronUp className="w-4 h-4 text-ton-black/30" />
+                      <ChevronUp className="w-4 h-4 text-ton-black/45" />
                     ) : (
-                      <ChevronDown className="w-4 h-4 text-ton-black/30" />
+                      <ChevronDown className="w-4 h-4 text-ton-black/45" />
                     )}
                   </div>
                 </div>
@@ -323,7 +323,7 @@ export default function TenderAnalysisView() {
 
       {/* Footer Badge */}
       <div className="mt-8 text-center">
-        <span className="inline-flex items-center gap-2 font-mono text-[10px] text-ton-black/30 uppercase tracking-wider">
+        <span className="inline-flex items-center gap-2 font-mono text-[10px] text-ton-black/45 uppercase tracking-wider">
           <Cpu className="w-3.5 h-3.5 text-ton-red" />
           Powered by Times OS v2.1 - TANGISON
         </span>

@@ -53,7 +53,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-8 pt-6 border-t border-ton-cream/10 flex flex-col sm:flex-row justify-between items-center gap-3 text-[10px] font-mono uppercase tracking-widest text-ton-cream/30">
+        <div className="mt-8 pt-6 border-t border-ton-cream/10 flex flex-col sm:flex-row justify-between items-center gap-3 text-[10px] font-mono uppercase tracking-widest text-ton-cream/45">
           <div>Powered by TANGISON Applied AI</div>
           <div>© {new Date().getFullYear()} Times of Namibia. All rights reserved.</div>
         </div>

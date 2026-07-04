@@ -13,7 +13,6 @@ import { action, internalAction } from "../_generated/server";
 import { v } from "convex/values";
 import { api, internal } from "../_generated/api";
 import { convertToWebp, generateDirectoryAltText } from "./imageProcessor";
-import gzip from "zlib";
 
 const HEADERS = {
   "User-Agent": "TimesOfNamibiaBot/1.0 (https://timesofnamibia47.vercel.app; admin@timesofnamibia.com)",
@@ -34,23 +33,67 @@ async function getWikipediaLeadImage(title: string): Promise<WikiImageResult | n
     const res = await fetch(url, { headers: HEADERS, signal: AbortSignal.timeout(15_000) });
     if (!res.ok) return null;
 
-    const raw = await res.text();
-    let text = raw;
-    if (res.headers.get("content-encoding") === "gzip") {
-      const { gunzipSync } = require("zlib");
-      text = gunzipSync(Buffer.from(raw, "binary")).toString("utf-8");
-    }
-
-    const data = JSON.parse(text);
+    const data = await res.json();
     const pages = data.query?.pages || {};
     for (const page of Object.values<any>(pages)) {
       if (page.original) {
         return { source: page.original.source, width: page.original.width, height: page.original.height };
       }
     }
-    return null;
+
+    // If PageImages API returns nothing, try Wikimedia Commons search
+    return await getCommonsImage(title);
   } catch (err) {
     console.warn(`[fetch-images] Wikipedia image failed for ${title}:`, err instanceof Error ? err.message : err);
+    // Fall back to Commons
+    return await getCommonsImage(title);
+  }
+}
+
+// ── WIKIMEDIA COMMONS SEARCH ─────────────────────────────────
+// Searches Commons for files matching the place name + "Namibia"
+
+async function getCommonsImage(title: string): Promise<WikiImageResult | null> {
+  try {
+    const params = new URLSearchParams({
+      action: "query",
+      generator: "search",
+      gsrsearch: `${title} Namibia`,
+      gsrnamespace: "6",
+      gsrlimit: "5",
+      prop: "imageinfo",
+      iiprop: "url|size",
+      format: "json",
+    });
+    const url = `https://commons.wikimedia.org/w/api.php?${params}`;
+    const res = await fetch(url, { headers: HEADERS, signal: AbortSignal.timeout(15_000) });
+    if (!res.ok) return null;
+
+    const data = await res.json();
+    const pages = data.query?.pages || {};
+
+    // Find the best image (prefer larger ones, skip SVGs/icons)
+    let bestImage: WikiImageResult | null = null;
+    let bestArea = 0;
+
+    for (const page of Object.values<any>(pages)) {
+      const info = page.imageinfo?.[0];
+      if (!info?.url) continue;
+
+      // Skip SVGs and very small images
+      if (info.url.endsWith(".svg") || info.url.endsWith(".SVG")) continue;
+      if (info.width && info.height && (info.width < 200 || info.height < 200)) continue;
+
+      const area = (info.width || 0) * (info.height || 0);
+      if (area > bestArea) {
+        bestArea = area;
+        bestImage = { source: info.url, width: info.width || 0, height: info.height || 0 };
+      }
+    }
+
+    return bestImage;
+  } catch (err) {
+    console.warn(`[fetch-images] Commons search failed for ${title}:`, err instanceof Error ? err.message : err);
     return null;
   }
 }

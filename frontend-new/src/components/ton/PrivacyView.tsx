@@ -1,4 +1,3 @@
-"use client";
 
 import React from "react";
 import { ArrowLeft, Shield, FileText } from "lucide-react";

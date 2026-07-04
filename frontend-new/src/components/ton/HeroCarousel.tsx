@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Clock } from "lucide-react";
-import Image from "next/image";
 
 interface CarouselArticle {
   id: string;
@@ -85,7 +84,7 @@ export default function HeroCarousel({ articles }: { articles: CarouselArticle[]
               />
             </motion.div>
           ) : (
-            <div className="absolute inset-0 bg-gradient-to-br from-ton-black via-ton-black/90 to-ton-red/20" />
+            <div className="absolute inset-0 bg-ton-navy" />
           )}
 
           {/* Gradient overlay */}

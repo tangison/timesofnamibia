@@ -70,7 +70,7 @@ export default function ArticleCard({ article, index = 0, variant = "default" }:
           {image ? (
             <img src={image} alt={article.headline} className="w-full h-full object-cover" />
           ) : (
-            <div className="w-full h-full bg-gradient-to-br from-ton-black/5 to-ton-red/5" />
+            <div className="w-full h-full bg-ton-navy" />
           )}
         </div>
 
@@ -141,7 +141,7 @@ export default function ArticleCard({ article, index = 0, variant = "default" }:
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-ton-black/5 to-ton-red/5" />
+          <div className="w-full h-full bg-ton-navy" />
         )}
         {/* Section badge */}
         <span className="absolute top-2 left-2 bg-ton-red text-white font-mono text-[8px] font-bold uppercase tracking-widest px-2 py-0.5">

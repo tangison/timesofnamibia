@@ -1,4 +1,3 @@
-"use client";
 
 /**
  * Category Navigation Bar - sticky below the masthead.

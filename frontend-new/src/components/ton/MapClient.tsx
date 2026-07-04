@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { MapContainer, TileLayer, Marker, Popup, CircleMarker } from "react-leaflet";
-import L from "leaflet";
+import { MapContainer, TileLayer, Popup, CircleMarker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
 interface MapPlace {

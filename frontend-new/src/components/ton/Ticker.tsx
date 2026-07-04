@@ -65,7 +65,7 @@ export default function Ticker() {
         <div
           className="overflow-hidden flex-1 py-2 cursor-pointer"
           onClick={() => setPaused(!paused)}
-          role="marquee"
+          
           aria-label="News ticker - tap to pause"
         >
           <div className={`ton-ticker-track ${paused ? "ton-ticker-paused" : ""}`}>

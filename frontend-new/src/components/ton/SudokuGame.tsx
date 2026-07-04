@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import * as sudoku from "sudoku";
 
 // ============================================================
 // Section 6: Sudoku using 'sudoku' npm package for puzzle logic
@@ -56,8 +57,7 @@ export default function SudokuGame() {
 
   useEffect(() => {
     // Generate puzzle using the 'sudoku' library
-    const sudoku = require("sudoku");
-    const rng = mulberry32(getDailySeed());
+        const rng = mulberry32(getDailySeed());
 
     // Generate multiple puzzles and pick based on difficulty
     // ratepuzzle returns 0-4, where 0=easy, 4=hard
@@ -67,8 +67,8 @@ export default function SudokuGame() {
     const attempts = 5;
 
     for (let i = 0; i < attempts; i++) {
-      const p = sudoku.makepuzzle();
-      const rating = sudoku.ratepuzzle(p);
+      const p = sudoku.makepuzzle() as number[];
+      const rating = (sudoku as any).ratepuzzle(p, true) as number;
       const diff = Math.abs(rating - targetScore);
       if (bestScore === -1 || diff < bestScore) {
         bestScore = diff;
@@ -104,8 +104,7 @@ export default function SudokuGame() {
     setUserGrid(newGrid);
 
     // Check validity using the sudoku library's solvepuzzle
-    const sudoku = require("sudoku");
-    const flatGrid: number[] = [];
+        const flatGrid: number[] = [];
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
         const val = newGrid[i][j];

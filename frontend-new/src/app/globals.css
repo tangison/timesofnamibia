@@ -186,6 +186,10 @@
   letter-spacing: -0.02em;
 }
 
+.font-wordmark {
+  font-family: var(--font-unifraktur), "UnifrakturMaguntia", serif;
+}
+
 .font-mono {
   letter-spacing: 0.02em;
 }
@@ -292,7 +296,7 @@ h1, h2, h3 {
 /* ========= DROP CAP ========= */
 
 .ton-dropcap::first-letter {
-  font-family: var(--font-playfair), "Playfair Display", serif;
+  font-family: var(--font-merriweather), "Merriweather", serif;
   float: left;
   font-size: 4.5rem;
   line-height: 0.75;

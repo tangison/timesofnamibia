@@ -1,4 +1,3 @@
-"use client";
 
 import React from "react";
 import { ArrowLeft, FileText, Accessibility, Eye, Keyboard, Volume2, Type, Contrast, Minimize, MousePointer, Image } from "lucide-react";

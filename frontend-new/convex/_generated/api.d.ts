@@ -13,6 +13,7 @@ import type * as actions_backfillBodies from "../actions/backfillBodies.js";
 import type * as actions_backfillContent from "../actions/backfillContent.js";
 import type * as actions_backfillImages from "../actions/backfillImages.js";
 import type * as actions_cleanupDatabase from "../actions/cleanupDatabase.js";
+import type * as actions_fetchMissingImages from "../actions/fetchMissingImages.js";
 import type * as actions_imageGenerator from "../actions/imageGenerator.js";
 import type * as actions_imageProcessor from "../actions/imageProcessor.js";
 import type * as actions_ingestRss from "../actions/ingestRss.js";
@@ -45,6 +46,7 @@ declare const fullApi: ApiFromModules<{
   "actions/backfillContent": typeof actions_backfillContent;
   "actions/backfillImages": typeof actions_backfillImages;
   "actions/cleanupDatabase": typeof actions_cleanupDatabase;
+  "actions/fetchMissingImages": typeof actions_fetchMissingImages;
   "actions/imageGenerator": typeof actions_imageGenerator;
   "actions/imageProcessor": typeof actions_imageProcessor;
   "actions/ingestRss": typeof actions_ingestRss;

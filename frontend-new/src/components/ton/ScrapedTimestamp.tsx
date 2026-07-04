@@ -22,7 +22,7 @@ export default function ScrapedTimestamp({ label = "Scraped", date }: { label?: 
   // If no real date provided, show the classic "6s ago" placeholder
   if (!date) {
     return (
-      <span className="font-mono text-[10px] text-ton-black/30 uppercase tracking-wider">
+      <span className="font-mono text-[10px] text-ton-black/45 uppercase tracking-wider">
         {label} 6s ago
       </span>
     );
@@ -31,7 +31,7 @@ export default function ScrapedTimestamp({ label = "Scraped", date }: { label?: 
   if (!mounted || !dateObj) {
     // SSR: show static date
     return (
-      <span className="font-mono text-[10px] text-ton-black/30 uppercase tracking-wider">
+      <span className="font-mono text-[10px] text-ton-black/45 uppercase tracking-wider">
         {label} {dateObj ? dateObj.toLocaleDateString("en-GB", { day: "numeric", month: "short" }) : ""}
       </span>
     );
@@ -51,7 +51,7 @@ function ScrapedTimestampClient({ label, dateObj }: { label: string; dateObj: Da
   }, [dateObj]);
 
   return (
-    <span className="font-mono text-[10px] text-ton-black/30 uppercase tracking-wider">
+    <span className="font-mono text-[10px] text-ton-black/45 uppercase tracking-wider">
       {label} {timeAgo}
     </span>
   );

@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — TON-specific data + types (TANGISON)
+// Times of Namibia - TON-specific data + types (TANGISON)
 //
 // TANGISON Iteration 4 Fix #14: This file previously defined a
 // DIVERGENT type system (different field names + types from data.ts
@@ -12,12 +12,12 @@
 // @/lib/types instead.
 // ============================================================
 
-// ========= TYPES (legacy — prefer @/lib/types) =========
+// ========= TYPES (legacy - prefer @/lib/types) =========
 
 /**
  * @deprecated Use `Job` from @/lib/types instead.
  * This legacy type uses `region: string` (non-nullable) and a strict
- * source union — kept only for backwards compat with JobScraperView.
+ * source union - kept only for backwards compat with JobScraperView.
  */
 export interface Job {
   id: string;
@@ -34,7 +34,7 @@ export interface Job {
 
 /**
  * @deprecated Use `Tender` from @/lib/types instead.
- * This legacy type uses `deadline: string` and flat array fields —
+ * This legacy type uses `deadline: string` and flat array fields -
  * kept only for backwards compat with TenderAnalysisView.
  */
 export interface Tender {
@@ -52,7 +52,7 @@ export interface Tender {
 
 /**
  * @deprecated Use `WireSubmission` from @/lib/types instead.
- * This legacy type uses `timestamp: string` and required `author` —
+ * This legacy type uses `timestamp: string` and required `author` -
  * kept only for backwards compat with ContributorDashboard.
  */
 export interface WireSubmission {
@@ -92,7 +92,7 @@ export const JOB_SOURCES: Job["source"][] = [
   "CareerPortal",
 ];
 
-// ========= INITIAL DATA (empty — populated at runtime via Convex) =========
+// ========= INITIAL DATA (empty - populated at runtime via Convex) =========
 
 export const JOBS: Job[] = [];
 

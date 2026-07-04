@@ -37,14 +37,14 @@ export default function TANGISONView() {
         </div>
       </div>
 
-      {/* Mission Statement — hero block */}
+      {/* Mission Statement - hero block */}
       <div className="py-8 sm:py-10 text-center border-t border-b border-ton-black mb-8 sm:mb-10">
         <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">Principle</span>
         <blockquote className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-ton-black leading-tight mt-4">
           Information Density Over Engagement Metrics
         </blockquote>
-        <p className="font-mono text-[10px] text-ton-black/30 mt-4 tracking-widest uppercase">
-          TANGISON — Windhoek, Namibia
+        <p className="font-mono text-[10px] text-ton-black/45 mt-4 tracking-widest uppercase">
+          TANGISON - Windhoek, Namibia
         </p>
       </div>
 
@@ -61,7 +61,7 @@ export default function TANGISONView() {
               TANGISON is a Windhoek-based publishing and technology company that builds information infrastructure for the African continent. Founded on the conviction that Namibian readers deserve a news platform as rigorous and precise as the country they inhabit, the company operates at the intersection of editorial judgment and systems engineering.
             </p>
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-3">
-              We do not publish opinion. We publish data — verified, timestamped, and sourced. We do not optimise for engagement. We optimise for understanding. Every product we build, from Times OS to TumaOS to The Broadside, is an expression of a single philosophy: that information density and editorial integrity are not just compatible, but inseparable.
+              We do not publish opinion. We publish data - verified, timestamped, and sourced. We do not optimise for engagement. We optimise for understanding. Every product we build, from Times OS to TumaOS to The Broadside, is an expression of a single philosophy: that information density and editorial integrity are not just compatible, but inseparable.
             </p>
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8]">
               The company&rsquo;s flagship publication, Times of Namibia, is the living proof of this conviction. Built on the Broadsheet Digital philosophy, TON treats every screen as a front page and every reader as a citizen who demands the truth delivered with precision at the speed of data.
@@ -101,7 +101,7 @@ export default function TANGISONView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section I // Who We Are</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -149,7 +149,7 @@ export default function TANGISONView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section II // Products & Systems</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -165,10 +165,10 @@ export default function TANGISONView() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           <div>
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-3">
-              Broadsheet Digital is the design and engineering philosophy that governs every decision at TANGISON. It dictates that every screen must carry the gravitas of a printed front page — heavy editorial borders, column rules, serif-dominant typography, and a high-contrast cream-and-black palette. The reader should feel the weight of information before they read a single word.
+              Broadsheet Digital is the design and engineering philosophy that governs every decision at TANGISON. It dictates that every screen must carry the gravitas of a printed front page - heavy editorial borders, column rules, serif-dominant typography, and a high-contrast cream-and-black palette. The reader should feel the weight of information before they read a single word.
             </p>
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8]">
-              We reject the shallow scroll. We reject infinite feeds. We design for density, not duration. If a reader can grasp the essential truth of a story from the layout alone — headline, timestamp, source, verification status — then the design has succeeded.
+              We reject the shallow scroll. We reject infinite feeds. We design for density, not duration. If a reader can grasp the essential truth of a story from the layout alone - headline, timestamp, source, verification status - then the design has succeeded.
             </p>
           </div>
           <div>
@@ -176,7 +176,7 @@ export default function TANGISONView() {
               {[
                 { label: "Authority of Print", desc: "Heavy borders, column rules, serif headlines. Every screen is a front page, not a social media feed." },
                 { label: "Precision of Data", desc: "Monospaced timestamps, verification badges, source attribution. The interface between human editorial and machine intelligence is visible and honest." },
-                { label: "Density over Decoration", desc: "Every pixel must inform. Whitespace is generous but purposeful — it separates, not adorns." },
+                { label: "Density over Decoration", desc: "Every pixel must inform. Whitespace is generous but purposeful - it separates, not adorns." },
                 { label: "3G-First Engineering", desc: "CSS-heavy, image-light. If it cannot load on a Nokia browsing through MTC in Oshakati within 6 seconds, it does not ship." },
               ].map((item, i) => (
                 <li key={i}>
@@ -192,7 +192,7 @@ export default function TANGISONView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section III // Broadsheet Digital</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -205,7 +205,7 @@ export default function TANGISONView() {
           <blockquote className="font-serif text-2xl sm:text-3xl font-bold text-ton-black leading-tight mt-5">
             tangison.com
           </blockquote>
-          <p className="font-mono text-[10px] text-ton-black/20 mt-4 tracking-wider">
+          <p className="font-mono text-[10px] text-ton-black/40 mt-4 tracking-wider">
             Windhoek, Namibia &middot; A TANGISON Publication
           </p>
           <a
@@ -218,7 +218,7 @@ export default function TANGISONView() {
           </a>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>About TANGISON // End</span>
           <span>&copy; TANGISON</span>
         </div>

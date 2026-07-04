@@ -1,4 +1,3 @@
-"use client";
 
 import React from "react";
 import { ArrowLeft, FileText, Scale } from "lucide-react";
@@ -85,7 +84,7 @@ export default function TermsView() {
           </p>
         </div>
 
-        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section 01 // Acceptance of Terms</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -106,7 +105,7 @@ export default function TermsView() {
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-3">
               Permission is granted to temporarily access and read the materials on the Times of
               Namibia platform for personal, non-commercial, non-automated use. This is the
-              license granted to you — it is limited, revocable, and non-exclusive.
+              license granted to you - it is limited, revocable, and non-exclusive.
             </p>
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8]">
               You may share links to individual articles via the TumaOS WhatsApp pipeline or other
@@ -139,7 +138,7 @@ export default function TermsView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section 02 // Use License</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -169,7 +168,7 @@ export default function TermsView() {
             </span>
             <p className="font-serif text-sm text-ton-black/50 leading-relaxed mt-2">
               We verify before we publish. Every datum carries its source, timestamp, and
-              verification status. When errors occur, they are corrected transparently — never
+              verification status. When errors occur, they are corrected transparently - never
               silently.
             </p>
           </div>
@@ -196,7 +195,7 @@ export default function TermsView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section 03 // Content Accuracy</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -231,7 +230,7 @@ export default function TermsView() {
           maximum extent permitted by Namibian law.
         </p>
 
-        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section 04 // Limitation of Liability</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -260,15 +259,15 @@ export default function TermsView() {
               </h3>
               <div className="space-y-1.5 font-mono text-[10px]">
                 <div className="flex items-center justify-between border-b border-ton-black/5 pb-1.5">
-                  <span className="text-ton-black/30">Email</span>
+                  <span className="text-ton-black/45">Email</span>
                   <span className="text-ton-black font-semibold">legal@timesofnamibia.com</span>
                 </div>
                 <div className="flex items-center justify-between border-b border-ton-black/5 pb-1.5">
-                  <span className="text-ton-black/30">Publisher</span>
+                  <span className="text-ton-black/45">Publisher</span>
                   <span className="text-ton-black font-semibold">TANGISON</span>
                 </div>
                 <div className="flex items-center justify-between pb-1.5">
-                  <span className="text-ton-black/30">Jurisdiction</span>
+                  <span className="text-ton-black/45">Jurisdiction</span>
                   <span className="text-ton-black font-semibold">Republic of Namibia</span>
                 </div>
               </div>
@@ -304,7 +303,7 @@ export default function TermsView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-5 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section 05 // Contact & Governance</span>
           <span>&copy; TANGISON</span>
         </div>

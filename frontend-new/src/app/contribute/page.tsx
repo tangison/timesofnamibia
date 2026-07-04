@@ -127,7 +127,7 @@ export default function ContributePage() {
               className="w-full bg-transparent border border-ton-black/15 px-4 py-3 font-serif text-base text-ton-black focus:border-ton-red outline-none resize-y"
               placeholder="Write your contribution here..."
             />
-            <p className="font-mono text-xs text-ton-black/30 mt-1">
+            <p className="font-mono text-xs text-ton-black/45 mt-1">
               {wordCount} words {wordCount < 50 && `(need ${50 - wordCount} more)`}
             </p>
           </div>

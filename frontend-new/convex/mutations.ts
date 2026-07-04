@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — Convex mutations (TANGISON)
+// Times of Namibia - Convex mutations (TANGISON)
 // All write operations: newsletter signup, contact form,
 // wire submissions, article view tracking.
 //
@@ -69,7 +69,7 @@ export const submitContactForm = mutation({
   },
   handler: async (ctx, args) => {
     const id = await ctx.db.insert("wireSubmission", {
-      title: `Contact: ${args.name} — ${args.category}`.slice(0, 200),
+      title: `Contact: ${args.name} - ${args.category}`.slice(0, 200),
       category: "contact",
       priority: "routine",
       source: args.email.trim(),
@@ -162,7 +162,7 @@ export const trackArticleView = mutation({
 
 // ── COMMENT (pending moderation) ─────────────────────────────
 // NOTE: Until Convex Auth is wired up, this mutation throws.
-// Comments require a verified user identity — accepting `userId`
+// Comments require a verified user identity - accepting `userId`
 // from the client would allow impersonation.
 
 export const submitComment = mutation({
@@ -257,8 +257,8 @@ export const toggleBookmark = mutation({
 });
 
 // ── COMMUNITY CONTRIBUTION SUBMISSION ────────────────────────
-// Public mutation — no auth required, but rate-limited at the API layer.
-// Goes to status: "pending" — NEVER auto-publishes.
+// Public mutation - no auth required, but rate-limited at the API layer.
+// Goes to status: "pending" - NEVER auto-publishes.
 
 export const submitContribution = mutation({
   args: {
@@ -271,7 +271,7 @@ export const submitContribution = mutation({
     imageUrls: v.array(v.string()),
   },
   handler: async (ctx, args) => {
-    // Basic content floor — reject very short submissions
+    // Basic content floor - reject very short submissions
     if (args.body.trim().split(/\s+/).length < 50) {
       throw new Error("Contribution must be at least 50 words");
     }

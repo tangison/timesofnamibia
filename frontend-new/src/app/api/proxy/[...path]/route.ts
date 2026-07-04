@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — Catch-All Proxy to FastAPI Backend (TANGISON)
+// Times of Namibia - Catch-All Proxy to FastAPI Backend (TANGISON)
 // SECURITY: GET → public read allow-list. POST/PUT/DELETE → admin only.
 // ============================================================
 

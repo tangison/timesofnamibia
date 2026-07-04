@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — Namibia Guide Seed Pipeline (Part 1)
+// Times of Namibia - Namibia Guide Seed Pipeline (Part 1)
 //
 // Fetches data from Wikipedia + Wikivoyage + Wikimedia Commons,
 // synthesizes original guide entries via AI, stores as drafts.
@@ -139,12 +139,12 @@ export const seedNamibiaGuide = internalAction({
           continue;
         }
 
-        // AI synthesis — original content, not a copy
+        // AI synthesis - original content, not a copy
         const body = await generateWithFallback(
           [
             {
               role: "system",
-              content: "You are a travel guide editor for Times of Namibia. Write original, well-organized content. DO NOT copy or closely paraphrase the source material — write entirely in your own words. Do not invent facts.",
+              content: "You are a travel guide editor for Times of Namibia. Write original, well-organized content. DO NOT copy or closely paraphrase the source material - write entirely in your own words. Do not invent facts.",
             },
             {
               role: "user",

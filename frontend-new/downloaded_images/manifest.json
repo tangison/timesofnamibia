@@ -1,0 +1,247 @@
+{
+  "dorob-national-park": {
+    "display_name": "Dorob National Park",
+    "wikipedia_title": "Dorob National Park",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/da/Dorob_Nationalpark.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Dorob_Nationalpark.jpg",
+    "local_path": "downloaded_images/dorob-national-park.jpg"
+  },
+  "waterberg-plateau-park": {
+    "display_name": "Waterberg Plateau Park",
+    "wikipedia_title": "Waterberg Plateau Park",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/27/Plateau_Waterberg.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Plateau_Waterberg.jpg",
+    "local_path": "downloaded_images/waterberg-plateau-park.jpg"
+  },
+  "fish-river-canyon": {
+    "display_name": "Fish River Canyon",
+    "wikipedia_title": "Fish River Canyon",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/89/Fish_River_Canyon_from_Main_View_Point.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Fish_River_Canyon_from_Main_View_Point.jpg",
+    "local_path": "downloaded_images/fish-river-canyon.jpg"
+  },
+  "mudumu-national-park": {
+    "display_name": "Mudumu National Park",
+    "wikipedia_title": "Mudumu National Park",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/f8/Map_of_Mudumu_National_Park%2C_Namibia.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Map_of_Mudumu_National_Park%252C_Namibia.jpg",
+    "local_path": "downloaded_images/mudumu-national-park.jpg"
+  },
+  "bwabwata-national-park": {
+    "display_name": "Bwabwata National Park",
+    "wikipedia_title": "Bwabwata National Park",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Loxodonta_africana_MS_10093s.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Loxodonta_africana_MS_10093s.jpg",
+    "local_path": "downloaded_images/bwabwata-national-park.jpg"
+  },
+  "nkasa-rupara-national-park": {
+    "display_name": "Nkasa Rupara National Park",
+    "wikipedia_title": "Nkasa Rupara National Park",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/1/19/Map_Nkasa_Rupara_National_Park.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Map_Nkasa_Rupara_National_Park.jpg",
+    "local_path": "downloaded_images/nkasa-rupara-national-park.jpg"
+  },
+  "sossusvlei": {
+    "display_name": "Sossusvlei",
+    "wikipedia_title": "Sossusvlei",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/22/Sossusvlei.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Sossusvlei.jpg",
+    "local_path": "downloaded_images/sossusvlei.jpg"
+  },
+  "deadvlei": {
+    "display_name": "Deadvlei",
+    "wikipedia_title": "Deadvlei",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/c0/Dead_Vlei_4.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Dead_Vlei_4.jpg",
+    "local_path": "downloaded_images/deadvlei.jpg"
+  },
+  "spitzkoppe": {
+    "display_name": "Spitzkoppe",
+    "wikipedia_title": "Spitzkoppe",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/e1/Spitzkoppe_year_2006.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Spitzkoppe_year_2006.jpg",
+    "local_path": "downloaded_images/spitzkoppe.jpg"
+  },
+  "dune-45": {
+    "display_name": "Dune 45",
+    "wikipedia_title": "Dune 45",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/2e/006_Dune_45_in_Sossusvlei_at_sunrise_Photo_by_Giles_Laurent.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:006_Dune_45_in_Sossusvlei_at_sunrise_Photo_by_Giles_Laurent.jpg",
+    "local_path": "downloaded_images/dune-45.jpg"
+  },
+  "brandberg-mountain": {
+    "display_name": "Brandberg Mountain",
+    "wikipedia_title": "Brandberg Mountain",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Brandberg_%28Namibia%29.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Brandberg_%2528Namibia%2529.jpg",
+    "local_path": "downloaded_images/brandberg-mountain.jpg"
+  },
+  "twyfelfontein": {
+    "display_name": "Twyfelfontein",
+    "wikipedia_title": "Twyfelfontein",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/d8/Twyfelfontein_16.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Twyfelfontein_16.jpg",
+    "local_path": "downloaded_images/twyfelfontein.jpg"
+  },
+  "epupa-falls": {
+    "display_name": "Epupa Falls",
+    "wikipedia_title": "Epupa Falls",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Epupa_Falls_%28detail%29.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Epupa_Falls_%2528detail%2529.jpg",
+    "local_path": "downloaded_images/epupa-falls.jpg"
+  },
+  "cape-cross": {
+    "display_name": "Cape Cross",
+    "wikipedia_title": "Cape Cross",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/c7/Cape_Cross_Seal_Colony.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Cape_Cross_Seal_Colony.jpg",
+    "local_path": "downloaded_images/cape-cross.jpg"
+  },
+  "kolmanskop": {
+    "display_name": "Kolmanskop",
+    "wikipedia_title": "Kolmanskop",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/33/Kolmanskop_Ghost_Town.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Kolmanskop_Ghost_Town.jpg",
+    "local_path": "downloaded_images/kolmanskop.jpg"
+  },
+  "sandwich-harbour": {
+    "display_name": "Sandwich Harbour",
+    "wikipedia_title": "Sandwich Harbour",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/80/Sandwich_Harbour_%28Luftaufnahme%29.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Sandwich_Harbour_%2528Luftaufnahme%2529.jpg",
+    "local_path": "downloaded_images/sandwich-harbour.jpg"
+  },
+  "windhoek": {
+    "display_name": "Windhoek",
+    "wikipedia_title": "Windhoek",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/70/Christ_Church_in_Windhoek%2C_Namibia.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Christ_Church_in_Windhoek%252C_Namibia.jpg",
+    "local_path": "downloaded_images/windhoek.jpg"
+  },
+  "swakopmund": {
+    "display_name": "Swakopmund",
+    "wikipedia_title": "Swakopmund",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Mole%2C_Jetty_and_Lighthouse_Swakopmund%2C_Namibia.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Mole%252C_Jetty_and_Lighthouse_Swakopmund%252C_Namibia.jpg",
+    "local_path": "downloaded_images/swakopmund.jpg"
+  },
+  "luderitz": {
+    "display_name": "Luderitz",
+    "wikipedia_title": "L\u00fcderitz",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/59/Lutheran_Church_Luderotz.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Lutheran_Church_Luderotz.jpg",
+    "local_path": "downloaded_images/luderitz.jpg"
+  },
+  "walvis-bay": {
+    "display_name": "Walvis Bay",
+    "wikipedia_title": "Walvis Bay",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/4/45/Walvis_Bay_aerial.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Walvis_Bay_aerial.jpg",
+    "local_path": "downloaded_images/walvis-bay.jpg"
+  },
+  "tsumeb": {
+    "display_name": "Tsumeb",
+    "wikipedia_title": "Tsumeb",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/60/Welcome_to_tsumeb.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Welcome_to_tsumeb.jpg",
+    "local_path": "downloaded_images/tsumeb.jpg"
+  },
+  "otjiwarongo": {
+    "display_name": "Otjiwarongo",
+    "wikipedia_title": "Otjiwarongo",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Otjiwarongo-Eglises_%282%29.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Otjiwarongo-Eglises_%25282%2529.jpg",
+    "local_path": "downloaded_images/otjiwarongo.jpg"
+  },
+  "gobabis": {
+    "display_name": "Gobabis",
+    "wikipedia_title": "Gobabis",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/63/Gobabis_10.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Gobabis_10.jpg",
+    "local_path": "downloaded_images/gobabis.jpg"
+  },
+  "desert-elephant": {
+    "display_name": "Desert elephant",
+    "wikipedia_title": "Desert elephant",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/77/Desert_elephants_in_the_Huab_River.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Desert_elephants_in_the_Huab_River.jpg",
+    "local_path": "downloaded_images/desert-elephant.jpg"
+  },
+  "black-rhinoceros": {
+    "display_name": "Black rhinoceros",
+    "wikipedia_title": "Black rhinoceros",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/69/Black_Rhino_at_Working_with_Wildlife.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Black_Rhino_at_Working_with_Wildlife.jpg",
+    "local_path": "downloaded_images/black-rhinoceros.jpg"
+  },
+  "leopard": {
+    "display_name": "Leopard",
+    "wikipedia_title": "Leopard",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/70/African_leopard_male_%28cropped%29.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:African_leopard_male_%2528cropped%2529.jpg",
+    "local_path": "downloaded_images/leopard.jpg"
+  },
+  "cheetah": {
+    "display_name": "Cheetah",
+    "wikipedia_title": "Cheetah",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/92/Male_cheetah_facing_left_in_South_Africa.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Male_cheetah_facing_left_in_South_Africa.jpg",
+    "local_path": "downloaded_images/cheetah.jpg"
+  },
+  "gemsbok": {
+    "display_name": "Gemsbok",
+    "wikipedia_title": "Gemsbok",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Gemsbok_%28Oryx_gazella%29_male.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Gemsbok_%2528Oryx_gazella%2529_male.jpg",
+    "local_path": "downloaded_images/gemsbok.jpg"
+  },
+  "burnt-mountain": {
+    "display_name": "Burnt Mountain (Namibia)",
+    "wikipedia_title": "Burnt Mountain (Namibia)",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Verbrandberg-01.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Verbrandberg-01.jpg",
+    "local_path": "downloaded_images/burnt-mountain.jpg"
+  },
+  "hartmanns-mountain-zebra": {
+    "display_name": "Hartmann's mountain zebra",
+    "wikipedia_title": "Hartmann's mountain zebra",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Equus_zebra_hartmannae_-_Etosha_2015.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Equus_zebra_hartmannae_-_Etosha_2015.jpg",
+    "local_path": "downloaded_images/hartmanns-mountain-zebra.jpg"
+  },
+  "welwitschia": {
+    "display_name": "Welwitschia",
+    "wikipedia_title": "Welwitschia",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/0/0c/Welwitschia_mirabilis%282%29.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Welwitschia_mirabilis%25282%2529.jpg",
+    "local_path": "downloaded_images/welwitschia.jpg"
+  },
+  "organ-pipes": {
+    "display_name": "Organ Pipes (Namibia)",
+    "wikipedia_title": "Organ Pipes (Namibia)",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Organ_pipes_Namibia_20190528.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Organ_pipes_Namibia_20190528.jpg",
+    "local_path": "downloaded_images/organ-pipes.jpg"
+  },
+  "himba-people": {
+    "display_name": "Himba people",
+    "wikipedia_title": "Himba people",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Namibie_Himba_0717a.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Namibie_Himba_0717a.jpg",
+    "local_path": "downloaded_images/himba-people.jpg"
+  },
+  "sesriem-canyon": {
+    "display_name": "Sesriem Canyon",
+    "wikipedia_title": "Sesriem",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Sesriem_Crater_2014.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Sesriem_Crater_2014.jpg",
+    "local_path": "downloaded_images/sesriem-canyon.jpg"
+  },
+  "alte-feste": {
+    "display_name": "Alte Feste",
+    "wikipedia_title": "Alte Feste",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Alte_Feste_Windhoek_%28Aussenansicht%29.jpg",
+    "commons_file_page": "https://commons.wikimedia.org/wiki/File:Alte_Feste_Windhoek_%2528Aussenansicht%2529.jpg",
+    "local_path": "downloaded_images/alte-feste.jpg"
+  }
+}

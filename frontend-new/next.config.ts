@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
     ".space.z.ai",
   ],
   productionBrowserSourceMaps: false,
+  serverExternalPackages: ["@sparticuz/chromium", "playwright-core", "puppeteer-core", "sharp", "sudoku"],
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },

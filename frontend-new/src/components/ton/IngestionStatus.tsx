@@ -45,7 +45,7 @@ export default function IngestionStatus() {
     : "Pending";
 
   return (
-    <div className="flex items-center gap-2 font-mono text-[8px] text-ton-black/20 uppercase tracking-wider">
+    <div className="flex items-center gap-2 font-mono text-[8px] text-ton-black/40 uppercase tracking-wider">
       {status.isRunning ? (
         <>
           <Activity className="w-3 h-3 text-ton-red animate-pulse" />

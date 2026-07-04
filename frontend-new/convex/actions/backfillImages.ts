@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — Backfill Images (Convex Action)
+// Times of Namibia - Backfill Images (Convex Action)
 //
 // Generates images for articles that have no imageUrl.
 // Processes 3 at a time to avoid hammering Pollinations.
@@ -46,7 +46,7 @@ export const backfillImages = internalAction({
 
           const storageId = await ctx.storage.store(blob);
 
-          // Persist the imageStorageId to the article — this updates
+          // Persist the imageStorageId to the article - this updates
           // the article's imageUrl field via updateArticleContent's
           // imageStorageId branch (which calls ctx.storage.getUrl).
           await ctx.runMutation(api.mutationsAdmin.updateArticleContent, {
@@ -68,7 +68,7 @@ export const backfillImages = internalAction({
           failed++;
           const msg = r.reason instanceof Error ? r.reason.message : String(r.reason);
           errors.push(`${batch[j].headline.slice(0, 40)}: ${msg}`);
-          console.warn(`[backfill-images] ✗ Failed: ${batch[j].headline.slice(0, 40)} — ${msg}`);
+          console.warn(`[backfill-images] ✗ Failed: ${batch[j].headline.slice(0, 40)} - ${msg}`);
         }
       }
 

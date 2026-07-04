@@ -1,9 +1,8 @@
-"use client";
 
 /**
- * Category Navigation Bar — sticky below the masthead.
+ * Category Navigation Bar - sticky below the masthead.
  * Pure white background. Horizontally scrollable on ALL screen sizes.
- * No toggle, no hamburger, no collapse — just a clean scrollable strip.
+ * No toggle, no hamburger, no collapse - just a clean scrollable strip.
  */
 const CATEGORIES = [
   { label: "National", slug: "national" },
@@ -34,6 +33,12 @@ export default function CategoryNav() {
               {cat.label}
             </a>
           ))}
+          <a
+            href="/know-namibia"
+            className="font-mono text-[11px] font-bold uppercase tracking-widest text-ton-red hover:text-ton-black transition-colors whitespace-nowrap flex-shrink-0 border-l border-ton-black/10 pl-4"
+          >
+            Know Namibia
+          </a>
           <a
             href="/contribute"
             className="hidden lg:inline-flex font-mono text-[10px] font-bold uppercase tracking-widest bg-ton-red text-white px-4 py-1.5 hover:bg-ton-red/80 transition-colors flex-shrink-0"

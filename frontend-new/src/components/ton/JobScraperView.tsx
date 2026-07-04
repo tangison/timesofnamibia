@@ -139,7 +139,7 @@ export default function JobScraperView() {
         </p>
         <div className="flex items-center gap-4 mt-4">
           <Breadcrumbs items={[{ label: "Job Scraper" }]} />
-          <span className="font-mono text-[9px] text-ton-black/20">TANGISON</span>
+          <span className="font-mono text-[9px] text-ton-black/40">TANGISON</span>
         </div>
       </div>
 
@@ -225,7 +225,7 @@ export default function JobScraperView() {
                     <span className={`font-mono text-[10px] px-2 py-0.5 border rounded-none font-semibold ${sourceColor(job.source)}`}>
                       {job.source}
                     </span>
-                    <span className="font-mono text-[10px] text-ton-black/30 px-2 py-0.5 border border-ton-black/10 rounded-none">
+                    <span className="font-mono text-[10px] text-ton-black/45 px-2 py-0.5 border border-ton-black/10 rounded-none">
                       {job.type || "Full-time"}
                     </span>
                   </div>
@@ -263,7 +263,7 @@ export default function JobScraperView() {
 
                   {/* Actions row */}
                   <div className="flex items-center gap-3 mt-3">
-                    <ShareButtons title={`${job.title} — ${job.company}`} />
+                    <ShareButtons title={`${job.title} - ${job.company}`} />
                     <button className="font-mono text-[10px] font-bold uppercase tracking-widest bg-ton-red text-white px-4 py-2 hover:bg-ton-red/90 transition-colors flex items-center gap-1.5">
                       <ExternalLink className="w-3 h-3" />
                       Apply Now

@@ -1,5 +1,5 @@
 // Server-side: use BACKEND_URL directly (env var only available server-side)
-// Client-side: always use the Next.js proxy (/api/proxy) to avoid CORS issues —
+// Client-side: always use the Next.js proxy (/api/proxy) to avoid CORS issues -
 //   BACKEND_URL is NOT prefixed with NEXT_PUBLIC_ so it's undefined in the browser.
 const BACKEND_URL = process.env.BACKEND_URL?.replace(/\/$/, "") || "http://127.0.0.1:8000";
 const PROXY_BASE = "/api/proxy";
@@ -199,7 +199,7 @@ export async function getMarketData() {
 
 export async function getTickerItems() {
   if (useConvex) {
-    // Use Convex tickerItem table when available — for now, return []
+    // Use Convex tickerItem table when available - for now, return []
     return [];
   }
   const rows = await api<BackendItem[]>("/api/v1/articles?limit=8");
@@ -244,7 +244,7 @@ export async function getRssFeeds() {
 
 export async function subscribeNewsletter(email: string, name?: string) {
   if (useConvex) {
-    // Use Convex mutation directly — bypass the proxy
+    // Use Convex mutation directly - bypass the proxy
     const { convexClient } = await import("@/lib/convex");
     const { api } = await import("@convex/_generated/api");
     if (convexClient) {

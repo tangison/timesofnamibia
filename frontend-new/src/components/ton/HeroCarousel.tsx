@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Clock } from "lucide-react";
-import Image from "next/image";
 
 interface CarouselArticle {
   id: string;
@@ -17,7 +16,7 @@ interface CarouselArticle {
 }
 
 /**
- * Hero Carousel — auto-rotating featured articles with Ken Burns effect,
+ * Hero Carousel - auto-rotating featured articles with Ken Burns effect,
  * navigation arrows, and dot indicators.
  */
 export default function HeroCarousel({ articles }: { articles: CarouselArticle[] }) {
@@ -34,10 +33,10 @@ export default function HeroCarousel({ articles }: { articles: CarouselArticle[]
     setCurrent((prev) => (prev - 1 + articles.length) % articles.length);
   }, [articles.length]);
 
-  // Auto-rotate every 5 seconds
+  // Section 3: Auto-rotate every 4 seconds (faster newspaper-carousel pace)
   useEffect(() => {
     if (articles.length <= 1) return;
-    const timer = setInterval(next, 5000);
+    const timer = setInterval(next, 4000);
     return () => clearInterval(timer);
   }, [next, articles.length]);
 
@@ -85,7 +84,7 @@ export default function HeroCarousel({ articles }: { articles: CarouselArticle[]
               />
             </motion.div>
           ) : (
-            <div className="absolute inset-0 bg-gradient-to-br from-ton-black via-ton-black/90 to-ton-red/20" />
+            <div className="absolute inset-0 bg-ton-navy" />
           )}
 
           {/* Gradient overlay */}

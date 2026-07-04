@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — RSS Ingestion API (TANGISON)
+// Times of Namibia - RSS Ingestion API (TANGISON)
 // Admin-only. Rate-limited 3/5min/IP.
 // ============================================================
 

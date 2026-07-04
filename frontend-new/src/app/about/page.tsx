@@ -2,9 +2,9 @@ import { Metadata } from "next";
 import TonLayout from "@/components/ton/TonLayout";
 
 export const metadata: Metadata = {
-  title: "About — Times of Namibia",
+  title: "About - Times of Namibia",
   description:
-    "About Times of Namibia — a TANGISON publication. Applied AI built in Africa, delivering real-time verified news for Namibia and the continent.",
+    "About Times of Namibia - a TANGISON publication. Applied AI built in Africa, delivering real-time verified news for Namibia and the continent.",
   alternates: { canonical: "/about" },
 };
 
@@ -30,7 +30,7 @@ export default function AboutPage() {
           <p className="font-serif text-base md:text-lg text-ton-black/70 leading-relaxed">
             Times of Namibia is a digital-first news outlet publishing real-time verified news,
             tender analysis, job market intelligence, and market data for Namibia and the African continent.
-            We are a TANGISON publication — built on applied AI infrastructure designed for African operating conditions.
+            We are a TANGISON publication - built on applied AI infrastructure designed for African operating conditions.
           </p>
 
           <p className="font-serif text-base md:text-lg text-ton-black/70 leading-relaxed">
@@ -45,12 +45,12 @@ export default function AboutPage() {
             What We Cover
           </h2>
           <ul className="space-y-3 font-serif text-base text-ton-black/60 leading-relaxed">
-            <li><strong className="text-ton-black">National News</strong> — Governance, policy, and civic life from 9 Namibian outlets</li>
-            <li><strong className="text-ton-black">Economy & Mining</strong> — Financial news, diamonds, uranium, and extractive industries</li>
-            <li><strong className="text-ton-black">Energy</strong> — Green hydrogen, solar, oil, and Namibia's energy transition</li>
-            <li><strong className="text-ton-black">Africa Desk</strong> — Continental affairs from five regions</li>
-            <li><strong className="text-ton-black">World</strong> — International coverage from SCMP, Telegraph, and Euronews</li>
-            <li><strong className="text-ton-black">Jobs & Tenders</strong> — Employment intelligence and government procurement</li>
+            <li><strong className="text-ton-black">National News</strong> - Governance, policy, and civic life from 9 Namibian outlets</li>
+            <li><strong className="text-ton-black">Economy & Mining</strong> - Financial news, diamonds, uranium, and extractive industries</li>
+            <li><strong className="text-ton-black">Energy</strong> - Green hydrogen, solar, oil, and Namibia's energy transition</li>
+            <li><strong className="text-ton-black">Africa Desk</strong> - Continental affairs from five regions</li>
+            <li><strong className="text-ton-black">World</strong> - International coverage from SCMP, Telegraph, and Euronews</li>
+            <li><strong className="text-ton-black">Jobs & Tenders</strong> - Employment intelligence and government procurement</li>
           </ul>
 
           <h2 className="font-serif text-2xl font-bold text-ton-black pt-6 border-t border-ton-black/10">
@@ -69,7 +69,7 @@ export default function AboutPage() {
           <p className="font-serif text-base md:text-lg text-ton-black/70 leading-relaxed">
             We do not auto-publish user-generated content. All community contributions go through
             editorial review before publishing. AI-generated content is marked as such, with visible
-            source attribution for synthesized articles. We do not hotlink stock photos — every image
+            source attribution for synthesized articles. We do not hotlink stock photos - every image
             is either from the publisher's own CDN or AI-generated with our brand palette.
           </p>
 
@@ -78,7 +78,7 @@ export default function AboutPage() {
           </h2>
           <p className="font-serif text-base md:text-lg text-ton-black/70 leading-relaxed">
             TANGISON is an applied AI laboratory based in Windhoek, Namibia. We build AI systems
-            for African operating conditions — systems that work where AI has never worked before.
+            for African operating conditions - systems that work where AI has never worked before.
             Times of Namibia is one of those systems.
           </p>
 

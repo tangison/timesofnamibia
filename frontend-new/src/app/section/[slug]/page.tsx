@@ -11,7 +11,7 @@ interface SectionPageProps {
 }
 
 const SECTION_META: Record<string, { title: string; description: string }> = {
-  national: { title: "National News", description: "Namibia's top stories — governance, policy, and civic life." },
+  national: { title: "National News", description: "Namibia's top stories - governance, policy, and civic life." },
   economy: { title: "Economy & Business", description: "Financial news, trade data, corporate reporting, and economic policy." },
   mining: { title: "Mining & Minerals", description: "Diamonds, uranium, gold, and the extractive industries driving Namibia." },
   energy: { title: "Energy & Power", description: "Green hydrogen, solar, oil, gas, and Namibia's energy future." },
@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: SectionPageProps): Promise<Me
     alternates: { canonical },
     robots,
     openGraph: {
-      title: `${meta.title} — Times of Namibia`,
+      title: `${meta.title} - Times of Namibia`,
       description: meta.description,
       type: "website",
       locale: "en_NA",
@@ -74,7 +74,7 @@ export default async function SectionPage({ params }: SectionPageProps) {
               {slug}
             </span>
             {articles.length > 0 && (
-              <span className="font-mono text-[9px] text-ton-black/20">
+              <span className="font-mono text-[9px] text-ton-black/40">
                 {articles.length} {articles.length === 1 ? "article" : "articles"}
               </span>
             )}
@@ -93,13 +93,13 @@ export default async function SectionPage({ params }: SectionPageProps) {
         {articles.length === 0 ? (
           <EmptyState
             type="articles"
-            title={`${meta.title} — Coming Soon`}
+            title={`${meta.title} - Coming Soon`}
             description={`The data scraper agent is collecting ${meta.title.toLowerCase()} content from Namibian sources. Articles will appear here automatically.`}
             action={{ label: "Return to Front Page", href: "/" }}
           />
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            {/* Main content — 8 cols */}
+            {/* Main content - 8 cols */}
             <div className="lg:col-span-8">
               {/* Featured article */}
               {featuredArticle && (
@@ -128,7 +128,7 @@ export default async function SectionPage({ params }: SectionPageProps) {
                       {featuredArticle.excerpt}
                     </p>
                   )}
-                  <div className="flex items-center gap-3 mt-3 text-[10px] font-mono text-ton-black/30 uppercase tracking-wider">
+                  <div className="flex items-center gap-3 mt-3 text-[10px] font-mono text-ton-black/45 uppercase tracking-wider">
                     <span>{featuredArticle.source}</span>
                     <span className="flex items-center gap-1">
                       <Clock size={12} />
@@ -146,7 +146,7 @@ export default async function SectionPage({ params }: SectionPageProps) {
               </div>
             </div>
 
-            {/* Sidebar — 4 cols */}
+            {/* Sidebar - 4 cols */}
             <div className="lg:col-span-4">
               <div className="flex items-center gap-2 mb-4 pb-3 border-b-2 border-ton-black">
                 <h3 className="font-serif font-bold text-lg text-ton-black">More in {meta.title}</h3>

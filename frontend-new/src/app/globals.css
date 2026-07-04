@@ -84,7 +84,7 @@
 :root {
   --radius: 0px;  /* TANGISON: zero border-radius on all elements */
 
-  /* TANGISON BRAND SYSTEM — Light theme */
+  /* TANGISON BRAND SYSTEM - Light theme */
   --background: #FAFAF8;            /* warm-white */
   --foreground: #111315;            /* atlantic-black */
   --card: #FFFFFF;
@@ -118,7 +118,7 @@
   --sidebar-ring: #C56A4A;
 }
 
-/* ========= TANGISON ONYX — DARK THEME ========= */
+/* ========= TANGISON ONYX - DARK THEME ========= */
 
 .dark {
   --background: #0A0B0C;            /* terminal-black */
@@ -186,6 +186,10 @@
   letter-spacing: -0.02em;
 }
 
+.font-wordmark {
+  font-family: var(--font-unifraktur), "UnifrakturMaguntia", serif;
+}
+
 .font-mono {
   letter-spacing: 0.02em;
 }
@@ -235,7 +239,7 @@ h1, h2, h3 {
 .tangison-stagger-5 { animation-delay: 0.40s; }
 .tangison-stagger-6 { animation-delay: 0.48s; }
 
-/* Signal travel — for loading bars + ticker accents */
+/* Signal travel - for loading bars + ticker accents */
 .tangison-signal {
   animation: tangison-signal-travel 1.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
@@ -292,7 +296,7 @@ h1, h2, h3 {
 /* ========= DROP CAP ========= */
 
 .ton-dropcap::first-letter {
-  font-family: var(--font-playfair), "Playfair Display", serif;
+  font-family: var(--font-merriweather), "Merriweather", serif;
   float: left;
   font-size: 4.5rem;
   line-height: 0.75;
@@ -302,7 +306,7 @@ h1, h2, h3 {
   color: #111111;
 }
 
-/* ========= COLUMN RULES — SUBTLE ========= */
+/* ========= COLUMN RULES - SUBTLE ========= */
 
 .ton-column-rule {
   border-right: 1px solid #D4D2CE;
@@ -358,7 +362,7 @@ h1, h2, h3 {
   background: #CB102E;
 }
 
-/* ========= EDITORIAL BORDERS — REFINED ========= */
+/* ========= EDITORIAL BORDERS - REFINED ========= */
 
 .ton-rule-top {
   border-top: 2px solid #111111;
@@ -458,7 +462,7 @@ h1, h2, h3 {
   margin-bottom: 0.75rem;
 }
 
-/* ========= TON ONYX — DARK MODE OVERRIDES ========= */
+/* ========= TON ONYX - DARK MODE OVERRIDES ========= */
 
 /* Smooth transitions for theme switching */
 html {
@@ -644,7 +648,7 @@ html {
     page-break-before: always;
   }
 
-  /* Print color treatment — TON red preserved for accent elements */
+  /* Print color treatment - TON red preserved for accent elements */
   .ton-bp-page * {
     color: black !important;
     border-color: black !important;

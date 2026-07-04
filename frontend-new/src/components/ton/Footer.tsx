@@ -1,30 +1,28 @@
-"use client";
-
-import { motion } from "framer-motion";
 import Image from "next/image";
 
 /**
- * Times of Namibia — Minimalist Footer
+ * Times of Namibia - Minimalist Footer
  *
  * Dark themed. Namibian landscape image as subtle accent.
- * No clutter — just the wordmark, tagline, essential links, and credit.
+ * No clutter - just the wordmark, tagline, essential links, and credit.
  */
 export default function Footer() {
   return (
-    <footer className="relative bg-ton-black text-ton-cream mt-20 overflow-hidden">
-      {/* Namibian landscape — subtle top accent from Wikimedia Commons (free, CC-BY-SA) */}
-      <div className="relative h-32 overflow-hidden">
+    <footer className="relative text-ton-cream mt-20 overflow-hidden">
+      {/* Section 2: Skeleton Coast background image */}
+      <div className="absolute inset-0">
         <Image
-          src="/og-default.png"
-          alt="Times of Namibia"
+          src="/skeleton-coast-bg.webp"
+          alt=""
           fill
-          className="object-cover opacity-30"
+          className="object-cover"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-ton-black via-ton-black/60 to-transparent" />
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-black/70" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-10">
+      <div className="relative max-w-7xl mx-auto px-4 md:px-8 py-10">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
           {/* Wordmark + tagline */}
           <div className="flex items-center gap-4">
@@ -48,12 +46,14 @@ export default function Footer() {
             <a href="/editorial-standards" className="hover:text-ton-red transition-colors">Ethics</a>
             <a href="/privacy" className="hover:text-ton-red transition-colors">Privacy</a>
             <a href="/terms" className="hover:text-ton-red transition-colors">Terms</a>
+            <a href="/games" className="hover:text-ton-red transition-colors">Games</a>
+            <a href="/brand" className="hover:text-ton-red transition-colors">Brand</a>
             <a href="/tangison" className="hover:text-ton-red transition-colors">TANGISON</a>
           </nav>
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-8 pt-6 border-t border-ton-cream/10 flex flex-col sm:flex-row justify-between items-center gap-3 text-[10px] font-mono uppercase tracking-widest text-ton-cream/30">
+        <div className="mt-8 pt-6 border-t border-ton-cream/10 flex flex-col sm:flex-row justify-between items-center gap-3 text-[10px] font-mono uppercase tracking-widest text-ton-cream/45">
           <div>Powered by TANGISON Applied AI</div>
           <div>© {new Date().getFullYear()} Times of Namibia. All rights reserved.</div>
         </div>

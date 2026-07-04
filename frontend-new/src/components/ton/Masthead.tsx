@@ -1,7 +1,26 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Search, Menu } from "lucide-react";
+import { Search } from "lucide-react";
+
+// Section 2: Custom 2-bar menu icon - premium minimal style
+// Thicker strokes, shorter lines for a deliberate, less default-UI-kit look
+function MenuIconTwoBar({ size = 22 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2.5}
+      strokeLinecap="round"
+    >
+      <line x1="4" y1="9" x2="20" y2="9" />
+      <line x1="4" y1="15" x2="20" y2="15" />
+    </svg>
+  );
+}
 import { useState } from "react";
 import OffCanvasMenu from "./OffCanvasMenu";
 
@@ -13,7 +32,7 @@ const springTransition = {
 };
 
 /**
- * Times of Namibia — Premium Masthead
+ * Times of Namibia - Premium Masthead
  *
  * Mobile: wordmark on line 1, search + menu icons on line 2 (compact, two-line layout).
  * Desktop: wordmark left, nav center, actions right (single line).
@@ -29,7 +48,7 @@ export default function Masthead() {
         transition={springTransition}
         className="sticky top-0 z-50 bg-ton-cream/95 backdrop-blur-md border-b border-ton-black/10"
       >
-        {/* Mobile layout — two lines */}
+        {/* Mobile layout - two lines */}
         <div className="lg:hidden">
           {/* Line 1: Wordmark */}
           <div className="px-4 pt-3 pb-1">
@@ -59,12 +78,12 @@ export default function Masthead() {
               aria-label="Menu"
               onClick={() => setMenuOpen(true)}
             >
-              <Menu size={22} />
+              <MenuIconTwoBar size={22} />
             </button>
           </div>
         </div>
 
-        {/* Desktop layout — single line */}
+        {/* Desktop layout - single line */}
         <div className="hidden lg:flex items-center justify-between px-8 py-4">
           {/* Wordmark */}
           <a href="/" className="flex flex-col group">
@@ -102,7 +121,7 @@ export default function Masthead() {
               aria-label="Menu"
               onClick={() => setMenuOpen(true)}
             >
-              <Menu size={24} />
+              <MenuIconTwoBar size={24} />
             </button>
           </div>
         </div>

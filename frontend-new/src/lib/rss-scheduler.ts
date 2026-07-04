@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — RSS Auto-Ingestion Scheduler
+// Times of Namibia - RSS Auto-Ingestion Scheduler
 // Triggers ingestion on first server start and periodically
 // ============================================================
 

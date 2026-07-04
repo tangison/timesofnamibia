@@ -34,7 +34,7 @@ export default function EditorialStandardsView() {
         <blockquote className="font-serif italic text-xl sm:text-2xl md:text-3xl text-ton-black/50 leading-relaxed max-w-3xl mx-auto">
           &ldquo;The standard is the standard. There are no exceptions, no shortcuts, no editorial conveniences that override the protocol.&rdquo;
         </blockquote>
-        <p className="font-mono text-[10px] text-ton-black/30 mt-4 tracking-widest uppercase">
+        <p className="font-mono text-[10px] text-ton-black/45 mt-4 tracking-widest uppercase">
           TANGISON Editorial Board
         </p>
       </div>
@@ -53,7 +53,7 @@ export default function EditorialStandardsView() {
           <div>
             <div className="ton-dropcap">
               <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-3">
-                Every datum published by Times of Namibia undergoes a mandatory 3-point source verification before it reaches the reader. This is not aspirational — it is structural. The Times OS engine validates each data point against three independent sources: the primary government portal, a secondary official record, and a tertiary cross-reference. If any point in the triangle fails, the datum is flagged as unverified, never buried or silently corrected.
+                Every datum published by Times of Namibia undergoes a mandatory 3-point source verification before it reaches the reader. This is not aspirational - it is structural. The Times OS engine validates each data point against three independent sources: the primary government portal, a secondary official record, and a tertiary cross-reference. If any point in the triangle fails, the datum is flagged as unverified, never buried or silently corrected.
               </p>
             </div>
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8]">
@@ -78,7 +78,7 @@ export default function EditorialStandardsView() {
                 ))}
               </div>
               <div className="mt-3 pt-3 border-t border-ton-cream/8">
-                <p className="font-mono text-[9px] text-ton-cream/30 uppercase tracking-wider">
+                <p className="font-mono text-[9px] text-ton-cream/45 uppercase tracking-wider">
                   If any point fails → Flagged as Unverified. Never buried.
                 </p>
               </div>
@@ -86,7 +86,7 @@ export default function EditorialStandardsView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Standard I // Verification Protocol</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -133,7 +133,7 @@ export default function EditorialStandardsView() {
           </p>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Standard II // The 6-Second Rule</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -150,7 +150,7 @@ export default function EditorialStandardsView() {
         <div className="h-px bg-ton-black/8 mb-5" />
 
         <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-5">
-          The spelling of Namibian regions is non-negotiable. We do not anglicise, simplify, or approximate. The click consonant in //Kharas is not decorative — it is the name. Our editorial system enforces correct spelling programmatically, with a regional name validator built into the Times OS pipeline.
+          The spelling of Namibian regions is non-negotiable. We do not anglicise, simplify, or approximate. The click consonant in //Kharas is not decorative - it is the name. Our editorial system enforces correct spelling programmatically, with a regional name validator built into the Times OS pipeline.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
@@ -169,7 +169,7 @@ export default function EditorialStandardsView() {
           ))}
         </div>
 
-        <div className="flex items-center justify-between mt-4 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-4 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Standard III // Regional Accuracy</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -186,7 +186,7 @@ export default function EditorialStandardsView() {
         <div className="h-px bg-ton-black/8 mb-5" />
 
         <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-5">
-          Every datum carries its source, its timestamp, and its verification status. This is not optional metadata — it is the structural integrity of the publication. A datum without a source is not information; it is noise. A timestamp that is not visible is not proof; it is decoration.
+          Every datum carries its source, its timestamp, and its verification status. This is not optional metadata - it is the structural integrity of the publication. A datum without a source is not information; it is noise. A timestamp that is not visible is not proof; it is decoration.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6">
@@ -210,7 +210,7 @@ export default function EditorialStandardsView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Standard IV // Source Attribution</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -256,7 +256,7 @@ export default function EditorialStandardsView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Standard V // No Engagement Bait</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -267,7 +267,7 @@ export default function EditorialStandardsView() {
         <div className="flex items-center gap-3 mb-5">
           <Eye className="w-4 h-4 text-ton-red" />
           <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black">
-            VI. The Stoic Observer — Editorial Voice
+            VI. The Stoic Observer - Editorial Voice
           </h2>
         </div>
         <div className="h-px bg-ton-black/8 mb-5" />
@@ -276,11 +276,11 @@ export default function EditorialStandardsView() {
           <div>
             <div className="ton-dropcap">
               <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-3">
-                The editorial voice of Times of Namibia is the Stoic Observer: intellectual, precise, and deeply rooted in Namibian soil. It does not emote. It does not speculate. It observes, verifies, and presents. The voice is the same whether reporting a tender award in Windhoek or a community development initiative in Kavango West — measured, factual, and stripped of performative urgency.
+                The editorial voice of Times of Namibia is the Stoic Observer: intellectual, precise, and deeply rooted in Namibian soil. It does not emote. It does not speculate. It observes, verifies, and presents. The voice is the same whether reporting a tender award in Windhoek or a community development initiative in Kavango West - measured, factual, and stripped of performative urgency.
               </p>
             </div>
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8]">
-              The Stoic Observer does not tell the reader how to feel. It tells the reader what is. Opinion is clearly separated from fact. When editorial judgment is exercised, it is disclosed. When a story requires context, it is provided — not as commentary, but as the scaffolding of understanding.
+              The Stoic Observer does not tell the reader how to feel. It tells the reader what is. Opinion is clearly separated from fact. When editorial judgment is exercised, it is disclosed. When a story requires context, it is provided - not as commentary, but as the scaffolding of understanding.
             </p>
           </div>
           <div>
@@ -289,7 +289,7 @@ export default function EditorialStandardsView() {
               {[
                 { attr: "Intellectual", desc: "Assumes the reader's capacity. Does not simplify. Provides depth." },
                 { attr: "Precise", desc: "Every word is deliberate. No hedging, no vagueness, no filler." },
-                { attr: "Rooted", desc: "Namibian context is not added — it is foundational. //Kharas is spelled with the click." },
+                { attr: "Rooted", desc: "Namibian context is not added - it is foundational. //Kharas is spelled with the click." },
                 { attr: "Stoic", desc: "No emotive language. No performative urgency. The fact is sufficient." },
               ].map((item, i) => (
                 <li key={i}>
@@ -301,7 +301,7 @@ export default function EditorialStandardsView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Standard VI // The Stoic Observer</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -323,7 +323,7 @@ export default function EditorialStandardsView() {
               Every contributor to Times of Namibia operates within the same verification framework as the core editorial pipeline. There are no exceptions for external wires, freelance correspondents, or partner publications. If the datum appears on TON, it carries the same source attribution, the same timestamp, and the same verification badge.
             </p>
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8]">
-              Verified correspondents receive a verification badge that is displayed alongside their bylines. This badge is not decorative — it indicates that the contributor has passed the TON verification protocol and their submissions flow through the same 3-point validation as scraped data.
+              Verified correspondents receive a verification badge that is displayed alongside their bylines. This badge is not decorative - it indicates that the contributor has passed the TON verification protocol and their submissions flow through the same 3-point validation as scraped data.
             </p>
           </div>
           <div>
@@ -343,7 +343,7 @@ export default function EditorialStandardsView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Standard VII // Contributor Standards</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -384,7 +384,7 @@ export default function EditorialStandardsView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Standard VIII // Correction Policy</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -406,13 +406,13 @@ export default function EditorialStandardsView() {
               All photography must be high-contrast grayscale. No stock photography. If it is not Namibia, it is not Times of Namibia. Every image must carry a GPS coordinate watermark and a JetBrains Mono timestamp in a black rectangular box. No rounded corners on overlay elements. Images displayed grayscale by default; colour on hover (digital only).
             </p>
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8]">
-              Print imagery is always grayscale — no hover state in print. All images must be shot with Namibian content: landscapes, infrastructure, people, commerce. No artificial lighting in outdoor shots. Natural light only.
+              Print imagery is always grayscale - no hover state in print. All images must be shot with Namibian content: landscapes, infrastructure, people, commerce. No artificial lighting in outdoor shots. Natural light only.
             </p>
           </div>
           <div>
             <ul className="space-y-2.5">
               {[
-                "High-contrast grayscale — no exceptions",
+                "High-contrast grayscale - no exceptions",
                 "No stock photography. Namibian content only",
                 "GPS coordinate watermark in black rectangular box",
                 "JetBrains Mono timestamp in the same black box",
@@ -433,7 +433,7 @@ export default function EditorialStandardsView() {
         {/* Overlay example */}
         <div className="mt-6 bg-ton-black/3 p-4">
           <div className="bg-ton-black/5 h-32 flex items-center justify-center border border-ton-black/8 relative">
-            <p className="font-mono text-[10px] text-ton-black/20 uppercase tracking-widest">[ Image Area ]</p>
+            <p className="font-mono text-[10px] text-ton-black/40 uppercase tracking-widest">[ Image Area ]</p>
             <div className="absolute bottom-2 left-2 bg-ton-black text-ton-cream px-2 py-1">
               <p className="font-mono text-[7px] leading-tight">
                 WINDHOEK CBD // 22.57 S, 17.08 E<br/>
@@ -443,7 +443,7 @@ export default function EditorialStandardsView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Standard IX // Imagery Standards</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -463,7 +463,7 @@ export default function EditorialStandardsView() {
           <div className="pt-5 border-t border-ton-black/8">
             <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">Paper Stock</span>
             <p className="font-sans text-xs text-ton-black/50 mt-2 leading-relaxed">
-              Pure White or Cream stock, minimum 120gsm. No gloss. Matte finish only. The texture must feel like authority — thick, unyielding, and archival.
+              Pure White or Cream stock, minimum 120gsm. No gloss. Matte finish only. The texture must feel like authority - thick, unyielding, and archival.
             </p>
           </div>
           <div className="pt-5 border-t border-ton-black/8">
@@ -501,7 +501,7 @@ export default function EditorialStandardsView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Standard X // Print Standards</span>
           <span>&copy; TANGISON</span>
         </div>

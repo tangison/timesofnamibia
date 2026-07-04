@@ -29,7 +29,7 @@ export async function GET() {
   xmlns:content="http://purl.org/rss/1.0/modules/content/"
   xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Times of Namibia — RSS Feed</title>
+    <title>Times of Namibia - RSS Feed</title>
     <link>${baseUrl}</link>
     <description>Namibia's premier digital broadsheet. Real-time verified news, tender analysis, job market intelligence, and market data.</description>
     <language>en-na</language>
@@ -40,7 +40,7 @@ export async function GET() {
     <atom:link href="${baseUrl}/feed.xml" rel="self" type="application/rss+xml" />
     <image>
       <url>${baseUrl}/logo-mark.png</url>
-      <title>Times of Namibia — A TANGISON Publication</title>
+      <title>Times of Namibia - A TANGISON Publication</title>
       <link>${baseUrl}</link>
     </image>
     ${rssItems}

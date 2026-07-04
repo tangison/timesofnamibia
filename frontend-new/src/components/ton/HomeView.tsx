@@ -73,7 +73,7 @@ function timeAgo(date: string | Date): string {
 function getMarketIcon(direction: string) {
   if (direction === "up") return <ArrowUpRight size={14} className="text-emerald-600" />;
   if (direction === "down") return <ArrowDownRight size={14} className="text-red-600" />;
-  return <Minus size={14} className="text-ton-black/30" />;
+  return <Minus size={14} className="text-ton-black/45" />;
 }
 
 // ── COMPONENT ────────────────────────────────────────────────
@@ -85,13 +85,40 @@ export default function HomeView({
   tenders,
   marketData,
 }: HomeViewProps) {
-  // Real-time article updates — poll every 30 seconds
+  // Real-time article updates - poll every 30 seconds
   const [liveArticles, setLiveArticles] = useState(recentArticles);
+  // Phase 2: category filter state - dynamically queries Convex
+  const [activeCategory, setActiveCategory] = useState<string>("all");
+  const [categoryLoading, setCategoryLoading] = useState(false);
 
+  // Phase 2: When category changes, fetch filtered articles from the API
+  // (which queries Convex with the section filter) - no page reload.
   useEffect(() => {
-    setLiveArticles(recentArticles);
-    
-    // Poll for new articles every 30 seconds
+    if (activeCategory === "all") {
+      setLiveArticles(recentArticles);
+      return;
+    }
+
+    setCategoryLoading(true);
+    fetch(`/api/articles?limit=20&section=${activeCategory}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.articles?.length > 0) {
+          setLiveArticles(data.articles);
+        } else {
+          setLiveArticles([]);
+        }
+      })
+      .catch(() => {
+        // Silent fail, keep current articles
+      })
+      .finally(() => setCategoryLoading(false));
+  }, [activeCategory, recentArticles]);
+
+  // Poll for new articles every 30 seconds (only when on "all" tab)
+  useEffect(() => {
+    if (activeCategory !== "all") return;
+
     const interval = setInterval(async () => {
       try {
         const res = await fetch("/api/articles?limit=20");
@@ -105,26 +132,42 @@ export default function HomeView({
     }, 30_000);
 
     return () => clearInterval(interval);
-  }, [recentArticles]);
+  }, [activeCategory]);
+
+  // Phase 2: Category filter tabs
+  const CATEGORIES = [
+    { label: "All", value: "all" },
+    { label: "Politics", value: "politics" },
+    { label: "Business", value: "economy" },
+    { label: "Sport", value: "sport" },
+    { label: "Africa", value: "africa" },
+    { label: "World", value: "world" },
+    { label: "Tech", value: "technology" },
+    { label: "Health", value: "health" },
+    { label: "Environment", value: "environment" },
+  ];
+
+  // Phase 2: articles are already filtered server-side via Convex query
+  const filteredArticles = liveArticles;
 
   // Build carousel articles (featured + top 4 with images)
   const carouselArticles = [
     ...(featuredArticle ? [featuredArticle] : []),
-    ...liveArticles.filter(a => a.imageUrl && a.id !== featuredArticle?.id).slice(0, 4),
+    ...filteredArticles.filter(a => (a.imageUrl || (a as any).coverImage) && a.id !== featuredArticle?.id).slice(0, 4),
   ].slice(0, 5);
 
   // Grid articles (next 8 after carousel)
-  const gridArticles = liveArticles
+  const gridArticles = filteredArticles
     .filter(a => !carouselArticles.find(c => c.id === a.id))
     .slice(0, 8);
 
   // Sidebar articles (compact list)
-  const sidebarArticles = liveArticles
+  const sidebarArticles = filteredArticles
     .filter(a => !carouselArticles.find(c => c.id === a.id))
     .slice(8, 14);
 
   // Most read (articles with most content = proxy for engagement)
-  const mostRead = [...liveArticles].sort((a, b) => b.content.length - a.content.length).slice(0, 5);
+  const mostRead = [...filteredArticles].sort((a, b) => b.content.length - a.content.length).slice(0, 5);
 
   return (
     <div>
@@ -138,7 +181,7 @@ export default function HomeView({
 
       {/* Main Content Area */}
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-12">
-        
+
         {/* Market Data Strip */}
         {marketData.length > 0 && (
           <motion.div
@@ -161,17 +204,41 @@ export default function HomeView({
 
         {/* Main 3-column layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
-          {/* LEFT — Latest News Grid (8 cols) */}
+
+          {/* LEFT - Latest News Grid (8 cols) */}
           <div className="lg:col-span-8">
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between mb-4">
               <h2 className="font-serif font-bold text-2xl text-ton-black border-l-4 border-ton-red pl-4">
                 Latest News
               </h2>
-              <span className="text-xs font-mono text-ton-black/30 uppercase tracking-wider flex items-center gap-1">
+              <span className="text-xs font-mono text-ton-black/45 uppercase tracking-wider flex items-center gap-1">
                 <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
                 Live
               </span>
+            </div>
+
+            {/* Phase 2: Category filter tabs - dynamically queries Convex */}
+            <div className="mb-6 flex items-center gap-2 overflow-x-auto scrollbar-hide pb-2 border-b border-ton-black/10">
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat.value}
+                  onClick={() => setActiveCategory(cat.value)}
+                  aria-label={`Filter by ${cat.label}`}
+                  aria-pressed={activeCategory === cat.value}
+                  className={`flex-shrink-0 px-4 py-1.5 font-mono text-[10px] font-bold uppercase tracking-widest transition-all whitespace-nowrap ${
+                    activeCategory === cat.value
+                      ? "bg-ton-black text-white"
+                      : "text-ton-black/50 hover:text-ton-black border border-ton-black/10 hover:border-ton-black/30"
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              ))}
+              {categoryLoading && (
+                <span className="flex-shrink-0 font-mono text-[9px] text-ton-black/45 uppercase tracking-widest animate-pulse">
+                  Loading...
+                </span>
+              )}
             </div>
 
             {/* Article Grid */}
@@ -181,19 +248,28 @@ export default function HomeView({
               ))}
             </div>
 
+            {/* Empty state */}
+            {gridArticles.length === 0 && (
+              <div className="py-12 text-center">
+                <p className="font-mono text-xs uppercase tracking-widest text-ton-black/45">
+                  No articles in this category yet
+                </p>
+              </div>
+            )}
+
             {/* Load More */}
             <div className="mt-8 text-center">
               <a
-                href="/section/national"
+                href={activeCategory === "all" ? "/section/national" : `/section/${activeCategory}`}
                 className="inline-flex items-center gap-2 border border-ton-black/15 px-6 py-3 font-mono text-xs uppercase tracking-widest text-ton-black/60 hover:bg-ton-black hover:text-white transition-all"
               >
-                View All News
+                View All {activeCategory !== "all" ? CATEGORIES.find(c => c.value === activeCategory)?.label : "News"}
                 <ChevronRight size={16} />
               </a>
             </div>
           </div>
 
-          {/* RIGHT — Sidebar (4 cols) */}
+          {/* RIGHT - Sidebar (4 cols) */}
           <div className="lg:col-span-4 space-y-8">
             
             {/* Most Read */}
@@ -219,7 +295,7 @@ export default function HomeView({
                       <h4 className="font-serif font-bold text-sm text-ton-black group-hover:text-ton-red transition-colors leading-snug line-clamp-2">
                         {article.headline}
                       </h4>
-                      <span className="font-mono text-[10px] text-ton-black/30 uppercase tracking-wider mt-1 block">
+                      <span className="font-mono text-[10px] text-ton-black/45 uppercase tracking-wider mt-1 block">
                         {article.source} • {timeAgo(article.publishedAt)}
                       </span>
                     </div>
@@ -311,6 +387,99 @@ export default function HomeView({
                 <ChevronRight size={14} />
               </a>
             </div>
+          </div>
+        </div>
+
+        {/* Section 4: Editor's Picks module - 6 stories below main grid */}
+        {gridArticles.length > 3 && (
+          <div className="mt-16">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="font-serif font-bold text-2xl text-ton-black border-l-4 border-ton-red pl-4">
+                Editor&apos;s Picks
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredArticles
+                .filter(a => !carouselArticles.find(c => c.id === a.id) && !gridArticles.find(g => g.id === a.id))
+                .slice(0, 6)
+                .map((article, i) => (
+                  <ArticleCard key={article.id} article={article} index={i} variant="compact" />
+                ))}
+            </div>
+          </div>
+        )}
+
+        {/* Section 4: Section preview modules - Sport */}
+        {filteredArticles.some(a => (a as any).categoryField === "sport" || a.section === "sport") && (
+          <div className="mt-16">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="font-serif font-bold text-2xl text-ton-black border-l-4 border-ton-red pl-4">
+                Sport
+              </h2>
+              <a
+                href="/section/sport"
+                className="font-mono text-[10px] uppercase tracking-widest text-ton-red hover:text-ton-black transition-colors"
+              >
+                All Sport →
+              </a>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredArticles
+                .filter(a => (a as any).categoryField === "sport" || a.section === "sport")
+                .slice(0, 3)
+                .map((article, i) => (
+                  <ArticleCard key={article.id} article={article} index={i} />
+                ))}
+            </div>
+          </div>
+        )}
+
+        {/* Section 4: Section preview modules - Economy */}
+        {filteredArticles.some(a => (a as any).categoryField === "economy" || a.section === "economy") && (
+          <div className="mt-16">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="font-serif font-bold text-2xl text-ton-black border-l-4 border-ton-red pl-4">
+                Markets &amp; Economy
+              </h2>
+              <a
+                href="/section/economy"
+                className="font-mono text-[10px] uppercase tracking-widest text-ton-red hover:text-ton-black transition-colors"
+              >
+                All Economy →
+              </a>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredArticles
+                .filter(a => (a as any).categoryField === "economy" || a.section === "economy")
+                .slice(0, 3)
+                .map((article, i) => (
+                  <ArticleCard key={article.id} article={article} index={i} />
+                ))}
+            </div>
+          </div>
+        )}
+
+        {/* Section 4: Know Namibia directory preview */}
+        <div className="mt-16 bg-ton-navy/[0.03] p-8 border border-ton-black/8">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="font-serif font-bold text-2xl text-ton-black border-l-4 border-ton-red pl-4">
+              Discover Namibia
+            </h2>
+            <a
+              href="/know-namibia"
+              className="font-mono text-[10px] uppercase tracking-widest text-ton-red hover:text-ton-black transition-colors"
+            >
+              Explore All →
+            </a>
+          </div>
+          <p className="font-sans text-sm text-ton-black/50 mb-4">
+            45 national parks, landmarks, towns, wildlife, and cultural sites across Namibia with real photos, interactive maps, and detailed guides.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <a href="/know-namibia" className="font-mono text-[10px] uppercase tracking-widest border border-ton-black/15 px-4 py-2 hover:bg-ton-black hover:text-white transition-colors">Parks</a>
+            <a href="/know-namibia/big-five" className="font-mono text-[10px] uppercase tracking-widest border border-ton-black/15 px-4 py-2 hover:bg-ton-black hover:text-white transition-colors">Big Five</a>
+            <a href="/know-namibia/map" className="font-mono text-[10px] uppercase tracking-widest border border-ton-black/15 px-4 py-2 hover:bg-ton-black hover:text-white transition-colors">Interactive Map</a>
+            <a href="/know-namibia/gallery" className="font-mono text-[10px] uppercase tracking-widest border border-ton-black/15 px-4 py-2 hover:bg-ton-black hover:text-white transition-colors">Gallery</a>
           </div>
         </div>
       </div>

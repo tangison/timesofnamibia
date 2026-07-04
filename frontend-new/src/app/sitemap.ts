@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { getArticles } from "@/lib/data";
+import { getDirectoryPlaces } from "@/lib/directoryData";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app";
@@ -46,7 +47,32 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "daily" as const,
       priority: 0.7,
     }));
-    return [...staticPages, ...articlePages];
+
+    // Directory place pages
+    const places = await getDirectoryPlaces({ limit: 200 });
+    const placePages: MetadataRoute.Sitemap = places.map((place) => ({
+      url: `${baseUrl}/know-namibia/${place.slug}`,
+      lastModified: new Date(place.updated_at || place.created_at || Date.now()),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    }));
+
+    // Know Namibia section pages
+    const knowNamibiaPages: MetadataRoute.Sitemap = [
+      { url: `${baseUrl}/know-namibia`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
+      { url: `${baseUrl}/know-namibia/gallery`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.7 },
+      { url: `${baseUrl}/know-namibia/big-five`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
+      { url: `${baseUrl}/know-namibia/map`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
+    ];
+
+    // Games pages
+    const gamesPages: MetadataRoute.Sitemap = [
+      { url: `${baseUrl}/games`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.4 },
+      { url: `${baseUrl}/games/sudoku`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.4 },
+      { url: `${baseUrl}/games/wordle`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.4 },
+    ];
+
+    return [...staticPages, ...articlePages, ...placePages, ...knowNamibiaPages, ...gamesPages];
   } catch {
     return staticPages;
   }

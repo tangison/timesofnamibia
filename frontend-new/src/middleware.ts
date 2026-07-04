@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// Maintenance mode — NOT prefixed with NEXT_PUBLIC_ (security: don't leak state to client)
+// Maintenance mode - NOT prefixed with NEXT_PUBLIC_ (security: don't leak state to client)
 const MAINTENANCE_MODE = process.env.MAINTENANCE_MODE === "true";
 
 const ALLOWED_PATHS = [

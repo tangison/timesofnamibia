@@ -22,7 +22,7 @@ export default function Error({
         <div className="flex items-center justify-center gap-3 mb-6">
           <span className="w-12 h-[1px] bg-ton-red" />
           <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-ton-red font-bold">
-            Error — Something Went Wrong
+            Error - Something Went Wrong
           </span>
           <span className="w-12 h-[1px] bg-ton-red" />
         </div>

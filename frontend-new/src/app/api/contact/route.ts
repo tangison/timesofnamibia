@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — Contact Form API (TANGISON)
+// Times of Namibia - Contact Form API (TANGISON)
 // Uses Convex when configured, falls back to Prisma.
 // Validation: Zod schema with length caps. Rate limit: 5/hour/IP.
 // ============================================================
@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
     // Fallback: Prisma
     const submission = await db.wireSubmission.create({
       data: {
-        title: `Contact: ${name} — ${category}`.slice(0, 200),
+        title: `Contact: ${name} - ${category}`.slice(0, 200),
         category: "contact",
         priority: "routine",
         source: email.trim(),

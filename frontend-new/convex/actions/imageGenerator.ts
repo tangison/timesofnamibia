@@ -1,44 +1,88 @@
 // ============================================================
-// Times of Namibia — Article Image Generator (TANGISON)
+// Times of Namibia - Article Image Generator (TANGISON)
 //
-// Two-step approach:
-//   1. AI picks ONE simple physical object (noun phrase) symbolizing the story
-//   2. Pollinations generates a hyper-realistic studio photograph of that object
-//
-// No people, no scenes, no text, no buildings, no rooms.
-// 45s timeout, 1 retry, random seed for uniqueness.
+// Section 1: Oil painting style with rotating composition modifiers.
+//   - Real photos from RSS are KEPT (best source)
+//   - AI-generated fallback uses oil painting prompt with
+//     rotating composition modifier selected by hashing slug
+//   - No single composition style repeats more than once in
+//     10 consecutively generated images
+//   - 1200x630, model=flux, nologo=true
+//   - 45s timeout, 1 retry, random seed
 // ============================================================
 
 "use node";
 
 import { generateWithFallback } from "./aiProvider";
 
-// ── TYPES ────────────────────────────────────────────────────
-
 export interface ArticleInput {
   title: string;
   category: string;
   summary: string;
+  slug?: string;
 }
 
-// ── STEP 1: Extract concept (single physical object) ─────────
+// ── COMPOSITION MODIFIER POOL ────────────────────────────────
+const COMPOSITION_MODIFIERS = [
+  "close-up still-life framing",
+  "wide landscape framing",
+  "high-contrast single-object silhouette",
+  "abstract symbolic composition",
+  "aerial/overhead framing",
+];
 
-async function getImageConcept(article: ArticleInput): Promise<string> {
-  const prompt = `You are an art director for a world-class minimalist news magazine. Given this news headline and category, respond with ONLY a short noun phrase describing one or two simple physical objects that symbolically represent the story. Never suggest people, crowds, buildings, rooms, screens, documents, maps, flags, or text. Think elementary school objects given adult sophistication.
+// Track last 10 used modifiers to prevent repeats
+const recentModifiers: string[] = [];
+
+function selectCompositionModifier(slug?: string): string {
+  const pool = [...COMPOSITION_MODIFIERS];
+
+  // Remove recently used modifiers from pool
+  const available = pool.filter((m) => !recentModifiers.includes(m));
+
+  // If all have been used recently, reset and start fresh
+  const candidates = available.length > 0 ? available : pool;
+
+  // If slug provided, use hash-based selection for determinism
+  if (slug) {
+    let hash = 0;
+    for (let i = 0; i < slug.length; i++) {
+      hash = ((hash << 5) - hash) + slug.charCodeAt(i);
+      hash |= 0;
+    }
+    const idx = Math.abs(hash) % candidates.length;
+    return candidates[idx];
+  }
+
+  // Random selection
+  return candidates[Math.floor(Math.random() * candidates.length)];
+}
+
+function trackModifier(modifier: string): void {
+  recentModifiers.push(modifier);
+  if (recentModifiers.length > 10) {
+    recentModifiers.shift();
+  }
+}
+
+// ── STEP 1: Extract 1-2 concrete objects from the article ───
+
+async function getImageObjects(article: ArticleInput): Promise<string> {
+  const prompt = `Given this news headline and category, respond with ONLY a short noun phrase describing one or two simple concrete physical objects that symbolically represent the story. No people, no crowds, no buildings, no rooms, no screens, no documents, no maps, no flags. Think simple objects.
 
 Examples:
-- War or conflict → "a single bronze arrowhead"
-- Economy or budget → "three stacked gold coins"
-- Environment → "a single green seedling in dry cracked earth"
-- Technology → "a single glowing filament lightbulb"
-- Politics or election → "a single wooden ballot box"
-- Health → "a single red stethoscope coiled"
-- Mining → "a rough uncut diamond"
-- Energy → "a single white wind turbine blade"
-- Sport → "a worn leather football"
-- Justice or law → "a single wooden gavel"
-- Transport → "a folded paper airplane"
-- Water → "a single glass of clear water"
+- War or conflict - a bronze arrowhead
+- Economy or budget - three stacked gold coins
+- Environment - a green seedling in dry earth
+- Technology - a glowing lightbulb
+- Politics or election - a wooden ballot box
+- Health - a red stethoscope
+- Mining - an uncut diamond
+- Energy - a white wind turbine blade
+- Sport - a worn leather football
+- Justice or law - a wooden gavel
+- Transport - a folded paper airplane
+- Water - a glass of clear water
 
 Headline: "${article.title}"
 Category: ${article.category}
@@ -47,7 +91,7 @@ Respond with ONLY the object phrase, nothing else.`;
 
   const result = await generateWithFallback(
     [{ role: "user", content: prompt }],
-    { maxTokens: 30, timeout: 10_000 }
+    { maxTokens: 40, timeout: 10_000 }
   );
 
   const concept = (result || "a folded newspaper")
@@ -59,25 +103,23 @@ Respond with ONLY the object phrase, nothing else.`;
   return concept || "a folded newspaper";
 }
 
-// ── STEP 2: Build Pollinations prompt from the concept ───────
+// ── STEP 2: Build oil painting Pollinations prompt ──────────
 
-function buildPollinationsPrompt(concept: string): string {
-  return `Hyper-realistic studio product photograph of ${concept}. ` +
-    `Shot against a pure white background with soft even lighting. ` +
-    `Single hero object centered with generous empty space around it. ` +
-    `Shallow depth of field, subtle shadow beneath the object. ` +
-    `No text, no words, no letters, no numbers, no watermark, no logo, no people, no hands, ` +
-    `no faces, no background scenery, no pattern, no texture behind the object. ` +
-    `Professional commercial photography. Extremely clean. Minimal. ` +
-    `Color palette: muted navy, warm gray, and cream only.`;
+function buildOilPaintingPrompt(concept: string, composition: string): string {
+  return `Oil painting, visible textured brushstrokes, ` +
+    `muted palette limited to navy blue, rust orange, and warm cream, ` +
+    `${concept}, ${composition}, ` +
+    `no text, no logos, no watermark, ` +
+    `no faces unless the subject requires it, ` +
+    `gallery painting quality, cohesive composition`;
 }
 
-// ── STEP 3: Fetch from Pollinations (45s timeout, 1 retry, random seed) ──
+// ── STEP 3: Fetch from Pollinations ──────────────────────────
 
 async function fetchPollinationsImage(prompt: string): Promise<Blob | null> {
   const encoded = encodeURIComponent(prompt);
   const seed = Math.floor(Math.random() * 999999);
-  const url = `https://image.pollinations.ai/prompt/${encoded}?width=1200&height=675&model=flux&nologo=true&seed=${seed}`;
+  const url = `https://image.pollinations.ai/prompt/${encoded}?width=1200&height=630&model=flux&nologo=true&seed=${seed}`;
 
   for (let attempt = 1; attempt <= 2; attempt++) {
     try {
@@ -86,11 +128,12 @@ async function fetchPollinationsImage(prompt: string): Promise<Blob | null> {
         headers: { "User-Agent": "TimesOfNamibiaBot/1.0 (+https://timesofnamibia.com)" },
       });
       if (res.ok) {
-        return await res.blob();
+        const blob = await res.blob();
+        if (blob.size > 1000) return blob;
       }
     } catch {
       if (attempt === 2) return null;
-      await new Promise((r) => setTimeout(r, 3000)); // wait 3s before retry
+      await new Promise((r) => setTimeout(r, 3000));
     }
   }
   return null;
@@ -101,12 +144,20 @@ async function fetchPollinationsImage(prompt: string): Promise<Blob | null> {
 export async function generateArticleImage(
   article: ArticleInput
 ): Promise<Blob | null> {
-  // Step 1: AI picks a concept object
-  const concept = await getImageConcept(article);
-  console.log(`[image-gen] Concept for "${article.title.slice(0, 40)}": ${concept}`);
+  // Select composition modifier (no repeats in last 10)
+  const composition = selectCompositionModifier(article.slug);
+  trackModifier(composition);
+  console.log(`[image-gen] Composition: ${composition} (recent: ${recentModifiers.length})`);
 
-  // Step 2: Build prompt + fetch image (with retry + random seed)
-  const prompt = buildPollinationsPrompt(concept);
+  // Step 1: AI picks concrete objects
+  const concept = await getImageObjects(article);
+  console.log(`[image-gen] Oil painting concept for "${article.title.slice(0, 40)}": ${concept}`);
+
+  // Step 2: Build oil painting prompt with composition modifier
+  const prompt = buildOilPaintingPrompt(concept, composition);
+  console.log(`[image-gen] Prompt: ${prompt.slice(0, 120)}...`);
+
+  // Step 3: Fetch image with retry
   const blob = await fetchPollinationsImage(prompt);
 
   if (!blob) {

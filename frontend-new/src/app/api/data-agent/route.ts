@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — Data Agent API Route (TANGISON)
+// Times of Namibia - Data Agent API Route (TANGISON)
 // GET (status): public, rate-limited 60/min/IP.
 // POST (trigger): admin-only, rate-limited 1/5min/IP.
 // ============================================================

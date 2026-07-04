@@ -7,12 +7,12 @@ import { Globe } from "lucide-react";
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Africa Desk — Continental Coverage",
+  title: "Africa Desk - Continental Coverage",
   description:
-    "Continental news from Windhoek. Verified reports from five African regions — sourced, timestamped, and badged by the Africa Desk.",
+    "Continental news from Windhoek. Verified reports from five African regions - sourced, timestamped, and badged by the Africa Desk.",
   alternates: { canonical: "/africa" },
   openGraph: {
-    title: "Africa Desk — Times of Namibia",
+    title: "Africa Desk - Times of Namibia",
     description: "Continental news from Windhoek. Verified reports from five African regions.",
     type: "website",
     locale: "en_NA",
@@ -41,7 +41,7 @@ export default async function AfricaPage() {
             Continental Coverage
           </h1>
           <p className="font-serif italic text-ton-black/50 text-sm sm:text-base mt-2 max-w-xl">
-            Verified reports from five African regions — sourced, timestamped, and badged by the Africa Desk.
+            Verified reports from five African regions - sourced, timestamped, and badged by the Africa Desk.
           </p>
         </div>
 
@@ -49,7 +49,7 @@ export default async function AfricaPage() {
           <p className="text-ton-black/40 text-lg">Articles will appear here as the Africa Desk ingests content.</p>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            {/* Main — 8 cols */}
+            {/* Main - 8 cols */}
             <div className="lg:col-span-8">
               {featured && (
                 <a href={`/article/${featured.slug}`} className="group block mb-8 pb-8 border-b border-ton-black/10">
@@ -73,7 +73,7 @@ export default async function AfricaPage() {
                 {grid.map((a, i) => <ArticleCard key={a.id} article={a} index={i} />)}
               </div>
             </div>
-            {/* Sidebar — 4 cols */}
+            {/* Sidebar - 4 cols */}
             <div className="lg:col-span-4">
               <div className="flex items-center gap-2 mb-4 pb-3 border-b-2 border-ton-black">
                 <h3 className="font-serif font-bold text-lg text-ton-black">More from Africa</h3>

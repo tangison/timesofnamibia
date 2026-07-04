@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — Search API (TANGISON)
+// Times of Namibia - Search API (TANGISON)
 // Rate limit: 30/min/IP. Cache: 60s s-maxage.
 // ============================================================
 

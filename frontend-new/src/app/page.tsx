@@ -14,19 +14,19 @@ export const revalidate = 300;
 
 export const metadata = {
   // TANGISON Iteration 4 Fix #16: Use the brand default homepage title
-  // (was "National News — Latest Headlines" which made the homepage look
-  // like a section page in SERPs). The title template appends " — Times
+  // (was "National News - Latest Headlines" which made the homepage look
+  // like a section page in SERPs). The title template appends " - Times
   // of Namibia" automatically.
-  title: "Namibia's Digital Broadsheet — Applied AI. Built in Africa.",
+  title: "Namibia's Digital Broadsheet - Applied AI. Built in Africa.",
   description:
-    "Times of Namibia — a TANGISON news outlet. Real-time verified news, tender alerts, job market data, and financial updates for Namibia. Applied AI. Built in Africa.",
+    "Times of Namibia - a TANGISON news outlet. Real-time verified news, tender alerts, job market data, and financial updates for Namibia. Applied AI. Built in Africa.",
   alternates: { canonical: "/" },
 };
 
 export default async function HomePage() {
   try {
     triggerAutoIngestion().catch(() => {
-      // Silently fail — don't block page render
+      // Silently fail - don't block page render
     });
   } catch {
     // Non-critical

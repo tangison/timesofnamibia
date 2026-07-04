@@ -224,7 +224,7 @@ describe("contentSanityCheck", () => {
   it("flags placeholder text", () => {
     const result = contentSanityCheck({
       title: "Title",
-      content: "Editorial photograph — no stock imagery should appear here.",
+      content: "Editorial photograph - no stock imagery should appear here.",
       authorLine: "Author",
     });
     expect(result.passed).toBe(false);

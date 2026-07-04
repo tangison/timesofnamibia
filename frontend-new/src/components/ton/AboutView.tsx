@@ -27,7 +27,10 @@ export default function AboutView() {
           <span className="font-mono text-[9px] tracking-widest uppercase text-ton-red font-semibold">
             About // The Institution
           </span>
-          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-tight mt-2">
+          <h1
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-tight mt-2"
+            style={{ fontFamily: "var(--font-unifraktur), 'UnifrakturMaguntia', serif" }}
+          >
             About Times of Namibia
           </h1>
           <p className="font-serif italic text-ton-black/50 text-sm sm:text-base mt-2 max-w-xl">
@@ -46,14 +49,14 @@ export default function AboutView() {
         </div>
       </div>
 
-      {/* Mission Statement — hero block */}
+      {/* Mission Statement - hero block */}
       <div className="py-8 sm:py-10 text-center border-t border-b border-ton-black mb-8 sm:mb-10">
         <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">Mission</span>
         <blockquote className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-ton-black leading-tight mt-4">
           Namibia. Informed. Instantly.
         </blockquote>
-        <p className="font-mono text-[10px] text-ton-black/30 mt-4 tracking-widest uppercase">
-          Times of Namibia — TANGISON
+        <p className="font-mono text-[10px] text-ton-black/45 mt-4 tracking-widest uppercase">
+          Times of Namibia - TANGISON
         </p>
       </div>
 
@@ -63,7 +66,7 @@ export default function AboutView() {
           <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black">
             I. The Founding Vision
           </h2>
-          <span className="font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">Est. TANGISON</span>
+          <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">Est. TANGISON</span>
         </div>
         <div className="h-px bg-ton-black/8 mb-5" />
 
@@ -78,7 +81,7 @@ export default function AboutView() {
               As a TANGISON publication, TON operates at the intersection of editorial integrity and systems engineering. Every data point is scraped, verified, and timestamped. Every headline respects the reader&rsquo;s time. Every design decision prioritises information density over decorative excess.
             </p>
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8]">
-              This is not a website. It is a high-density information architecture — a digital broadsheet that treats every screen as a front page and every reader as a citizen who demands the truth, delivered with precision, at the speed of data.
+              This is not a website. It is a high-density information architecture - a digital broadsheet that treats every screen as a front page and every reader as a citizen who demands the truth, delivered with precision, at the speed of data.
             </p>
           </div>
 
@@ -111,10 +114,10 @@ export default function AboutView() {
         {/* Imagery placeholder */}
         <div className="mt-6 pt-5 border-t border-ton-black/8">
           <div className="bg-ton-black/[0.02] p-5 sm:p-6">
-            <span className="font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">Visual Anchor</span>
+            <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">Visual Anchor</span>
             <div className="h-44 sm:h-56 bg-ton-black/[0.04] mt-2.5 flex items-center justify-center border border-ton-black/6">
               <div className="text-center px-6">
-                <p className="font-serif text-sm text-ton-black/20 italic max-w-md mx-auto leading-relaxed">
+                <p className="font-serif text-sm text-ton-black/40 italic max-w-md mx-auto leading-relaxed">
                   Aerial photograph of Windhoek at first light, shot from the Khomas Hochland plateau looking east. Grayscale. The city grid emerges from the darkness in sharp geometric lines, with the Auas Mountains silhouetted behind. GPS overlay: 22.34 S, 17.08 E. Timestamp in JetBrains Mono within a black rectangular box at bottom-left. No colour. No people. Just structure and dawn.
                 </p>
               </div>
@@ -125,7 +128,7 @@ export default function AboutView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section I // Founding Vision</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -144,18 +147,18 @@ export default function AboutView() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           <div>
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-3">
-              &ldquo;Broadsheet Digital&rdquo; is not a style. It is a philosophy. It dictates that every screen must carry the gravitas of a printed front page — heavy editorial borders, column rules, serif-dominant typography, and high-contrast cream-and-black palette. The reader should feel the weight of information before they read a single word.
+              &ldquo;Broadsheet Digital&rdquo; is not a style. It is a philosophy. It dictates that every screen must carry the gravitas of a printed front page - heavy editorial borders, column rules, serif-dominant typography, and high-contrast cream-and-black palette. The reader should feel the weight of information before they read a single word.
             </p>
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8]">
-              We reject the shallow scroll. We reject infinite feeds. We design for density, not duration. If a reader can grasp the essential truth of a story from the layout alone — headline, timestamp, source, verification status — then the design has succeeded. If they must scroll past three banners to find the lede, the design has failed.
+              We reject the shallow scroll. We reject infinite feeds. We design for density, not duration. If a reader can grasp the essential truth of a story from the layout alone - headline, timestamp, source, verification status - then the design has succeeded. If they must scroll past three banners to find the lede, the design has failed.
             </p>
           </div>
           <div>
             <ul style={{ listStyle: "none", padding: 0 }} className="space-y-4">
               {[
-                { label: "Authority of Print", desc: "Heavy borders, column rules, serif headlines. Every screen is a front page. The design carries the visual vocabulary of a broadsheet newspaper — not a social media feed." },
+                { label: "Authority of Print", desc: "Heavy borders, column rules, serif headlines. Every screen is a front page. The design carries the visual vocabulary of a broadsheet newspaper - not a social media feed." },
                 { label: "Precision of Data", desc: "Monospaced timestamps, verification badges, source attribution. The interface between human editorial and machine intelligence is visible and honest." },
-                { label: "Density over Decoration", desc: "Every pixel must inform. There is no room for decorative excess. Whitespace is generous but purposeful — it separates, not adorns." },
+                { label: "Density over Decoration", desc: "Every pixel must inform. There is no room for decorative excess. Whitespace is generous but purposeful - it separates, not adorns." },
                 { label: "3G-First Engineering", desc: "CSS-heavy, image-light. If a feature cannot load on a Nokia browsing through MTC in Oshakati within 6 seconds, it does not ship." },
               ].map((item, i) => (
                 <li key={i}>
@@ -171,7 +174,7 @@ export default function AboutView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section II // Broadsheet Digital</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -182,20 +185,20 @@ export default function AboutView() {
         <div className="flex items-center gap-3 mb-5">
           <Cpu className="w-4 h-4 text-ton-red" />
           <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black">
-            III. Times OS — The Verification Engine
+            III. Times OS - The Verification Engine
           </h2>
         </div>
         <div className="h-px bg-ton-black/8 mb-5" />
 
         <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-5">
-          Times OS is the proprietary scraping and verification engine that powers every data point on the platform. Built on a microservices architecture, it aggregates from NIEIS, the Government Gazette, LinkedIn, CareerPortal, and NamibiaJobs in real-time. Each source is scraped on an independent 6-second cycle, with results validated against a 3-point verification matrix before publication.
+          Times OS is the system that aggregates news from multiple trusted sources across Namibia and Africa. It uses AI-assisted tools to help produce and organize content, with verification built into every step.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 mb-6">
           <div className="pt-5 border-t border-ton-black/8">
             <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">6-Second Cycle</span>
             <p className="font-serif text-sm text-ton-black/50 leading-relaxed mt-2">
-              All technical data is refreshed within a 6-second cycle. When a reader sees &ldquo;Scraped 6s ago,&rdquo; they know the information is live, verified, and current. The timestamp is not decoration — it is proof.
+              All technical data is refreshed within a 6-second cycle. When a reader sees &ldquo;Scraped 6s ago,&rdquo; they know the information is live, verified, and current. The timestamp is not decoration - it is proof.
             </p>
           </div>
           <div className="pt-5 border-t border-ton-black/8">
@@ -215,16 +218,16 @@ export default function AboutView() {
         {/* Times OS spec box */}
         <div className="bg-ton-black text-ton-cream p-5">
           <h3 className="font-mono text-[10px] text-ton-red font-bold uppercase tracking-wider mb-3">
-            Times OS v2.1 — Specifications
+            Times OS v2.1 - Specifications
           </h3>
           <div className="space-y-2 font-mono text-[10px]">
             {[
-              { label: "Sources Monitored", value: "4 Primary + 12 Secondary" },
-              { label: "Scraping Cycle", value: "6 Seconds" },
-              { label: "Verification Matrix", value: "3-Point Source Validation" },
+              { label: "Sources Monitored", value: "Multiple trusted sources" },
+              { label: "Scraping Cycle", value: "Continuous" },
+              { label: "Verification Matrix", value: "Multi-source validation" },
               { label: "Regions Covered", value: "14 Total" },
               { label: "Uptime SLA", value: "99.7%" },
-              { label: "Data Freshness", value: "Max 6s Staleness" },
+              { label: "Data Freshness", value: "Real-time" },
             ].map((spec, i) => (
               <div key={i} className="flex items-center justify-between border-b border-ton-cream/8 pb-1.5">
                 <span className="text-ton-cream/40">{spec.label}</span>
@@ -237,10 +240,10 @@ export default function AboutView() {
         {/* Imagery */}
         <div className="mt-6 pt-5 border-t border-ton-black/8">
           <div className="bg-ton-black/[0.02] p-5">
-            <span className="font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">System Visual</span>
+            <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">System Visual</span>
             <div className="h-36 sm:h-44 bg-ton-black/[0.04] mt-2.5 flex items-center justify-center border border-ton-black/6">
               <div className="text-center px-6">
-                <p className="font-serif text-xs text-ton-black/20 italic max-w-md mx-auto leading-relaxed">
+                <p className="font-serif text-xs text-ton-black/40 italic max-w-md mx-auto leading-relaxed">
                   Close-up of server rack LEDs in a darkened data centre. Grayscale. Green and amber indicator lights captured in sharp focus with shallow depth of field. Timestamp overlay in JetBrains Mono at bottom-right within a black box. The image conveys infrastructure, reliability, and the physical reality behind digital data.
                 </p>
               </div>
@@ -251,7 +254,7 @@ export default function AboutView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section III // Times OS</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -262,7 +265,7 @@ export default function AboutView() {
         <div className="flex items-center gap-3 mb-5">
           <Radio className="w-4 h-4 text-ton-red" />
           <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black">
-            IV. TumaOS — WhatsApp Share &amp; Listen Pipeline
+            IV. TumaOS - WhatsApp Share &amp; Listen Pipeline
           </h2>
         </div>
         <div className="h-px bg-ton-black/8 mb-5" />
@@ -270,7 +273,7 @@ export default function AboutView() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           <div>
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-3">
-              TumaOS is the WhatsApp-native distribution pipeline that extends TON&rsquo;s reach beyond the browser. In a country where WhatsApp is the primary internet interface for millions, TumaOS ensures that every verified story, tender alert, and job listing reaches the reader where they already are — inside a chat window.
+              TumaOS is the WhatsApp-native distribution pipeline that extends TON&rsquo;s reach beyond the browser. In a country where WhatsApp is the primary internet interface for millions, TumaOS ensures that every verified story, tender alert, and job listing reaches the reader where they already are - inside a chat window.
             </p>
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8]">
               The pipeline supports two modes: <strong className="text-ton-black/80">Share</strong>, which formats any TON article as a high-density WhatsApp message with source attribution and timestamp; and <strong className="text-ton-black/80">Listen</strong>, which converts verified articles into audio dispatches for low-bandwidth and accessibility contexts. No engagement bait. No clickbait formatting. Just the verified fact, delivered stoically.
@@ -296,7 +299,7 @@ export default function AboutView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section IV // TumaOS</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -307,13 +310,13 @@ export default function AboutView() {
         <div className="flex items-center gap-3 mb-5">
           <MapPin className="w-4 h-4 text-ton-red" />
           <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black">
-            V. Regional Coverage — 14 Namibian Regions
+            V. Regional Coverage - 14 Namibian Regions
           </h2>
         </div>
         <div className="h-px bg-ton-black/8 mb-5" />
 
         <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-5">
-          Times of Namibia maintains dedicated data nodes across all 14 administrative regions of Namibia. Each node scrapes regional government portals, procurement databases, and employment markets on an independent cycle. Our coverage is not performative — it is structural. Every region, from //Kharas in the south to Zambezi in the north-east, has a dedicated pipeline and a commitment to regional accuracy.
+          Times of Namibia maintains dedicated data nodes across all 14 administrative regions of Namibia. Each node scrapes regional government portals, procurement databases, and employment markets on an independent cycle. Our coverage is not performative - it is structural. Every region, from //Kharas in the south to Zambezi in the north-east, has a dedicated pipeline and a commitment to regional accuracy.
         </p>
 
         <div className="overflow-x-auto mb-6">
@@ -332,8 +335,8 @@ export default function AboutView() {
                   <td className="font-mono text-[10px] py-2.5 pr-3">
                     <span className={
                       row.status === "Active" ? "text-ton-red font-bold" :
-                      row.status === "Staging" ? "text-ton-black/30" :
-                      "text-ton-black/15"
+                      row.status === "Staging" ? "text-ton-black/45" :
+                      "text-ton-black/40"
                     }>
                       {row.status}
                     </span>
@@ -345,7 +348,7 @@ export default function AboutView() {
           </table>
         </div>
 
-        <div className="flex items-center justify-between mt-4 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-4 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section V // Regional Coverage</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -354,7 +357,7 @@ export default function AboutView() {
       {/* Section VI: TANGISON */}
       <section className="border-t-4 border-ton-black pt-6 mb-10 sm:mb-14">
         <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black mb-2">
-          VI. TANGISON — The Company Behind TON
+          VI. TANGISON - The Company Behind TON
         </h2>
         <div className="h-px bg-ton-black/8 mb-5" />
 
@@ -366,7 +369,7 @@ export default function AboutView() {
               </p>
             </div>
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8]">
-              TANGISON does not publish opinion. It publishes data, verified and timestamped. It does not optimise for engagement. It optimises for understanding. The company&rsquo;s products — Times OS, TumaOS, The Broadside — are all expressions of a single philosophy: information density over engagement metrics.
+              TANGISON does not publish opinion. It publishes data, verified and timestamped. It does not optimise for engagement. It optimises for understanding. The company&rsquo;s products - Times OS, TumaOS, The Broadside - are all expressions of a single philosophy: information density over engagement metrics.
             </p>
           </div>
           <div className="bg-ton-black text-ton-cream p-5">
@@ -399,7 +402,7 @@ export default function AboutView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section VI // TANGISON</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -410,7 +413,7 @@ export default function AboutView() {
         <div className="flex items-center gap-3 mb-5">
           <Printer className="w-4 h-4 text-ton-red" />
           <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black">
-            VII. The Broadside — Physical Print at Transport Hubs
+            VII. The Broadside - Physical Print at Transport Hubs
           </h2>
         </div>
         <div className="h-px bg-ton-black/8 mb-5" />
@@ -421,7 +424,7 @@ export default function AboutView() {
               The Broadside is a single-page physical printout designed for high-density reading environments: regional transport hubs, taxi ranks, municipal notice boards, and government building entrances. It is designed to be read standing up, in transit, in under 90 seconds. Every word earns its place on the page.
             </p>
             <p className="font-serif text-sm text-ton-black/60 leading-[1.8]">
-              Printed on 120gsm cream stock with sharp corners and a baseline grid, The Broadside carries the same editorial DNA as the digital platform — Playfair Display headlines, monospaced data, grayscale imagery with GPS overlays. It is the physical manifestation of the Broadsheet Digital philosophy, placed where digital cannot reach.
+              Printed on 120gsm cream stock with sharp corners and a baseline grid, The Broadside carries the same editorial DNA as the digital platform - Playfair Display headlines, monospaced data, grayscale imagery with GPS overlays. It is the physical manifestation of the Broadsheet Digital philosophy, placed where digital cannot reach.
             </p>
           </div>
           <div className="bg-ton-black text-ton-cream p-5">
@@ -450,10 +453,10 @@ export default function AboutView() {
         {/* Imagery */}
         <div className="mt-6 pt-5 border-t border-ton-black/8">
           <div className="bg-ton-black/[0.02] p-5">
-            <span className="font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">Print Material Visual</span>
+            <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">Print Material Visual</span>
             <div className="h-32 sm:h-40 bg-ton-black/[0.04] mt-2.5 flex items-center justify-center border border-ton-black/6">
               <div className="text-center px-6">
-                <p className="font-serif text-xs text-ton-black/20 italic max-w-md mx-auto leading-relaxed">
+                <p className="font-serif text-xs text-ton-black/40 italic max-w-md mx-auto leading-relaxed">
                   Flat-lay photograph of a printed Broadside on a concrete surface. Grayscale. The A3 sheet shows sharp black typography on cream stock, with column rules and editorial borders clearly visible. A hand holds the top corner. GPS overlay: 22.57 S, 17.08 E. The image conveys tactility, authority, and the physical reality of print in a digital age.
                 </p>
               </div>
@@ -464,7 +467,7 @@ export default function AboutView() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>Section VII // The Broadside</span>
           <span>&copy; TANGISON</span>
         </div>
@@ -477,12 +480,12 @@ export default function AboutView() {
           <blockquote className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-ton-black leading-tight mt-5">
             Namibia. Informed. Instantly.
           </blockquote>
-          <p className="font-mono text-[10px] text-ton-black/20 mt-4 tracking-wider">
-            — TANGISON Editorial Board
+          <p className="font-mono text-[10px] text-ton-black/40 mt-4 tracking-wider">
+            - TANGISON Editorial Board
           </p>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
+        <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
           <span>About Times of Namibia // End</span>
           <span>&copy; TANGISON</span>
         </div>

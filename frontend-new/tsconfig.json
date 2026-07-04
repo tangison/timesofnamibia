@@ -43,6 +43,7 @@
     "node_modules",
     "examples",
     "skills",
-    "scripts"
+    "scripts",
+    "convex"
   ]
 }

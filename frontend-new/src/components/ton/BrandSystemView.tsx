@@ -5,26 +5,26 @@ import { ArrowLeft, Copy, Check, ClipboardCopy } from "lucide-react";
 import { toast } from "sonner";
 
 /* ================================================================
-   BRAND DATA — 3 CORE COLORS ONLY
+   BRAND DATA - 3 CORE COLORS ONLY
    ================================================================ */
 
 const PALETTE = [
   {
     name: "TON Cream",
     hex: "#F9F8F6",
-    description: "Background base — warm, paper-like canvas for broadsheet digital",
+    description: "Background base - warm, paper-like canvas for broadsheet digital",
     textColor: "text-ton-black",
   },
   {
     name: "TON Black",
     hex: "#111111",
-    description: "Typography, structure, editorial borders — the ink of our identity",
+    description: "Typography, structure, editorial borders - the ink of our identity",
     textColor: "text-ton-cream",
   },
   {
     name: "TON Red",
     hex: "#CB102E",
-    description: "Breaking news, urgency, live indicators, CTAs — the pulse of now",
+    description: "Breaking news, urgency, live indicators, CTAs - the pulse of now",
     textColor: "text-white",
   },
 ];
@@ -32,21 +32,21 @@ const PALETTE = [
 const TYPOGRAPHY = [
   {
     name: "Playfair Display",
-    category: "Serif — Headlines & Editorial",
+    category: "Serif - Headlines & Editorial",
     usage: "Headlines, editorial text, drop caps, italic pull quotes",
     className: "font-serif",
     sample: "The desert whispers of hydrogen dreams",
   },
   {
     name: "Inter",
-    category: "Sans-serif — Interface & Navigation",
+    category: "Sans-serif - Interface & Navigation",
     usage: "UI elements, labels, navigation, metadata, form fields",
     className: "font-sans",
     sample: "NIEIS: 847 new job listings this week",
   },
   {
     name: "JetBrains Mono",
-    category: "Monospace — Technical Data",
+    category: "Monospace - Technical Data",
     usage: "Scraping logs, timestamps, system metadata, market data",
     className: "font-mono",
     sample: "GRN-2026-0451 | 2026-05-15 | N$ 12.5M",
@@ -67,12 +67,12 @@ const PRINCIPLES = [
   {
     title: "Information Density",
     description:
-      "We respect the reader's capacity. High-density grids, multi-column layouts, and real-time data indicators. Every pixel must inform — there is no room for decoration without purpose.",
+      "We respect the reader's capacity. High-density grids, multi-column layouts, and real-time data indicators. Every pixel must inform - there is no room for decoration without purpose.",
   },
   {
     title: "Namibian Voice",
     description:
-      "From the regions we cover to the sources we scrape, our identity is Namibian. //Kharas is spelled with the click. Oshana is not just a region — it's home. Our design reflects the land we serve.",
+      "From the regions we cover to the sources we scrape, our identity is Namibian. //Kharas is spelled with the click. Oshana is not just a region - it's home. Our design reflects the land we serve.",
   },
 ];
 
@@ -85,30 +85,30 @@ const DOS = [
   "Use editorial borders (2px top rules) to separate sections",
   "Respect the 6-second scraped timestamp convention from Times OS",
   "Use drop caps on lead paragraphs and opening articles",
-  "Keep whitespace generous — let the content breathe like a newspaper",
+  "Keep whitespace generous - let the content breathe like a newspaper",
   "Use Red (#CB102E) exclusively for urgency, breaking news, and primary CTAs",
   "Use Black (#111111) for all body text, borders, and structural elements",
   "Maintain column rules (1px solid) between multi-column layouts",
   "Spell Namibian regions correctly: //Kharas with the click, Oshana not Oshanaa",
-  "Credit TANGISON — never 'Pty Ltd'",
+  "Credit TANGISON - never 'Pty Ltd'",
   "Optimize for 3G: CSS-heavy, image-light, system fonts as fallback",
 ];
 
 const DONTS = [
-  "Never use rounded corners on any TON element — sharp corners only",
-  "Never use mid-grays — only pure Black (#111111) on Cream (#F9F8F6)",
-  "Never add a fourth color to the core palette — three is the law",
-  "Never display imagery in color by default — grayscale first, color on hover",
-  "Never add decoration without purpose — every pixel must inform",
-  "Never use 'Pty Ltd' anywhere — always 'TANGISON'",
-  "Never use sans-serif fonts for editorial headlines — Playfair Display only",
-  "Never crowd the layout — maintain newspaper-like spacing and breathing room",
-  "Never use more than one serif typeface — Playfair Display is the only serif",
-  "Never use Red for decorative purposes — it is reserved for urgency and action",
-  "Never apply gradients or shadows to text — flat, high-contrast typography only",
-  "Never hide the scraped timestamp — it proves the data is live and verified",
-  "Never use placeholder images — every visual must be real Namibian content",
-  "Never compromise mobile performance — 3G users are our readers too",
+  "Never use rounded corners on any TON element - sharp corners only",
+  "Never use mid-grays - only pure Black (#111111) on Cream (#F9F8F6)",
+  "Never add a fourth color to the core palette - three is the law",
+  "Never display imagery in color by default - grayscale first, color on hover",
+  "Never add decoration without purpose - every pixel must inform",
+  "Never use 'Pty Ltd' anywhere - always 'TANGISON'",
+  "Never use sans-serif fonts for editorial headlines - Playfair Display only",
+  "Never crowd the layout - maintain newspaper-like spacing and breathing room",
+  "Never use more than one serif typeface - Playfair Display is the only serif",
+  "Never use Red for decorative purposes - it is reserved for urgency and action",
+  "Never apply gradients or shadows to text - flat, high-contrast typography only",
+  "Never hide the scraped timestamp - it proves the data is live and verified",
+  "Never use placeholder images - every visual must be real Namibian content",
+  "Never compromise mobile performance - 3G users are our readers too",
   "Never use CSS border-radius greater than 0px on any TON component",
 ];
 
@@ -123,15 +123,15 @@ const PRINT_MATERIALS = {
 };
 
 const IMAGERY_RULES = [
-  "All photography must be high-contrast grayscale — no exceptions",
+  "All photography must be high-contrast grayscale - no exceptions",
   "No stock photography. If it is not Namibia, it is not Times of Namibia",
   "Every image must carry a GPS coordinate watermark in a black rectangular box",
   "Every image must carry a JetBrains Mono timestamp in the same black box",
-  "No rounded corners on any overlay element — sharp rectangles only",
+  "No rounded corners on any overlay element - sharp rectangles only",
   "Images displayed grayscale by default; colour on hover (digital only)",
-  "Print imagery is always grayscale — no hover state in print",
+  "Print imagery is always grayscale - no hover state in print",
   "All images must be shot with Namibian content: landscapes, infrastructure, people, commerce",
-  "No artificial lighting in outdoor shots — natural light only",
+  "No artificial lighting in outdoor shots - natural light only",
   "Aspect ratio: 16:9 for hero images, 4:3 for inline, 1:1 for portraits",
   "Overlay position: bottom-left (default) or bottom-right (variant)",
   "Overlay format: 'LOCATION NAME // 00.00 S, 00.00 E' + ISO-8601 timestamp with CAT timezone",
@@ -145,7 +145,7 @@ function generateBrandSystemText(): string {
   const lines: string[] = [];
 
   lines.push("═══════════════════════════════════════════════════════════");
-  lines.push("  TIMES OF NAMIBIA — BRAND SYSTEM");
+  lines.push("  TIMES OF NAMIBIA - BRAND SYSTEM");
   lines.push("  TANGISON Publication");
   lines.push("═══════════════════════════════════════════════════════════");
   lines.push("");
@@ -286,24 +286,24 @@ function generateBrandSystemText(): string {
   lines.push("  Automation of scraping logs from //Kharas and Oshana directly into");
   lines.push("  public feeds.");
   lines.push("  Phase III: High-Density Physical Distribution");
-  lines.push("  Deployment of 'The Broadside' — single-page physical printouts at");
+  lines.push("  Deployment of 'The Broadside' - single-page physical printouts at");
   lines.push("  regional transport hubs, designed to be read in high-density environments.");
   lines.push("");
 
   lines.push("═══════════════════════════════════════════════════════════");
-  lines.push("  © Times of Namibia — A TANGISON Publication");
+  lines.push("  © Times of Namibia - A TANGISON Publication");
   lines.push("═══════════════════════════════════════════════════════════");
 
   return lines.join("\n");
 }
 
 function generateBrandSystemCSS(): string {
-  return `/* ========= TIMES OF NAMIBIA — BRAND SYSTEM ========= */
+  return `/* ========= TIMES OF NAMIBIA - BRAND SYSTEM ========= */
 /* TANGISON Publication */
 
 :root {
-  /* Core Palette — 3 Colors Only */
-  --ton-cream: #F9F8F6; /* Background base — warm, paper-like canvas */
+  /* Core Palette - 3 Colors Only */
+  --ton-cream: #F9F8F6; /* Background base - warm, paper-like canvas */
   --ton-black: #111111; /* Typography, structure, editorial borders */
   --ton-red: #CB102E;   /* Breaking news, urgency, live indicators, CTAs */
 
@@ -313,7 +313,7 @@ function generateBrandSystemCSS(): string {
   --font-mono: 'JetBrains Mono', monospace;
 }
 
-/* TON Block — No Rounded Corners */
+/* TON Block - No Rounded Corners */
 .ton-no-radius,
 .ton-no-radius button,
 .ton-no-radius [role="button"] {
@@ -329,7 +329,7 @@ function generateBrandSystemCSS(): string {
 .ton-column-rule { border-right: 1px solid #D4D2CE; }
 .ton-column-rule:last-child { border-right: none; }
 
-/* Grayscale Images — Color on Hover */
+/* Grayscale Images - Color on Hover */
 .ton-article-image {
   filter: grayscale(100%);
   transition: filter 0.6s ease;
@@ -363,7 +363,7 @@ function generateBrandSystemCSS(): string {
 }
 
 function generateBrandSystemTailwind(): string {
-  return `// ========= TIMES OF NAMIBIA — TAILWIND CONFIG =========
+  return `// ========= TIMES OF NAMIBIA - TAILWIND CONFIG =========
 // TANGISON Publication
 
 /** @type {import('tailwindcss').Config} */
@@ -509,7 +509,7 @@ export default function BrandSystemView() {
                   className={`font-mono text-[9px] uppercase tracking-wider px-2.5 py-1 transition-colors ${
                     copyFormat === fmt
                       ? "bg-ton-black text-ton-cream font-bold"
-                      : "text-ton-black/30 hover:text-ton-black/60"
+                      : "text-ton-black/45 hover:text-ton-black/60"
                   }`}
                 >
                   {fmt}
@@ -535,12 +535,12 @@ export default function BrandSystemView() {
         <blockquote className="font-serif italic text-2xl sm:text-3xl md:text-4xl text-ton-black/60 leading-relaxed">
           &ldquo;Every pixel must inform.&rdquo;
         </blockquote>
-        <p className="font-mono text-[10px] text-ton-black/30 mt-4 tracking-widest uppercase">
-          Times of Namibia Design Philosophy — TANGISON
+        <p className="font-mono text-[10px] text-ton-black/45 mt-4 tracking-widest uppercase">
+          Times of Namibia Design Philosophy - TANGISON
         </p>
       </div>
 
-      {/* Color Palette — 3 Colors Only */}
+      {/* Color Palette - 3 Colors Only */}
       <div className="mb-10 sm:mb-12">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
@@ -554,7 +554,7 @@ export default function BrandSystemView() {
           </div>
           <button
             onClick={handleCopyColors}
-            className="flex items-center gap-1.5 font-mono text-[9px] text-ton-black/30 hover:text-ton-black/60 uppercase tracking-wider transition-colors"
+            className="flex items-center gap-1.5 font-mono text-[9px] text-ton-black/45 hover:text-ton-black/60 uppercase tracking-wider transition-colors"
           >
             <Copy className="w-3 h-3" />
             Copy Colors
@@ -739,7 +739,7 @@ export default function BrandSystemView() {
             {/* Overlay example */}
             <div className="mt-6 bg-ton-black/3 p-4">
               <div className="bg-ton-black/5 h-32 flex items-center justify-center border border-ton-black/8 relative">
-                <p className="font-mono text-[10px] text-ton-black/20 uppercase tracking-widest">[ Image Area ]</p>
+                <p className="font-mono text-[10px] text-ton-black/40 uppercase tracking-widest">[ Image Area ]</p>
                 <div className="absolute bottom-2 left-2 bg-ton-black text-ton-cream px-2 py-1">
                   <p className="font-mono text-[7px] leading-tight">
                     WINDHOEK CBD // 22.57 S, 17.08 E<br/>
@@ -833,7 +833,7 @@ export default function BrandSystemView() {
               const success = await copyToClipboard(generateBrandSystemCSS());
               if (success) toast.success("CSS copied to clipboard!");
             }}
-            className="flex items-center gap-1.5 font-mono text-[9px] text-ton-black/30 hover:text-ton-black/60 uppercase tracking-wider transition-colors"
+            className="flex items-center gap-1.5 font-mono text-[9px] text-ton-black/45 hover:text-ton-black/60 uppercase tracking-wider transition-colors"
           >
             <Copy className="w-3 h-3" />
             Copy CSS
@@ -865,7 +865,7 @@ export default function BrandSystemView() {
               const success = await copyToClipboard(generateBrandSystemTailwind());
               if (success) toast.success("Tailwind config copied to clipboard!");
             }}
-            className="flex items-center gap-1.5 font-mono text-[9px] text-ton-black/30 hover:text-ton-black/60 uppercase tracking-wider transition-colors"
+            className="flex items-center gap-1.5 font-mono text-[9px] text-ton-black/45 hover:text-ton-black/60 uppercase tracking-wider transition-colors"
           >
             <Copy className="w-3 h-3" />
             Copy Config
@@ -926,9 +926,9 @@ export default function BrandSystemView() {
 
             <div>
               <h4 className="font-mono text-[9px] text-ton-red font-bold uppercase tracking-widest mb-2">5. Business Execution Plan</h4>
-              <p className="mb-2"><span className="text-ton-cream font-bold">Phase I: The Physical Anchor</span> — Establish the print-ready Business Plan. Readable, authoritative, and physically imposing.</p>
-              <p className="mb-2"><span className="text-ton-cream font-bold">Phase II: Social Media & Times OS Feed</span> — Conversion of all social outputs to &ldquo;Digital Telegrams.&rdquo; Automation of scraping logs into public feeds.</p>
-              <p><span className="text-ton-cream font-bold">Phase III: High-Density Physical Distribution</span> — Deployment of &ldquo;The Broadside&rdquo; — single-page physical printouts at regional transport hubs.</p>
+              <p className="mb-2"><span className="text-ton-cream font-bold">Phase I: The Physical Anchor</span> - Establish the print-ready Business Plan. Readable, authoritative, and physically imposing.</p>
+              <p className="mb-2"><span className="text-ton-cream font-bold">Phase II: Social Media & Times OS Feed</span> - Conversion of all social outputs to &ldquo;Digital Telegrams.&rdquo; Automation of scraping logs into public feeds.</p>
+              <p><span className="text-ton-cream font-bold">Phase III: High-Density Physical Distribution</span> - Deployment of &ldquo;The Broadside&rdquo; - single-page physical printouts at regional transport hubs.</p>
             </div>
           </div>
         </div>
@@ -936,7 +936,7 @@ export default function BrandSystemView() {
 
       {/* Masthead Preview */}
       <div className="py-8 sm:py-10 text-center border-t border-ton-black/8">
-        <span className="font-mono text-[9px] text-ton-black/20 tracking-widest uppercase">
+        <span className="font-mono text-[9px] text-ton-black/40 tracking-widest uppercase">
           Masthead
         </span>
         <div className="font-serif text-4xl sm:text-6xl md:text-8xl font-bold tracking-tight text-ton-black mt-3">

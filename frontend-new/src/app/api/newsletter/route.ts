@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — Newsletter Subscription API (TANGISON)
+// Times of Namibia - Newsletter Subscription API (TANGISON)
 // Uses Convex when configured, falls back to Prisma.
 // Validation: Zod schema. Rate limit: 5/hour/IP.
 // ============================================================

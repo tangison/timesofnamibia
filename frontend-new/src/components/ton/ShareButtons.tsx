@@ -26,7 +26,11 @@ export default function ShareButtons({ title, url, articleContent }: ShareButton
   // Resolve the URL on the client (avoids hydration mismatch)
   const [shareUrl, setShareUrl] = useState<string | undefined>(url);
   useEffect(() => {
-    if (!url && typeof window !== "undefined") {
+    if (typeof window === "undefined") return;
+    // If url is a relative path like /article/slug, convert to absolute
+    if (url && url.startsWith("/")) {
+      setShareUrl(`${window.location.origin}${url}`);
+    } else if (!url) {
       setShareUrl(window.location.href);
     }
   }, [url]);
@@ -49,8 +53,8 @@ export default function ShareButtons({ title, url, articleContent }: ShareButton
 
   const handleWhatsApp = () => {
     const text = shareUrl
-      ? `${title} — ${shareUrl}`
-      : `${title} — Times of Namibia`;
+      ? `${title} - ${shareUrl}`
+      : `${title} - Times of Namibia`;
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
   };
 
@@ -72,7 +76,7 @@ export default function ShareButtons({ title, url, articleContent }: ShareButton
       ? `${title}. ${articleContent}`
       : title;
 
-    // Clean up the text — remove HTML tags, extra whitespace, etc.
+    // Clean up the text - remove HTML tags, extra whitespace, etc.
     const cleanText = fullText
       .replace(/<[^>]*>/g, "")
       .replace(/&nbsp;/g, " ")

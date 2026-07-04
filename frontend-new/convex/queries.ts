@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — Convex queries (TANGISON)
+// Times of Namibia - Convex queries (TANGISON)
 // All read operations for articles, jobs, tenders, market data,
 // RSS feeds, newsletter, wire submissions.
 // ============================================================
@@ -46,7 +46,7 @@ export const getArticleBySlug = query({
   },
 });
 
-// ── DEDUP CHECK (for RSS ingestion — avoid wasting image gen calls) ─
+// ── DEDUP CHECK (for RSS ingestion - avoid wasting image gen calls) ─
 // Checks if an article already exists by slug OR rssGuid.
 
 export const checkArticleExists = query({
@@ -97,7 +97,7 @@ export const searchArticles = query({
     const term = args.q.toLowerCase().trim();
     if (!term) return [];
 
-    // Convex doesn't have built-in full-text search yet — use filter with
+    // Convex doesn't have built-in full-text search yet - use filter with
     // contains on headline + excerpt. For larger datasets, consider
     // external search (Algolia, Typesense).
     const candidates = await ctx.db
@@ -384,5 +384,160 @@ export const listArticlesWithoutImages = query({
       .filter((q) => q.eq(q.field("imageUrl"), undefined))
       .take(limit);
     return all;
+  },
+});
+
+// ── ARTICLES NEEDING SOCIAL PREP (Task 5) ───────────────────
+// Returns published articles where postedToSocial is false or undefined.
+
+export const listArticlesForSocial = query({
+  args: { limit: v.optional(v.number()) },
+  handler: async (ctx, args) => {
+    const limit = Math.min(args.limit ?? 20, 50);
+    const all = await ctx.db
+      .query("article")
+      .filter((q) => q.eq(q.field("published"), true))
+      .filter((q) => q.eq(q.field("deletedAt"), undefined))
+      .filter((q) => q.neq(q.field("postedToSocial"), true))
+      .order("desc")
+      .take(limit);
+    return all;
+  },
+});
+
+// ── SOCIAL QUEUE - pending posts (Task 5) ────────────────────
+// Returns pending social queue entries for external automation.
+
+export const listPendingSocialPosts = query({
+  args: { limit: v.optional(v.number()) },
+  handler: async (ctx, args) => {
+    const limit = Math.min(args.limit ?? 50, 200);
+    return await ctx.db
+      .query("socialQueue")
+      .withIndex("by_status_queuedAt", (q) => q.eq("status", "pending"))
+      .order("asc")
+      .take(limit);
+  },
+});
+
+// ── DIRECTORY PLACES (Phase 4, Iteration 14) ────────────────
+
+export const getDirectoryPlace = query({
+  args: { slug: v.string() },
+  handler: async (ctx, args) => {
+    return await ctx.db
+      .query("directory_places")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .first();
+  },
+});
+
+export const listDirectoryPlaces = query({
+  args: {
+    limit: v.optional(v.number()),
+    type: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const limit = Math.min(args.limit ?? 100, 200);
+    if (args.type) {
+      return await ctx.db
+        .query("directory_places")
+        .withIndex("by_type", (q) => q.eq("type", args.type!))
+        .take(limit);
+    }
+    return await ctx.db.query("directory_places").take(limit);
+  },
+});
+
+export const searchDirectoryPlaces = query({
+  args: { q: v.string(), limit: v.optional(v.number()) },
+  handler: async (ctx, args) => {
+    const limit = Math.min(args.limit ?? 20, 50);
+    const term = args.q.toLowerCase().trim();
+    if (!term) return [];
+    const all = await ctx.db.query("directory_places").take(200);
+    return all
+      .filter((p) =>
+        p.name.toLowerCase().includes(term) ||
+        p.region.toLowerCase().includes(term) ||
+        p.type.toLowerCase().includes(term)
+      )
+      .slice(0, limit);
+  },
+});
+
+// ── ADVERTISEMENTS (Phase 8) ────────────────────────────────
+
+export const getActiveAd = query({
+  args: { placement: v.string() },
+  handler: async (ctx, args) => {
+    return await ctx.db
+      .query("advertisements")
+      .withIndex("by_placement_active", (q) =>
+        q.eq("placement", args.placement).eq("isActive", true)
+      )
+      .first();
+  },
+});
+
+// ── ARTICLES NEEDING REWRITE (Issue: Fix unrewritten articles) ──
+
+export const listArticlesNeedingRewrite = query({
+  args: { limit: v.optional(v.number()) },
+  handler: async (ctx, args) => {
+    const limit = Math.min(args.limit ?? 50, 200);
+    const all = await ctx.db
+      .query("article")
+      .filter((q) => q.eq(q.field("published"), true))
+      .filter((q) => q.eq(q.field("deletedAt"), undefined))
+      .order("desc")
+      .take(limit * 3);
+
+    return all
+      .filter((a: any) => !a.key_takeaways || a.key_takeaways.length === 0 || !a.seo_meta_description)
+      .slice(0, limit);
+  },
+});
+
+// ── CLEANUP QUERIES (Section 5) ─────────────────────────────
+
+export const listOldMarketData = query({
+  args: { olderThanMs: v.number() },
+  handler: async (ctx, args) => {
+    const cutoff = Date.now() - args.olderThanMs;
+    const all = await ctx.db.query("marketDatum").take(200);
+    return all.filter((m: any) => m.updatedAt < cutoff);
+  },
+});
+
+export const listAllTenders = query({
+  args: { limit: v.optional(v.number()) },
+  handler: async (ctx, args) => {
+    return await ctx.db.query("tender").take(args.limit ?? 200);
+  },
+});
+
+export const listAllJobs = query({
+  args: { limit: v.optional(v.number()) },
+  handler: async (ctx, args) => {
+    return await ctx.db.query("job").take(args.limit ?? 200);
+  },
+});
+
+export const listOldSocialQueue = query({
+  args: { olderThanMs: v.number() },
+  handler: async (ctx, args) => {
+    const cutoff = Date.now() - args.olderThanMs;
+    const all = await ctx.db.query("socialQueue").take(500);
+    return all.filter((s: any) => s.queuedAt < cutoff && s.status !== "pending");
+  },
+});
+
+export const listOldTickerItems = query({
+  args: { olderThanMs: v.number() },
+  handler: async (ctx, args) => {
+    const cutoff = Date.now() - args.olderThanMs;
+    const all = await ctx.db.query("tickerItem").take(200);
+    return all.filter((t: any) => t.createdAt < cutoff);
   },
 });

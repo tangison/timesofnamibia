@@ -1,5 +1,5 @@
 // ============================================================
-// Times of Namibia — Convex Schema (TANGISON)
+// Times of Namibia - Convex Schema (TANGISON)
 //
 // Ported from the Prisma schema. Key changes:
 //   - All tables use Convex's `defineTable()` + index() instead of @@index
@@ -91,21 +91,23 @@ export default defineSchema({
     deletedAt: v.optional(v.number()),
     createdAt: v.number(),
     updatedAt: v.number(),
-    // Task 4 fields
-    body: v.optional(v.string()),
-    summary: v.optional(v.string()),
-    category: v.optional(v.string()),
-    coverImage: v.optional(v.string()),
-    sourceRegion: v.optional(v.string()),
-    originalUrl: v.optional(v.string()),
-    postedToSocial: v.optional(v.boolean()),
+    // ── Task 4 fields (upgrade spec) ──
+    // Aliases written alongside legacy fields for backwards compat.
+    // Frontend prefers these, falls back to legacy names.
+    body: v.optional(v.string()),           // == content
+    summary: v.optional(v.string()),        // == excerpt
+    category: v.optional(v.string()),       // == section
+    coverImage: v.optional(v.string()),     // == imageUrl
+    sourceRegion: v.optional(v.string()),   // "namibia" | "africa" | "world"
+    originalUrl: v.optional(v.string()),    // original RSS article URL
+    postedToSocial: v.optional(v.boolean()),// default false
     socialPostedAt: v.optional(v.number()),
-    // Phase 1 fields
-    seo_meta_description: v.optional(v.string()),
-    key_takeaways: v.optional(v.array(v.string())),
-    // Phase 2 fields
-    alt_text: v.optional(v.string()),
-    webp_image_url: v.optional(v.string()),
+    // ── Phase 1 fields (Tangison Audit Autonomous Loop) ──
+    seo_meta_description: v.optional(v.string()),  // max 160 chars, for Google snippet
+    key_takeaways: v.optional(v.array(v.string())), // exactly 3 bullet points
+    // ── Phase 2 fields (Iteration 14: WebP + alt text) ──
+    alt_text: v.optional(v.string()),              // descriptive alt text for hero image
+    webp_image_url: v.optional(v.string()),        // WebP-converted image URL
   })
     .index("by_slug", ["slug"])
     .index("by_published_section_publishedAt", ["published", "section", "publishedAt"])
@@ -392,7 +394,7 @@ export default defineSchema({
     updatedAt: v.number(),
   }).index("by_key", ["key"]),
 
-  // ── NAMIBIA GUIDE (Part 1 — evergreen info hub) ─────────────
+  // ── NAMIBIA GUIDE (Part 1 - evergreen info hub) ─────────────
   namibiaGuide: defineTable({
     slug: v.string(),
     title: v.string(),
@@ -433,11 +435,84 @@ export default defineSchema({
     submittedAt: v.number(),
   }).index("by_status", ["status"]),
 
-  // ── INGESTION HEALTH (Part 5 — visibility) ──────────────────
+  // ── INGESTION HEALTH (Part 5 - visibility) ──────────────────
   ingestionHealth: defineTable({
     key: v.string(),
     lastSuccessfulRun: v.number(),
     articlesInserted: v.number(),
     errors: v.array(v.string()),
   }).index("by_key", ["key"]),
+
+  // ── SOCIAL QUEUE (Task 5) ───────────────────────────────────
+  socialQueue: defineTable({
+    articleId: v.id("article"),
+    imageUrl: v.optional(v.string()),
+    caption: v.string(),
+    hashtags: v.array(v.string()),
+    platforms: v.array(v.string()),
+    status: v.string(),
+    queuedAt: v.number(),
+    postedAt: v.optional(v.number()),
+    postResults: v.optional(v.array(v.object({
+      platform: v.string(),
+      success: v.boolean(),
+      error: v.optional(v.string()),
+      postId: v.optional(v.string()),
+    }))),
+  })
+    .index("by_status_queuedAt", ["status", "queuedAt"])
+    .index("by_article", ["articleId"]),
+
+  // ── DIRECTORY PLACES (Phase 4, Iteration 14) ────────────────
+  // Namibian national directory - 48+ places seeded from Wikimedia.
+  directory_places: defineTable({
+    slug: v.string(),
+    name: v.string(),
+    type: v.string(), // park | landmark | town | wildlife | geological | cultural
+    region: v.string(),
+    short_description: v.string(),
+    rich_description: v.string(),
+    seo_meta_description: v.string(),
+    coordinates: v.object({
+      lat: v.number(),
+      lng: v.number(),
+    }),
+    images: v.array(v.object({
+      url: v.string(),
+      webp_url: v.optional(v.string()),
+      caption: v.string(),
+      source: v.string(),
+      license: v.string(),
+      width: v.optional(v.number()),
+      height: v.optional(v.number()),
+      alt_text: v.string(),
+    })),
+    key_facts: v.array(v.object({
+      label: v.string(),
+      value: v.string(),
+    })),
+    best_time_to_visit: v.string(),
+    activities: v.array(v.string()),
+    official_url: v.string(),
+    booking_url: v.optional(v.string()),
+    related_places: v.array(v.string()), // slugs
+    gallery_featured: v.boolean(),
+    created_at: v.number(),
+    updated_at: v.number(),
+  })
+    .index("by_slug", ["slug"])
+    .index("by_type", ["type"])
+    .index("by_region", ["region"]),
+
+  // ── ADVERTISEMENTS (Phase 8, Iteration 14) ──────────────────
+  advertisements: defineTable({
+    imageUrl: v.string(),            // WebP URL
+    targetUrl: v.string(),
+    placement: v.string(),           // popup | sidebar | in-article
+    isActive: v.boolean(),
+    impressions: v.number(),
+    clicks: v.number(),
+    alt_text: v.string(),
+    created_at: v.number(),
+  }).index("by_placement_active", ["placement", "isActive"]),
 });

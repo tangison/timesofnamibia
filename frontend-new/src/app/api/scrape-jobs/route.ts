@@ -29,8 +29,8 @@ const JOB_SOURCES = [
 
 async function launchBrowser() {
   const chromium: any = require("@sparticuz/chromium");
-  const puppeteerModule: any = require("puppeteer-core");
-  const puppeteer = puppeteerModule.default || puppeteerModule;
+  // Use eval to prevent Vercel's bundler from transforming the require
+  const puppeteer: any = (0, eval)("require")("puppeteer-core");
   const executablePath = await chromium.executablePath();
   return await puppeteer.launch({ executablePath, args: chromium.args, headless: "new" });
 }

@@ -91,6 +91,21 @@ export default defineSchema({
     deletedAt: v.optional(v.number()),
     createdAt: v.number(),
     updatedAt: v.number(),
+    // Task 4 fields
+    body: v.optional(v.string()),
+    summary: v.optional(v.string()),
+    category: v.optional(v.string()),
+    coverImage: v.optional(v.string()),
+    sourceRegion: v.optional(v.string()),
+    originalUrl: v.optional(v.string()),
+    postedToSocial: v.optional(v.boolean()),
+    socialPostedAt: v.optional(v.number()),
+    // Phase 1 fields
+    seo_meta_description: v.optional(v.string()),
+    key_takeaways: v.optional(v.array(v.string())),
+    // Phase 2 fields
+    alt_text: v.optional(v.string()),
+    webp_image_url: v.optional(v.string()),
   })
     .index("by_slug", ["slug"])
     .index("by_published_section_publishedAt", ["published", "section", "publishedAt"])
@@ -99,7 +114,9 @@ export default defineSchema({
     .index("by_category", ["categoryId"])
     .index("by_author", ["authorId"])
     .index("by_rssFeed", ["rssFeedId"])
-    .index("by_rssGuid", ["rssGuid"]),
+    .index("by_rssGuid", ["rssGuid"])
+    .index("by_postedToSocial", ["postedToSocial"])
+    .index("by_sourceRegion", ["sourceRegion"]),
 
   // ── MEDIA ────────────────────────────────────────────────────
   media: defineTable({

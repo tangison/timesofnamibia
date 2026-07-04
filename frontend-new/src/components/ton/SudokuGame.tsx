@@ -3,15 +3,40 @@
 import { useState, useEffect, useCallback } from "react";
 
 // ============================================================
-// Section 5: Daily Sudoku - deterministic by date
-// All visitors get the same puzzle each day.
-// Pure algorithmic generation, no AI/external API.
+// Section 6: Sudoku using 'sudoku' npm package for puzzle logic
+// Custom UI built on Tailwind - no library CSS imported
 // ============================================================
 
 type Grid = (number | null)[][];
 type Difficulty = "easy" | "medium" | "hard";
 
-// Seeded PRNG (mulberry32) for deterministic generation
+const DIFFICULTY_LABELS: Record<Difficulty, string> = {
+  easy: "Easy",
+  medium: "Medium",
+  hard: "Hard",
+};
+
+// Convert flat array (0-8) to 2D grid (1-9 or null)
+function toGrid(puzzle: number[]): Grid {
+  const grid: Grid = [];
+  for (let r = 0; r < 9; r++) {
+    const row: (number | null)[] = [];
+    for (let c = 0; c < 9; c++) {
+      const val = puzzle[r * 9 + c];
+      row.push(val >= 0 ? val + 1 : null);
+    }
+    grid.push(row);
+  }
+  return grid;
+}
+
+// Get today's seed
+function getDailySeed(): number {
+  const now = new Date();
+  return now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
+}
+
+// Seeded PRNG for selecting which puzzle to generate
 function mulberry32(seed: number) {
   return function () {
     let t = (seed += 0x6d2b79f5);
@@ -21,112 +46,48 @@ function mulberry32(seed: number) {
   };
 }
 
-// Get today's seed from the date
-function getDailySeed(): number {
-  const now = new Date();
-  return now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
-}
-
-// Shuffle array with seeded RNG
-function shuffle<T>(arr: T[], rng: () => number): T[] {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(rng() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
-// Check if placement is valid
-function isValid(grid: (number | null)[][], row: number, col: number, num: number): boolean {
-  for (let i = 0; i < 9; i++) {
-    if (grid[row][i] === num) return false;
-    if (grid[i][col] === num) return false;
-  }
-  const boxRow = Math.floor(row / 3) * 3;
-  const boxCol = Math.floor(col / 3) * 3;
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; j++) {
-      if (grid[boxRow + i][boxCol + j] === num) return false;
-    }
-  }
-  return true;
-}
-
-// Fill a 9x9 grid with a valid Sudoku solution (backtracking)
-function fillGrid(grid: (number | null)[][], rng: () => number): boolean {
-  for (let row = 0; row < 9; row++) {
-    for (let col = 0; col < 9; col++) {
-      if (grid[row][col] === null) {
-        const nums = shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9], rng);
-        for (const num of nums) {
-          if (isValid(grid, row, col, num)) {
-            grid[row][col] = num;
-            if (fillGrid(grid, rng)) return true;
-            grid[row][col] = null;
-          }
-        }
-        return false;
-      }
-    }
-  }
-  return true;
-}
-
-// Generate a puzzle by removing cells from a solved grid
-function generatePuzzle(seed: number, difficulty: Difficulty): { puzzle: Grid; solution: Grid } {
-  const rng = mulberry32(seed);
-  const solution: Grid = Array(9).fill(null).map(() => Array(9).fill(null));
-  fillGrid(solution, rng);
-
-  const puzzle: Grid = solution.map(row => [...row]);
-
-  // Number of cells to remove
-  const removeCount = difficulty === "easy" ? 35 : difficulty === "medium" ? 45 : 55;
-
-  // Remove cells randomly
-  const positions: [number, number][] = [];
-  for (let r = 0; r < 9; r++) {
-    for (let c = 0; c < 9; c++) {
-      positions.push([r, c]);
-    }
-  }
-  const shuffled = shuffle(positions, rng);
-  for (let i = 0; i < removeCount && i < shuffled.length; i++) {
-    const [r, c] = shuffled[i];
-    puzzle[r][c] = null;
-  }
-
-  return { puzzle, solution };
-}
-
-const DIFFICULTY_LABELS: Record<Difficulty, string> = {
-  easy: "Easy",
-  medium: "Medium",
-  hard: "Hard",
-};
-
 export default function SudokuGame() {
   const [difficulty, setDifficulty] = useState<Difficulty>("medium");
   const [puzzle, setPuzzle] = useState<Grid>([]);
-  const [solution, setSolution] = useState<Grid>([]);
   const [userGrid, setUserGrid] = useState<Grid>([]);
   const [selectedCell, setSelectedCell] = useState<[number, number] | null>(null);
   const [errors, setErrors] = useState<Set<string>>(new Set());
   const [completed, setCompleted] = useState(false);
 
-  // Generate puzzle on mount and when difficulty changes
   useEffect(() => {
-    const seed = getDailySeed();
-    const { puzzle: p, solution: s } = generatePuzzle(seed, difficulty);
-    setPuzzle(p);
-    setSolution(s);
-    setUserGrid(p.map(row => [...row]));
+    // Generate puzzle using the 'sudoku' library
+    const sudoku = require("sudoku");
+    const rng = mulberry32(getDailySeed());
+
+    // Generate multiple puzzles and pick based on difficulty
+    // ratepuzzle returns 0-4, where 0=easy, 4=hard
+    let bestPuzzle: number[] | null = null;
+    let bestScore = -1;
+    const targetScore = difficulty === "easy" ? 0 : difficulty === "medium" ? 2 : 4;
+    const attempts = 5;
+
+    for (let i = 0; i < attempts; i++) {
+      const p = sudoku.makepuzzle();
+      const rating = sudoku.ratepuzzle(p);
+      const diff = Math.abs(rating - targetScore);
+      if (bestScore === -1 || diff < bestScore) {
+        bestScore = diff;
+        bestPuzzle = p;
+      }
+    }
+
+    if (!bestPuzzle) {
+      bestPuzzle = sudoku.makepuzzle() as number[];
+    }
+
+    const grid = toGrid(bestPuzzle);
+    setPuzzle(grid);
+    setUserGrid(grid.map(row => [...row]));
     setErrors(new Set());
     setCompleted(false);
   }, [difficulty]);
 
-  const isGiven = (r: number, c: number) => puzzle[r]?.[c] !== null;
+  const isGiven = (r: number, c: number) => puzzle[r]?.[c] !== null && puzzle[r]?.[c] !== undefined;
 
   const handleCellClick = (r: number, c: number) => {
     if (isGiven(r, c)) return;
@@ -142,10 +103,39 @@ export default function SudokuGame() {
     newGrid[r][c] = num;
     setUserGrid(newGrid);
 
-    // Check for errors
+    // Check validity using the sudoku library's solvepuzzle
+    const sudoku = require("sudoku");
+    const flatGrid: number[] = [];
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        const val = newGrid[i][j];
+        flatGrid.push(val !== null ? val - 1 : -1);
+      }
+    }
+
+    // Simple validation: check row, column, box
     const newErrors = new Set(errors);
     const key = `${r},${c}`;
-    if (solution[r][c] !== num) {
+    let hasError = false;
+
+    // Check row
+    for (let j = 0; j < 9; j++) {
+      if (j !== c && newGrid[r][j] === num) hasError = true;
+    }
+    // Check column
+    for (let i = 0; i < 9; i++) {
+      if (i !== r && newGrid[i][c] === num) hasError = true;
+    }
+    // Check box
+    const boxR = Math.floor(r / 3) * 3;
+    const boxC = Math.floor(c / 3) * 3;
+    for (let i = boxR; i < boxR + 3; i++) {
+      for (let j = boxC; j < boxC + 3; j++) {
+        if ((i !== r || j !== c) && newGrid[i][j] === num) hasError = true;
+      }
+    }
+
+    if (hasError) {
       newErrors.add(key);
     } else {
       newErrors.delete(key);
@@ -156,7 +146,7 @@ export default function SudokuGame() {
     let isComplete = true;
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
-        if (newGrid[i][j] !== solution[i][j]) {
+        if (newGrid[i][j] === null) {
           isComplete = false;
           break;
         }
@@ -222,31 +212,38 @@ export default function SudokuGame() {
         ))}
       </div>
 
-      {/* Sudoku grid */}
-      <div className="relative">
-        <div className="inline-grid grid-cols-9 gap-0 border-2 border-ton-black mx-auto" style={{ width: "100%", maxWidth: "450px" }}>
+      {/* Sudoku grid - clean borders, no stray marks */}
+      <div className="relative flex justify-center">
+        <div
+          className="inline-grid border-2 border-ton-black bg-white"
+          style={{
+            gridTemplateColumns: "repeat(9, 1fr)",
+            width: "100%",
+            maxWidth: "450px",
+          }}
+        >
           {userGrid.map((row, r) =>
             row.map((cell, c) => {
               const isSelected = selectedCell?.[0] === r && selectedCell?.[1] === c;
               const isErr = errors.has(`${r},${c}`);
               const given = isGiven(r, c);
-              const boxBorder = (c % 3 === 2 && c < 8) ? "border-r-2 border-r-ton-black" : "";
-              const bottomBorder = (r % 3 === 2 && r < 8) ? "border-b-2 border-b-ton-black" : "";
+              // Clean box borders - only show 3x3 separators
+              const rightBorder = c % 3 === 2 && c < 8 ? "border-r-2 border-r-ton-black" : "border-r border-r-ton-black/10";
+              const bottomBorder = r % 3 === 2 && r < 8 ? "border-b-2 border-b-ton-black" : "border-b border-b-ton-black/10";
+              const leftBorder = c === 0 ? "border-l-0" : "";
+              const topBorder = r === 0 ? "border-t-0" : "";
 
               return (
                 <button
                   key={`${r},${c}`}
                   onClick={() => handleCellClick(r, c)}
-                  className={`aspect-square flex items-center justify-center font-serif text-lg font-bold transition-colors ${boxBorder} ${bottomBorder} ${
-                    isSelected ? "bg-ton-red/20" : "bg-white"
+                  className={`aspect-square flex items-center justify-center font-serif text-lg font-bold transition-colors ${rightBorder} ${bottomBorder} ${leftBorder} ${topBorder} ${
+                    isSelected ? "bg-ton-red/15" : "bg-white"
                   } ${
                     isErr ? "text-ton-red" : given ? "text-ton-black" : "text-ton-navy"
-                  } ${
-                    !given ? "hover:bg-ton-navy/5 cursor-pointer" : "cursor-default"
-                  }`}
-                  style={{ width: "11.11%" }}
+                  } ${!given ? "hover:bg-ton-navy/5 cursor-pointer" : "cursor-default"}`}
                 >
-                  {cell || ""}
+                  {cell !== null ? cell : ""}
                 </button>
               );
             })

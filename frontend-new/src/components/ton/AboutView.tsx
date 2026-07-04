@@ -27,7 +27,10 @@ export default function AboutView() {
           <span className="font-mono text-[9px] tracking-widest uppercase text-ton-red font-semibold">
             About // The Institution
           </span>
-          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-tight mt-2">
+          <h1
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-tight mt-2"
+            style={{ fontFamily: "var(--font-unifraktur), 'UnifrakturMaguntia', serif" }}
+          >
             About Times of Namibia
           </h1>
           <p className="font-serif italic text-ton-black/50 text-sm sm:text-base mt-2 max-w-xl">
@@ -188,7 +191,7 @@ export default function AboutView() {
         <div className="h-px bg-ton-black/8 mb-5" />
 
         <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-5">
-          Times OS is the proprietary scraping and verification engine that powers every data point on the platform. Built on a microservices architecture, it aggregates from NIEIS, the Government Gazette, LinkedIn, CareerPortal, and NamibiaJobs in real-time. Each source is scraped on an independent 6-second cycle, with results validated against a 3-point verification matrix before publication.
+          Times OS is the system that aggregates news from multiple trusted sources across Namibia and Africa. It uses AI-assisted tools to help produce and organize content, with verification built into every step.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 mb-6">
@@ -219,12 +222,12 @@ export default function AboutView() {
           </h3>
           <div className="space-y-2 font-mono text-[10px]">
             {[
-              { label: "Sources Monitored", value: "4 Primary + 12 Secondary" },
-              { label: "Scraping Cycle", value: "6 Seconds" },
-              { label: "Verification Matrix", value: "3-Point Source Validation" },
+              { label: "Sources Monitored", value: "Multiple trusted sources" },
+              { label: "Scraping Cycle", value: "Continuous" },
+              { label: "Verification Matrix", value: "Multi-source validation" },
               { label: "Regions Covered", value: "14 Total" },
               { label: "Uptime SLA", value: "99.7%" },
-              { label: "Data Freshness", value: "Max 6s Staleness" },
+              { label: "Data Freshness", value: "Real-time" },
             ].map((spec, i) => (
               <div key={i} className="flex items-center justify-between border-b border-ton-cream/8 pb-1.5">
                 <span className="text-ton-cream/40">{spec.label}</span>

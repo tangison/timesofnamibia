@@ -384,4 +384,29 @@ http.route({
   }),
 });
 
+// ── /cleanup-database (Section 5) - trigger database cleanup ──
+http.route({
+  path: "/cleanup-database",
+  method: "POST",
+  handler: httpAction(async (ctx, request) => {
+    const secret = request.headers.get("Authorization");
+    const expectedSecret = `Bearer ${process.env.INGEST_SECRET}`;
+    if (!secret || secret !== expectedSecret) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+    try {
+      await ctx.scheduler.runAfter(0, internal.actions.cleanupDatabase.cleanupDatabase, {});
+      return new Response(
+        JSON.stringify({ status: "Database cleanup started" }),
+        { status: 200, headers: { "Content-Type": "application/json" } }
+      );
+    } catch (err) {
+      return new Response(
+        JSON.stringify({ error: err instanceof Error ? err.message : "Unknown error" }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      );
+    }
+  }),
+});
+
 export default http;

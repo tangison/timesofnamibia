@@ -605,6 +605,53 @@ export const clearAllDirectoryPlaces = mutation({
   },
 });
 
+// ── DELETE MUTATIONS (Section 5: Database cleanup) ───────────
+
+export const deleteMarketDatum = mutation({
+  args: { adminToken: v.string(), id: v.id("marketDatum") },
+  handler: async (ctx, args) => {
+    requireAdmin(args.adminToken);
+    await ctx.db.delete(args.id);
+    return { success: true };
+  },
+});
+
+export const deleteTender = mutation({
+  args: { adminToken: v.string(), id: v.id("tender") },
+  handler: async (ctx, args) => {
+    requireAdmin(args.adminToken);
+    await ctx.db.delete(args.id);
+    return { success: true };
+  },
+});
+
+export const deleteJob = mutation({
+  args: { adminToken: v.string(), id: v.id("job") },
+  handler: async (ctx, args) => {
+    requireAdmin(args.adminToken);
+    await ctx.db.delete(args.id);
+    return { success: true };
+  },
+});
+
+export const deleteSocialQueueEntry = mutation({
+  args: { adminToken: v.string(), id: v.id("socialQueue") },
+  handler: async (ctx, args) => {
+    requireAdmin(args.adminToken);
+    await ctx.db.delete(args.id);
+    return { success: true };
+  },
+});
+
+export const deleteTickerItem = mutation({
+  args: { adminToken: v.string(), id: v.id("tickerItem") },
+  handler: async (ctx, args) => {
+    requireAdmin(args.adminToken);
+    await ctx.db.delete(args.id);
+    return { success: true };
+  },
+});
+
 // ── UPDATE DIRECTORY PLACE IMAGES (Issue: Fill missing images) ──
 
 export const updateDirectoryPlaceImages = mutation({

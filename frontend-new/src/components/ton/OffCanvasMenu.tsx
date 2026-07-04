@@ -51,17 +51,18 @@ export default function OffCanvasMenu({ open, onClose }: OffCanvasMenuProps) {
             transition={{ type: "spring", stiffness: 80, damping: 20, mass: 1 }}
             className="fixed top-0 right-0 bottom-0 w-full sm:w-[480px] bg-ton-cream z-[70] overflow-y-auto"
           >
-            {/* Header with brand image */}
+            {/* Header with Skeleton Coast background */}
             <div className="relative h-48 overflow-hidden">
               <Image
-                src="/og-default.png"
-                alt="Times of Namibia"
+                src="/skeleton-coast-bg.webp"
+                alt=""
                 fill
                 className="object-cover"
                 sizes="480px"
                 priority
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-ton-black via-ton-black/40 to-transparent" />
+              {/* Dark overlay for text readability */}
+              <div className="absolute inset-0 bg-black/60" />
 
               {/* Wordmark overlay */}
               <div className="absolute bottom-4 left-6">

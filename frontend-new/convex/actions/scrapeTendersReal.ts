@@ -178,6 +178,8 @@ async function scrapeSource(source: typeof SOURCES[0]): Promise<ScrapedTender[]>
 }
 
 // ── TAVILY FALLBACK ──────────────────────────────────────────
+// Section 3: Only used as last resort, with strict validation.
+// No portal homepage links - only pages that look like actual tenders.
 
 async function searchTavilyForTenders(): Promise<ScrapedTender[]> {
   const apiKey = process.env.TAVILY_API_KEY;
@@ -189,9 +191,10 @@ async function searchTavilyForTenders(): Promise<ScrapedTender[]> {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         api_key: apiKey,
-        query: "Namibia government tenders procurement 2026 site:gov.na",
+        query: "Namibia government tender bid notice closing date 2026",
         max_results: 10,
-        search_depth: "basic",
+        search_depth: "advanced",
+        include_raw_content: false,
       }),
       signal: AbortSignal.timeout(15_000),
     });
@@ -199,13 +202,44 @@ async function searchTavilyForTenders(): Promise<ScrapedTender[]> {
     if (!res.ok) return [];
     const data = await res.json();
 
-    return (data.results || []).map((r: any) => ({
-      title: r.title || "Government Tender",
-      entity: "Government of Namibia",
-      deadline: Date.now() + 30 * 24 * 60 * 60 * 1000,
-      url: r.url,
-      category: "government",
-    }));
+    // Section 3: Validation gate - reject portal homepage links and
+    // records without a real closing date
+    return (data.results || [])
+      .filter((r: any) => {
+        const title = (r.title || "").toLowerCase();
+        const content = (r.content || "").toLowerCase();
+        // Reject aggregator/portal homepage patterns
+        if (title.includes("procurement") && title.length < 30) return false;
+        if (title.includes("portal ariel")) return false;
+        if (title.includes("murd")) return false;
+        // Require some indication of an actual tender
+        const hasTenderIndicator =
+          content.includes("closing date") ||
+          content.includes("tender no") ||
+          content.includes("bid no") ||
+          content.includes("rfq") ||
+          content.includes("rfp") ||
+          content.includes("expression of interest") ||
+          content.includes("invitation to bid");
+        return hasTenderIndicator;
+      })
+      .map((r: any) => {
+        // Try to extract closing date from content
+        const content = r.content || "";
+        const dateMatch = content.match(/(?:closing|deadline|closes?)[:\s]+(\d{1,2}\s+\w+\s+\d{4})/i);
+        const refMatch = content.match(/(?:tender|bid|rfq|rfp)\s*(?:no|number)?[:\s]*([A-Z0-9\/\-]{4,20})/i);
+
+        return {
+          title: r.title || "Government Tender",
+          entity: "Government of Namibia",
+          deadline: dateMatch ? parseDate(dateMatch[1]) : 0, // 0 = no valid date
+          url: r.url,
+          estimatedValue: undefined,
+          category: refMatch ? refMatch[1] : undefined,
+        };
+      })
+      // Section 3: Reject records missing a real closing date
+      .filter((t: ScrapedTender) => t.deadline > 0);
   } catch (err) {
     console.warn(`[tenders] Tavily search failed: ${err instanceof Error ? err.message : err}`);
     return [];

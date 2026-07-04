@@ -170,6 +170,7 @@ async function scrapeSource(source: typeof SOURCES[0]): Promise<ScrapedJob[]> {
 }
 
 // ── TAVILY FALLBACK ──────────────────────────────────────────
+// Section 4: Strict validation - reject aggregator page titles.
 
 async function searchTavilyForJobs(): Promise<ScrapedJob[]> {
   const apiKey = process.env.TAVILY_API_KEY;
@@ -181,9 +182,10 @@ async function searchTavilyForJobs(): Promise<ScrapedJob[]> {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         api_key: apiKey,
-        query: "Namibia jobs vacancies 2026 site:nieis.namibiaatwork.gov.na OR site:namijob.com OR site:jobsnamibia.net",
-        max_results: 10,
-        search_depth: "basic",
+        query: "Namibia job vacancy hiring position 2026",
+        max_results: 15,
+        search_depth: "advanced",
+        include_raw_content: false,
       }),
       signal: AbortSignal.timeout(15_000),
     });
@@ -191,12 +193,36 @@ async function searchTavilyForJobs(): Promise<ScrapedJob[]> {
     if (!res.ok) return [];
     const data = await res.json();
 
-    return (data.results || []).map((r: any) => ({
-      title: r.title || "Job Vacancy",
-      company: "Namibia",
-      location: "Namibia",
-      url: r.url,
-    }));
+    // Section 4: Validation gate - reject aggregator page titles
+    return (data.results || [])
+      .filter((r: any) => {
+        const title = r.title || "";
+        const titleLower = title.toLowerCase();
+
+        // Reject aggregator patterns: number + "Vacancies"/"Jobs"
+        if (/\d+\s*(vacanc|jobs?|positions?|openings?)/i.test(title)) return false;
+
+        // Reject source-brand names standing in as job title
+        const aggregatorBrands = ["linkedin", "naukri", "indeed", "glassdoor", "simply hired", "careerjet", "jooble"];
+        for (const brand of aggregatorBrands) {
+          if (titleLower.includes(brand) && titleLower.length < 60) return false;
+        }
+
+        // Reject generic "jobs in Namibia" type titles
+        if (/^jobs?\s+(in|namibia)/i.test(title.trim())) return false;
+        if (/^namibia\s+(jobs?|vacanc)/i.test(title.trim())) return false;
+
+        // Require at least 15 chars (real job titles are descriptive)
+        if (title.trim().length < 15) return false;
+
+        return true;
+      })
+      .map((r: any) => ({
+        title: r.title,
+        company: "Namibia",
+        location: "Namibia",
+        url: r.url,
+      }));
   } catch (err) {
     console.warn(`[jobs] Tavily search failed: ${err instanceof Error ? err.message : err}`);
     return [];

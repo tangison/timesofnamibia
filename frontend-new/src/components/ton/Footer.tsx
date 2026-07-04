@@ -11,20 +11,21 @@ import Image from "next/image";
  */
 export default function Footer() {
   return (
-    <footer className="relative bg-ton-black text-ton-cream mt-20 overflow-hidden">
-      {/* Oil-painted banner accent - navy/rust/cream palette */}
-      <div className="relative h-32 overflow-hidden">
+    <footer className="relative text-ton-cream mt-20 overflow-hidden">
+      {/* Section 2: Skeleton Coast background image */}
+      <div className="absolute inset-0">
         <Image
-          src="/banner-oil.webp"
-          alt="Times of Namibia editorial banner"
+          src="/skeleton-coast-bg.webp"
+          alt=""
           fill
-          className="object-cover opacity-40"
+          className="object-cover"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-ton-black via-ton-black/60 to-transparent" />
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-black/70" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-10">
+      <div className="relative max-w-7xl mx-auto px-4 md:px-8 py-10">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
           {/* Wordmark + tagline */}
           <div className="flex items-center gap-4">

@@ -491,11 +491,53 @@ export const listArticlesNeedingRewrite = query({
       .filter((q) => q.eq(q.field("published"), true))
       .filter((q) => q.eq(q.field("deletedAt"), undefined))
       .order("desc")
-      .take(limit * 3); // over-fetch to filter
+      .take(limit * 3);
 
-    // Filter to articles missing key_takeaways or seo_meta_description
     return all
       .filter((a: any) => !a.key_takeaways || a.key_takeaways.length === 0 || !a.seo_meta_description)
       .slice(0, limit);
+  },
+});
+
+// ── CLEANUP QUERIES (Section 5) ─────────────────────────────
+
+export const listOldMarketData = query({
+  args: { olderThanMs: v.number() },
+  handler: async (ctx, args) => {
+    const cutoff = Date.now() - args.olderThanMs;
+    const all = await ctx.db.query("marketDatum").take(200);
+    return all.filter((m: any) => m.updatedAt < cutoff);
+  },
+});
+
+export const listAllTenders = query({
+  args: { limit: v.optional(v.number()) },
+  handler: async (ctx, args) => {
+    return await ctx.db.query("tender").take(args.limit ?? 200);
+  },
+});
+
+export const listAllJobs = query({
+  args: { limit: v.optional(v.number()) },
+  handler: async (ctx, args) => {
+    return await ctx.db.query("job").take(args.limit ?? 200);
+  },
+});
+
+export const listOldSocialQueue = query({
+  args: { olderThanMs: v.number() },
+  handler: async (ctx, args) => {
+    const cutoff = Date.now() - args.olderThanMs;
+    const all = await ctx.db.query("socialQueue").take(500);
+    return all.filter((s: any) => s.queuedAt < cutoff && s.status !== "pending");
+  },
+});
+
+export const listOldTickerItems = query({
+  args: { olderThanMs: v.number() },
+  handler: async (ctx, args) => {
+    const cutoff = Date.now() - args.olderThanMs;
+    const all = await ctx.db.query("tickerItem").take(200);
+    return all.filter((t: any) => t.createdAt < cutoff);
   },
 });

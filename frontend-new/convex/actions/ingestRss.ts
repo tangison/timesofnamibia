@@ -590,6 +590,7 @@ export const ingestRssFeeds = internalAction({
               title: headline,
               category,
               summary,
+              slug,
             });
             if (imageBlob) {
               const webpBlob = await convertToWebp(imageBlob);

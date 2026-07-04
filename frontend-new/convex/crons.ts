@@ -71,4 +71,12 @@ crons.interval(
   {}
 );
 
+// Section 5: Database cleanup - daily (24 hours)
+crons.interval(
+  "cleanup database",
+  { hours: 24 },
+  internal.actions.cleanupDatabase.cleanupDatabase,
+  {}
+);
+
 export default crons;

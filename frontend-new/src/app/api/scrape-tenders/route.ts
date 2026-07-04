@@ -34,8 +34,10 @@ async function launchBrowser() {
   // export API (class-based). Review in 1-2 months for security updates or
   // migration to the new API. See package.json for the pin.
   const chromium: any = require("@sparticuz/chromium");
-  // Use eval to prevent Vercel's bundler from transforming the require
-  const puppeteer: any = (0, eval)("require")("puppeteer-core");
+  // Dynamic import for puppeteer-core - serverExternalPackages config
+  // in next.config.ts prevents Vercel from bundling it
+  const puppeteerMod: any = await import("puppeteer-core");
+  const puppeteer = puppeteerMod.default || puppeteerMod;
   const executablePath = await chromium.executablePath();
   return await puppeteer.launch({
     executablePath,

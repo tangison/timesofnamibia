@@ -34,10 +34,10 @@ export default function HeroCarousel({ articles }: { articles: CarouselArticle[]
     setCurrent((prev) => (prev - 1 + articles.length) % articles.length);
   }, [articles.length]);
 
-  // Auto-rotate every 5 seconds
+  // Section 3: Auto-rotate every 4 seconds (faster newspaper-carousel pace)
   useEffect(() => {
     if (articles.length <= 1) return;
-    const timer = setInterval(next, 5000);
+    const timer = setInterval(next, 4000);
     return () => clearInterval(timer);
   }, [next, articles.length]);
 

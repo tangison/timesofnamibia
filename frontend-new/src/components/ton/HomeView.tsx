@@ -387,6 +387,99 @@ export default function HomeView({
             </div>
           </div>
         </div>
+
+        {/* Section 4: Editor's Picks module - 6 stories below main grid */}
+        {gridArticles.length > 3 && (
+          <div className="mt-16">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="font-serif font-bold text-2xl text-ton-black border-l-4 border-ton-red pl-4">
+                Editor&apos;s Picks
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredArticles
+                .filter(a => !carouselArticles.find(c => c.id === a.id) && !gridArticles.find(g => g.id === a.id))
+                .slice(0, 6)
+                .map((article, i) => (
+                  <ArticleCard key={article.id} article={article} index={i} variant="compact" />
+                ))}
+            </div>
+          </div>
+        )}
+
+        {/* Section 4: Section preview modules - Sport */}
+        {filteredArticles.some(a => (a as any).categoryField === "sport" || a.section === "sport") && (
+          <div className="mt-16">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="font-serif font-bold text-2xl text-ton-black border-l-4 border-ton-red pl-4">
+                Sport
+              </h2>
+              <a
+                href="/section/sport"
+                className="font-mono text-[10px] uppercase tracking-widest text-ton-red hover:text-ton-black transition-colors"
+              >
+                All Sport →
+              </a>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredArticles
+                .filter(a => (a as any).categoryField === "sport" || a.section === "sport")
+                .slice(0, 3)
+                .map((article, i) => (
+                  <ArticleCard key={article.id} article={article} index={i} />
+                ))}
+            </div>
+          </div>
+        )}
+
+        {/* Section 4: Section preview modules - Economy */}
+        {filteredArticles.some(a => (a as any).categoryField === "economy" || a.section === "economy") && (
+          <div className="mt-16">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="font-serif font-bold text-2xl text-ton-black border-l-4 border-ton-red pl-4">
+                Markets &amp; Economy
+              </h2>
+              <a
+                href="/section/economy"
+                className="font-mono text-[10px] uppercase tracking-widest text-ton-red hover:text-ton-black transition-colors"
+              >
+                All Economy →
+              </a>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredArticles
+                .filter(a => (a as any).categoryField === "economy" || a.section === "economy")
+                .slice(0, 3)
+                .map((article, i) => (
+                  <ArticleCard key={article.id} article={article} index={i} />
+                ))}
+            </div>
+          </div>
+        )}
+
+        {/* Section 4: Know Namibia directory preview */}
+        <div className="mt-16 bg-ton-navy/[0.03] p-8 border border-ton-black/8">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="font-serif font-bold text-2xl text-ton-black border-l-4 border-ton-red pl-4">
+              Discover Namibia
+            </h2>
+            <a
+              href="/know-namibia"
+              className="font-mono text-[10px] uppercase tracking-widest text-ton-red hover:text-ton-black transition-colors"
+            >
+              Explore All →
+            </a>
+          </div>
+          <p className="font-sans text-sm text-ton-black/50 mb-4">
+            45 national parks, landmarks, towns, wildlife, and cultural sites across Namibia with real photos, interactive maps, and detailed guides.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <a href="/know-namibia" className="font-mono text-[10px] uppercase tracking-widest border border-ton-black/15 px-4 py-2 hover:bg-ton-black hover:text-white transition-colors">Parks</a>
+            <a href="/know-namibia/big-five" className="font-mono text-[10px] uppercase tracking-widest border border-ton-black/15 px-4 py-2 hover:bg-ton-black hover:text-white transition-colors">Big Five</a>
+            <a href="/know-namibia/map" className="font-mono text-[10px] uppercase tracking-widest border border-ton-black/15 px-4 py-2 hover:bg-ton-black hover:text-white transition-colors">Interactive Map</a>
+            <a href="/know-namibia/gallery" className="font-mono text-[10px] uppercase tracking-widest border border-ton-black/15 px-4 py-2 hover:bg-ton-black hover:text-white transition-colors">Gallery</a>
+          </div>
+        </div>
       </div>
     </div>
   );

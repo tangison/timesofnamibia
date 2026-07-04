@@ -30,8 +30,12 @@ const TENDER_SOURCES = [
 ];
 
 async function launchBrowser() {
+  // TECH DEBT: @sparticuz/chromium is pinned to v121 because v149+ changed the
+  // export API (class-based). Review in 1-2 months for security updates or
+  // migration to the new API. See package.json for the pin.
   const chromium: any = require("@sparticuz/chromium");
-  const puppeteer = require("puppeteer-core");
+  const puppeteerModule: any = require("puppeteer-core");
+  const puppeteer = puppeteerModule.default || puppeteerModule;
   const executablePath = await chromium.executablePath();
   return await puppeteer.launch({
     executablePath,

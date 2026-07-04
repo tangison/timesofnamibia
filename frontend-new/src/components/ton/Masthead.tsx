@@ -1,7 +1,26 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Search, Menu } from "lucide-react";
+import { Search } from "lucide-react";
+
+// Section 2: Custom 2-bar menu icon - premium minimal style
+// Thicker strokes, shorter lines for a deliberate, less default-UI-kit look
+function MenuIconTwoBar({ size = 22 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2.5}
+      strokeLinecap="round"
+    >
+      <line x1="4" y1="9" x2="20" y2="9" />
+      <line x1="4" y1="15" x2="20" y2="15" />
+    </svg>
+  );
+}
 import { useState } from "react";
 import OffCanvasMenu from "./OffCanvasMenu";
 
@@ -59,7 +78,7 @@ export default function Masthead() {
               aria-label="Menu"
               onClick={() => setMenuOpen(true)}
             >
-              <Menu size={22} />
+              <MenuIconTwoBar size={22} />
             </button>
           </div>
         </div>
@@ -102,7 +121,7 @@ export default function Masthead() {
               aria-label="Menu"
               onClick={() => setMenuOpen(true)}
             >
-              <Menu size={24} />
+              <MenuIconTwoBar size={24} />
             </button>
           </div>
         </div>

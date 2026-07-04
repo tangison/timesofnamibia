@@ -29,7 +29,8 @@ const JOB_SOURCES = [
 
 async function launchBrowser() {
   const chromium: any = require("@sparticuz/chromium");
-  const puppeteer = require("puppeteer-core");
+  const puppeteerModule: any = require("puppeteer-core");
+  const puppeteer = puppeteerModule.default || puppeteerModule;
   const executablePath = await chromium.executablePath();
   return await puppeteer.launch({ executablePath, args: chromium.args, headless: "new" });
 }

@@ -50,6 +50,7 @@ export default function Footer() {
             <a href="/privacy" className="hover:text-ton-red transition-colors">Privacy</a>
             <a href="/terms" className="hover:text-ton-red transition-colors">Terms</a>
             <a href="/technology" className="hover:text-ton-red transition-colors">Technology</a>
+            <a href="/games/sudoku" className="hover:text-ton-red transition-colors">Games</a>
             <a href="/tangison" className="hover:text-ton-red transition-colors">TANGISON</a>
           </nav>
         </div>

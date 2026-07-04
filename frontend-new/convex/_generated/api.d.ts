@@ -14,10 +14,7 @@ import type * as actions_backfillContent from "../actions/backfillContent.js";
 import type * as actions_backfillImages from "../actions/backfillImages.js";
 import type * as actions_cleanupDatabase from "../actions/cleanupDatabase.js";
 import type * as actions_fetchMissingImages from "../actions/fetchMissingImages.js";
-<<<<<<< HEAD
 import type * as actions_generatePlaceImages from "../actions/generatePlaceImages.js";
-=======
->>>>>>> 8356cfeaf5fac17edf4f1ad0d4a4eb8779bb38d6
 import type * as actions_imageGenerator from "../actions/imageGenerator.js";
 import type * as actions_imageProcessor from "../actions/imageProcessor.js";
 import type * as actions_ingestRss from "../actions/ingestRss.js";
@@ -51,10 +48,7 @@ declare const fullApi: ApiFromModules<{
   "actions/backfillImages": typeof actions_backfillImages;
   "actions/cleanupDatabase": typeof actions_cleanupDatabase;
   "actions/fetchMissingImages": typeof actions_fetchMissingImages;
-<<<<<<< HEAD
   "actions/generatePlaceImages": typeof actions_generatePlaceImages;
-=======
->>>>>>> 8356cfeaf5fac17edf4f1ad0d4a4eb8779bb38d6
   "actions/imageGenerator": typeof actions_imageGenerator;
   "actions/imageProcessor": typeof actions_imageProcessor;
   "actions/ingestRss": typeof actions_ingestRss;

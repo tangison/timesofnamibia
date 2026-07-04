@@ -48,18 +48,20 @@ crons.interval(
 );
 
 // Section 3: Real tenders scraper - daily (24 hours)
+// Part 1: Uses Playwright via Vercel route, Tavily as fallback
 crons.interval(
   "scrape real tenders",
   { hours: 24 },
-  internal.actions.scrapeTendersReal.scrapeTenders,
+  internal.actions.triggerPlaywrightScrape.triggerTenderScrape,
   {}
 );
 
 // Section 4: Real jobs scraper - daily (24 hours)
+// Part 1: Uses Playwright via Vercel route, Tavily as fallback
 crons.interval(
   "scrape real jobs",
   { hours: 24 },
-  internal.actions.scrapeJobsReal.scrapeJobs,
+  internal.actions.triggerPlaywrightScrape.triggerJobScrape,
   {}
 );
 

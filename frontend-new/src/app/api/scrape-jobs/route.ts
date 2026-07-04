@@ -1,19 +1,10 @@
 // ============================================================
-// Times of Namibia - /api/scrape-jobs (Phase 2, Iteration 12)
+// Times of Namibia - Playwright Job Scraper (Part 1)
 //
-// Hybrid Search API + Playwright scraper for Namibian jobs and
-// tenders. Runs in the Node.js runtime (not edge).
+// Uses @sparticuz/chromium + playwright-core to render JS-heavy
+// job portals and extract real individual job listings.
 //
-// Step 1: Use Tavily Search API to discover live links for
-//         "Namibia government tenders" and "Namibia jobs"
-// Step 2: If Playwright + chromium available, render JS-heavy
-//         portals. Otherwise, use the search result snippets
-//         directly as the scraped data.
-// Step 3: Extract title, entity, deadline, url, type
-// Step 4: Upsert into Convex jobs and tender tables
-//
-// Triggered by Convex cron every 12 hours via HTTP endpoint,
-// or manually via POST /api/scrape-jobs
+// Blocks images/fonts/CSS to stay under Vercel Hobby memory limit.
 // ============================================================
 
 import { NextRequest, NextResponse } from "next/server";
@@ -21,289 +12,276 @@ import { convexClient } from "@/lib/convex";
 import { api } from "@convex/_generated/api";
 
 export const runtime = "nodejs";
-export const maxDuration = 300; // 5 minutes max
+export const maxDuration = 300;
 
-interface ScrapedItem {
+interface ScrapedJob {
   title: string;
-  entity: string;
-  deadline?: string;
+  company: string;
+  location: string;
   url: string;
-  type: "job" | "tender";
-  location?: string;
-  estimatedValue?: string;
+  closingDate?: string;
+  salary?: string;
+  type?: string;
 }
 
-// ── TAVILY SEARCH ────────────────────────────────────────────
+// ── SOURCE CONFIG ────────────────────────────────────────────
 
-async function searchTavily(query: string, maxResults = 8): Promise<{ title: string; url: string; content: string }[]> {
-  const apiKey = process.env.TAVILY_API_KEY;
-  if (!apiKey) {
-    console.warn("[scrape-jobs] TAVILY_API_KEY not set");
-    return [];
-  }
+const JOB_SOURCES = [
+  {
+    name: "NIEIS (Namibia at Work)",
+    url: "https://nieis.namibiaatwork.gov.na",
+    searchPaths: ["/", "/jobs", "/vacancies", "/search"],
+    entity: "NIEIS - Ministry of Labour",
+  },
+  {
+    name: "Namijob",
+    url: "https://www.namijob.com",
+    searchPaths: ["/", "/jobs", "/search-jobs", "/vacancies"],
+    entity: "Namijob",
+  },
+  {
+    name: "Jobs Namibia",
+    url: "https://www.jobsnamibia.net",
+    searchPaths: ["/", "/jobs", "/search"],
+    entity: "Jobs Namibia",
+  },
+];
 
-  try {
-    const res = await fetch("https://api.tavily.com/search", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        api_key: apiKey,
-        query,
-        max_results: maxResults,
-        include_raw_content: false,
-        search_depth: "basic",
-      }),
-      signal: AbortSignal.timeout(15_000),
-    });
+// ── LAUNCH CHROMIUM ──────────────────────────────────────────
 
-    if (!res.ok) {
-      console.warn(`[scrape-jobs] Tavily returned ${res.status}`);
-      return [];
-    }
+async function launchBrowser() {
+  const chromium: any = await import("@sparticuz/chromium");
+  const { chromium: playwrightChromium } = await import("playwright-core");
 
-    const data = await res.json();
-    return (data.results || []).map((r: any) => ({
-      title: r.title || "",
-      url: r.url || "",
-      content: r.content || "",
-    }));
-  } catch (err) {
-    console.warn("[scrape-jobs] Tavily search failed:", err instanceof Error ? err.message : err);
-    return [];
-  }
+  const executablePath = await chromium.executablePath();
+
+  const browser = await playwrightChromium.launch({
+    executablePath,
+    args: chromium.args,
+    headless: true,
+  });
+
+  return browser;
 }
 
-// ── PLAYWRIGHT SCRAPER (optional) ────────────────────────────
-// Playwright requires chromium to be installed on the host. On
-// Vercel serverless, chromium is not available by default, so
-// this function gracefully falls back to search snippets if
-// Playwright cannot launch.
+// ── VALIDATION: Reject aggregator titles ─────────────────────
 
-async function scrapeWithPlaywright(urls: { url: string; type: "job" | "tender" }[]): Promise<ScrapedItem[]> {
-  let chromium: any = null;
-  try {
-    chromium = (await import("playwright-core")).chromium;
-  } catch {
-    console.warn("[scrape-jobs] playwright-core not available - using search snippets only");
-    return [];
+function isAggregatorTitle(title: string): boolean {
+  const titleLower = title.toLowerCase();
+  if (/\d+\s*(vacanc|jobs?|positions?|openings?)/i.test(title)) return true;
+  const aggregatorBrands = ["linkedin", "naukri", "indeed", "glassdoor", "careerjet", "jooble", "pnet", "facebook"];
+  for (const brand of aggregatorBrands) {
+    if (titleLower.includes(brand) && title.length < 70) return true;
   }
+  if (/^jobs?\s+(in|namibia)/i.test(title.trim())) return true;
+  if (/^namibia\s+(jobs?|vacanc)/i.test(title.trim())) return true;
+  if (/^find jobs/i.test(title.trim())) return true;
+  if (titleLower.includes("vacancies") && titleLower.includes("recruitment")) return true;
+  if (titleLower.includes("namijob.com")) return true;
+  if (titleLower.includes("opportunities") && titleLower.includes("windhoek")) return true;
+  return false;
+}
 
-  const items: ScrapedItem[] = [];
-  let browser;
+// ── SCRAPE SINGLE SOURCE ─────────────────────────────────────
 
-  try {
-    browser = await chromium.launch({
-      headless: true,
-      args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"],
-    });
+async function scrapeSource(browser: any, source: typeof JOB_SOURCES[0]): Promise<ScrapedJob[]> {
+  const jobs: ScrapedJob[] = [];
 
-    for (const { url, type } of urls.slice(0, 6)) {
-      const page = await browser.newPage();
-      try {
-        await page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
-        await page.goto(url, { waitUntil: "domcontentloaded", timeout: 20_000 });
-        await page.waitForTimeout(2000);
+  for (const searchPath of source.searchPaths) {
+    const url = `${source.url}${searchPath}`;
+    const page = await browser.newPage();
 
-        const pageItems = await page.evaluate((pageType: string) => {
-          const results: { title: string; url: string; deadline?: string; entity?: string; location?: string; estimatedValue?: string }[] = [];
-          const selectors = [
-            "article", ".job-item", ".tender-item", ".listing",
-            ".vacancy", ".procurement", ".card", "tr",
-            "[class*='job']", "[class*='tender']", "[class*='vacancy']",
-          ];
+    try {
+      // Block images, fonts, CSS to save memory
+      await page.route("**/*", (route: any) => {
+        const type = route.request().resourceType();
+        if (["image", "font", "stylesheet", "media"].includes(type)) {
+          route.abort();
+        } else {
+          route.continue();
+        }
+      });
 
-          for (const sel of selectors) {
-            const elements = document.querySelectorAll(sel);
-            if (elements.length === 0) continue;
+      await page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
 
-            elements.forEach((el, idx) => {
-              if (idx >= 10) return;
-              const text = el.textContent || "";
-              const link = el.querySelector("a");
-              const title = (el.querySelector("h1, h2, h3, h4, .title, strong") as HTMLElement)?.textContent?.trim() || text.slice(0, 120).trim();
-              const href = link?.href || "";
-              if (!title || title.length < 5) return;
+      const res = await page.goto(url, { waitUntil: "domcontentloaded", timeout: 20_000 });
+      if (!res || !res.ok()) continue;
 
-              const deadlineMatch = text.match(/(?:closing|deadline|apply\s+by)[:\s]+(\d{1,2}\s+\w+\s+\d{4})/i);
-              const valueMatch = text.match(/(?:NAD|N\$)\s*[\d,.]+/i);
-              const locationMatch = text.match(/(?:location|based\s+in)[:\s]+([^,\n]+)/i);
+      await page.waitForTimeout(3000); // Allow JS to render
 
-              results.push({
-                title: title.slice(0, 200),
-                url: href || window.location.href,
-                deadline: deadlineMatch?.[1],
-                entity: window.location.hostname.replace("www.", ""),
-                location: locationMatch?.[1]?.trim(),
-                estimatedValue: valueMatch?.[0],
-              });
+      // Extract job listings from rendered DOM
+      const items = await page.evaluate((entity: string) => {
+        const results: { title: string; url: string; location: string; closingDate?: string; salary?: string; company?: string }[] = [];
+
+        // Try multiple selectors
+        const selectors = [
+          ".job-item", ".vacancy-item", ".job-listing", ".job-card",
+          ".position", ".listing-item", "article", ".card",
+          "table tr", ".job-result", ".job-ad",
+        ];
+
+        for (const sel of selectors) {
+          const elements = document.querySelectorAll(sel);
+          if (elements.length === 0) continue;
+
+          elements.forEach((el, idx) => {
+            if (idx >= 15) return;
+            const text = (el.textContent || "").trim();
+            if (text.length < 15) return;
+
+            const link = el.querySelector("a");
+            const heading = el.querySelector("h1, h2, h3, h4, h5, .title, .job-title, .position-title, strong");
+
+            const title = heading?.textContent?.trim() || text.slice(0, 120).trim();
+            if (!title || title.length < 10) return;
+
+            // Extract location
+            const locMatch = text.match(/(?:location|based\s+in|city)[:\s]+([^,\n]+)/i);
+            const location = locMatch?.[1]?.trim() || "Namibia";
+
+            // Extract closing date
+            const dateMatch = text.match(/(?:closing|deadline|apply\s+by|expires?)[:\s]+(\d{1,2}\s+\w+\s+\d{4})/i);
+
+            // Extract company/employer
+            const companyMatch = text.match(/(?:company|employer|organization)[:\s]+([^,\n]+)/i);
+
+            // Extract salary
+            const salaryMatch = text.match(/(?:salary|remuneration)[:\s]+(NAD\s+[\d,.]+)/i);
+
+            const href = link?.href || "";
+            results.push({
+              title: title.slice(0, 200),
+              url: href || window.location.href,
+              location,
+              closingDate: dateMatch?.[1],
+              salary: salaryMatch?.[1],
+              company: companyMatch?.[1]?.trim() || entity,
             });
-
-            if (results.length > 0) break;
-          }
-          return results;
-        }, type);
-
-        for (const item of pageItems) {
-          items.push({
-            title: item.title,
-            entity: item.entity || new URL(url).hostname,
-            deadline: item.deadline,
-            url: item.url || url,
-            type,
-            location: item.location,
-            estimatedValue: item.estimatedValue,
           });
+
+          if (results.length > 0) break;
         }
 
-        console.log(`[scrape-jobs] Playwright scraped ${pageItems.length} items from ${url}`);
-      } catch (err) {
-        console.warn(`[scrape-jobs] Failed to scrape ${url}:`, err instanceof Error ? err.message : err);
-      } finally {
-        await page.close();
+        return results;
+      }, source.entity);
+
+      for (const item of items) {
+        // Validation: reject aggregator titles
+        if (isAggregatorTitle(item.title)) continue;
+        if (item.title.length < 10) continue;
+
+        jobs.push({
+          title: item.title,
+          company: item.company || source.entity,
+          location: item.location || "Namibia",
+          url: item.url || url,
+          closingDate: item.closingDate,
+          salary: item.salary,
+        });
       }
+
+      if (jobs.length > 0) {
+        console.log(`[scrape-jobs] ${source.name} ${searchPath}: ${jobs.length} jobs`);
+        break; // Use first path that yields results
+      }
+    } catch (err) {
+      console.warn(`[scrape-jobs] ${source.name} ${searchPath} failed: ${err instanceof Error ? err.message : err}`);
+    } finally {
+      await page.close();
     }
+  }
+
+  return jobs;
+}
+
+// ── UPSERT TO CONVEX ─────────────────────────────────────────
+
+async function upsertToConvex(jobs: ScrapedJob[]): Promise<{ inserted: number; deduped: number }> {
+  if (!convexClient) return { inserted: 0, deduped: 0 };
+
+  const adminToken = process.env.CONVEX_ADMIN_TOKEN;
+  if (!adminToken) return { inserted: 0, deduped: 0 };
+
+  let inserted = 0;
+  let deduped = 0;
+
+  for (const job of jobs) {
+    try {
+      const closingDate = job.closingDate ? new Date(job.closingDate).getTime() : undefined;
+      const result = await convexClient.mutation(api.mutationsAdmin.ingestJob, {
+        adminToken,
+        title: job.title,
+        company: job.company,
+        location: job.location,
+        source: job.company,
+        url: job.url,
+        salary: job.salary,
+        closingDate,
+      });
+      if (result.deduped) deduped++;
+      else inserted++;
+    } catch (err) {
+      console.warn(`[scrape-jobs] Upsert failed: ${err instanceof Error ? err.message : err}`);
+    }
+  }
+
+  return { inserted, deduped };
+}
+
+// ── MAIN HANDLER ─────────────────────────────────────────────
+
+export async function POST(request: NextRequest) {
+  console.log("[scrape-jobs] Starting Playwright scraper...");
+
+  let browser;
+  try {
+    browser = await launchBrowser();
+    console.log("[scrape-jobs] Browser launched");
+
+    const allJobs: ScrapedJob[] = [];
+
+    for (const source of JOB_SOURCES) {
+      const jobs = await scrapeSource(browser, source);
+      allJobs.push(...jobs);
+      console.log(`[scrape-jobs] ${source.name}: ${jobs.length} jobs total`);
+    }
+
+    await browser.close();
+    browser = null;
+
+    // Dedupe by title
+    const seen = new Set<string>();
+    const unique = allJobs.filter((j) => {
+      const key = j.title.toLowerCase().slice(0, 80);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+
+    console.log(`[scrape-jobs] Total unique: ${unique.length}`);
+
+    const result = await upsertToConvex(unique);
+
+    return NextResponse.json({
+      success: true,
+      source: "playwright",
+      totalFound: unique.length,
+      inserted: result.inserted,
+      deduped: result.deduped,
+    });
   } catch (err) {
-    console.warn("[scrape-jobs] Playwright launch failed, falling back to search snippets:", err instanceof Error ? err.message : err);
-    return [];
+    console.error("[scrape-jobs] Playwright failed:", err instanceof Error ? err.message : err);
+    return NextResponse.json(
+      { success: false, error: err instanceof Error ? err.message : "Unknown error", source: "playwright" },
+      { status: 500 }
+    );
   } finally {
     if (browser) {
       await browser.close();
     }
   }
-
-  return items;
-}
-
-// ── BUILD ITEMS FROM SEARCH SNIPPETS ─────────────────────────
-// Used as fallback when Playwright is unavailable. Extracts
-// structured data from the Tavily search result snippets.
-
-function buildItemsFromSearchResults(
-  results: { title: string; url: string; content: string }[],
-  type: "job" | "tender"
-): ScrapedItem[] {
-  return results.map((r) => {
-    const deadlineMatch = r.content.match(/(?:closing|deadline|apply\s+by)[:\s]+(\d{1,2}\s+\w+\s+\d{4})/i);
-    const valueMatch = r.content.match(/(?:NAD|N\$)\s*[\d,.]+/i);
-    const locationMatch = r.content.match(/(?:location|based\s+in)[:\s]+([^,\n.]+)/i);
-    let entity = "Unknown";
-    try {
-      entity = new URL(r.url).hostname.replace("www.", "").replace(/\.[a-z]{2,}$/, "");
-    } catch {}
-
-    return {
-      title: r.title.slice(0, 200),
-      entity,
-      deadline: deadlineMatch?.[1],
-      url: r.url,
-      type,
-      location: locationMatch?.[1]?.trim(),
-      estimatedValue: valueMatch?.[0],
-    };
-  });
-}
-
-// ── UPSERT TO CONVEX ─────────────────────────────────────────
-
-async function upsertToConvex(items: ScrapedItem[]): Promise<{ jobs: number; tenders: number }> {
-  if (!convexClient) {
-    console.warn("[scrape-jobs] Convex client not configured");
-    return { jobs: 0, tenders: 0 };
-  }
-
-  const adminToken = process.env.CONVEX_ADMIN_TOKEN;
-  if (!adminToken) {
-    console.warn("[scrape-jobs] CONVEX_ADMIN_TOKEN not set");
-    return { jobs: 0, tenders: 0 };
-  }
-
-  let jobsInserted = 0;
-  let tendersInserted = 0;
-
-  for (const item of items) {
-    try {
-      if (item.type === "tender") {
-        const deadline = item.deadline ? new Date(item.deadline).getTime() : Date.now() + 30 * 24 * 60 * 60 * 1000;
-        await convexClient.mutation(api.mutationsAdmin.ingestTender, {
-          adminToken,
-          docId: item.url,
-          title: item.title,
-          department: item.entity,
-          deadline,
-          estimatedValue: item.estimatedValue,
-          documentUrl: item.url,
-          status: "open",
-        });
-        tendersInserted++;
-      } else {
-        const deadline = item.deadline ? new Date(item.deadline).getTime() : undefined;
-        await convexClient.mutation(api.mutationsAdmin.ingestJob, {
-          adminToken,
-          title: item.title,
-          company: item.entity,
-          location: item.location || "Namibia",
-          source: item.entity,
-          url: item.url,
-          closingDate: deadline,
-        });
-        jobsInserted++;
-      }
-    } catch (err) {
-      console.warn(`[scrape-jobs] Upsert failed for "${item.title.slice(0, 40)}":`, err instanceof Error ? err.message : err);
-    }
-  }
-
-  return { jobs: jobsInserted, tenders: tendersInserted };
-}
-
-// ── MAIN HANDLER ─────────────────────────────────────────────
-
-export async function POST(_request: NextRequest) {
-  console.log("[scrape-jobs] Starting hybrid search + Playwright scrape...");
-
-  // Step 1: Search API discovery
-  const [tenderResults, jobResults] = await Promise.all([
-    searchTavily("Namibia government tenders 2026", 6),
-    searchTavily("Namibia jobs vacancies 2026", 6),
-  ]);
-
-  console.log(`[scrape-jobs] Found ${tenderResults.length} tender results, ${jobResults.length} job results`);
-
-  // Step 2: Try Playwright scrape (may fail gracefully on Vercel)
-  const urlsToScrape = [
-    ...tenderResults.map((r) => ({ url: r.url, type: "tender" as const })),
-    ...jobResults.map((r) => ({ url: r.url, type: "job" as const })),
-  ];
-
-  let scrapedItems = await scrapeWithPlaywright(urlsToScrape);
-
-  // Step 2b: If Playwright yielded nothing, use search snippets directly
-  if (scrapedItems.length === 0) {
-    console.log("[scrape-jobs] Playwright yielded no items - using search snippets as fallback");
-    scrapedItems = [
-      ...buildItemsFromSearchResults(tenderResults, "tender"),
-      ...buildItemsFromSearchResults(jobResults, "job"),
-    ];
-  }
-
-  console.log(`[scrape-jobs] Total items to upsert: ${scrapedItems.length}`);
-
-  // Step 3: Upsert to Convex
-  const result = await upsertToConvex(scrapedItems);
-
-  console.log(`[scrape-jobs] Complete: ${result.jobs} jobs, ${result.tenders} tenders inserted`);
-
-  return NextResponse.json({
-    success: true,
-    discoveredUrls: { tenders: tenderResults.length, jobs: jobResults.length },
-    scraped: scrapedItems.length,
-    inserted: result,
-  });
 }
 
 export async function GET() {
-  return NextResponse.json({
-    status: "ok",
-    message: "Scrape endpoint. Send POST to trigger.",
-  });
+  return NextResponse.json({ status: "ok", message: "Send POST to trigger job scraping." });
 }

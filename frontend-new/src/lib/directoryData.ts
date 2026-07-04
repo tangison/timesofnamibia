@@ -34,6 +34,8 @@ export interface DirectoryPlace {
   booking_url?: string;
   related_places: string[];
   gallery_featured: boolean;
+  created_at?: number;
+  updated_at?: number;
 }
 
 export async function getDirectoryPlaces(options?: {

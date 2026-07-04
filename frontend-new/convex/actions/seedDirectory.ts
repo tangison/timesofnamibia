@@ -26,7 +26,7 @@ interface PlaceSeed {
 }
 
 const PLACES: PlaceSeed[] = [
-  // Parks (10)
+  // === Parks (15) ===
   { title: "Etosha National Park", type: "park", region: "Kunene" },
   { title: "Namib-Naukluft National Park", type: "park", region: "Hardap" },
   { title: "Skeleton Coast National Park", type: "park", region: "Kunene" },
@@ -37,7 +37,13 @@ const PLACES: PlaceSeed[] = [
   { title: "Mudumu National Park", type: "park", region: "Zambezi" },
   { title: "Nkasa Rupara National Park", type: "park", region: "Zambezi" },
   { title: "Ai-Ais", type: "park", region: "Karas" },
-  // Landmarks (10)
+  { title: "NamibSand Sea", type: "park", region: "Hardap" },
+  { title: "Hardap Dam", type: "park", region: "Hardap" },
+  { title: "Daan Viljoen Game Reserve", type: "park", region: "Khomas" },
+  { title: "Von Bach Game Reserve", type: "park", region: "Khomas" },
+  { title: "Mundulea Nature Reserve", type: "park", region: "Kunene" },
+
+  // === Landmarks (20) ===
   { title: "Sossusvlei", type: "landmark", region: "Hardap" },
   { title: "Deadvlei", type: "landmark", region: "Hardap" },
   { title: "Dune 45", type: "landmark", region: "Hardap" },
@@ -48,18 +54,87 @@ const PLACES: PlaceSeed[] = [
   { title: "Cape Cross", type: "landmark", region: "Erongo" },
   { title: "Sandwich Harbour", type: "landmark", region: "Hardap" },
   { title: "Kolmanskop", type: "landmark", region: "Karas" },
-  // Towns (10)
+  { title: "Gibeon meteorite", type: "landmark", region: "Hardap" },
+  { title: "Hoba meteorite", type: "landmark", region: "Otjozondjupa" },
+  { title: "Dias Point", type: "landmark", region: "Karas" },
+  { title: "Welwitschia Plains", type: "landmark", region: "Erongo" },
+  { title: "Living Desert", type: "landmark", region: "Erongo" },
+  { title: "Rosh Pinah", type: "landmark", region: "Karas" },
+  { title: "Gross Barmen", type: "landmark", region: "Khomas" },
+  { title: "Ostrich farming in Namibia", type: "landmark", region: "Omaheke" },
+  { title: "Okapuka Ranch", type: "landmark", region: "Khomas" },
+  { title: "Mount Etjo", type: "landmark", region: "Otjozondjupa" },
+
+  // === Towns (50) - all 14 regions represented ===
+  // Khomas
   { title: "Windhoek", type: "town", region: "Khomas" },
+  { title: "Okahandja", type: "town", region: "Khomas" },
+  { title: "Rehoboth", type: "town", region: "Khomas" },
+  // Erongo
   { title: "Swakopmund", type: "town", region: "Erongo" },
   { title: "Walvis Bay", type: "town", region: "Erongo" },
+  { title: "Arandis", type: "town", region: "Erongo" },
+  { title: "Henties Bay", type: "town", region: "Erongo" },
+  { title: "Karibib", type: "town", region: "Erongo" },
+  { title: "Omaruru", type: "town", region: "Erongo" },
+  { title: "Usakos", type: "town", region: "Erongo" },
+  // Karas
   { title: "Luderitz", type: "town", region: "Karas" },
   { title: "Keetmanshoop", type: "town", region: "Karas" },
+  { title: "Oranjemund", type: "town", region: "Karas" },
+  { title: "Rosh Pinah", type: "town", region: "Karas" },
+  { title: "Karasburg", type: "town", region: "Karas" },
+  { title: "Warmbad, Namibia", type: "town", region: "Karas" },
+  // Hardap
+  { title: "Mariental", type: "town", region: "Hardap" },
+  { title: "Maltahohe", type: "town", region: "Hardap" },
+  { title: "Aranos", type: "town", region: "Hardap" },
+  { title: "Stampriet", type: "town", region: "Hardap" },
+  // Kunene
+  { title: "Opuwo", type: "town", region: "Kunene" },
+  { title: "Khorixas", type: "town", region: "Kunene" },
+  { title: "Outjo", type: "town", region: "Kunene" },
+  { title: "Kamanjab", type: "town", region: "Kunene" },
+  // Omusati
+  { title: "Outapi", type: "town", region: "Omusati" },
+  { title: "Oshikuku", type: "town", region: "Omusati" },
+  { title: "Okahao", type: "town", region: "Omusati" },
+  // Oshana
   { title: "Oshakati", type: "town", region: "Oshana" },
-  { title: "Rundu", type: "town", region: "Kavango East" },
-  { title: "Gobabis", type: "town", region: "Omaheke" },
-  { title: "Otjiwarongo", type: "town", region: "Otjozondjupa" },
+  { title: "Ongwediva", type: "town", region: "Oshana" },
+  { title: "Ondangwa", type: "town", region: "Oshana" },
+  // Ohangwena
+  { title: "Eenhana", type: "town", region: "Ohangwena" },
+  { title: "Okongo", type: "town", region: "Ohangwena" },
+  // Oshikoto
   { title: "Tsumeb", type: "town", region: "Oshikoto" },
-  // Wildlife (8)
+  { title: "Oshikoto", type: "town", region: "Oshikoto" },
+  { title: "Omuthiya", type: "town", region: "Oshikoto" },
+  // Otjozondjupa
+  { title: "Otjiwarongo", type: "town", region: "Otjozondjupa" },
+  { title: "Grootfontein", type: "town", region: "Otjozondjupa" },
+  { title: "Gobabis", type: "town", region: "Otjozondjupa" },
+  { title: "Okakarara", type: "town", region: "Otjozondjupa" },
+  // Kavango East
+  { title: "Rundu", type: "town", region: "Kavango East" },
+  { title: "Nkurenkuru", type: "town", region: "Kavango East" },
+  // Kavango West
+  { title: "Nkurenkuru", type: "town", region: "Kavango West" },
+  // Zambezi
+  { title: "Katima Mulilo", type: "town", region: "Zambezi" },
+  { title: "Kongola", type: "town", region: "Zambezi" },
+  // Omaheke
+  { title: "Gobabis", type: "town", region: "Omaheke" },
+  { title: "Leonardville", type: "town", region: "Omaheke" },
+  { title: "Aminuis", type: "town", region: "Omaheke" },
+  // Kavango
+  { title: "Divundu", type: "town", region: "Kavango East" },
+  { title: "Bagani", type: "town", region: "Kavango East" },
+  { title: "Tsumkwe", type: "town", region: "Otjozondjupa" },
+  { title: "Bukalo", type: "town", region: "Zambezi" },
+  { title: "Omitara", type: "town", region: "Omaheke" },
+
+  // === Wildlife (15) ===
   { title: "Desert elephant", type: "wildlife", region: "Kunene" },
   { title: "Desert lion", type: "wildlife", region: "Kunene" },
   { title: "Black rhinoceros", type: "wildlife", region: "Kunene" },
@@ -68,18 +143,37 @@ const PLACES: PlaceSeed[] = [
   { title: "Cheetah", type: "wildlife", region: "Otjozondjupa" },
   { title: "Gemsbok", type: "wildlife", region: "Hardap" },
   { title: "Hartmann's mountain zebra", type: "wildlife", region: "Kunene" },
-  // Geological (6)
+  { title: "African wild dog", type: "wildlife", region: "Zambezi" },
+  { title: "Brown hyena", type: "wildlife", region: "Kunene" },
+  { title: "Cape fur seal", type: "wildlife", region: "Erongo" },
+  { title: "Giraffe", type: "wildlife", region: "Kunene" },
+  { title: "Springbok", type: "wildlife", region: "Hardap" },
+  { title: "Ostrich", type: "wildlife", region: "Hardap" },
+  { title: "Aardvark", type: "wildlife", region: "Otjozondjupa" },
+
+  // === Geological (10) ===
   { title: "Burnt Mountain (Namibia)", type: "geological", region: "Kunene" },
   { title: "Organ Pipes (Namibia)", type: "geological", region: "Kunene" },
   { title: "Petrified Forest (Namibia)", type: "geological", region: "Kunene" },
   { title: "Welwitschia", type: "geological", region: "Erongo" },
   { title: "Moon Landscape (Namibia)", type: "geological", region: "Erongo" },
   { title: "Sesriem Canyon", type: "geological", region: "Hardap" },
-  // Cultural (4)
+  { title: "Gamsberg", type: "geological", region: "Khomas" },
+  { title: " Brukkaros Mountain", type: "geological", region: "Karas" },
+  { title: "Etendeka Plateau", type: "geological", region: "Kunene" },
+  { title: "Victoria Falls", type: "geological", region: "Zambezi" },
+
+  // === Cultural (10) ===
   { title: "Himba people", type: "cultural", region: "Kunene" },
   { title: "Damara people", type: "cultural", region: "Kunene" },
   { title: "San people", type: "cultural", region: "Otjozondjupa" },
   { title: "Alte Feste", type: "cultural", region: "Khomas" },
+  { title: "Christuskirche", type: "cultural", region: "Khomas" },
+  { title: "Tintenpalast", type: "cultural", region: "Khomas" },
+  { title: "Heroes' Acre (Namibia)", type: "cultural", region: "Khomas" },
+  { title: "National Museum of Namibia", type: "cultural", region: "Khomas" },
+  { title: "Owela Museum", type: "cultural", region: "Khomas" },
+  { title: "Cape Cross Museum", type: "cultural", region: "Erongo" },
 ];
 
 // ── HELPERS ──────────────────────────────────────────────────
@@ -135,6 +229,127 @@ async function fetchWikipediaSummary(title: string): Promise<WikiSummary | null>
     console.warn(`[directory] Wikipedia summary failed for ${title}:`, err instanceof Error ? err.message : err);
     return null;
   }
+}
+
+// ── WIKIPEDIA FULL ARTICLE ───────────────────────────────────
+// Fetches the full article HTML and converts to structured Markdown
+// with sections for History, Geography, etc.
+
+async function fetchWikipediaFullArticle(title: string): Promise<string> {
+  try {
+    const encoded = encodeURIComponent(title.replace(/ /g, "_"));
+    const url = `https://en.wikipedia.org/api/rest_v1/page/html/${encoded}`;
+    const res = await fetch(url, {
+      headers: { "User-Agent": "TimesOfNamibiaBot/1.0 (+https://timesofnamibia.com)" },
+      signal: AbortSignal.timeout(15_000),
+    });
+    if (!res.ok) return "";
+
+    const html = await res.text();
+
+    // Convert HTML to structured Markdown with H2 sections
+    let markdown = "";
+    let inSection = false;
+    let sectionTitle = "";
+
+    // Extract text from paragraphs and headings
+    const blocks = html.match(/<(h2|p)[^>]*>([\s\S]*?)<\/\1>/gi) || [];
+
+    for (const block of blocks) {
+      const tag = block.match(/^<(h2|p)/i)?.[1]?.toLowerCase();
+      const text = block
+        .replace(/<[^>]*>/g, "")
+        .replace(/&amp;/g, "&")
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'")
+        .replace(/&nbsp;/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+
+      if (!text || text.length < 10) continue;
+
+      if (tag === "h2") {
+        // Skip edit links and references
+        if (text.toLowerCase().includes("see also") || 
+            text.toLowerCase().includes("references") ||
+            text.toLowerCase().includes("external links") ||
+            text.toLowerCase().includes("further reading") ||
+            text.toLowerCase().includes("bibliography") ||
+            text.toLowerCase().includes("notes")) {
+          inSection = false;
+          continue;
+        }
+        if (inSection) markdown += "\n\n";
+        markdown += `## ${text}\n\n`;
+        inSection = true;
+        sectionTitle = text;
+      } else if (tag === "p") {
+        if (text.length > 30) {
+          markdown += text + "\n\n";
+        }
+      }
+    }
+
+    // If no structured sections were found, wrap the summary
+    if (!markdown.includes("## ")) {
+      return "";
+    }
+
+    // Limit to reasonable length
+    return markdown.slice(0, 8000);
+  } catch (err) {
+    console.warn(`[directory] Full article fetch failed for ${title}:`, err instanceof Error ? err.message : err);
+    return "";
+  }
+}
+
+// ── BUILD STRUCTURED DESCRIPTION ─────────────────────────────
+// Combines summary + full article into a rich description with
+// distinct sections. Falls back to summary if full article fails.
+
+function buildRichDescription(
+  summary: string,
+  fullArticle: string,
+  placeType: string
+): string {
+  if (fullArticle && fullArticle.length > 200) {
+    return fullArticle;
+  }
+
+  // Fallback: build structured description from summary
+  let desc = `${summary}\n\n`;
+
+  // Add type-specific section
+  if (placeType === "park") {
+    desc += `## Practical Information\n\n`;
+    desc += `Entry fees apply for non-residents. Park permits can be obtained at the gate or booked in advance through Namibia Wildlife Resorts. Guided game drives are available at most rest camps.\n\n`;
+    desc += `## Best Time to Visit\n\n`;
+    desc += `The dry season from May to October offers the best game viewing as animals concentrate around waterholes. The wet season brings lush landscapes but wildlife is more dispersed.\n\n`;
+  } else if (placeType === "town") {
+    desc += `## Getting There\n\n`;
+    desc += `Accessible by road from Windhoek. Regional flights may be available depending on the town's significance.\n\n`;
+    desc += `## Practical Information\n\n`;
+    desc += `Basic services including fuel, shops, and accommodation are available. Banking and medical facilities vary by town size.\n\n`;
+  } else if (placeType === "landmark" || placeType === "geological") {
+    desc += `## Getting There\n\n`;
+    desc += `Accessible by vehicle. Some sites require a 4x4, especially during the wet season. Check road conditions before visiting.\n\n`;
+    desc += `## Best Time to Visit\n\n`;
+    desc += `April to October offers cooler temperatures and clearer skies. Avoid the peak heat of December to February.\n\n`;
+  } else if (placeType === "wildlife") {
+    desc += `## Where to Spot\n\n`;
+    desc += `Found in national parks and conservancies across Namibia. Etosha National Park and the Kunene region are prime locations.\n\n`;
+    desc += `## Conservation Status\n\n`;
+    desc += `Conservation efforts are ongoing. Always observe wildlife from a safe distance and follow park guidelines.\n\n`;
+  } else if (placeType === "cultural") {
+    desc += `## Cultural Significance\n\n`;
+    desc += `This represents an important aspect of Namibia's cultural heritage. Visitors should approach with respect and seek local guidance.\n\n`;
+    desc += `## Practical Information\n\n`;
+    desc += `Cultural tours can be arranged through registered tour operators. Always ask permission before photographing people.\n\n`;
+  }
+
+  return desc;
 }
 
 // ── WIKIMEDIA COMMONS API ────────────────────────────────────
@@ -288,7 +503,7 @@ async function processPlace(ctx: any, place: PlaceSeed): Promise<{ success: bool
     const existing = await ctx.runQuery(api.queries.getDirectoryPlace, { slug });
     if (existing) return { success: true };
 
-    // Fetch data from all three APIs
+    // Fetch summary + full article + images + facts
     const [summary, commonsImages, wikidataFacts] = await Promise.all([
       fetchWikipediaSummary(place.title),
       fetchCommonsImages(place.title, 5),
@@ -299,7 +514,11 @@ async function processPlace(ctx: any, place: PlaceSeed): Promise<{ success: bool
       return { success: false, error: "No Wikipedia summary found" };
     }
 
-    // Process and store images (convert to WebP)
+    // Section 3: Fetch full article for deep content
+    const fullArticle = await fetchWikipediaFullArticle(place.title);
+    const richDescription = buildRichDescription(summary.extract, fullArticle, place.type);
+
+    // Process and store images
     const processedImages: Array<{ url: string; webp_url: string; caption: string; source: string; license: string; alt_text: string; width?: number; height?: number }> = [];
     for (const img of commonsImages.slice(0, 5)) {
       const processed = await processAndStoreImage(
@@ -316,7 +535,7 @@ async function processPlace(ctx: any, place: PlaceSeed): Promise<{ success: bool
       if (processed) processedImages.push(processed);
     }
 
-    // Default best_time_to_visit based on region
+    // Default best_time_to_visit based on type
     const bestTimeToVisit = place.type === "park" || place.type === "wildlife"
       ? "May to September (dry season, best game viewing)"
       : place.type === "landmark" || place.type === "geological"
@@ -333,6 +552,14 @@ async function processPlace(ctx: any, place: PlaceSeed): Promise<{ success: bool
       cultural: ["Cultural tours", "Community visits", "Traditional crafts", "Historical sites"],
     };
 
+    // Section 5: Compute related places (same region or same type)
+    // Get other places in same region or same type
+    const allPlaces = await ctx.runQuery(api.queries.listDirectoryPlaces, { limit: 200 });
+    const relatedPlaces = allPlaces
+      .filter((p: any) => p.slug !== slug && (p.region === place.region || p.type === place.type))
+      .slice(0, 5)
+      .map((p: any) => p.slug);
+
     await ctx.runMutation(api.mutationsAdmin.ingestDirectoryPlace, {
       adminToken: process.env.CONVEX_ADMIN_TOKEN!,
       slug,
@@ -340,21 +567,21 @@ async function processPlace(ctx: any, place: PlaceSeed): Promise<{ success: bool
       type: place.type,
       region: place.region,
       short_description: summary.extract.slice(0, 300),
-      rich_description: summary.extract, // Phase 5 will enrich this
+      rich_description: richDescription,
       seo_meta_description: summary.extract.slice(0, 160),
       coordinates: summary.coordinates
         ? { lat: summary.coordinates.lat, lng: summary.coordinates.lon }
-        : { lat: -22.0, lng: 17.0 }, // default Namibia center
+        : { lat: -22.0, lng: 17.0 },
       images: processedImages,
       key_facts: wikidataFacts.key_facts,
       best_time_to_visit: bestTimeToVisit,
       activities: activitiesByType[place.type] || ["Sightseeing"],
       official_url: summary.contentUrl,
-      related_places: [],
+      related_places: relatedPlaces,
       gallery_featured: processedImages.length > 0,
     });
 
-    console.log(`[directory] Seeded: ${place.title} (${processedImages.length} images)`);
+    console.log(`[directory] Seeded: ${place.title} (${processedImages.length} images, ${richDescription.length} chars description, ${relatedPlaces.length} related)`);
     return { success: true };
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);

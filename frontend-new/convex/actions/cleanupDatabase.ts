@@ -56,10 +56,15 @@ export const cleanupDatabase = internalAction({
         if (title.includes("portal ariel")) return true;
         if (title.includes("murd")) return true;
         if (title.length < 15) return true;
-        if (/^\d+\s*(vacanc|jobs?)/i.test(t.title || "")) return true;
+        // Reject aggregator tender listing pages
+        if (title.includes("live government bids")) return true;
+        if (title.includes("tenders 2026") && title.includes("eprocurement")) return true;
+        if (title.includes("latest") && title.includes("tenders")) return true;
+        if (title.includes("construction tenders") && title.includes("bids")) return true;
+        if (title.includes("procurement") && title.includes("about us")) return true;
+        if (title.match(/\d+\s*tenders/i)) return true;  // "3500 Namibia Tenders"
         // Reject tenders with no real deadline (default 30 days from scrape)
         if (t.deadline && Math.abs(t.deadline - (t.createdAt || now) - 30 * 24 * 60 * 60 * 1000) < 1000) {
-          // This is a default deadline, not a real one - check if it has a real title
           if (!t.title || t.title.length < 20) return true;
         }
         return false;
@@ -81,14 +86,19 @@ export const cleanupDatabase = internalAction({
       const allJobs = await ctx.runQuery(api.queries.listAllJobs, { limit: 200 });
       const orphaned = allJobs.filter((j: any) => {
         const title = j.title || "";
+        const titleLower = title.toLowerCase();
         // Section 4: Reject aggregator patterns
         if (/\d+\s*(vacanc|jobs?|positions?|openings?)/i.test(title)) return true;
-        const aggregatorBrands = ["linkedin", "naukri", "indeed", "glassdoor", "careerjet", "jooble"];
+        const aggregatorBrands = ["linkedin", "naukri", "indeed", "glassdoor", "careerjet", "jooble", "pnet", "facebook"];
         for (const brand of aggregatorBrands) {
-          if (title.toLowerCase().includes(brand) && title.length < 60) return true;
+          if (titleLower.includes(brand) && title.length < 70) return true;
         }
         if (/^jobs?\s+(in|namibia)/i.test(title.trim())) return true;
         if (/^namibia\s+(jobs?|vacanc)/i.test(title.trim())) return true;
+        if (/^find jobs/i.test(title.trim())) return true;
+        if (titleLower.includes("vacancies") && titleLower.includes("recruitment")) return true;
+        if (titleLower.includes("opportunities") && titleLower.includes("windhoek")) return true;
+        if (titleLower.includes("namijob.com")) return true;
         return false;
       });
       for (const j of orphaned) {

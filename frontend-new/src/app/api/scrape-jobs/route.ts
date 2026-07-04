@@ -50,15 +50,16 @@ const JOB_SOURCES = [
 // ── LAUNCH CHROMIUM ──────────────────────────────────────────
 
 async function launchBrowser() {
-  const chromium: any = await import("@sparticuz/chromium");
-  const { chromium: playwrightChromium } = await import("playwright-core");
+  // Use require instead of dynamic import to avoid bundling issues
+  const chromium: any = require("@sparticuz/chromium");
+  const { chromium: playwrightChromium } = require("playwright-core");
 
   const executablePath = await chromium.executablePath();
 
   const browser = await playwrightChromium.launch({
     executablePath,
     args: chromium.args,
-    headless: true,
+    headless: chromium.headless,
   });
 
   return browser;

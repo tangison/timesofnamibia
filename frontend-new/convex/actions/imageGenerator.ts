@@ -1,12 +1,12 @@
 // ============================================================
 // Times of Namibia - Article Image Generator (TANGISON)
 //
-// Section 1: Oil painting style with rotating composition modifiers.
+// Minimalist flat vector icon illustration system.
 //   - Real photos from RSS are KEPT (best source)
-//   - AI-generated fallback uses oil painting prompt with
-//     rotating composition modifier selected by hashing slug
-//   - No single composition style repeats more than once in
-//     10 consecutively generated images
+//   - AI-generated fallback uses the icon prompt template
+//     with category-specific color palettes
+//   - Subject deduplication: never repeat the same subject
+//     in the last 30 generated images
 //   - 1200x630, model=flux, nologo=true
 //   - 45s timeout, 1 retry, random seed
 // ============================================================
@@ -22,99 +22,183 @@ export interface ArticleInput {
   slug?: string;
 }
 
-// ── COMPOSITION MODIFIER POOL ────────────────────────────────
-const COMPOSITION_MODIFIERS = [
-  "close-up still-life framing",
-  "wide landscape framing",
-  "high-contrast single-object silhouette",
-  "abstract symbolic composition",
-  "aerial/overhead framing",
-];
+// ── CATEGORY PALETTE ─────────────────────────────────────────
+const CATEGORY_PALETTES: Record<string, string> = {
+  politics: "navy and red",
+  world: "blue and orange",
+  economy: "dark green and gold",
+  sport: "green and gold",
+  technology: "teal and grey",
+  tech: "teal and grey",
+  energy: "amber and charcoal",
+  mining: "amber and charcoal",
+  health: "red and white",
+  environment: "green and brown",
+  national: "navy and cream",
+  africa: "orange and green",
+  opinion: "navy and grey",
+  infrastructure: "grey and amber",
+  legal: "navy and gold",
+  cultural: "rust and cream",
+};
 
-// Track last 10 used modifiers to prevent repeats
-const recentModifiers: string[] = [];
-
-function selectCompositionModifier(slug?: string): string {
-  const pool = [...COMPOSITION_MODIFIERS];
-
-  // Remove recently used modifiers from pool
-  const available = pool.filter((m) => !recentModifiers.includes(m));
-
-  // If all have been used recently, reset and start fresh
-  const candidates = available.length > 0 ? available : pool;
-
-  // If slug provided, use hash-based selection for determinism
-  if (slug) {
-    let hash = 0;
-    for (let i = 0; i < slug.length; i++) {
-      hash = ((hash << 5) - hash) + slug.charCodeAt(i);
-      hash |= 0;
-    }
-    const idx = Math.abs(hash) % candidates.length;
-    return candidates[idx];
-  }
-
-  // Random selection
-  return candidates[Math.floor(Math.random() * candidates.length)];
+function getPalette(category: string): string {
+  const cat = (category || "").toLowerCase().trim();
+  return CATEGORY_PALETTES[cat] || "navy and cream";
 }
 
-function trackModifier(modifier: string): void {
-  recentModifiers.push(modifier);
-  if (recentModifiers.length > 10) {
-    recentModifiers.shift();
+// ── ABSTRACT CATEGORY ICONS (fallback when no clear subject) ──
+const CATEGORY_ICONS: Record<string, string> = {
+  politics: "a ballot box icon",
+  world: "a compass icon",
+  economy: "an upward graph line icon",
+  sport: "a trophy icon",
+  technology: "a circuit board icon",
+  tech: "a circuit board icon",
+  energy: "a lightning bolt icon",
+  mining: "a pickaxe icon",
+  health: "a medical cross icon",
+  environment: "a leaf icon",
+  national: "a map of Namibia silhouette icon",
+  africa: "a map of Africa silhouette icon",
+  opinion: "a speech bubble icon",
+  infrastructure: "a bridge icon",
+  legal: "a scales of justice icon",
+  cultural: "a drum icon",
+};
+
+// ── SUBJECT HISTORY (deduplication) ──────────────────────────
+interface HistoryEntry {
+  subject: string;
+  category: string;
+  slug: string;
+  timestamp: number;
+}
+
+const subjectHistory: HistoryEntry[] = [];
+const MAX_HISTORY = 30;
+
+function isSubjectUsed(subject: string, category: string): boolean {
+  // Check if exact subject was used in last 30
+  const recentSubjects = subjectHistory.slice(-MAX_HISTORY);
+  return recentSubjects.some(
+    (h) => h.subject.toLowerCase() === subject.toLowerCase()
+  );
+}
+
+function isSubjectCategoryUsed(subject: string, category: string): boolean {
+  // Check if subject+category combo was used in last 15
+  const recent = subjectHistory.slice(-15);
+  return recent.some(
+    (h) =>
+      h.subject.toLowerCase() === subject.toLowerCase() &&
+      h.category.toLowerCase() === category.toLowerCase()
+  );
+}
+
+function logSubject(subject: string, category: string, slug: string): void {
+  subjectHistory.push({ subject, category, slug, timestamp: Date.now() });
+  if (subjectHistory.length > MAX_HISTORY) {
+    subjectHistory.shift();
   }
 }
 
-// ── STEP 1: Extract 1-2 concrete objects from the article ───
+// ── ALTERNATE SUBJECTS (for collision resolution) ────────────
+const SUBJECT_ALTERNATIVES: Record<string, string[]> = {
+  "flame": ["warning triangle", "fire extinguisher", "heat shimmer"],
+  "soccer ball": ["trophy", "whistle", "goal net"],
+  "flag": ["banner", "shield", "crest"],
+  "coin": ["banknote", "ledger", "abacus"],
+  "gavel": ["scales of justice", "law book", "key"],
+  "lightbulb": ["gear", "circuit", "antenna"],
+  "arrow": ["rocket", "compass needle", "upward staircase"],
+  "handshake": ["clasped hands silhouette", "bridge", "knot"],
+  "microphone": ["podium", "megaphone", "speech bubble"],
+  "newspaper": ["printing press", "inkwell", "quill pen"],
+};
 
-async function getImageObjects(article: ArticleInput): Promise<string> {
-  const prompt = `Given this news headline and category, respond with ONLY a short noun phrase describing one or two simple concrete physical objects that symbolically represent the story. No people, no crowds, no buildings, no rooms, no screens, no documents, no maps, no flags. Think simple objects.
+function getAlternate(original: string): string {
+  const key = original.toLowerCase().trim();
+  const alts = SUBJECT_ALTERNATIVES[key];
+  if (alts && alts.length > 0) {
+    return alts[Math.floor(Math.random() * alts.length)];
+  }
+  // Generic alternation: add "abstract" prefix
+  return `abstract ${original}`;
+}
+
+// ── STEP 1: Extract ONE concrete subject from the article ───
+
+async function getImageSubject(article: ArticleInput): Promise<string> {
+  const prompt = `Read this news headline and category. Respond with ONLY a short noun phrase (max 6 words) describing ONE concrete physical object or symbol that represents the story. Maximum TWO objects if they relate directly (e.g. "flag and shield"). Never suggest people, crowds, buildings, rooms, screens, documents, maps, newspapers, or generic scenes. Think simple iconic objects.
 
 Examples:
 - War or conflict - a bronze arrowhead
-- Economy or budget - three stacked gold coins
-- Environment - a green seedling in dry earth
+- Economy or budget - stacked gold coins
+- Environment - a green seedling
 - Technology - a glowing lightbulb
 - Politics or election - a wooden ballot box
 - Health - a red stethoscope
 - Mining - an uncut diamond
-- Energy - a white wind turbine blade
-- Sport - a worn leather football
+- Energy - a wind turbine blade
+- Sport - a leather football
 - Justice or law - a wooden gavel
-- Transport - a folded paper airplane
-- Water - a glass of clear water
+- Transport - a paper airplane
+- Diplomacy - a handshake silhouette
+- Election - a ballot box
+- Climate - a thermometer
+- Trade - a cargo ship silhouette
 
 Headline: "${article.title}"
 Category: ${article.category}
 
-Respond with ONLY the object phrase, nothing else.`;
+Respond with ONLY the object phrase, nothing else. No explanation.`;
 
   const result = await generateWithFallback(
     [{ role: "user", content: prompt }],
     { maxTokens: 40, timeout: 10_000 }
   );
 
-  const concept = (result || "a folded newspaper")
+  let subject = (result || "")
     .split("\n")[0]
     .replace(/["'.]/g, "")
     .trim()
     .toLowerCase();
 
-  return concept || "a folded newspaper";
+  // BANNED: never use "newspaper" or "stack of papers" as fallback
+  if (!subject || subject.includes("newspaper") || subject.includes("stack of paper") || subject.includes("generic press")) {
+    // Use category-specific abstract icon instead
+    const cat = (article.category || "").toLowerCase().trim();
+    subject = CATEGORY_ICONS[cat] || "a compass icon";
+  }
+
+  // STEP 2: Check against recent history
+  let attempts = 0;
+  while (attempts < 3) {
+    if (!isSubjectUsed(subject, article.category)) {
+      break; // No collision, use this subject
+    }
+    // Collision found - try alternate
+    console.log(`[image-gen] Subject collision: "${subject}" already used. Trying alternate...`);
+    subject = getAlternate(subject);
+    attempts++;
+  }
+
+  // Log the subject
+  logSubject(subject, article.category, article.slug || "");
+
+  return subject;
 }
 
-// ── STEP 2: Build oil painting Pollinations prompt ──────────
+// ── STEP 3: Build the final Pollinations prompt ──────────────
+// Uses the exact template from the spec, filling [SUBJECT] and [PALETTE]
 
-function buildOilPaintingPrompt(concept: string, composition: string): string {
-  return `Oil painting, visible textured brushstrokes, ` +
-    `muted palette limited to navy blue, rust orange, and warm cream, ` +
-    `${concept}, ${composition}, ` +
-    `no text, no logos, no watermark, ` +
-    `no faces unless the subject requires it, ` +
-    `gallery painting quality, cohesive composition`;
+function buildIconPrompt(subject: string, category: string): string {
+  const palette = getPalette(category);
+  return `${subject}, minimalist flat vector icon illustration, single central symbol, simple geometric shapes, ${palette} color palette only, solid flat background, no text, no letters, no words, no human faces, no photorealism, no photo, no 3d render, clean line art, editorial icon style, generous negative space, centered composition`;
 }
 
-// ── STEP 3: Fetch from Pollinations ──────────────────────────
+// ── STEP 4: Fetch from Pollinations ──────────────────────────
 
 async function fetchPollinationsImage(prompt: string): Promise<Blob | null> {
   const encoded = encodeURIComponent(prompt);
@@ -144,20 +228,17 @@ async function fetchPollinationsImage(prompt: string): Promise<Blob | null> {
 export async function generateArticleImage(
   article: ArticleInput
 ): Promise<Blob | null> {
-  // Select composition modifier (no repeats in last 10)
-  const composition = selectCompositionModifier(article.slug);
-  trackModifier(composition);
-  console.log(`[image-gen] Composition: ${composition} (recent: ${recentModifiers.length})`);
+  console.log(`[image-gen] Processing: "${article.title.slice(0, 50)}" (${article.category})`);
 
-  // Step 1: AI picks concrete objects
-  const concept = await getImageObjects(article);
-  console.log(`[image-gen] Oil painting concept for "${article.title.slice(0, 40)}": ${concept}`);
+  // Step 1: Extract subject (with dedup check)
+  const subject = await getImageSubject(article);
+  console.log(`[image-gen] Subject: ${subject}`);
 
-  // Step 2: Build oil painting prompt with composition modifier
-  const prompt = buildOilPaintingPrompt(concept, composition);
-  console.log(`[image-gen] Prompt: ${prompt.slice(0, 120)}...`);
+  // Step 3: Build prompt using exact template
+  const prompt = buildIconPrompt(subject, article.category);
+  console.log(`[image-gen] Prompt: ${prompt.slice(0, 150)}...`);
 
-  // Step 3: Fetch image with retry
+  // Step 4: Fetch image with retry
   const blob = await fetchPollinationsImage(prompt);
 
   if (!blob) {

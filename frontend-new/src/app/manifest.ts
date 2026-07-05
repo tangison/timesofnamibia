@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "Times of Namibia - A TANGISON Publication",
     short_name: "Times of Namibia",
     description:
-      "A TANGISON news outlet. Real-time verified news, tender analysis, job market intelligence, and market data for Namibia. Applied AI. Built in Africa.",
+      "A TANGISON news outlet. Real-time verified news, tender analysis, job market intelligence, and market data for Namibia. Unbiased News. Global Reach.",
     start_url: "/",
     display: "standalone",
     background_color: "#FAFAF8",  // TANGISON warm-white

@@ -38,7 +38,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Times of Namibia - Applied AI. Built in Africa. | TANGISON",
+    default: "Times of Namibia - Unbiased News. Global Reach.",
     template: "%s - Times of Namibia",
   },
   description:
@@ -54,14 +54,14 @@ export const metadata: Metadata = {
     "Jobs",
     "Africa",
     "Windhoek",
-    "Applied AI",
+    
     "Market Data",
   ],
   openGraph: {
     type: "website",
     locale: "en_NA",
     siteName: "Times of Namibia",
-    title: "Times of Namibia - Applied AI. Built in Africa.",
+    title: "Times of Namibia - Unbiased News. Global Reach.",
     description:
       "A TANGISON news outlet. Real-time verified news, tender analysis, job market intelligence, and market data for Namibia.",
     url: process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app",
@@ -70,13 +70,13 @@ export const metadata: Metadata = {
         url: "/brand-og.png",
         width: 1200,
         height: 630,
-        alt: "Times of Namibia - Applied AI. Built in Africa.",
+        alt: "Times of Namibia - Unbiased News. Global Reach.",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Times of Namibia - Applied AI. Built in Africa.",
+    title: "Times of Namibia - Unbiased News. Global Reach.",
     description:
       "A TANGISON news outlet. Real-time verified news, tender analysis, job market intelligence, and market data for Namibia.",
     images: ["/brand-og.png"],

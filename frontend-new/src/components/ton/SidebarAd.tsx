@@ -14,7 +14,7 @@ interface SidebarAdProps {
 export default function SidebarAd({ imageUrl, targetUrl, altText }: SidebarAdProps) {
   const adImage = imageUrl || "/brand-card.png";
   const adUrl = targetUrl || "https://tangison.com";
-  const adAlt = altText || "Tangison - Applied AI. Built in Africa.";
+  const adAlt = altText || "Tangison - Unbiased News. Global Reach.";
 
   return (
     <a
@@ -33,7 +33,7 @@ export default function SidebarAd({ imageUrl, targetUrl, altText }: SidebarAdPro
       <div className="p-4 text-center">
         <p className="font-serif text-lg font-bold text-ton-black mb-1">Tangison</p>
         <p className="font-mono text-[8px] uppercase tracking-widest text-ton-black/40 mb-2">
-          Applied AI. Built in Africa.
+          Unbiased News. Global Reach.
         </p>
         <span className="inline-flex items-center gap-1 font-mono text-[9px] uppercase tracking-widest text-ton-red">
           Learn More <ExternalLink size={10} />

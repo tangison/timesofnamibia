@@ -1,14 +1,11 @@
 // ============================================================
-// Times of Namibia - Article Image Generator (TANGISON)
+// Times of Namibia - Article Image Generator
 //
-// Minimalist flat vector icon illustration system.
+// Phase 3: Oil painting illustration system.
 //   - Real photos from RSS are KEPT (best source)
-//   - AI-generated fallback uses the icon prompt template
-//     with category-specific color palettes
-//   - Subject deduplication: never repeat the same subject
-//     in the last 30 generated images
-//   - 1200x630, model=flux, nologo=true
-//   - 45s timeout, 1 retry, random seed
+//   - AI fallback: oil painting with category palettes
+//   - Subject deduplication: no repeats in last 30
+//   - BANNED: newspaper, stack of papers, human faces, text
 // ============================================================
 
 "use node";
@@ -22,7 +19,7 @@ export interface ArticleInput {
   slug?: string;
 }
 
-// ── CATEGORY PALETTE ─────────────────────────────────────────
+// ── CATEGORY PALETTES ────────────────────────────────────────
 const CATEGORY_PALETTES: Record<string, string> = {
   politics: "navy and red",
   world: "blue and orange",
@@ -47,27 +44,27 @@ function getPalette(category: string): string {
   return CATEGORY_PALETTES[cat] || "navy and cream";
 }
 
-// ── ABSTRACT CATEGORY ICONS (fallback when no clear subject) ──
+// ── ABSTRACT CATEGORY FALLBACKS ──────────────────────────────
 const CATEGORY_ICONS: Record<string, string> = {
-  politics: "a ballot box icon",
-  world: "a compass icon",
-  economy: "an upward graph line icon",
-  sport: "a trophy icon",
-  technology: "a circuit board icon",
-  tech: "a circuit board icon",
-  energy: "a lightning bolt icon",
-  mining: "a pickaxe icon",
-  health: "a medical cross icon",
-  environment: "a leaf icon",
-  national: "a map of Namibia silhouette icon",
-  africa: "a map of Africa silhouette icon",
-  opinion: "a speech bubble icon",
-  infrastructure: "a bridge icon",
-  legal: "a scales of justice icon",
-  cultural: "a drum icon",
+  politics: "a ballot box",
+  world: "a compass",
+  economy: "an upward graph line",
+  sport: "a trophy",
+  technology: "a circuit board",
+  tech: "a circuit board",
+  energy: "a lightning bolt",
+  mining: "a pickaxe",
+  health: "a medical cross",
+  environment: "a leaf",
+  national: "a map of Namibia silhouette",
+  africa: "a map of Africa silhouette",
+  opinion: "a speech bubble",
+  infrastructure: "a bridge",
+  legal: "scales of justice",
+  cultural: "a drum",
 };
 
-// ── SUBJECT HISTORY (deduplication) ──────────────────────────
+// ── SUBJECT HISTORY ──────────────────────────────────────────
 interface HistoryEntry {
   subject: string;
   category: string;
@@ -78,59 +75,50 @@ interface HistoryEntry {
 const subjectHistory: HistoryEntry[] = [];
 const MAX_HISTORY = 30;
 
-function isSubjectUsed(subject: string, category: string): boolean {
-  // Check if exact subject was used in last 30
-  const recentSubjects = subjectHistory.slice(-MAX_HISTORY);
-  return recentSubjects.some(
+function isSubjectUsed(subject: string): boolean {
+  return subjectHistory.slice(-MAX_HISTORY).some(
     (h) => h.subject.toLowerCase() === subject.toLowerCase()
   );
 }
 
 function isSubjectCategoryUsed(subject: string, category: string): boolean {
-  // Check if subject+category combo was used in last 15
-  const recent = subjectHistory.slice(-15);
-  return recent.some(
-    (h) =>
-      h.subject.toLowerCase() === subject.toLowerCase() &&
-      h.category.toLowerCase() === category.toLowerCase()
+  return subjectHistory.slice(-15).some(
+    (h) => h.subject.toLowerCase() === subject.toLowerCase() &&
+           h.category.toLowerCase() === category.toLowerCase()
   );
 }
 
 function logSubject(subject: string, category: string, slug: string): void {
   subjectHistory.push({ subject, category, slug, timestamp: Date.now() });
-  if (subjectHistory.length > MAX_HISTORY) {
-    subjectHistory.shift();
-  }
+  if (subjectHistory.length > MAX_HISTORY) subjectHistory.shift();
 }
 
-// ── ALTERNATE SUBJECTS (for collision resolution) ────────────
+// ── ALTERNATES TABLE ─────────────────────────────────────────
 const SUBJECT_ALTERNATIVES: Record<string, string[]> = {
-  "flame": ["warning triangle", "fire extinguisher", "heat shimmer"],
-  "soccer ball": ["trophy", "whistle", "goal net"],
-  "flag": ["banner", "shield", "crest"],
-  "coin": ["banknote", "ledger", "abacus"],
-  "gavel": ["scales of justice", "law book", "key"],
-  "lightbulb": ["gear", "circuit", "antenna"],
-  "arrow": ["rocket", "compass needle", "upward staircase"],
-  "handshake": ["clasped hands silhouette", "bridge", "knot"],
-  "microphone": ["podium", "megaphone", "speech bubble"],
-  "newspaper": ["printing press", "inkwell", "quill pen"],
+  "flame": ["warning triangle", "fire extinguisher"],
+  "soccer ball": ["trophy", "whistle"],
+  "football": ["trophy", "whistle"],
+  "flag": ["banner", "shield"],
+  "coin": ["banknote", "ledger"],
+  "gavel": ["scales of justice", "law book"],
+  "lightbulb": ["gear", "circuit"],
+  "arrow": ["rocket", "compass needle"],
+  "handshake": ["bridge", "knot"],
+  "microphone": ["podium", "megaphone"],
+  "newspaper": ["printing press", "inkwell"],
 };
 
 function getAlternate(original: string): string {
   const key = original.toLowerCase().trim();
   const alts = SUBJECT_ALTERNATIVES[key];
-  if (alts && alts.length > 0) {
-    return alts[Math.floor(Math.random() * alts.length)];
-  }
-  // Generic alternation: add "abstract" prefix
+  if (alts && alts.length > 0) return alts[Math.floor(Math.random() * alts.length)];
   return `abstract ${original}`;
 }
 
-// ── STEP 1: Extract ONE concrete subject from the article ───
+// ── STEP 1: Extract ONE subject ──────────────────────────────
 
 async function getImageSubject(article: ArticleInput): Promise<string> {
-  const prompt = `Read this news headline and category. Respond with ONLY a short noun phrase (max 6 words) describing ONE concrete physical object or symbol that represents the story. Maximum TWO objects if they relate directly (e.g. "flag and shield"). Never suggest people, crowds, buildings, rooms, screens, documents, maps, newspapers, or generic scenes. Think simple iconic objects.
+  const prompt = `Read this news headline and category. Respond with ONLY a short noun phrase (max 6 words) describing ONE concrete physical object or symbol that represents the story. Maximum TWO objects if they relate directly. Never suggest people, crowds, buildings, rooms, screens, documents, maps, newspapers, or generic scenes.
 
 Examples:
 - War or conflict - a bronze arrowhead
@@ -145,14 +133,11 @@ Examples:
 - Justice or law - a wooden gavel
 - Transport - a paper airplane
 - Diplomacy - a handshake silhouette
-- Election - a ballot box
-- Climate - a thermometer
-- Trade - a cargo ship silhouette
 
 Headline: "${article.title}"
 Category: ${article.category}
 
-Respond with ONLY the object phrase, nothing else. No explanation.`;
+Respond with ONLY the object phrase, nothing else.`;
 
   const result = await generateWithFallback(
     [{ role: "user", content: prompt }],
@@ -165,40 +150,33 @@ Respond with ONLY the object phrase, nothing else. No explanation.`;
     .trim()
     .toLowerCase();
 
-  // BANNED: never use "newspaper" or "stack of papers" as fallback
+  // BANNED subjects
   if (!subject || subject.includes("newspaper") || subject.includes("stack of paper") || subject.includes("generic press")) {
-    // Use category-specific abstract icon instead
     const cat = (article.category || "").toLowerCase().trim();
-    subject = CATEGORY_ICONS[cat] || "a compass icon";
+    subject = CATEGORY_ICONS[cat] || "a compass";
   }
 
-  // STEP 2: Check against recent history
+  // Dedup check
   let attempts = 0;
   while (attempts < 3) {
-    if (!isSubjectUsed(subject, article.category)) {
-      break; // No collision, use this subject
-    }
-    // Collision found - try alternate
-    console.log(`[image-gen] Subject collision: "${subject}" already used. Trying alternate...`);
+    if (!isSubjectUsed(subject) && !isSubjectCategoryUsed(subject, article.category)) break;
+    console.log(`[image-gen] Collision: "${subject}". Trying alternate...`);
     subject = getAlternate(subject);
     attempts++;
   }
 
-  // Log the subject
   logSubject(subject, article.category, article.slug || "");
-
   return subject;
 }
 
-// ── STEP 3: Build the final Pollinations prompt ──────────────
-// Uses the exact template from the spec, filling [SUBJECT] and [PALETTE]
+// ── STEP 2: Build oil painting prompt ────────────────────────
 
-function buildIconPrompt(subject: string, category: string): string {
+function buildPrompt(subject: string, category: string): string {
   const palette = getPalette(category);
-  return `${subject}, minimalist flat vector icon illustration, single central symbol, simple geometric shapes, ${palette} color palette only, solid flat background, no text, no letters, no words, no human faces, no photorealism, no photo, no 3d render, clean line art, editorial icon style, generous negative space, centered composition`;
+  return `${subject}, oil painting illustration, visible brush strokes, painterly texture, ${palette}, single central subject, simple background, no text, no letters, no human faces, no photorealism, generous negative space`;
 }
 
-// ── STEP 4: Fetch from Pollinations ──────────────────────────
+// ── STEP 3: Fetch from Pollinations ──────────────────────────
 
 async function fetchPollinationsImage(prompt: string): Promise<Blob | null> {
   const encoded = encodeURIComponent(prompt);
@@ -225,24 +203,19 @@ async function fetchPollinationsImage(prompt: string): Promise<Blob | null> {
 
 // ── MAIN EXPORT ──────────────────────────────────────────────
 
-export async function generateArticleImage(
-  article: ArticleInput
-): Promise<Blob | null> {
+export async function generateArticleImage(article: ArticleInput): Promise<Blob | null> {
   console.log(`[image-gen] Processing: "${article.title.slice(0, 50)}" (${article.category})`);
 
-  // Step 1: Extract subject (with dedup check)
   const subject = await getImageSubject(article);
   console.log(`[image-gen] Subject: ${subject}`);
 
-  // Step 3: Build prompt using exact template
-  const prompt = buildIconPrompt(subject, article.category);
+  const prompt = buildPrompt(subject, article.category);
   console.log(`[image-gen] Prompt: ${prompt.slice(0, 150)}...`);
 
-  // Step 4: Fetch image with retry
   const blob = await fetchPollinationsImage(prompt);
 
   if (!blob) {
-    console.warn(`[image-gen] Pollinations failed after 2 attempts for "${article.title.slice(0, 40)}"`);
+    console.warn(`[image-gen] Pollinations failed for "${article.title.slice(0, 40)}"`);
   }
 
   return blob;

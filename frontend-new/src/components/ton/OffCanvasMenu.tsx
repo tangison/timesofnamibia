@@ -153,7 +153,7 @@ export default function OffCanvasMenu({ open, onClose }: OffCanvasMenuProps) {
                   Updated continuously
                 </div>
                 <div className="text-[10px] text-ton-black/45 font-mono uppercase tracking-widest">
-                  Powered by TANGISON Applied AI
+                  Powered by TANGISON
                 </div>
               </div>
             </div>

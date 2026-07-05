@@ -14,7 +14,7 @@ interface InArticleAdProps {
 export default function InArticleAd({ imageUrl, targetUrl, altText }: InArticleAdProps) {
   const adImage = imageUrl || "/brand-card.png";
   const adUrl = targetUrl || "https://tangison.com";
-  const adAlt = altText || "Tangison - Applied AI. Built in Africa.";
+  const adAlt = altText || "Tangison - Unbiased News. Global Reach.";
 
   return (
     <div className="my-8 py-4 border-y border-ton-black/10">
@@ -38,7 +38,7 @@ export default function InArticleAd({ imageUrl, targetUrl, altText }: InArticleA
           <div className="flex-1">
             <p className="font-serif text-lg font-bold text-ton-black mb-1">Tangison</p>
             <p className="font-sans text-xs text-ton-black/50 mb-2">
-              Applied AI. Built in Africa. Building the future of African media.
+              Unbiased News. Global Reach. Building the future of African media.
             </p>
             <span className="inline-flex items-center gap-1 font-mono text-[9px] uppercase tracking-widest text-ton-red">
               Learn More <ExternalLink size={10} />

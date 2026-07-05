@@ -17,9 +17,9 @@ export const metadata = {
   // (was "National News - Latest Headlines" which made the homepage look
   // like a section page in SERPs). The title template appends " - Times
   // of Namibia" automatically.
-  title: "Namibia's Digital Broadsheet - Applied AI. Built in Africa.",
+  title: "Namibia's Digital Broadsheet - Unbiased News. Global Reach.",
   description:
-    "Times of Namibia - a TANGISON news outlet. Real-time verified news, tender alerts, job market data, and financial updates for Namibia. Applied AI. Built in Africa.",
+    "Times of Namibia - a TANGISON news outlet. Real-time verified news, tender alerts, job market data, and financial updates for Namibia. Unbiased News. Global Reach.",
   alternates: { canonical: "/" },
 };
 

@@ -33,7 +33,7 @@ export default function AdPopup({ imageUrl, targetUrl, altText }: AdPopupProps) 
 
   const adImage = imageUrl || "/brand-card.png";
   const adUrl = targetUrl || "https://tangison.com";
-  const adAlt = altText || "Tangison - Applied AI. Built in Africa.";
+  const adAlt = altText || "Tangison - Unbiased News. Global Reach.";
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
@@ -64,7 +64,7 @@ export default function AdPopup({ imageUrl, targetUrl, altText }: AdPopupProps) 
               Tangison
             </p>
             <p className="font-mono text-[10px] uppercase tracking-widest text-white/60 mb-4">
-              Applied AI. Built in Africa.
+              Unbiased News. Global Reach.
             </p>
             <span className="inline-flex items-center gap-2 bg-white text-ton-navy px-5 py-2 font-mono text-[10px] font-bold uppercase tracking-widest group-hover:bg-ton-red group-hover:text-white transition-colors">
               Learn More

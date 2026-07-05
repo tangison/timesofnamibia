@@ -4,7 +4,7 @@ import TonLayout from "@/components/ton/TonLayout";
 export const metadata: Metadata = {
   title: "About - Times of Namibia",
   description:
-    "About Times of Namibia - a TANGISON publication. Applied AI built in Africa, delivering real-time verified news for Namibia and the continent.",
+    "About Times of Namibia - a TANGISON publication. Unbiased news for Namibia and the continent, delivering real-time verified news for Namibia and the continent.",
   alternates: { canonical: "/about" },
 };
 
@@ -22,7 +22,7 @@ export default function AboutPage() {
         <p
           className="font-serif text-xl text-ton-black/50 italic mt-3 leading-relaxed"
         >
-          Applied AI. Built in Africa.
+          Unbiased News. Global Reach.
         </p>
 
         {/* Content */}

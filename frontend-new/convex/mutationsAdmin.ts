@@ -884,3 +884,19 @@ export const updateSocialPostStatus = mutation({
     return { success: true };
   },
 });
+
+// ── DELETE DIRECTORY PLACE ───────────────────────────────────
+
+export const deleteDirectoryPlace = mutation({
+  args: { adminToken: v.string(), slug: v.string() },
+  handler: async (ctx, args) => {
+    requireAdmin(args.adminToken);
+    const place = await ctx.db
+      .query("directory_places")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .first();
+    if (!place) return { deleted: false, error: "Not found" };
+    await ctx.db.delete(place._id);
+    return { deleted: true, name: place.name };
+  },
+});

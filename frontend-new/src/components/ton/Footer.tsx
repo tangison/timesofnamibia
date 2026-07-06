@@ -48,6 +48,7 @@ export default function Footer() {
             <a href="/terms" className="hover:text-ton-red transition-colors">Terms</a>
             <a href="/games" className="hover:text-ton-red transition-colors">Games</a>
             <a href="/history-of-namibia" className="hover:text-ton-red transition-colors">History</a>
+            <a href="/about-namibia" className="hover:text-ton-red transition-colors">About Namibia</a>
             <a href="/cultural-groups" className="hover:text-ton-red transition-colors">Culture</a>
             <a href="/brand" className="hover:text-ton-red transition-colors">Brand</a>
             <a href="/tangison" className="hover:text-ton-red transition-colors">TANGISON</a>

@@ -174,6 +174,41 @@ const PLACES: PlaceSeed[] = [
   { title: "National Museum of Namibia", type: "cultural", region: "Khomas" },
   { title: "Owela Museum", type: "cultural", region: "Khomas" },
   { title: "Cape Cross Museum", type: "cultural", region: "Erongo" },
+
+  // === Phase 2 Expansion: Additional Parks ===
+  { title: "Khaudum National Park", type: "park", region: "Otjozondjupa" },
+  { title: "Mangetti National Park", type: "park", region: "Oshikoto" },
+  { title: "Von Bach Dam Recreation Resort", type: "park", region: "Khomas" },
+  { title: "Naute Dam Recreation Resort", type: "park", region: "Karas" },
+
+  // === Phase 2 Expansion: Additional Landmarks ===
+  { title: "Quiver Tree Forest", type: "landmark", region: "Karas" },
+  { title: "Giant's Playground", type: "landmark", region: "Karas" },
+  { title: "Duwisib Castle", type: "landmark", region: "Hardap" },
+  { title: "White Lady of Brandberg", type: "landmark", region: "Erongo" },
+  { title: "Cape Fria", type: "landmark", region: "Kunene" },
+  { title: "Roaring Dunes", type: "landmark", region: "Erongo" },
+
+  // === Phase 2 Expansion: Additional Towns ===
+  { title: "Otavi", type: "town", region: "Otjozondjupa" },
+  { title: "Ruacana", type: "town", region: "Kunene" },
+  { title: "Bethanie", type: "town", region: "Karas" },
+  { title: "Berseba", type: "town", region: "Karas" },
+  { title: "Noordoewer", type: "town", region: "Karas" },
+
+  // === Phase 2 Expansion: Additional Wildlife ===
+  { title: "Cape fur seal", type: "wildlife", region: "Erongo" },
+  { title: "African wild dog", type: "wildlife", region: "Zambezi" },
+  { title: "Klipspringer", type: "wildlife", region: "Kunene" },
+
+  // === Phase 2 Expansion: Additional Geological ===
+  { title: "Homeb gravel terraces", type: "geological", region: "Erongo" },
+  { title: "Ugab River petrified dunes", type: "geological", region: "Erongo" },
+
+  // === Phase 2 Expansion: Additional Cultural ===
+  { title: "Duwisib Castle", type: "cultural", region: "Hardap" },
+  { title: "Owambo homestead", type: "cultural", region: "Oshana" },
+  { title: "Herero traditional dress", type: "cultural", region: "Kunene" },
 ];
 
 // ── HELPERS ──────────────────────────────────────────────────

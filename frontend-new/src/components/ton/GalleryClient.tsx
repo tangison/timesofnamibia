@@ -80,12 +80,15 @@ export default function GalleryClient({ places }: { places: any[] }) {
             onClick={() => setLightboxImg(img)}
             className="block w-full break-inside-avoid mb-3 group relative overflow-hidden bg-ton-navy"
           >
-            {img.webp_url ? (
+            {img.webp_url || img.url ? (
               <img
-                src={img.webp_url}
+                src={img.webp_url || img.url}
                 alt={img.alt_text || img.placeName}
                 className="w-full h-auto object-cover group-hover:opacity-90 transition-opacity"
                 loading="lazy"
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).style.display = 'none';
+                }}
               />
             ) : (
               <BrandedImageFallback contextText={img.placeName} />

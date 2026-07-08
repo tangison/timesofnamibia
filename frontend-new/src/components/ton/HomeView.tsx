@@ -56,6 +56,7 @@ interface HomeViewProps {
   jobs: Job[];
   tenders: Tender[];
   marketData: MarketDatum[];
+  directoryPlaceCount?: number;
 }
 
 // ── HELPERS ──────────────────────────────────────────────────
@@ -84,6 +85,7 @@ export default function HomeView({
   jobs,
   tenders,
   marketData,
+  directoryPlaceCount = 0,
 }: HomeViewProps) {
   // Real-time article updates - poll every 30 seconds
   const [liveArticles, setLiveArticles] = useState(recentArticles);
@@ -473,7 +475,9 @@ export default function HomeView({
             </a>
           </div>
           <p className="font-sans text-sm text-ton-black/50 mb-4">
-            45 national parks, landmarks, towns, wildlife, and cultural sites across Namibia with real photos, interactive maps, and detailed guides.
+            {directoryPlaceCount > 0
+              ? `${directoryPlaceCount} curated places — national parks, landmarks, towns, wildlife, and cultural sites across Namibia with real photos, interactive maps, and detailed guides.`
+              : "National parks, landmarks, towns, wildlife, and cultural sites across Namibia with real photos, interactive maps, and detailed guides."}
           </p>
           <div className="flex flex-wrap gap-3">
             <a href="/know-namibia" className="font-mono text-[10px] uppercase tracking-widest border border-ton-black/15 px-4 py-2 hover:bg-ton-black hover:text-white transition-colors">Parks</a>

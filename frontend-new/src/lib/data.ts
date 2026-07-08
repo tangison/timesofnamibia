@@ -115,9 +115,21 @@ function mapTender(item: BackendItem) {
 }
 
 export async function getFeaturedArticle() {
-  if (useConvex) return dataConvex.getFeaturedArticle();
-  const rows = await api<BackendItem[]>("/api/v1/articles?limit=1");
-  return rows.length ? mapArticle(rows[0]) : null;
+  if (useConvex) {
+    try {
+      return await dataConvex.getFeaturedArticle();
+    } catch (err) {
+      console.warn("[data] Convex getFeaturedArticle failed:", err instanceof Error ? err.message : err);
+      return null;
+    }
+  }
+  try {
+    const rows = await api<BackendItem[]>("/api/v1/articles?limit=1");
+    return rows.length ? mapArticle(rows[0]) : null;
+  } catch (err) {
+    console.warn("[data] getFeaturedArticle backend fetch failed:", err instanceof Error ? err.message : err);
+    return null;
+  }
 }
 
 export async function getArticles(options?: {
@@ -128,57 +140,113 @@ export async function getArticles(options?: {
   limit?: number;
   offset?: number;
 }) {
-  if (useConvex) return dataConvex.getArticles(options);
-  const params = new URLSearchParams();
-  params.set("limit", String(options?.limit || 20));
-  if (options?.section) params.set("section", options.section);
-  if (options?.offset) params.set("offset", String(options.offset));
-  const rows = await api<BackendItem[]>(`/api/v1/articles?${params.toString()}`);
-  let articles = rows.map(mapArticle);
-  if (options?.category) {
-    const wanted = options.category.toLowerCase();
-    articles = articles.filter((a) => (a.categorySlug || "").toLowerCase().includes(wanted));
+  if (useConvex) {
+    try {
+      return await dataConvex.getArticles(options);
+    } catch (err) {
+      console.warn("[data] Convex getArticles failed, returning empty list:", err instanceof Error ? err.message : err);
+      return [];
+    }
   }
-  if (options?.source) {
-    const s = options.source.toLowerCase();
-    articles = articles.filter((a) => a.authorLine.toLowerCase().includes(s));
+  try {
+    const params = new URLSearchParams();
+    params.set("limit", String(options?.limit || 20));
+    if (options?.section) params.set("section", options.section);
+    if (options?.offset) params.set("offset", String(options.offset));
+    const rows = await api<BackendItem[]>(`/api/v1/articles?${params.toString()}`);
+    let articles = rows.map(mapArticle);
+    if (options?.category) {
+      const wanted = options.category.toLowerCase();
+      articles = articles.filter((a) => (a.categorySlug || "").toLowerCase().includes(wanted));
+    }
+    if (options?.source) {
+      const s = options.source.toLowerCase();
+      articles = articles.filter((a) => a.authorLine.toLowerCase().includes(s));
+    }
+    return articles;
+  } catch (err) {
+    // Backend unavailable — return empty list so section pages render the
+    // "Coming Soon" empty state instead of crashing the whole route.
+    console.warn("[data] getArticles backend fetch failed, returning []:", err instanceof Error ? err.message : err);
+    return [];
   }
-  return articles;
 }
 
 export async function getArticleBySlug(slug: string) {
-  if (useConvex) return dataConvex.getArticleBySlug(slug);
+  if (useConvex) {
+    try {
+      return await dataConvex.getArticleBySlug(slug);
+    } catch (err) {
+      console.warn("[data] Convex getArticleBySlug failed:", err instanceof Error ? err.message : err);
+      return null;
+    }
+  }
   try {
     const row = await api<BackendItem>(`/api/v1/articles/${encodeURIComponent(slug)}`);
     return row ? mapArticle(row) : null;
   } catch {
-    const rows = await api<BackendItem[]>("/api/v1/articles?limit=200");
-    return rows.map(mapArticle).find((a) => a.slug === slug) || null;
+    try {
+      const rows = await api<BackendItem[]>("/api/v1/articles?limit=200");
+      return rows.map(mapArticle).find((a) => a.slug === slug) || null;
+    } catch {
+      return null;
+    }
   }
 }
 
 export async function getJobs(options?: { region?: string; source?: string; type?: string; limit?: number }) {
-  if (useConvex) return dataConvex.getJobs(options);
-  const rows = await api<BackendItem[]>(`/api/v1/jobs?limit=${options?.limit || 50}`);
-  let jobs = rows.map(mapJob);
-  if (options?.region) jobs = jobs.filter((j) => (j.region || "").toLowerCase() === options.region!.toLowerCase());
-  if (options?.source) jobs = jobs.filter((j) => j.source.toLowerCase().includes(options.source!.toLowerCase()));
-  return jobs;
+  if (useConvex) {
+    try {
+      return await dataConvex.getJobs(options);
+    } catch (err) {
+      console.warn("[data] Convex getJobs failed:", err instanceof Error ? err.message : err);
+      return [];
+    }
+  }
+  try {
+    const rows = await api<BackendItem[]>(`/api/v1/jobs?limit=${options?.limit || 50}`);
+    let jobs = rows.map(mapJob);
+    if (options?.region) jobs = jobs.filter((j) => (j.region || "").toLowerCase() === options.region!.toLowerCase());
+    if (options?.source) jobs = jobs.filter((j) => j.source.toLowerCase().includes(options.source!.toLowerCase()));
+    return jobs;
+  } catch (err) {
+    console.warn("[data] getJobs backend fetch failed:", err instanceof Error ? err.message : err);
+    return [];
+  }
 }
 
 export async function getTenders(options?: { status?: string; department?: string; limit?: number }) {
-  if (useConvex) return dataConvex.getTenders(options);
-  const rows = await api<BackendItem[]>(`/api/v1/tenders?limit=${options?.limit || 50}`);
-  let tenders = rows.map(mapTender);
-  if (options?.department) {
-    const d = options.department.toLowerCase();
-    tenders = tenders.filter((t) => t.department.toLowerCase().includes(d));
+  if (useConvex) {
+    try {
+      return await dataConvex.getTenders(options);
+    } catch (err) {
+      console.warn("[data] Convex getTenders failed:", err instanceof Error ? err.message : err);
+      return [];
+    }
   }
-  return tenders;
+  try {
+    const rows = await api<BackendItem[]>(`/api/v1/tenders?limit=${options?.limit || 50}`);
+    let tenders = rows.map(mapTender);
+    if (options?.department) {
+      const d = options.department.toLowerCase();
+      tenders = tenders.filter((t) => t.department.toLowerCase().includes(d));
+    }
+    return tenders;
+  } catch (err) {
+    console.warn("[data] getTenders backend fetch failed:", err instanceof Error ? err.message : err);
+    return [];
+  }
 }
 
 export async function getMarketData() {
-  if (useConvex) return dataConvex.getMarketData();
+  if (useConvex) {
+    try {
+      return await dataConvex.getMarketData();
+    } catch (err) {
+      console.warn("[data] Convex getMarketData failed:", err instanceof Error ? err.message : err);
+      return [];
+    }
+  }
   try {
     return await api<
       Array<{
@@ -202,35 +270,60 @@ export async function getTickerItems() {
     // Use Convex tickerItem table when available - for now, return []
     return [];
   }
-  const rows = await api<BackendItem[]>("/api/v1/articles?limit=8");
-  return rows.map((r, i) => ({ id: String(i + 1), text: `${r.title} ▸`, order: i, active: true }));
+  try {
+    const rows = await api<BackendItem[]>("/api/v1/articles?limit=8");
+    return rows.map((r, i) => ({ id: String(i + 1), text: `${r.title} ▸`, order: i, active: true }));
+  } catch {
+    return [];
+  }
 }
 
 export async function searchArticles(query: string, options?: { limit?: number; section?: string }) {
-  if (useConvex) return dataConvex.searchArticles(query, options);
-  const rows = await api<BackendItem[]>(`/api/v1/articles?limit=${Math.max(options?.limit || 20, 100)}`);
-  const q = query.toLowerCase();
-  return rows
-    .map(mapArticle)
-    .filter((a) => (a.headline + " " + a.content).toLowerCase().includes(q))
-    .filter((a) => (options?.section ? a.section === options.section : true))
-    .slice(0, options?.limit || 20);
+  if (useConvex) {
+    try {
+      return await dataConvex.searchArticles(query, options);
+    } catch (err) {
+      console.warn("[data] Convex searchArticles failed:", err instanceof Error ? err.message : err);
+      return [];
+    }
+  }
+  try {
+    const rows = await api<BackendItem[]>(`/api/v1/articles?limit=${Math.max(options?.limit || 20, 100)}`);
+    const q = query.toLowerCase();
+    return rows
+      .map(mapArticle)
+      .filter((a) => (a.headline + " " + a.content).toLowerCase().includes(q))
+      .filter((a) => (options?.section ? a.section === options.section : true))
+      .slice(0, options?.limit || 20);
+  } catch (err) {
+    console.warn("[data] searchArticles backend fetch failed:", err instanceof Error ? err.message : err);
+    return [];
+  }
 }
 
 export async function getPlatformStats() {
   if (useConvex) {
-    const stats = await dataConvex.getStats();
-    if (stats) {
-      return {
-        news: stats.articles,
-        jobs: stats.jobs,
-        tenders: stats.tenders,
-        internships: 0,
-        total: stats.total,
-      };
+    try {
+      const stats = await dataConvex.getStats();
+      if (stats) {
+        return {
+          news: stats.articles,
+          jobs: stats.jobs,
+          tenders: stats.tenders,
+          internships: 0,
+          total: stats.total,
+        };
+      }
+    } catch (err) {
+      console.warn("[data] Convex getStats failed:", err instanceof Error ? err.message : err);
     }
   }
-  return api<{ news: number; jobs: number; tenders: number; internships: number; total: number }>("/api/v1/stats");
+  try {
+    return await api<{ news: number; jobs: number; tenders: number; internships: number; total: number }>("/api/v1/stats");
+  } catch (err) {
+    console.warn("[data] getPlatformStats backend fetch failed:", err instanceof Error ? err.message : err);
+    return { news: 0, jobs: 0, tenders: 0, internships: 0, total: 0 };
+  }
 }
 
 export async function getCategoryBySlug(slug: string) {

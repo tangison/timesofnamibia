@@ -86,17 +86,27 @@ export default function PlaceDetailClient({ place, relatedPlaces }: PlaceDetailC
 
       {/* Hero image */}
       <div className="relative w-full aspect-[16/9] overflow-hidden bg-ton-navy mb-6">
-        {heroImage?.webp_url ? (
+        {heroImage && (heroImage.webp_url || heroImage.url) ? (
           <img
-            src={heroImage.webp_url}
+            src={heroImage.webp_url || heroImage.url}
             alt={heroImage.alt_text || place.name}
             className="w-full h-full object-cover"
+            onError={(e) => {
+              // Hide the broken img and show fallback (next render via state)
+              (e.currentTarget as HTMLImageElement).style.display = 'none';
+              const parent = e.currentTarget.parentElement;
+              if (parent && !parent.querySelector('.fallback-rendered')) {
+                const fb = document.createElement('div');
+                fb.className = 'fallback-rendered w-full h-full';
+                parent.appendChild(fb);
+              }
+            }}
           />
         ) : (
           <BrandedImageFallback contextText={place.name} />
         )}
         {heroImage && (
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 pointer-events-none">
             <p className="font-mono text-[9px] text-white/80 uppercase tracking-widest">
               {heroImage.caption}
             </p>
@@ -155,11 +165,14 @@ export default function PlaceDetailClient({ place, relatedPlaces }: PlaceDetailC
                     onClick={() => openLightbox(i)}
                     className="relative aspect-square overflow-hidden bg-ton-navy group cursor-pointer"
                   >
-                    {img.webp_url ? (
+                    {img.webp_url || img.url ? (
                       <img
-                        src={img.webp_url}
+                        src={img.webp_url || img.url}
                         alt={img.alt_text || place.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLImageElement).style.display = 'none';
+                        }}
                       />
                     ) : (
                       <BrandedImageFallback contextText={place.name} />
@@ -271,11 +284,14 @@ export default function PlaceDetailClient({ place, relatedPlaces }: PlaceDetailC
                   className="group block bg-ton-cream/50 border-t-4 border-transparent hover:border-ton-red transition-all duration-300"
                 >
                   <div className="relative aspect-[16/9] overflow-hidden bg-ton-navy">
-                    {rpImage?.webp_url ? (
+                    {rpImage && (rpImage.webp_url || rpImage.url) ? (
                       <img
-                        src={rpImage.webp_url}
+                        src={rpImage.webp_url || rpImage.url}
                         alt={rpImage.alt_text || rp.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLImageElement).style.display = 'none';
+                        }}
                       />
                     ) : (
                       <BrandedImageFallback contextText={rp.name} />

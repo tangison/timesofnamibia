@@ -12,6 +12,11 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
       { protocol: "https", hostname: "plus.unsplash.com" },
+      // Convex storage — article cover images served from here.
+      { protocol: "https", hostname: "exuberant-ladybug-733.convex.cloud" },
+      // Wikimedia Commons upload host — Know Namibia directory images.
+      // All CC-BY-SA 4.0 / public domain; metadata stored alongside each entry.
+      { protocol: "https", hostname: "upload.wikimedia.org" },
     ],
   },
   async headers() {

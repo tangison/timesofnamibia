@@ -7,6 +7,7 @@ import {
   getTenders,
   getMarketData,
 } from "@/lib/data";
+import { getDirectoryPlaces } from "@/lib/directoryData";
 import { triggerAutoIngestion } from "@/lib/rss-scheduler";
 
 // TANGISON: ISR with 5-min revalidate instead of force-dynamic.
@@ -32,13 +33,14 @@ export default async function HomePage() {
     // Non-critical
   }
 
-  const [featuredArticle, recentArticles, jobs, tenders, marketData] =
+  const [featuredArticle, recentArticles, jobs, tenders, marketData, directoryPlaces] =
     await Promise.all([
       getFeaturedArticle(),
       getArticles({ limit: 10 }),
       getJobs({ limit: 14 }),
       getTenders({ limit: 5 }),
       getMarketData(),
+      getDirectoryPlaces({ limit: 200 }),
     ]);
 
   return (
@@ -49,6 +51,7 @@ export default async function HomePage() {
         jobs={jobs}
         tenders={tenders}
         marketData={marketData as any}
+        directoryPlaceCount={directoryPlaces.length}
       />
     </TonLayout>
   );

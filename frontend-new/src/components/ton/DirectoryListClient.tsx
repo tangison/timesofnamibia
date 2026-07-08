@@ -126,51 +126,9 @@ export default function DirectoryListClient({ places }: { places: DirectoryPlace
 
       {/* Place grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredPlaces.map((place, i) => {
-          const heroImage = place.images[0];
-          return (
-            <motion.div
-              key={place._id}
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: (i % 6) * 0.08, type: "spring", stiffness: 100, damping: 15 }}
-            >
-              <Link
-                href={`/know-namibia/${place.slug}`}
-                className="group block bg-ton-cream/50 border-t-4 border-transparent hover:border-ton-red transition-all duration-300 h-full"
-              >
-                {/* Hero image */}
-                <div className="relative aspect-[16/9] overflow-hidden bg-ton-navy">
-                  {heroImage?.webp_url ? (
-                    <img
-                      src={heroImage.webp_url}
-                      alt={heroImage.alt_text || place.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  ) : (
-                    <BrandedImageFallback contextText={place.name} />
-                  )}
-                  <span className="absolute top-2 left-2 bg-ton-red text-white font-mono text-[8px] font-bold uppercase tracking-widest px-2 py-0.5">
-                    {TYPE_LABELS[place.type] || place.type}
-                  </span>
-                </div>
-                {/* Content */}
-                <div className="p-5">
-                  <h3 className="font-serif font-bold text-lg text-ton-black leading-snug mb-2 group-hover:text-ton-red transition-colors">
-                    {place.name}
-                  </h3>
-                  <p className="font-sans text-sm text-ton-black/50 leading-relaxed mb-3 line-clamp-2">
-                    {place.short_description}
-                  </p>
-                  <div className="flex items-center justify-between text-[10px] font-mono text-ton-black/45 uppercase tracking-wider pt-3 border-t border-ton-black/5">
-                    <span>{place.region}</span>
-                    <span className="text-ton-red">Explore</span>
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
-          );
-        })}
+        {filteredPlaces.map((place, i) => (
+          <PlaceCard key={place._id} place={place} index={i} />
+        ))}
       </div>
 
       {/* Empty state */}
@@ -182,5 +140,60 @@ export default function DirectoryListClient({ places }: { places: DirectoryPlace
         </div>
       )}
     </div>
+  );
+}
+
+// ── Place Card ──────────────────────────────────────────────────
+// Lifted into its own component so each card can track its own
+// image-failed state independently.
+function PlaceCard({ place, index }: { place: DirectoryPlace; index: number }) {
+  const [imageFailed, setImageFailed] = useState(false);
+  const heroImage = place.images[0];
+  // Prefer webp_url, fall back to url (static fallback dataset uses url only)
+  const imageUrl = heroImage?.webp_url || heroImage?.url;
+  const hasUsableImage = imageUrl && !imageFailed;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: (index % 6) * 0.08, type: "spring", stiffness: 100, damping: 15 }}
+    >
+      <Link
+        href={`/know-namibia/${place.slug}`}
+        className="group block bg-ton-cream/50 border-t-4 border-transparent hover:border-ton-red transition-all duration-300 h-full"
+      >
+        {/* Hero image — fixed aspect ratio reserves space even when
+            image fails or is missing. Prevents text overlap. */}
+        <div className="relative aspect-[16/9] overflow-hidden bg-ton-navy">
+          {hasUsableImage ? (
+            <img
+              src={imageUrl}
+              alt={heroImage!.alt_text || place.name}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              onError={() => setImageFailed(true)}
+            />
+          ) : (
+            <BrandedImageFallback contextText={place.name} />
+          )}
+          <span className="absolute top-2 left-2 bg-ton-red text-white font-mono text-[8px] font-bold uppercase tracking-widest px-2 py-0.5 z-10">
+            {TYPE_LABELS[place.type] || place.type}
+          </span>
+        </div>
+        {/* Content — min-height prevents card collapse on missing content */}
+        <div className="p-5 min-h-[180px] flex flex-col">
+          <h3 className="font-serif font-bold text-lg text-ton-black leading-snug mb-2 group-hover:text-ton-red transition-colors">
+            {place.name}
+          </h3>
+          <p className="font-sans text-sm text-ton-black/50 leading-relaxed mb-3 line-clamp-2 flex-1">
+            {place.short_description}
+          </p>
+          <div className="flex items-center justify-between text-[10px] font-mono text-ton-black/45 uppercase tracking-wider pt-3 border-t border-ton-black/5">
+            <span>{place.region}</span>
+            <span className="text-ton-red">Explore</span>
+          </div>
+        </div>
+      </Link>
+    </motion.div>
   );
 }

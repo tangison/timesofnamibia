@@ -49,11 +49,14 @@ export default function BigFiveClient({ places }: { places: any[] }) {
                 className="group block bg-ton-cream/50 border-t-4 border-transparent hover:border-ton-red transition-all duration-300 h-full"
               >
                 <div className="relative aspect-[4/3] overflow-hidden bg-ton-navy">
-                  {heroImage?.webp_url ? (
+                  {heroImage && (heroImage.webp_url || heroImage.url) ? (
                     <img
-                      src={heroImage.webp_url}
+                      src={heroImage.webp_url || heroImage.url}
                       alt={heroImage.alt_text || place.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      onError={(e) => {
+                        (e.currentTarget as HTMLImageElement).style.display = 'none';
+                      }}
                     />
                   ) : (
                     <BrandedImageFallback contextText={place.name} />

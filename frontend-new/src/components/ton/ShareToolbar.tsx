@@ -193,7 +193,7 @@ export default function ShareToolbar({ title, url, articleContent }: ShareToolba
       </button>
       <button
         onClick={handleCopyLink}
-        aria-label={copied ? "Link copied" : "Copy article link"}
+        aria-label={copied ? "Link copied" : "Copy link"}
         className="ton-share-btn flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-widest bg-transparent text-ton-black border border-ton-black/30 px-3 py-1.5 hover:bg-ton-black hover:text-white transition-colors"
       >
         {copied ? <Check className="w-3 h-3" aria-hidden="true" /> : <Link2 className="w-3 h-3" aria-hidden="true" />}

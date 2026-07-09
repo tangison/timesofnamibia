@@ -84,6 +84,7 @@ export default function DirectoryListClient({ places }: { places: DirectoryPlace
             placeholder="Search places, regions, or types..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
+            aria-label="Search Namibia directory places"
             className="w-full pl-12 pr-4 py-3 border border-ton-black/15 bg-white font-sans text-sm text-ton-black placeholder:text-ton-black/45 focus:outline-none focus:border-ton-red transition-colors"
           />
         </div>

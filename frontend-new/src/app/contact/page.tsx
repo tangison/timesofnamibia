@@ -105,16 +105,18 @@ export default function ContactPage() {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="font-mono text-[10px] uppercase tracking-widest text-ton-black/40 block mb-2">Name</label>
+                  <label htmlFor="contact-name" className="font-mono text-[10px] uppercase tracking-widest text-ton-black/40 block mb-2">Name</label>
                   <input
+                    id="contact-name" name="name"
                     type="text" required value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     className="w-full bg-transparent border border-ton-black/15 px-4 py-3 font-sans text-sm text-ton-black focus:border-ton-red outline-none"
                   />
                 </div>
                 <div>
-                  <label className="font-mono text-[10px] uppercase tracking-widest text-ton-black/40 block mb-2">Email</label>
+                  <label htmlFor="contact-email" className="font-mono text-[10px] uppercase tracking-widest text-ton-black/40 block mb-2">Email</label>
                   <input
+                    id="contact-email" name="email"
                     type="email" required value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     className="w-full bg-transparent border border-ton-black/15 px-4 py-3 font-sans text-sm text-ton-black focus:border-ton-red outline-none"
@@ -122,8 +124,9 @@ export default function ContactPage() {
                 </div>
               </div>
               <div>
-                <label className="font-mono text-[10px] uppercase tracking-widest text-ton-black/40 block mb-2">Department</label>
+                <label htmlFor="contact-category" className="font-mono text-[10px] uppercase tracking-widest text-ton-black/40 block mb-2">Department</label>
                 <select
+                  id="contact-category" name="category"
                   required value={form.category}
                   onChange={(e) => setForm({ ...form, category: e.target.value })}
                   className="w-full bg-transparent border border-ton-black/15 px-4 py-3 font-sans text-sm text-ton-black focus:border-ton-red outline-none"
@@ -133,8 +136,9 @@ export default function ContactPage() {
                 </select>
               </div>
               <div>
-                <label className="font-mono text-[10px] uppercase tracking-widest text-ton-black/40 block mb-2">Message</label>
+                <label htmlFor="contact-message" className="font-mono text-[10px] uppercase tracking-widest text-ton-black/40 block mb-2">Message</label>
                 <textarea
+                  id="contact-message" name="message"
                   required rows={5} value={form.message}
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
                   className="w-full bg-transparent border border-ton-black/15 px-4 py-3 font-serif text-base text-ton-black focus:border-ton-red outline-none resize-y"

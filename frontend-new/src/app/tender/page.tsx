@@ -21,6 +21,7 @@ export const revalidate = 600;
 export default function TenderPage() {
   return (
     <TonLayout>
+      <h1 className="sr-only">Tenders — Government Procurement Namibia</h1>
       <TenderAnalysisView />
     </TonLayout>
   );

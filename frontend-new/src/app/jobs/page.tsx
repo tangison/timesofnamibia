@@ -22,6 +22,7 @@ export const revalidate = 600;
 export default function JobsPage() {
   return (
     <TonLayout>
+      <h1 className="sr-only">Jobs — Namibia Employment Intelligence</h1>
       <JobScraperView />
     </TonLayout>
   );

@@ -45,6 +45,8 @@ export default async function HomePage() {
 
   return (
     <TonLayout activePage="national">
+      {/* Visually-hidden H1 for SEO — the visible hero is the featured article carousel */}
+      <h1 className="sr-only">Times of Namibia — Namibia&apos;s Digital Broadsheet</h1>
       <HomeView
         featuredArticle={featuredArticle}
         recentArticles={recentArticles}

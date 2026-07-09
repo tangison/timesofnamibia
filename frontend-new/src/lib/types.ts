@@ -44,6 +44,15 @@ export interface Article {
   published: boolean;
   publishedAt: Date;
   views: number;
+  // Extended fields for AI-rewritten articles (Phase 2)
+  body?: string | null;
+  summary?: string | null;
+  categoryField?: string | null;
+  coverImage?: string | null;
+  sourceRegion?: string | null;
+  originalUrl?: string | null;
+  seo_meta_description?: string | null;
+  key_takeaways?: string[] | null;
   commentCount: number;
   category: { id: string; name: string; slug: string; color: string | null } | null;
   rssFeed: { id: string; name: string; url: string } | null;

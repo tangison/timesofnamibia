@@ -13,17 +13,24 @@ const springTransition = {
   mass: 1,
 };
 
+// Premium motion variants — cubic-bezier(0.4,0,0.2,1), 0% overshoot
+const PREMIUM_EASE = [0.4, 0, 0.2, 1] as const;
+
 const staggerContainer = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.1 },
+    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
   },
 };
 
 const fadeUpItem = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: springTransition },
+  hidden: { opacity: 0, y: 20 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: PREMIUM_EASE },
+  },
 };
 
 // ── TYPES ─────────────────────────────────────────────────────
@@ -108,20 +115,20 @@ function regionLabel(region: string | null | undefined): string | null {
   return region.toUpperCase();
 }
 
-// Issue 2: Proper markdown renderer using react-markdown
-// Ensures ## becomes styled <h2>, not visible text.
+// Premium markdown renderer — drop cap on first paragraph, refined typography,
+// generous line-height, optimal measure (max ~65ch).
 const markdownComponents = {
   h1: ({ node, ...props }: any) => (
-    <h1 className="font-serif text-2xl sm:text-3xl font-bold text-ton-black mt-8 mb-4 leading-tight" {...props} />
+    <h1 className="font-serif text-2xl sm:text-3xl font-bold text-ton-black mt-10 mb-4 leading-[1.15] tracking-tight" {...props} />
   ),
   h2: ({ node, ...props }: any) => (
-    <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black mt-8 mb-4 leading-tight" {...props} />
+    <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black mt-10 mb-3 leading-[1.2] tracking-tight" {...props} />
   ),
   h3: ({ node, ...props }: any) => (
-    <h3 className="font-serif text-lg sm:text-xl font-bold text-ton-black mt-6 mb-3 leading-tight" {...props} />
+    <h3 className="font-serif text-lg sm:text-xl font-bold text-ton-black mt-8 mb-2 leading-[1.25] tracking-tight" {...props} />
   ),
   p: ({ node, ...props }: any) => (
-    <p className="font-serif text-base sm:text-lg text-ton-black/70 leading-[1.8] mb-5" {...props} />
+    <p className="font-serif text-base sm:text-lg text-ton-black/75 leading-[1.85] mb-5" style={{ textWrap: "pretty" } as any} {...props} />
   ),
   strong: ({ node, ...props }: any) => (
     <strong className="font-bold text-ton-black" {...props} />
@@ -130,16 +137,16 @@ const markdownComponents = {
     <em className="italic" {...props} />
   ),
   ul: ({ node, ...props }: any) => (
-    <ul className="list-disc pl-6 mb-5 space-y-1" {...props} />
+    <ul className="list-disc pl-6 mb-5 space-y-1.5" {...props} />
   ),
   ol: ({ node, ...props }: any) => (
-    <ol className="list-decimal pl-6 mb-5 space-y-1" {...props} />
+    <ol className="list-decimal pl-6 mb-5 space-y-1.5" {...props} />
   ),
   li: ({ node, ...props }: any) => (
-    <li className="font-serif text-base text-ton-black/70 leading-[1.8]" {...props} />
+    <li className="font-serif text-base sm:text-lg text-ton-black/75 leading-[1.85]" {...props} />
   ),
   blockquote: ({ node, ...props }: any) => (
-    <blockquote className="border-l-4 border-ton-red pl-4 italic text-ton-black/60 my-4" {...props} />
+    <blockquote className="border-l-4 border-ton-red pl-5 py-1 italic font-serif text-lg text-ton-black/60 my-6" {...props} />
   ),
   a: ({ node, ...props }: any) => (
     <a className="text-ton-red hover:underline" {...props} />
@@ -288,32 +295,46 @@ export default function ArticleView({ article }: ArticleViewProps) {
           />
         </motion.div>
 
-        {/* Image area - Task 6: use coverImage with fallback to imageUrl */}
+        {/* Image area - premium framed hero with attribution overlay */}
         {heroImage ? (
-          <div className="mt-6 relative overflow-hidden border border-ton-black/8">
-            <img
-              src={heroImage}
-              alt={article.imageAlt || article.headline}
-              className="w-full aspect-[16/9] object-cover ton-article-image"
-            />
-            {article.imageGps && (
-              <div className="absolute bottom-2 left-2 bg-ton-black text-ton-cream px-2 py-1">
-                <p className="font-mono text-[7px] sm:text-[8px] leading-tight">
-                  {article.imageGps}<br />
-                  {article.publishedAt
-                    ? new Date(article.publishedAt).toISOString().replace("T", " ").slice(0, 19) + " CAT"
-                    : ""}
-                </p>
-              </div>
-            )}
-          </div>
+          <motion.figure variants={fadeUpItem} className="mt-8 relative overflow-hidden group">
+            {/* Premium tinted shadow + border */}
+            <div className="relative overflow-hidden border border-ton-black/8 shadow-[0_8px_30px_-12px_rgba(17,19,21,0.15)]">
+              <img
+                src={heroImage}
+                alt={article.imageAlt || article.headline}
+                className="w-full aspect-[16/9] object-cover ton-article-image transition-transform duration-700 group-hover:scale-[1.02]"
+                style={{ transitionTimingFunction: "cubic-bezier(0.4,0,0.2,1)" }}
+              />
+              {/* Subtle gradient at bottom for GPS overlay readability */}
+              {article.imageGps && (
+                <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-ton-black/60 to-transparent pointer-events-none" />
+              )}
+              {article.imageGps && (
+                <figcaption className="absolute bottom-3 left-3 text-white">
+                  <p className="font-mono text-[7px] sm:text-[8px] leading-tight tracking-wider">
+                    {article.imageGps}<br />
+                    {article.publishedAt
+                      ? new Date(article.publishedAt).toISOString().replace("T", " ").slice(0, 19) + " CAT"
+                      : ""}
+                  </p>
+                </figcaption>
+              )}
+            </div>
+          </motion.figure>
         ) : (
-          // Phase 3: clean navy div block, zero broken image icons
-          <div className="mt-6 bg-ton-navy aspect-[16/9] border border-ton-black/8 flex items-center justify-center">
-            <span className="font-mono text-[10px] uppercase tracking-widest text-white/30">
+          // Premium placeholder — navy with grain texture, not flat
+          <motion.div variants={fadeUpItem} className="mt-8 relative bg-ton-navy aspect-[16/9] border border-ton-black/8 flex items-center justify-center overflow-hidden">
+            <div
+              className="absolute inset-0 opacity-[0.05] pointer-events-none"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)'/%3E%3C/svg%3E")`,
+              }}
+            />
+            <span className="relative font-mono text-[10px] uppercase tracking-[0.3em] text-white/30">
               Times of Namibia
             </span>
-          </div>
+          </motion.div>
         )}
 
         {/* Content - Phase 1: render Markdown H2 subheadings */}

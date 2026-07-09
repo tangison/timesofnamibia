@@ -8,10 +8,13 @@ const isClient = typeof window !== "undefined";
 // On the client, always go through the proxy. On the server, hit the backend directly.
 const API_BASE = isClient ? PROXY_BASE : BACKEND_URL;
 
-// --- TANGISON: Convex is preferred when configured ---
-// If NEXT_PUBLIC_CONVEX_URL is set, all data-layer calls route to Convex.
-// Otherwise, fall back to the FastAPI backend.
+// --- TANGISON: Data source priority ---
+// 1. Prisma (Vercel Postgres) — primary, production-grade
+// 2. Convex — legacy fallback (disabled on free plan)
+// 3. FastAPI backend — last resort
 import { dataConvex } from "@/lib/dataConvex";
+import { dataPrisma } from "@/lib/dataPrisma";
+const usePrisma = dataPrisma.isAvailable();
 const useConvex = dataConvex.isAvailable();
 
 type BackendItem = {
@@ -115,6 +118,14 @@ function mapTender(item: BackendItem) {
 }
 
 export async function getFeaturedArticle() {
+  if (usePrisma) {
+    try {
+      const result = await dataPrisma.getFeaturedArticle();
+      if (result) return result;
+    } catch (err) {
+      console.warn("[data] Prisma getFeaturedArticle failed:", err instanceof Error ? err.message : err);
+    }
+  }
   if (useConvex) {
     try {
       return await dataConvex.getFeaturedArticle();
@@ -140,6 +151,14 @@ export async function getArticles(options?: {
   limit?: number;
   offset?: number;
 }) {
+  if (usePrisma) {
+    try {
+      const result = await dataPrisma.getArticles(options);
+      if (result.length > 0) return result;
+    } catch (err) {
+      console.warn("[data] Prisma getArticles failed:", err instanceof Error ? err.message : err);
+    }
+  }
   if (useConvex) {
     try {
       return await dataConvex.getArticles(options);
@@ -173,6 +192,14 @@ export async function getArticles(options?: {
 }
 
 export async function getArticleBySlug(slug: string) {
+  if (usePrisma) {
+    try {
+      const result = await dataPrisma.getArticleBySlug(slug);
+      if (result) return result;
+    } catch (err) {
+      console.warn("[data] Prisma getArticleBySlug failed:", err instanceof Error ? err.message : err);
+    }
+  }
   if (useConvex) {
     try {
       return await dataConvex.getArticleBySlug(slug);
@@ -195,6 +222,14 @@ export async function getArticleBySlug(slug: string) {
 }
 
 export async function getJobs(options?: { region?: string; source?: string; type?: string; limit?: number }) {
+  if (usePrisma) {
+    try {
+      const result = await dataPrisma.getJobs(options);
+      if (result.length > 0) return result;
+    } catch (err) {
+      console.warn("[data] Prisma getJobs failed:", err instanceof Error ? err.message : err);
+    }
+  }
   if (useConvex) {
     try {
       return await dataConvex.getJobs(options);
@@ -216,6 +251,14 @@ export async function getJobs(options?: { region?: string; source?: string; type
 }
 
 export async function getTenders(options?: { status?: string; department?: string; limit?: number }) {
+  if (usePrisma) {
+    try {
+      const result = await dataPrisma.getTenders(options);
+      if (result.length > 0) return result;
+    } catch (err) {
+      console.warn("[data] Prisma getTenders failed:", err instanceof Error ? err.message : err);
+    }
+  }
   if (useConvex) {
     try {
       return await dataConvex.getTenders(options);
@@ -239,6 +282,14 @@ export async function getTenders(options?: { status?: string; department?: strin
 }
 
 export async function getMarketData() {
+  if (usePrisma) {
+    try {
+      const result = await dataPrisma.getMarketData();
+      if (result.length > 0) return result;
+    } catch (err) {
+      console.warn("[data] Prisma getMarketData failed:", err instanceof Error ? err.message : err);
+    }
+  }
   if (useConvex) {
     try {
       return await dataConvex.getMarketData();
@@ -279,6 +330,14 @@ export async function getTickerItems() {
 }
 
 export async function searchArticles(query: string, options?: { limit?: number; section?: string }) {
+  if (usePrisma) {
+    try {
+      const result = await dataPrisma.searchArticles(query, options);
+      if (result.length > 0) return result;
+    } catch (err) {
+      console.warn("[data] Prisma searchArticles failed:", err instanceof Error ? err.message : err);
+    }
+  }
   if (useConvex) {
     try {
       return await dataConvex.searchArticles(query, options);
@@ -302,6 +361,22 @@ export async function searchArticles(query: string, options?: { limit?: number; 
 }
 
 export async function getPlatformStats() {
+  if (usePrisma) {
+    try {
+      const stats = await dataPrisma.getStats();
+      if (stats) {
+        return {
+          news: stats.articles,
+          jobs: stats.jobs,
+          tenders: stats.tenders,
+          internships: 0,
+          total: stats.total,
+        };
+      }
+    } catch (err) {
+      console.warn("[data] Prisma getStats failed:", err instanceof Error ? err.message : err);
+    }
+  }
   if (useConvex) {
     try {
       const stats = await dataConvex.getStats();

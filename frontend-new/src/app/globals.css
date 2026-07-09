@@ -294,7 +294,19 @@ h1, h2, h3 {
 }
 
 /* ========= DROP CAP ========= */
+/* Only apply to the FIRST paragraph in an article body — premium editorial style */
+.ton-article-body > p:first-of-type::first-letter {
+  font-family: var(--font-merriweather), "Merriweather", serif;
+  float: left;
+  font-size: 4.5rem;
+  line-height: 0.75;
+  padding-right: 0.6rem;
+  padding-top: 0.15rem;
+  font-weight: 700;
+  color: var(--color-ton-black, #111315);
+}
 
+/* Legacy class kept for backwards compat — now scoped to first-of-type only */
 .ton-dropcap::first-letter {
   font-family: var(--font-merriweather), "Merriweather", serif;
   float: left;

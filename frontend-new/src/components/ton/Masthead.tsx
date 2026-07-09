@@ -1,28 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Search } from "lucide-react";
-
-// Section 2: Custom 2-bar menu icon - premium minimal style
-// Thicker strokes, shorter lines for a deliberate, less default-UI-kit look
-function MenuIconTwoBar({ size = 22 }: { size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2.5}
-      strokeLinecap="round"
-    >
-      <line x1="4" y1="9" x2="20" y2="9" />
-      <line x1="4" y1="15" x2="20" y2="15" />
-    </svg>
-  );
-}
 import { useState } from "react";
 import OffCanvasMenu from "./OffCanvasMenu";
+import { IconSearch, IconMenu } from "./BrandIcons";
 
 const springTransition = {
   type: "spring" as const,
@@ -71,14 +52,14 @@ export default function Masthead() {
               aria-label="Search"
               onClick={() => window.dispatchEvent(new CustomEvent("ton-search-open"))}
             >
-              <Search size={20} />
+              <IconSearch size={20} />
             </button>
             <button
               className="hover:text-ton-red transition-colors duration-300 text-ton-black/70"
               aria-label="Menu"
               onClick={() => setMenuOpen(true)}
             >
-              <MenuIconTwoBar size={22} />
+              <IconMenu size={22} />
             </button>
           </div>
         </div>
@@ -114,14 +95,14 @@ export default function Masthead() {
               aria-label="Search"
               onClick={() => window.dispatchEvent(new CustomEvent("ton-search-open"))}
             >
-              <Search size={22} />
+              <IconSearch size={22} />
             </button>
             <button
               className="hover:text-ton-red transition-colors duration-300"
               aria-label="Menu"
               onClick={() => setMenuOpen(true)}
             >
-              <MenuIconTwoBar size={24} />
+              <IconMenu size={24} />
             </button>
           </div>
         </div>

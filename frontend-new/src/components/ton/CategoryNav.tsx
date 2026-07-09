@@ -2,8 +2,8 @@
 
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
+import { IconChevronDown } from "./BrandIcons";
 
 /**
  * Category Navigation Bar — sticky below the masthead.
@@ -131,7 +131,7 @@ export default function CategoryNav() {
                 "All Sections"
               )}
             </span>
-            <ChevronDown
+            <IconChevronDown
               size={16}
               className={`transition-transform duration-300 ${mobileOpen ? "rotate-180" : ""}`}
               style={{ transitionTimingFunction: "cubic-bezier(0.4,0,0.2,1)" }}

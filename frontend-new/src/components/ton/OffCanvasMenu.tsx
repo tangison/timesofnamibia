@@ -1,9 +1,21 @@
 "use client";
 
 import { motion, AnimatePresence, type Variants } from "framer-motion";
-import { X, ArrowRight, ArrowUpRight, Clock, Sparkles, Newspaper, Briefcase, FileText, TrendingUp, Mail, Compass } from "lucide-react";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
+import {
+  IconClose,
+  IconArrowRight,
+  IconArrowUpRight,
+  IconClock,
+  IconSparkles,
+  IconNewspaper,
+  IconBriefcase,
+  IconFileText,
+  IconTrendingUp,
+  IconMail,
+  IconCompass,
+} from "./BrandIcons";
 
 interface OffCanvasMenuProps {
   open: boolean;
@@ -13,34 +25,24 @@ interface OffCanvasMenuProps {
 // ── NAVIGATION DATA ──────────────────────────────────────────
 
 const NAV_SECTIONS = [
-  { label: "National", href: "/section/national", desc: "Governance, policy, civic life", icon: "newspaper" },
-  { label: "Economy", href: "/section/economy", desc: "Finance, trade, markets", icon: "trending" },
-  { label: "Mining", href: "/section/mining", desc: "Diamonds, uranium, lithium", icon: "briefcase" },
-  { label: "Energy", href: "/section/energy", desc: "Green hydrogen, solar, oil", icon: "sparkles" },
-  { label: "Politics", href: "/section/politics", desc: "Elections, parliament, policy", icon: "newspaper" },
-  { label: "Sport", href: "/section/sport", desc: "Brave Warriors, NPL, rugby", icon: "trending" },
-  { label: "Africa", href: "/africa", desc: "Continental affairs", icon: "compass" },
-  { label: "World", href: "/world", desc: "International coverage", icon: "compass" },
+  { label: "National", href: "/section/national", desc: "Governance, policy, civic life", icon: IconNewspaper },
+  { label: "Economy", href: "/section/economy", desc: "Finance, trade, markets", icon: IconTrendingUp },
+  { label: "Mining", href: "/section/mining", desc: "Diamonds, uranium, lithium", icon: IconBriefcase },
+  { label: "Energy", href: "/section/energy", desc: "Green hydrogen, solar, oil", icon: IconSparkles },
+  { label: "Politics", href: "/section/politics", desc: "Elections, parliament, policy", icon: IconNewspaper },
+  { label: "Sport", href: "/section/sport", desc: "Brave Warriors, NPL, rugby", icon: IconTrendingUp },
+  { label: "Africa", href: "/africa", desc: "Continental affairs", icon: IconCompass },
+  { label: "World", href: "/world", desc: "International coverage", icon: IconCompass },
 ];
 
 const TOOLS = [
-  { label: "Know Namibia", href: "/know-namibia", desc: "Places & landmarks", icon: Compass },
-  { label: "Jobs", href: "/jobs", desc: "Employment intel", icon: Briefcase },
-  { label: "Tenders", href: "/tender", desc: "Procurement", icon: FileText },
-  { label: "Market Data", href: "/", desc: "Forex & crypto", icon: TrendingUp },
-  { label: "About", href: "/about", desc: "Our mission", icon: Sparkles },
-  { label: "Contact", href: "/contact", desc: "Newsroom", icon: Mail },
+  { label: "Know Namibia", href: "/know-namibia", desc: "Places & landmarks", icon: IconCompass },
+  { label: "Jobs", href: "/jobs", desc: "Employment intel", icon: IconBriefcase },
+  { label: "Tenders", href: "/tender", desc: "Procurement", icon: IconFileText },
+  { label: "Market Data", href: "/", desc: "Forex & crypto", icon: IconTrendingUp },
+  { label: "About", href: "/about", desc: "Our mission", icon: IconSparkles },
+  { label: "Contact", href: "/contact", desc: "Newsroom", icon: IconMail },
 ];
-
-const ICON_MAP: Record<string, typeof Newspaper> = {
-  newspaper: Newspaper,
-  trending: TrendingUp,
-  briefcase: Briefcase,
-  sparkles: Sparkles,
-  compass: Compass,
-  file: FileText,
-  mail: Mail,
-};
 
 // ── PREMIUM MOTION VARIANTS ──────────────────────────────────
 // Archetype: Premium (350-600ms, cubic-bezier(0.4,0,0.2,1), 0% overshoot)
@@ -193,7 +195,7 @@ export default function OffCanvasMenu({ open, onClose }: OffCanvasMenuProps) {
                 className="absolute top-5 right-5 w-10 h-10 flex items-center justify-center bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-ton-red hover:border-ton-red transition-all duration-300"
                 aria-label="Close menu"
               >
-                <X size={18} />
+                <IconClose size={18} />
               </button>
             </motion.div>
 
@@ -209,7 +211,7 @@ export default function OffCanvasMenu({ open, onClose }: OffCanvasMenuProps) {
                 </div>
                 <div className="space-y-px">
                   {NAV_SECTIONS.map((section, i) => {
-                    const Icon = ICON_MAP[section.icon] || Newspaper;
+                    const Icon = section.icon;
                     const isActive = pathname === section.href;
                     return (
                       <motion.a
@@ -240,7 +242,7 @@ export default function OffCanvasMenu({ open, onClose }: OffCanvasMenuProps) {
                         </div>
 
                         {/* Arrow */}
-                        <ArrowRight
+                        <IconArrowRight
                           size={16}
                           className="relative text-ton-black/20 group-hover:text-ton-red group-hover:translate-x-1 transition-all duration-300 flex-shrink-0"
                         />
@@ -279,7 +281,7 @@ export default function OffCanvasMenu({ open, onClose }: OffCanvasMenuProps) {
                           <div className="w-8 h-8 flex items-center justify-center bg-ton-black/[0.03] group-hover:bg-ton-red group-hover:text-white text-ton-black/60 transition-all duration-300">
                             <Icon size={14} />
                           </div>
-                          <ArrowUpRight
+                          <IconArrowUpRight
                             size={12}
                             className="text-ton-black/20 group-hover:text-ton-red transition-colors duration-300"
                           />
@@ -306,7 +308,7 @@ export default function OffCanvasMenu({ open, onClose }: OffCanvasMenuProps) {
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-ton-black/50 text-xs font-mono uppercase tracking-widest">
-                  <Clock size={12} />
+                  <IconClock size={12} />
                   Updated continuously
                 </div>
                 <div className="text-[10px] text-ton-black/45 font-mono uppercase tracking-widest">

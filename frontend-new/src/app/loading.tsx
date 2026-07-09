@@ -1,4 +1,3 @@
-import TonLayout from "@/components/ton/TonLayout";
 
 /**
  * Loading state for the homepage.
@@ -10,7 +9,7 @@ import TonLayout from "@/components/ton/TonLayout";
  */
 export default function HomeLoading() {
   return (
-    <TonLayout activePage="national">
+    <div className="min-h-screen bg-ton-cream">
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-12">
         {/* Hero skeleton */}
         <div className="mb-16 border-b border-ton-black/10 pb-16">
@@ -39,6 +38,6 @@ export default function HomeLoading() {
           ))}
         </div>
       </div>
-    </TonLayout>
+    </div>
   );
 }

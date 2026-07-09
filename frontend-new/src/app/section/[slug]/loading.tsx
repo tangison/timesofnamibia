@@ -1,9 +1,8 @@
-import TonLayout from "@/components/ton/TonLayout";
 import SkeletonCard from "@/components/ton/SkeletonCard";
 
 export default function SectionLoading() {
   return (
-    <TonLayout>
+    <div className="min-h-screen bg-ton-cream">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 md:py-10">
         {/* Header skeleton */}
         <div className="mb-8 sm:mb-10 animate-pulse">
@@ -25,6 +24,6 @@ export default function SectionLoading() {
           </div>
         ))}
       </div>
-    </TonLayout>
+    </div>
   );
 }

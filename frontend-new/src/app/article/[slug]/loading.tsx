@@ -1,4 +1,3 @@
-import TonLayout from "@/components/ton/TonLayout";
 
 function SkeletonPulse({ className = "", width }: { className?: string; width?: string }) {
   return <div className={`animate-pulse bg-ton-black/[0.06] ${className}`} style={width ? { width } : undefined} />;
@@ -6,7 +5,7 @@ function SkeletonPulse({ className = "", width }: { className?: string; width?: 
 
 export default function ArticleLoading() {
   return (
-    <TonLayout activePage="national">
+    <div className="min-h-screen bg-ton-cream">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         {/* Breadcrumb skeleton */}
         <div className="flex items-center gap-2 mb-6">
@@ -47,6 +46,6 @@ export default function ArticleLoading() {
           ))}
         </div>
       </div>
-    </TonLayout>
+    </div>
   );
 }

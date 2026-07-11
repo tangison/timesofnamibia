@@ -22,10 +22,10 @@ Disallow: /maintenance
 Crawl-delay: 1
 
 # Sitemap
-Sitemap: https://timesofnamibia47.vercel.app/sitemap.xml
+Sitemap: https://ton.tangison.com/sitemap.xml
 
 # RSS Feeds
-# https://timesofnamibia47.vercel.app/feed.xml
+# https://ton.tangison.com/feed.xml
 
 # Section pages (data-scraper-agent taxonomy)
 # /section/national  /section/politics  /section/economy

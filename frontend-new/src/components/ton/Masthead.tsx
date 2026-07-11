@@ -79,13 +79,12 @@ export default function Masthead() {
             </div>
           </a>
 
-          {/* Navigation */}
+          {/* Navigation — consolidated to avoid overlap with CategoryNav */}
           <nav className="flex items-center gap-8 font-bold text-sm tracking-widest text-ton-black/70 uppercase">
-            <a href="/section/national" className="hover:text-ton-red transition-colors duration-300">News</a>
+            <a href="/section/national" className="hover:text-ton-red transition-colors duration-300">National</a>
             <a href="/section/economy" className="hover:text-ton-red transition-colors duration-300">Business</a>
-            <a href="/section/opinion" className="hover:text-ton-red transition-colors duration-300">Opinion</a>
             <a href="/section/sport" className="hover:text-ton-red transition-colors duration-300">Sport</a>
-            <a href="/section/technology" className="hover:text-ton-red transition-colors duration-300">Tech</a>
+            <a href="/know-namibia" className="hover:text-ton-red transition-colors duration-300">Know Namibia</a>
           </nav>
 
           {/* Actions */}

@@ -7,53 +7,44 @@ import {
   getTenders,
   getMarketData,
 } from "@/lib/data";
-import { getDirectoryPlaces } from "@/lib/directoryData";
 import { triggerAutoIngestion } from "@/lib/rss-scheduler";
 
 // TANGISON: ISR with 5-min revalidate instead of force-dynamic.
 export const revalidate = 300;
 
 export const metadata = {
-  // TANGISON Iteration 4 Fix #16: Use the brand default homepage title
-  // (was "National News - Latest Headlines" which made the homepage look
-  // like a section page in SERPs). The title template appends " - Times
-  // of Namibia" automatically.
-  title: "Namibia's Digital Broadsheet - Unbiased News. Global Reach.",
+  title: "Times of Namibia | Latest Namibian News, Business and Politics",
   description:
-    "Times of Namibia - a TANGISON news outlet. Real-time verified news, tender alerts, job market data, and financial updates for Namibia. Unbiased News. Global Reach.",
+    "Times of Namibia — Namibia's digital broadsheet. Breaking news, business, mining, energy, politics, sport, tenders, and jobs from Windhoek and across all 14 regions.",
   alternates: { canonical: "/" },
 };
 
 export default async function HomePage() {
   try {
     triggerAutoIngestion().catch(() => {
-      // Silently fail - don't block page render
+      // Silently fail — don't block page render
     });
   } catch {
     // Non-critical
   }
 
-  const [featuredArticle, recentArticles, jobs, tenders, marketData, directoryPlaces] =
+  const [featuredArticle, recentArticles, jobs, tenders, marketData] =
     await Promise.all([
       getFeaturedArticle(),
       getArticles({ limit: 10 }),
       getJobs({ limit: 14 }),
       getTenders({ limit: 5 }),
       getMarketData(),
-      getDirectoryPlaces({ limit: 200 }),
     ]);
 
   return (
     <TonLayout activePage="national">
-      {/* Visually-hidden H1 for SEO — the visible hero is the featured article carousel */}
-      <h1 className="sr-only">Times of Namibia — Namibia&apos;s Digital Broadsheet</h1>
       <HomeView
         featuredArticle={featuredArticle}
         recentArticles={recentArticles}
         jobs={jobs}
         tenders={tenders}
         marketData={marketData as any}
-        directoryPlaceCount={directoryPlaces.length}
       />
     </TonLayout>
   );

@@ -311,8 +311,8 @@ export default function OffCanvasMenu({ open, onClose }: OffCanvasMenuProps) {
                   <IconClock size={12} />
                   Updated continuously
                 </div>
-                <div className="text-[10px] text-ton-black/45 font-mono uppercase tracking-widest">
-                  Powered by TANGISON
+                <div className="text-[10px] text-ton-black/30 font-mono uppercase tracking-widest">
+                  Published by TANGISON
                 </div>
               </div>
             </motion.footer>

@@ -90,7 +90,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       url: "https://tangison.com",
       logo: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app"}/logo-mark.png`,
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://ton.tangison.com"}/logo-mark.png`,
         width: 286,
         height: 286,
       },
@@ -101,7 +101,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     dateModified: new Date(article.updatedAt).toISOString(),
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `${process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app"}/article/${slug}`,
+      "@id": `${process.env.NEXT_PUBLIC_SITE_URL || "https://ton.tangison.com"}/article/${slug}`,
     },
     // Phase 1: image as ImageObject for rich snippets
     image: articleImage
@@ -126,8 +126,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   // TANGISON Iteration 4 Fix #8: Use /section/SECTION for non-national sections
   // (was /SECTION which 404s - politics, economy, mining, etc.)
   const sectionUrl = article.section === "national"
-    ? process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app"
-    : `${process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app"}/section/${article.section}`;
+    ? process.env.NEXT_PUBLIC_SITE_URL || "https://ton.tangison.com"
+    : `${process.env.NEXT_PUBLIC_SITE_URL || "https://ton.tangison.com"}/section/${article.section}`;
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -136,7 +136,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app",
+        item: process.env.NEXT_PUBLIC_SITE_URL || "https://ton.tangison.com",
       },
       ...(article.section
         ? [
@@ -152,7 +152,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         "@type": "ListItem",
         position: article.section ? 3 : 2,
         name: article.headline,
-        item: `${process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app"}/article/${slug}`,
+        item: `${process.env.NEXT_PUBLIC_SITE_URL || "https://ton.tangison.com"}/article/${slug}`,
       },
     ],
   };

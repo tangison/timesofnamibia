@@ -31,6 +31,12 @@ export default function Ticker() {
     fetchTickerItems();
   }, []);
 
+  // Don't render the ticker at all when there are no items — avoids
+  // showing a "LIVE" badge with empty content.
+  if (!loading && tickerItems.length === 0) {
+    return null;
+  }
+
   if (loading) {
     return (
       <div className="bg-ton-black text-ton-cream overflow-hidden ton-ticker-wrapper border-b border-ton-cream/15">

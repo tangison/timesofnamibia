@@ -4,7 +4,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET() {
   const articles = await getArticles({ limit: 50 });
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ton.tangison.com";
 
   const rssItems = articles
     .map(

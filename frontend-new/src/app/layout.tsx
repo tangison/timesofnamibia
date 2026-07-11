@@ -4,10 +4,10 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 
 // Times of Namibia typography:
-//   Wordmark:  UnifrakturMaguntia (Google Fonts - the masthead "Times of Namibia")
-//   Headlines: Merriweather (Google Fonts - serif, authoritative)
-//   Body:      Lato (Google Fonts - clean sans-serif)
-//   Technical: JetBrains Mono (Google Fonts - monospace for labels/metadata)
+//   Wordmark:  UnifrakturMaguntia (Google Fonts — the masthead "Times of Namibia")
+//   Headlines: Merriweather (Google Fonts — serif, authoritative)
+//   Body:      Lato (Google Fonts — clean sans-serif)
+//   Technical: JetBrains Mono (Google Fonts — monospace for labels/metadata)
 
 const merriweather = Merriweather({
   variable: "--font-merriweather",
@@ -38,45 +38,32 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Times of Namibia - Unbiased News. Global Reach.",
-    template: "%s - Times of Namibia",
+    default: "Times of Namibia | Latest Namibian News, Business and Politics",
+    template: "%s — Times of Namibia",
   },
   description:
-    "Times of Namibia - a TANGISON news outlet. Real-time verified news, tender analysis, job market intelligence, and market data for Namibia and the continent. Powered by applied AI built in Africa.",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app"),
-  keywords: [
-    "Namibia",
-    "News",
-    "Times of Namibia",
-    "TON",
-    "TANGISON",
-    "Tenders",
-    "Jobs",
-    "Africa",
-    "Windhoek",
-    
-    "Market Data",
-  ],
+    "Times of Namibia — Namibia's digital broadsheet. Breaking news, business, mining, energy, politics, sport, tenders, and jobs from Windhoek and across all 14 regions.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://ton.tangison.com"),
   openGraph: {
     type: "website",
     locale: "en_NA",
     siteName: "Times of Namibia",
-    title: "Times of Namibia - Unbiased News. Global Reach.",
+    title: "Times of Namibia | Latest Namibian News, Business and Politics",
     description:
-      "A TANGISON news outlet. Real-time verified news, tender analysis, job market intelligence, and market data for Namibia.",
-    url: process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app",
+      "Namibia's digital broadsheet. Breaking news, business, mining, energy, politics, sport, tenders, and jobs.",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://ton.tangison.com",
     images: [
       {
         url: "/brand-og.png",
         width: 1200,
         height: 630,
-        alt: "Times of Namibia - Unbiased News. Global Reach.",
+        alt: "Times of Namibia",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Times of Namibia - Unbiased News. Global Reach.",
+    title: "Times of Namibia | Latest Namibian News",
     description:
       "A TANGISON news outlet. Real-time verified news, tender analysis, job market intelligence, and market data for Namibia.",
     images: ["/brand-og.png"],
@@ -101,13 +88,13 @@ export const metadata: Metadata = {
   },
 };
 
-// Website JSON-LD - TANGISON brand
+// Website JSON-LD — TANGISON brand
 const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "Times of Namibia",
-  alternateName: "TANGISON News - Namibia",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app",
+  alternateName: "TANGISON News — Namibia",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://ton.tangison.com",
   description:
     "A TANGISON news outlet. Real-time verified news, tender analysis, job market intelligence, and market data for Namibia.",
   publisher: {
@@ -117,12 +104,12 @@ const websiteJsonLd = {
   },
   potentialAction: {
     "@type": "SearchAction",
-    target: `${process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app"}/?q={search_term_string}`,
+    target: `${process.env.NEXT_PUBLIC_SITE_URL || "https://ton.tangison.com"}/?q={search_term_string}`,
     "query-input": "required name=search_term_string",
   },
 };
 
-// Organization JSON-LD - TANGISON as publisher
+// Organization JSON-LD — TANGISON as publisher
 // Establishes E-E-A-T signals for Google.
 const organizationJsonLd = {
   "@context": "https://schema.org",
@@ -133,7 +120,7 @@ const organizationJsonLd = {
   logo: {
     "@type": "ImageObject",
     // TANGISON logo mark (286×286 PNG with alpha)
-    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app"}/logo-mark.png`,
+    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://ton.tangison.com"}/logo-mark.png`,
     width: 286,
     height: 286,
   },
@@ -147,7 +134,7 @@ const organizationJsonLd = {
     "@type": "Country",
     name: "Namibia",
   },
-  // Placeholder social profiles - replace with real handles once created.
+  // Placeholder social profiles — replace with real handles once created.
   sameAs: [
     "https://x.com/tangison",
     "https://www.linkedin.com/company/tangison",
@@ -155,12 +142,12 @@ const organizationJsonLd = {
     "https://www.instagram.com/tangison",
     "https://www.youtube.com/@tangison",
   ],
-  publishingPrinciples: `${process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app"}/editorial-standards`,
-  actionableFeedbackPolicy: `${process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app"}/contact`,
-  diversityPolicy: `${process.env.NEXT_PUBLIC_SITE_URL || "https://timesofnamibia47.vercel.app"}/about`,
+  publishingPrinciples: `${process.env.NEXT_PUBLIC_SITE_URL || "https://ton.tangison.com"}/editorial-standards`,
+  actionableFeedbackPolicy: `${process.env.NEXT_PUBLIC_SITE_URL || "https://ton.tangison.com"}/contact`,
+  diversityPolicy: `${process.env.NEXT_PUBLIC_SITE_URL || "https://ton.tangison.com"}/about`,
 };
 
-// Helper: safely serialize JSON-LD - escape < to prevent script injection.
+// Helper: safely serialize JSON-LD — escape < to prevent script injection.
 function safeJsonLd(obj: unknown): string {
   return JSON.stringify(obj).replace(/</g, "\\u003c");
 }
@@ -182,7 +169,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: safeJsonLd(organizationJsonLd) }}
         />
-        {/* Analytics placeholder - replace GA_MEASUREMENT_ID with your actual ID */}
+        {/* Analytics placeholder — replace GA_MEASUREMENT_ID with your actual ID */}
         {process.env.NEXT_PUBLIC_GA_ID && (
           <>
             <script
@@ -205,7 +192,7 @@ export default function RootLayout({
       <body
         className={`${merriweather.variable} ${lato.variable} ${unifrakturMaguntia.variable} ${jetbrainsMono.variable} antialiased`}
       >
-        {/* Skip to content - accessibility */}
+        {/* Skip to content — accessibility */}
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:bg-ton-red focus:text-white focus:font-mono focus:text-xs focus:px-4 focus:py-2"

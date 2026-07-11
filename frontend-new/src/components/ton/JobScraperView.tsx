@@ -123,12 +123,14 @@ export default function JobScraperView() {
       <div className="mb-8 sm:mb-10">
         <div className="flex items-center gap-3 mb-3">
           <Zap className="w-5 h-5 text-ton-red" />
-          <div className="flex items-center gap-2">
-            <span className="ton-live-dot" />
-            <span className="font-mono text-[10px] tracking-widest uppercase text-ton-red font-semibold">
-              Live
-            </span>
-          </div>
+          {filteredJobs.length > 0 && (
+            <div className="flex items-center gap-2">
+              <span className="ton-live-dot" />
+              <span className="font-mono text-[10px] tracking-widest uppercase text-ton-red font-semibold">
+                Live
+              </span>
+            </div>
+          )}
         </div>
         <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-tight">
           Job Scraper

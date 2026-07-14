@@ -1,7 +1,7 @@
 // ============================================================
 // Times of Namibia - Directory Data Layer
 //
-// PRIMARY data source: src/data/places.ts (static, 89+ curated places)
+// PRIMARY data source: src/data/namibia.ts (static, 186+ curated topics)
 // FALLBACK: Convex (when available and has richer data)
 //
 // The static file is the source of truth — no runtime dependency
@@ -10,8 +10,7 @@
 
 import { convexClient } from "@/lib/convex";
 import { api } from "@convex/_generated/api";
-import { places as STATIC_PLACES } from "@/data/places";
-import type { Place } from "@/data/places";
+import { topics as STATIC_TOPICS, type NamibiaTopic } from "@/data/namibia";
 
 export interface DirectoryPlace {
   _id: string;
@@ -44,44 +43,44 @@ export interface DirectoryPlace {
   updated_at?: number;
 }
 
-// ── Convert static Place → DirectoryPlace shape ──────────────
-function staticToDirectory(p: Place): DirectoryPlace {
+// ── Convert static NamibiaTopic → DirectoryPlace shape ──────
+function staticToDirectory(t: NamibiaTopic): DirectoryPlace {
   return {
-    _id: `static-${p.slug}`,
-    slug: p.slug,
-    name: p.name,
-    type: p.category,
-    region: p.region,
-    short_description: p.summary,
-    rich_description: p.description,
-    seo_meta_description: p.summary.slice(0, 160),
-    coordinates: p.coordinates || { lat: -22, lng: 17 },
-    images: p.image
+    _id: `static-${t.slug}`,
+    slug: t.slug,
+    name: t.name,
+    type: t.category,
+    region: t.subcategory,
+    short_description: t.summary,
+    rich_description: t.description,
+    seo_meta_description: t.summary.slice(0, 160),
+    coordinates: t.coordinates || { lat: -22, lng: 17 },
+    images: t.image
       ? [{
-          url: p.image.url,
-          caption: p.image.alt,
-          source: p.image.credit,
-          license: p.image.license,
-          alt_text: p.image.alt,
+          url: t.image.url,
+          caption: t.image.alt,
+          source: t.image.credit,
+          license: t.image.license,
+          alt_text: t.image.alt,
         }]
       : [],
-    key_facts: p.keyFacts,
+    key_facts: t.keyFacts,
     best_time_to_visit: "Year-round (May–September for cooler weather)",
     activities: [],
-    official_url: p.sources[0]?.url || "",
+    official_url: t.sources[0]?.url || "",
     related_places: [],
-    gallery_featured: !!p.image,
+    gallery_featured: !!t.image,
   };
 }
 
-// Get the static places in DirectoryPlace shape
-const STATIC_DIRECTORY_PLACES: DirectoryPlace[] = STATIC_PLACES.map(staticToDirectory);
+// Get the static topics in DirectoryPlace shape
+const STATIC_DIRECTORY_PLACES: DirectoryPlace[] = STATIC_TOPICS.map(staticToDirectory);
 
 export async function getDirectoryPlaces(options?: {
   limit?: number;
   type?: string;
 }): Promise<DirectoryPlace[]> {
-  const limit = options?.limit ?? 100;
+  const limit = options?.limit ?? 200;
   const type = options?.type;
 
   // PRIMARY: static data (always available, no external dependency)
@@ -136,3 +135,4 @@ export async function getDirectoryPlaceBySlug(slug: string): Promise<DirectoryPl
 
   return null;
 }
+

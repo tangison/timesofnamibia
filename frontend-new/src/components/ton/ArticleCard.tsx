@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Clock } from "lucide-react";
+import Image from "next/image";
 
 interface ArticleCardProps {
   article: {
@@ -9,13 +10,9 @@ interface ArticleCardProps {
     slug: string;
     headline: string;
     excerpt: string | null;
-    summary?: string | null;
     section: string;
-    categoryField?: string | null;
     source: string;
     imageUrl: string | null;
-    coverImage?: string | null;
-    sourceRegion?: string | null;
     publishedAt: string | Date;
     readingTime?: number;
   };
@@ -30,31 +27,14 @@ const springTransition = {
   mass: 1,
 };
 
-// Phase 2: sourceRegion badge - text labels only, no emojis (NAM/AFR/WLD)
-function RegionBadge({ region }: { region: string | null | undefined }) {
-  if (!region) return null;
-  const label = region === "namibia" ? "NAM" : region === "africa" ? "AFR" : "WLD";
-  return (
-    <span className="inline-flex items-center gap-1 font-mono text-[8px] font-bold uppercase tracking-widest text-ton-black/40 border border-ton-black/15 px-1 py-0.5">
-      {label}
-    </span>
-  );
-}
-
 /**
- * Article Card - reusable card component with 3 variants:
+ * Article Card — reusable card component with 3 variants:
  * - default: vertical card with image on top
  * - compact: smaller card for sidebar
  * - horizontal: horizontal layout for lists
- *
- * Task 6: uses coverImage with fallback to imageUrl,
- * shows sourceRegion badge on all variants.
  */
 export default function ArticleCard({ article, index = 0, variant = "default" }: ArticleCardProps) {
   const delay = (index % 6) * 0.08;
-  const image = article.coverImage || article.imageUrl;
-  const excerpt = article.summary || article.excerpt;
-  const section = article.categoryField || article.section;
 
   if (variant === "horizontal") {
     return (
@@ -67,25 +47,22 @@ export default function ArticleCard({ article, index = 0, variant = "default" }:
       >
         {/* Thumbnail */}
         <div className="flex-shrink-0 w-20 h-20 bg-ton-black/5 overflow-hidden">
-          {image ? (
-            <img src={image} alt={article.headline} className="w-full h-full object-cover" />
+          {article.imageUrl ? (
+            <img src={article.imageUrl} alt={article.headline} className="w-full h-full object-cover" />
           ) : (
-            <div className="w-full h-full bg-ton-navy" />
+            <div className="w-full h-full bg-gradient-to-br from-ton-black/5 to-ton-red/5" />
           )}
         </div>
 
         {/* Content */}
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2">
-            <span className="font-mono text-[8px] font-bold uppercase tracking-widest text-ton-red">
-              {section}
-            </span>
-            <RegionBadge region={article.sourceRegion} />
-          </div>
+          <span className="font-mono text-[8px] font-bold uppercase tracking-widest text-ton-red">
+            {article.section}
+          </span>
           <h3 className="font-serif font-bold text-sm text-ton-black leading-snug mt-1 group-hover:text-ton-red transition-colors line-clamp-2">
             {article.headline}
           </h3>
-          <div className="flex items-center gap-2 mt-2 text-[10px] font-mono text-ton-black/45 uppercase tracking-wider">
+          <div className="flex items-center gap-2 mt-2 text-[10px] font-mono text-ton-black/30 uppercase tracking-wider">
             <span>{article.source}</span>
             <span>•</span>
             <span>{timeAgo(article.publishedAt)}</span>
@@ -104,16 +81,13 @@ export default function ArticleCard({ article, index = 0, variant = "default" }:
         transition={{ ...springTransition, delay }}
         className="group block py-3 border-b border-ton-black/5 hover:border-ton-red/20 transition-colors"
       >
-        <div className="flex items-center gap-2">
-          <span className="font-mono text-[8px] font-bold uppercase tracking-widest text-ton-red">
-            {section}
-          </span>
-          <RegionBadge region={article.sourceRegion} />
-        </div>
+        <span className="font-mono text-[8px] font-bold uppercase tracking-widest text-ton-red">
+          {article.section}
+        </span>
         <h3 className="font-serif font-bold text-sm text-ton-black leading-snug mt-1 group-hover:text-ton-red transition-colors line-clamp-2">
           {article.headline}
         </h3>
-        <div className="flex items-center gap-2 mt-1 text-[10px] font-mono text-ton-black/45 uppercase tracking-wider">
+        <div className="flex items-center gap-2 mt-1 text-[10px] font-mono text-ton-black/30 uppercase tracking-wider">
           <span>{article.source}</span>
           <span>•</span>
           <span>{timeAgo(article.publishedAt)}</span>
@@ -122,7 +96,7 @@ export default function ArticleCard({ article, index = 0, variant = "default" }:
     );
   }
 
-  // Default variant - vertical card with image
+  // Default variant — vertical card with image
   return (
     <motion.a
       href={`/article/${article.slug}`}
@@ -134,25 +108,19 @@ export default function ArticleCard({ article, index = 0, variant = "default" }:
     >
       {/* Image */}
       <div className="relative aspect-[16/9] overflow-hidden bg-ton-black/5">
-        {image ? (
+        {article.imageUrl ? (
           <img
-            src={image}
+            src={article.imageUrl}
             alt={article.headline}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
-          <div className="w-full h-full bg-ton-navy" />
+          <div className="w-full h-full bg-gradient-to-br from-ton-black/5 to-ton-red/5" />
         )}
         {/* Section badge */}
         <span className="absolute top-2 left-2 bg-ton-red text-white font-mono text-[8px] font-bold uppercase tracking-widest px-2 py-0.5">
-          {section}
+          {article.section}
         </span>
-        {/* Phase 2: sourceRegion text badge (no emoji) */}
-        {article.sourceRegion && (
-          <span className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm font-mono text-[8px] font-bold uppercase tracking-widest px-2 py-0.5 border border-ton-black/10">
-            {article.sourceRegion === "namibia" ? "NAM" : article.sourceRegion === "africa" ? "AFR" : "WLD"}
-          </span>
-        )}
       </div>
 
       {/* Content */}
@@ -160,16 +128,13 @@ export default function ArticleCard({ article, index = 0, variant = "default" }:
         <h3 className="font-serif font-bold text-lg text-ton-black leading-snug mb-2 group-hover:text-ton-red transition-colors line-clamp-2">
           {article.headline}
         </h3>
-        {excerpt && (
-          <p className="font-sans text-sm text-ton-black/50 leading-relaxed mb-3 line-clamp-2">
-            {excerpt}
+        {article.excerpt && (
+          <p className="font-sans text-sm text-ton-black/65 leading-relaxed mb-3 line-clamp-2">
+            {article.excerpt}
           </p>
         )}
-        <div className="flex items-center justify-between text-[10px] font-mono text-ton-black/45 uppercase tracking-wider pt-3 border-t border-ton-black/5">
-          <span className="flex items-center gap-2">
-            {article.source}
-            {article.sourceRegion && <RegionBadge region={article.sourceRegion} />}
-          </span>
+        <div className="flex items-center justify-between text-[10px] font-mono text-ton-black/30 uppercase tracking-wider pt-3 border-t border-ton-black/5">
+          <span>{article.source}</span>
           <span className="flex items-center gap-1">
             <Clock size={10} />
             {timeAgo(article.publishedAt)}

@@ -35,8 +35,8 @@ export default function BusinessPlanView() {
             <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-tight mt-2">
               Business Plan
             </h1>
-            <p className="font-serif italic text-ton-black/40 text-sm sm:text-base mt-2 max-w-xl">
-              Strategic Business Plan 2026 - 2028. The constitutional document of Times of Namibia.
+            <p className="font-serif italic text-ton-black/55 text-sm sm:text-base mt-2 max-w-xl">
+              Strategic Business Plan 2026 — 2028. The constitutional document of Times of Namibia.
             </p>
           </div>
 
@@ -55,7 +55,7 @@ export default function BusinessPlanView() {
               <Download className="w-3 h-3" />
               Download HTML
             </button>
-            <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-wider">
+            <span className="font-mono text-[8px] text-ton-black/25 uppercase tracking-wider">
               A4 Optimized
             </span>
           </div>
@@ -64,12 +64,12 @@ export default function BusinessPlanView() {
         <div className="flex items-center gap-4 mt-3">
           <a
             href="/"
-            className="font-mono text-[9px] text-ton-black/45 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
+            className="font-mono text-[9px] text-ton-black/30 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
           >
             <ArrowLeft className="w-3 h-3" />
             Newsroom
           </a>
-          <span className="font-mono text-[9px] text-ton-black/40">Doc_Ref: TON-BP-2026-01</span>
+          <span className="font-mono text-[9px] text-ton-black/20">Doc_Ref: TON-BP-2026-01</span>
         </div>
       </div>
 
@@ -79,7 +79,7 @@ export default function BusinessPlanView() {
         {/* ===== PAGE 1: TITLE & EXECUTIVE SUMMARY ===== */}
         <section className="ton-bp-page border-t-4 border-ton-black pt-6 mb-10 sm:mb-14">
           <div className="flex items-center justify-between mb-5">
-            <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">Doc_Ref: TON-BP-2026-01</span>
+            <span className="font-mono text-[8px] text-ton-black/25 uppercase tracking-widest">Doc_Ref: TON-BP-2026-01</span>
             <span className="font-mono text-[8px] text-ton-red font-bold uppercase tracking-widest">Confidential // Print Edition</span>
           </div>
 
@@ -88,10 +88,10 @@ export default function BusinessPlanView() {
             <div className="font-serif text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight text-ton-black leading-none">
               TIMES OF NAMIBIA
             </div>
-            <p className="font-mono text-[10px] sm:text-xs text-ton-black/40 mt-2.5 tracking-wider uppercase">
-              Strategic Business Plan // 2026 - 2028
+            <p className="font-mono text-[10px] sm:text-xs text-ton-black/55 mt-2.5 tracking-wider uppercase">
+              Strategic Business Plan // 2026 — 2028
             </p>
-            <p className="font-mono text-[9px] text-ton-black/40 mt-1 tracking-wider uppercase">
+            <p className="font-mono text-[9px] text-ton-black/20 mt-1 tracking-wider uppercase">
               A TANGISON Publication
             </p>
           </div>
@@ -108,7 +108,7 @@ export default function BusinessPlanView() {
                 </p>
               </div>
               <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-3">
-                Our design language - the &ldquo;Broadsheet Digital&rdquo; philosophy - merges the authority of traditional journalism with the precision of real-time data scraping through the Times OS engine. We do not chase clicks. We inform. We do not optimise for engagement. We optimise for understanding.
+                Our design language — the &ldquo;Broadsheet Digital&rdquo; philosophy — merges the authority of traditional journalism with the precision of real-time data scraping through the Times OS engine. We do not chase clicks. We inform. We do not optimise for engagement. We optimise for understanding.
               </p>
               <p className="font-serif text-sm text-ton-black/60 leading-[1.8]">
                 This document is the constitution of the company. It outlines not merely what we build, but why we build it, how we sustain it, and the principles that will govern every editorial and commercial decision from Windhoek to //Kharas, from Oshana to the Zambezi.
@@ -122,20 +122,20 @@ export default function BusinessPlanView() {
               <ul style={{ listStyle: "none", padding: 0 }} className="space-y-4 mt-3">
                 <li>
                   <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">01 // Broad Reach</span>
-                  <p className="font-serif text-sm text-ton-black/50 leading-relaxed mt-1.5">
+                  <p className="font-serif text-sm text-ton-black/65 leading-relaxed mt-1.5">
                     Optimised for 3G networks across all 14 regions. CSS-heavy, image-light. Every byte must earn its place on the page. If a feature cannot load on a Nokia browsing through MTC in Oshakati within 6 seconds, it does not ship.
                   </p>
                 </li>
                 <li>
                   <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">02 // System Trust</span>
-                  <p className="font-serif text-sm text-ton-black/50 leading-relaxed mt-1.5">
-                    Every datum is verified by a 6-second scraping loop. The timestamp is not decoration - it is proof. When a reader sees &ldquo;Scraped 6s ago,&rdquo; they know the information is live, verified, and current.
+                  <p className="font-serif text-sm text-ton-black/65 leading-relaxed mt-1.5">
+                    Every datum is verified by a 6-second scraping loop. The timestamp is not decoration — it is proof. When a reader sees &ldquo;Scraped 6s ago,&rdquo; they know the information is live, verified, and current.
                   </p>
                 </li>
                 <li>
                   <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">03 // Regional Identity</span>
-                  <p className="font-serif text-sm text-ton-black/50 leading-relaxed mt-1.5">
-                    Dedicated data nodes in //Kharas, Oshana, and Erongo. Our scraping targets Namibian government portals - NIEIS, the Government Gazette, CRAN filings. We do not repurpose international feeds. We mine Namibian data for Namibian readers.
+                  <p className="font-serif text-sm text-ton-black/65 leading-relaxed mt-1.5">
+                    Dedicated data nodes in //Kharas, Oshana, and Erongo. Our scraping targets Namibian government portals — NIEIS, the Government Gazette, CRAN filings. We do not repurpose international feeds. We mine Namibian data for Namibian readers.
                   </p>
                 </li>
               </ul>
@@ -145,10 +145,10 @@ export default function BusinessPlanView() {
           {/* Imagery description */}
           <div className="mt-6 pt-5 border-t border-ton-black/8">
             <div className="bg-ton-black/[0.02] p-5 sm:p-6">
-              <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">Visual Anchor</span>
+              <span className="font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">Visual Anchor</span>
               <div className="h-44 sm:h-56 bg-ton-black/[0.04] mt-2.5 flex items-center justify-center border border-ton-black/6">
                 <div className="text-center px-6">
-                  <p className="font-serif text-sm text-ton-black/40 italic max-w-md mx-auto leading-relaxed">
+                  <p className="font-serif text-sm text-ton-black/20 italic max-w-md mx-auto leading-relaxed">
                     High-contrast aerial photograph of the Central Plateau at dawn. Grayscale. The vast gravel plains stretching toward the escarpment, shot from 800m altitude. GPS overlay: 22.56 S, 17.08 E. Timestamp in JetBrains Mono within a black rectangular box at bottom-left. No colour. No people. Just land and light.
                   </p>
                 </div>
@@ -159,7 +159,7 @@ export default function BusinessPlanView() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
+          <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
             <span>Page 01 // Executive Summary</span>
             <span>&copy; TANGISON</span>
           </div>
@@ -173,7 +173,7 @@ export default function BusinessPlanView() {
           <div className="h-px bg-ton-black/8 mb-5" />
 
           <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-5">
-            The Times of Namibia operates on a proprietary integration layer - <strong className="text-ton-black/80">Times OS</strong>. This system enables real-time monitoring of regional sentiment, government procurement data, and employment market dynamics across all 14 administrative regions. The architecture follows a &ldquo;6-second rule&rdquo;: all technical data is refreshed within a 6-second cycle, proving the veracity and currency of every figure presented to the reader.
+            The Times of Namibia operates on a proprietary integration layer — <strong className="text-ton-black/80">Times OS</strong>. This system enables real-time monitoring of regional sentiment, government procurement data, and employment market dynamics across all 14 administrative regions. The architecture follows a &ldquo;6-second rule&rdquo;: all technical data is refreshed within a 6-second cycle, proving the veracity and currency of every figure presented to the reader.
           </p>
 
           <h3 className="font-mono text-[9px] font-bold text-ton-black uppercase tracking-wider mb-3">
@@ -181,7 +181,7 @@ export default function BusinessPlanView() {
           </h3>
           <div className="overflow-x-auto mb-6">
             <table className="w-full text-left">
-              <caption className="sr-only">Regional Node Deployment - Status and scraping frequency across Namibian regions</caption>
+              <caption className="sr-only">Regional Node Deployment — Status and scraping frequency across Namibian regions</caption>
               <thead>
                 <tr className="border-b-2 border-ton-black">
                   <th className="font-mono text-[8px] font-bold uppercase tracking-widest py-2.5 pr-3">Region</th>
@@ -198,18 +198,18 @@ export default function BusinessPlanView() {
                   { region: "Erongo", status: "Active", freq: "6 Seconds", focus: "Logistics, Maritime Trade, Mining" },
                   { region: "Otjozondjupa", status: "Staging", freq: "Planned", focus: "Agriculture, Transport Corridor" },
                   { region: "Zambezi", status: "Staging", freq: "Planned", focus: "Cross-border Trade, Tourism" },
-                  { region: "Kunene", status: "Planned Q4", freq: "-", focus: "Conservation, Community Development" },
-                  { region: "Hardap", status: "Planned Q4", freq: "-", focus: "Solar Energy, Irrigation" },
+                  { region: "Kunene", status: "Planned Q4", freq: "—", focus: "Conservation, Community Development" },
+                  { region: "Hardap", status: "Planned Q4", freq: "—", focus: "Solar Energy, Irrigation" },
                 ].map((row, i) => (
                   <tr key={i} className="border-b border-ton-black/5">
                     <td className="font-serif text-sm py-2.5 pr-3 text-ton-black font-semibold">{row.region}</td>
                     <td className="font-mono text-[10px] py-2.5 pr-3">
-                      <span className={row.status === "Active" ? "text-ton-red font-bold" : row.status === "Staging" ? "text-ton-black/45" : "text-ton-black/40"}>
+                      <span className={row.status === "Active" ? "text-ton-red font-bold" : row.status === "Staging" ? "text-ton-black/30" : "text-ton-black/15"}>
                         {row.status}
                       </span>
                     </td>
-                    <td className="font-mono text-[10px] py-2.5 pr-3 text-ton-black/40">{row.freq}</td>
-                    <td className="font-sans text-[11px] py-2.5 text-ton-black/40">{row.focus}</td>
+                    <td className="font-mono text-[10px] py-2.5 pr-3 text-ton-black/55">{row.freq}</td>
+                    <td className="font-sans text-[11px] py-2.5 text-ton-black/55">{row.focus}</td>
                   </tr>
                 ))}
               </tbody>
@@ -218,7 +218,7 @@ export default function BusinessPlanView() {
 
           {/* Times OS Specifications */}
           <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black mb-2 mt-6">
-            IV. Times OS - Technical Foundation
+            IV. Times OS — Technical Foundation
           </h2>
           <div className="h-px bg-ton-black/8 mb-5" />
 
@@ -233,7 +233,7 @@ export default function BusinessPlanView() {
             </div>
             <div className="bg-ton-black text-ton-cream p-5">
               <h3 className="font-mono text-[10px] text-ton-red font-bold uppercase tracking-wider mb-3">
-                Times OS v2.1 - Specifications
+                Times OS v2.1 — Specifications
               </h3>
               <div className="space-y-2 font-mono text-[10px]">
                 {[
@@ -247,7 +247,7 @@ export default function BusinessPlanView() {
                   { label: "Data Freshness", value: "Max 6s Staleness" },
                 ].map((spec, i) => (
                   <div key={i} className="flex items-center justify-between border-b border-ton-cream/8 pb-1.5">
-                    <span className="text-ton-cream/40">{spec.label}</span>
+                    <span className="text-ton-cream/60">{spec.label}</span>
                     <span className="text-ton-cream font-bold">{spec.value}</span>
                   </div>
                 ))}
@@ -258,10 +258,10 @@ export default function BusinessPlanView() {
           {/* Imagery */}
           <div className="mt-6 pt-5 border-t border-ton-black/8">
             <div className="bg-ton-black/[0.02] p-5">
-              <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">System Integration Visual</span>
+              <span className="font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">System Integration Visual</span>
               <div className="h-36 sm:h-44 bg-ton-black/[0.04] mt-2.5 flex items-center justify-center border border-ton-black/6">
                 <div className="text-center px-6">
-                  <p className="font-serif text-xs text-ton-black/40 italic max-w-md mx-auto leading-relaxed">
+                  <p className="font-serif text-xs text-ton-black/20 italic max-w-md mx-auto leading-relaxed">
                     Close-up of server rack LEDs in a darkened data centre. Grayscale. Green and amber indicator lights captured in sharp focus with shallow depth of field. Timestamp overlay in JetBrains Mono at bottom-right within a black box. The image conveys infrastructure, reliability, and the physical reality behind digital data.
                   </p>
                 </div>
@@ -272,7 +272,7 @@ export default function BusinessPlanView() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
+          <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
             <span>Page 02 // Operations & Technology</span>
             <span>&copy; TANGISON</span>
           </div>
@@ -296,19 +296,19 @@ export default function BusinessPlanView() {
               <ul style={{ listStyle: "none", padding: 0 }} className="space-y-3">
                 <li>
                   <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">Broadsheet Sponsorships</span>
-                  <p className="font-serif text-sm text-ton-black/50 leading-relaxed mt-1.5">
-                    High-density branded content modules integrated into the editorial grid. Sponsors do not buy banners - they buy columns. Each sponsorship is clearly labelled and must provide informational value to the reader.
+                  <p className="font-serif text-sm text-ton-black/65 leading-relaxed mt-1.5">
+                    High-density branded content modules integrated into the editorial grid. Sponsors do not buy banners — they buy columns. Each sponsorship is clearly labelled and must provide informational value to the reader.
                   </p>
                 </li>
                 <li>
                   <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">Times OS Data Licensing</span>
-                  <p className="font-serif text-sm text-ton-black/50 leading-relaxed mt-1.5">
+                  <p className="font-serif text-sm text-ton-black/65 leading-relaxed mt-1.5">
                     B2B data streams for logistics companies, legal firms, and procurement consultants who require real-time access to Namibian government tender data, job market analytics, and regulatory filings. Sold as API access with tiered pricing.
                   </p>
                 </li>
                 <li>
                   <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">Premium Archive & Print</span>
-                  <p className="font-serif text-sm text-ton-black/50 leading-relaxed mt-1.5">
+                  <p className="font-serif text-sm text-ton-black/65 leading-relaxed mt-1.5">
                     High-fidelity print-on-demand assets for institutional subscribers. Research reports, annual tender compilations, and curated regional data packages delivered in the Broadsheet Digital print format on 120gsm cream stock.
                   </p>
                 </li>
@@ -321,7 +321,7 @@ export default function BusinessPlanView() {
               </h3>
               <div className="overflow-x-auto mb-4">
                 <table className="w-full text-left">
-                  <caption className="sr-only">Financial Projections - Revenue and operational status by period</caption>
+                  <caption className="sr-only">Financial Projections — Revenue and operational status by period</caption>
                   <thead>
                     <tr className="border-b-2 border-ton-black">
                       <th className="font-mono text-[8px] font-bold uppercase tracking-widest py-2.5 pr-3">Period</th>
@@ -338,16 +338,16 @@ export default function BusinessPlanView() {
                       { period: "FY 2028", revenue: "N$ 6.5M", status: "Profitability Target" },
                     ].map((row, i) => (
                       <tr key={i} className="border-b border-ton-black/5">
-                        <td className="font-mono text-[10px] py-2.5 pr-3 text-ton-black/50">{row.period}</td>
+                        <td className="font-mono text-[10px] py-2.5 pr-3 text-ton-black/65">{row.period}</td>
                         <td className="font-serif text-sm py-2.5 pr-3 text-ton-black font-bold">{row.revenue}</td>
-                        <td className="font-sans text-[10px] py-2.5 text-ton-black/45">{row.status}</td>
+                        <td className="font-sans text-[10px] py-2.5 text-ton-black/30">{row.status}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
 
-              {/* FY28 Target - black box */}
+              {/* FY28 Target — black box */}
               <div className="bg-ton-black text-ton-cream p-5">
                 <h3 className="font-mono text-[10px] text-ton-red font-bold uppercase tracking-wider mb-2">FY28 Target</h3>
                 <p className="font-serif text-3xl sm:text-4xl font-bold text-ton-cream leading-none mb-1.5">45%</p>
@@ -361,10 +361,10 @@ export default function BusinessPlanView() {
           {/* Imagery */}
           <div className="mt-5 pt-5 border-t border-ton-black/8">
             <div className="bg-ton-black/[0.02] p-5">
-              <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">Financial Visual</span>
+              <span className="font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">Financial Visual</span>
               <div className="h-32 sm:h-40 bg-ton-black/[0.04] mt-2.5 flex items-center justify-center border border-ton-black/6">
                 <div className="text-center px-6">
-                  <p className="font-serif text-xs text-ton-black/40 italic max-w-md mx-auto leading-relaxed">
+                  <p className="font-serif text-xs text-ton-black/20 italic max-w-md mx-auto leading-relaxed">
                     Wide shot of the Windhoek skyline at dusk, shot from the Auas Mountains looking north. Grayscale. The city lights form a grid pattern against the darkening sky. GPS overlay: 22.57 S, 17.08 E. The image represents commerce, concentration, and the urban core of Namibian economic activity.
                   </p>
                 </div>
@@ -375,7 +375,7 @@ export default function BusinessPlanView() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
+          <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
             <span>Page 03 // Financial Roadmap</span>
             <span>&copy; TANGISON</span>
           </div>
@@ -400,25 +400,25 @@ export default function BusinessPlanView() {
               <ul style={{ listStyle: "none", padding: 0 }} className="space-y-3">
                 <li>
                   <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">Paper Stock</span>
-                  <p className="font-serif text-sm text-ton-black/50 leading-relaxed mt-1.5">
-                    Pure White or Cream stock, minimum 120gsm. No gloss. Matte finish only. The texture must feel like authority - thick, unyielding, and archival. Every page must be suitable for filing, framing, or archiving without degradation.
+                  <p className="font-serif text-sm text-ton-black/65 leading-relaxed mt-1.5">
+                    Pure White or Cream stock, minimum 120gsm. No gloss. Matte finish only. The texture must feel like authority — thick, unyielding, and archival. Every page must be suitable for filing, framing, or archiving without degradation.
                   </p>
                 </li>
                 <li>
                   <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">Typography Grid</span>
-                  <p className="font-serif text-sm text-ton-black/50 leading-relaxed mt-1.5">
-                    All type aligned to a baseline grid. Headlines in Playfair Display 900 weight, body in Inter 400, data in JetBrains Mono. No exceptions. The grid is non-negotiable - it is the structural integrity of the page.
+                  <p className="font-serif text-sm text-ton-black/65 leading-relaxed mt-1.5">
+                    All type aligned to a baseline grid. Headlines in Playfair Display 900 weight, body in Inter 400, data in JetBrains Mono. No exceptions. The grid is non-negotiable — it is the structural integrity of the page.
                   </p>
                 </li>
                 <li>
                   <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">Imagery Rules</span>
-                  <p className="font-serif text-sm text-ton-black/50 leading-relaxed mt-1.5">
+                  <p className="font-serif text-sm text-ton-black/65 leading-relaxed mt-1.5">
                     All photography must be high-contrast grayscale. No stock photography. If it is not Namibia, it is not Times of Namibia. Every image must be watermarked with its GPS coordinates and a JetBrains Mono timestamp in a black box. No colour in print. No exceptions.
                   </p>
                 </li>
                 <li>
                   <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">Physical Space</span>
-                  <p className="font-serif text-sm text-ton-black/50 leading-relaxed mt-1.5">
+                  <p className="font-serif text-sm text-ton-black/65 leading-relaxed mt-1.5">
                     Brutalist minimalism. Sharp corners only. No soft textures. No rounded edges. The physical form of Times of Namibia materials must convey the same authority as the editorial content they carry.
                   </p>
                 </li>
@@ -428,7 +428,7 @@ export default function BusinessPlanView() {
             {/* The Broadside */}
             <div>
               <h3 className="font-mono text-[9px] font-bold text-ton-black uppercase tracking-wider mb-3">
-                The Broadside - Physical Distribution
+                The Broadside — Physical Distribution
               </h3>
               <p className="font-serif text-sm text-ton-black/60 leading-[1.8] mb-3">
                 The Broadside is a single-page physical printout designed for high-density reading environments: regional transport hubs, taxi ranks, municipal notice boards, and government building entrances. It is designed to be read standing up, in transit, in under 90 seconds.
@@ -448,7 +448,7 @@ export default function BusinessPlanView() {
                     { label: "Reading Time", value: "90 Seconds Maximum" },
                   ].map((spec, i) => (
                     <div key={i} className="flex items-center justify-between border-b border-ton-cream/8 pb-1.5">
-                      <span className="text-ton-cream/40">{spec.label}</span>
+                      <span className="text-ton-cream/60">{spec.label}</span>
                       <span className="text-ton-cream font-bold">{spec.value}</span>
                     </div>
                   ))}
@@ -456,7 +456,7 @@ export default function BusinessPlanView() {
               </div>
 
               <h3 className="font-mono text-[9px] font-bold text-ton-black uppercase tracking-wider mb-3">
-                Social Media - Digital Telegrams
+                Social Media — Digital Telegrams
               </h3>
               <p className="font-serif text-sm text-ton-black/60 leading-[1.8]">
                 Every social media post must look like an excerpt from a ledger or a telegram. Monospaced timestamps. No emojis unless functional. Information density over engagement bait. The format is rigid: timestamp, source, headline, single data point. No threads. No hot takes. Just the verified fact, delivered with the same stoic precision as the platform itself.
@@ -467,10 +467,10 @@ export default function BusinessPlanView() {
           {/* Print imagery */}
           <div className="mt-5 pt-5 border-t border-ton-black/8">
             <div className="bg-ton-black/[0.02] p-5">
-              <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">Print Material Visual</span>
+              <span className="font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">Print Material Visual</span>
               <div className="h-32 sm:h-40 bg-ton-black/[0.04] mt-2.5 flex items-center justify-center border border-ton-black/6">
                 <div className="text-center px-6">
-                  <p className="font-serif text-xs text-ton-black/40 italic max-w-md mx-auto leading-relaxed">
+                  <p className="font-serif text-xs text-ton-black/20 italic max-w-md mx-auto leading-relaxed">
                     Flat-lay photograph of a printed Broadside on a concrete surface. Grayscale. The A3 sheet shows sharp black typography on cream stock, with column rules and editorial borders clearly visible. A hand with a wedding ring holds the top corner. GPS overlay: 22.57 S, 17.08 E. The image conveys tactility, authority, and the physical reality of print in a digital age.
                   </p>
                 </div>
@@ -481,7 +481,7 @@ export default function BusinessPlanView() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
+          <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
             <span>Page 04 // Print Materials & Social Output</span>
             <span>&copy; TANGISON</span>
           </div>
@@ -491,34 +491,34 @@ export default function BusinessPlanView() {
         <section className="ton-bp-page border-t-4 border-ton-black pt-6">
           <div className="py-10 sm:py-14 text-center border-t border-b border-ton-black mb-6">
             <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">Final Directive</span>
-            <blockquote className="font-serif italic text-xl sm:text-2xl md:text-3xl text-ton-black/50 leading-relaxed mt-5 max-w-3xl mx-auto">
+            <blockquote className="font-serif italic text-xl sm:text-2xl md:text-3xl text-ton-black/65 leading-relaxed mt-5 max-w-3xl mx-auto">
               &ldquo;Information is the only currency that appreciates when shared correctly.&rdquo;
             </blockquote>
-            <p className="font-mono text-[10px] text-ton-black/40 mt-4 tracking-wider">
-              - TANGISON Editorial Board
+            <p className="font-mono text-[10px] text-ton-black/20 mt-4 tracking-wider">
+              — TANGISON Editorial Board
             </p>
           </div>
 
           {/* Signatory Block */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             <div className="pt-5 border-t border-ton-black/8">
-              <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">Authorised By</span>
+              <span className="font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">Authorised By</span>
               <p className="font-serif text-base font-bold text-ton-black mt-2">TANGISON</p>
-              <p className="font-mono text-[10px] text-ton-black/45 mt-0.5">Editorial & Architectural Board</p>
+              <p className="font-mono text-[10px] text-ton-black/30 mt-0.5">Editorial & Architectural Board</p>
               <div className="h-px bg-ton-black/15 mt-5 mb-1.5" />
-              <p className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">Signature</p>
+              <p className="font-mono text-[8px] text-ton-black/15 uppercase tracking-widest">Signature</p>
             </div>
             <div className="pt-5 border-t border-ton-black/8">
-              <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">Date of Issue</span>
+              <span className="font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">Date of Issue</span>
               <p className="font-serif text-base font-bold text-ton-black mt-2">
                 {new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" })}
               </p>
-              <p className="font-mono text-[10px] text-ton-black/45 mt-0.5">Document Reference: TON-BP-2026-01</p>
+              <p className="font-mono text-[10px] text-ton-black/30 mt-0.5">Document Reference: TON-BP-2026-01</p>
               <p className="font-mono text-[10px] text-ton-red mt-0.5">Classification: Confidential</p>
             </div>
           </div>
 
-          <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
+          <div className="flex items-center justify-between mt-6 pt-3 border-t border-ton-black/8 font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
             <span>Page 05 // Final Directive</span>
             <span>End of Document</span>
           </div>
@@ -530,7 +530,7 @@ export default function BusinessPlanView() {
 }
 
 /* ================================================================
-   STANDALONE HTML GENERATOR - Downloadable Business Plan
+   STANDALONE HTML GENERATOR — Downloadable Business Plan
    ================================================================ */
 function generateStandaloneHTML(): string {
   const today = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
@@ -602,7 +602,7 @@ function generateStandaloneHTML(): string {
         </div>
         <h1 class="masthead">Times of Namibia</h1>
         <div style="text-align: center; margin-bottom: 40px;">
-            <p class="mono" style="font-size: 12pt;">Strategic Business Plan // 2026 - 2028</p>
+            <p class="mono" style="font-size: 12pt;">Strategic Business Plan // 2026 — 2028</p>
             <p class="mono" style="margin-top: 5px;">A TANGISON Publication</p>
         </div>
         <div class="editorial-rule"></div>
@@ -613,7 +613,7 @@ function generateStandaloneHTML(): string {
                     We carry the gravitas of print into the digital age. Times of Namibia is not merely a news platform; it is a high-density information architecture designed to serve the intellectual capacity of the Namibian people. In an era of fragmented attention, we provide depth.
                 </p>
                 <p>
-                    Every screen is treated as a front page. Our design language - the "Broadsheet Digital" philosophy - merges the authority of traditional journalism with the precision of real-time data scraping through the Times OS.
+                    Every screen is treated as a front page. Our design language — the "Broadsheet Digital" philosophy — merges the authority of traditional journalism with the precision of real-time data scraping through the Times OS.
                 </p>
             </div>
             <div>
@@ -650,7 +650,7 @@ function generateStandaloneHTML(): string {
         <h2>III. Operational Architecture</h2>
         <div class="editor-rule"></div>
         <p style="margin-bottom: 20px;">
-            The Times of Namibia utilizes a proprietary integration layer - <strong>Times OS</strong>. This system allows for the real-time monitoring of regional sentiment and data. We respect the "6-second rule," where all technical data is refreshed to prove the veracity of the information presented.
+            The Times of Namibia utilizes a proprietary integration layer — <strong>Times OS</strong>. This system allows for the real-time monitoring of regional sentiment and data. We respect the "6-second rule," where all technical data is refreshed to prove the veracity of the information presented.
         </p>
         <h3 class="mono" style="margin-bottom: 10px; font-weight: bold;">Regional Node Deployment</h3>
         <table>
@@ -667,7 +667,7 @@ function generateStandaloneHTML(): string {
             </tbody>
         </table>
 
-        <h2 style="margin-top: 30px;">IV. Times OS - Technical Foundation</h2>
+        <h2 style="margin-top: 30px;">IV. Times OS — Technical Foundation</h2>
         <div class="editorial-rule"></div>
         <div class="grid-2">
             <div>
@@ -675,7 +675,7 @@ function generateStandaloneHTML(): string {
                 <p>Each source is scraped on an independent cycle, with results validated against a 3-point verification matrix before publication. The engine maintains a compliance-first approach: every scraped datum carries its source, timestamp, and verification status.</p>
             </div>
             <div style="background: var(--ton-black); color: var(--ton-cream); padding: 15px;">
-                <h3 class="mono" style="color: var(--ton-red);">Times OS v2.1 - Specifications</h3>
+                <h3 class="mono" style="color: var(--ton-red);">Times OS v2.1 — Specifications</h3>
                 <div style="font-family: var(--font-mono); font-size: 8pt; margin-top: 10px;">
                     <p>Sources Monitored: 4 Primary + 12 Secondary</p>
                     <p>Scraping Cycle: 6 Seconds</p>
@@ -784,7 +784,7 @@ function generateStandaloneHTML(): string {
                         <p>Reading Time: 90 Seconds Maximum</p>
                     </div>
                 </div>
-                <h3 style="margin-top: 20px;">Social Media - Digital Telegrams</h3>
+                <h3 style="margin-top: 20px;">Social Media — Digital Telegrams</h3>
                 <p style="font-size: 10pt;">Every post must look like an excerpt from a ledger or a telegram. Monospaced timestamps. No emojis unless functional. Information density over engagement bait.</p>
             </div>
         </div>
@@ -800,7 +800,7 @@ function generateStandaloneHTML(): string {
             <blockquote style="font-family: var(--font-display); font-style: italic; font-size: 18pt; color: #666; line-height: 1.5; margin: 20px auto; max-width: 500px;">
                 "Information is the only currency that appreciates when shared correctly."
             </blockquote>
-            <p class="mono" style="margin-top: 15px; color: #999;">- TANGISON Editorial Board</p>
+            <p class="mono" style="margin-top: 15px; color: #999;">— TANGISON Editorial Board</p>
         </div>
         <div class="grid-2" style="margin-top: 40px;">
             <div style="border-top: 1px solid #ddd; padding-top: 15px;">

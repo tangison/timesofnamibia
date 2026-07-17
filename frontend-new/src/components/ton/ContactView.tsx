@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import Breadcrumbs from "./Breadcrumbs";
 
 const CATEGORIES = [
-  "Editorial Desk - Tips & Story Submissions",
+  "Editorial Desk — Tips & Story Submissions",
   "Times OS Technical Support",
   "Business & Partnerships",
   "Contributor Programme",
@@ -131,8 +131,8 @@ export default function ContactView() {
           <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-tight mt-2">
             Contact
           </h1>
-          <p className="font-serif italic text-ton-black/50 text-sm sm:text-base mt-2 max-w-xl">
-            Reach the desk. Every channel, every department. No automated responses - just the editorial floor.
+          <p className="font-serif italic text-ton-black/65 text-sm sm:text-base mt-2 max-w-xl">
+            Reach the desk. Every channel, every department. No automated responses — just the editorial floor.
           </p>
         </div>
       </div>
@@ -159,7 +159,7 @@ export default function ContactView() {
                       <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">
                         {channel.label}
                       </span>
-                      <p className="font-sans text-xs text-ton-black/50 leading-relaxed mt-1">
+                      <p className="font-sans text-xs text-ton-black/65 leading-relaxed mt-1">
                         {channel.desc}
                       </p>
                       <p className="font-mono text-[11px] text-ton-black font-bold mt-1.5">
@@ -183,7 +183,7 @@ export default function ContactView() {
                 <p className="font-serif text-sm text-ton-black/60 leading-relaxed mt-1">
                   Windhoek, Namibia
                 </p>
-                <p className="font-mono text-[10px] text-ton-black/45 mt-1">
+                <p className="font-mono text-[10px] text-ton-black/30 mt-1">
                   22.57 S, 17.08 E
                 </p>
               </div>
@@ -206,7 +206,7 @@ export default function ContactView() {
               <h3 className="font-serif text-xl font-bold text-ton-black">
                 Enquiry Received
               </h3>
-              <p className="font-sans text-sm text-ton-black/50 mt-2 max-w-sm mx-auto">
+              <p className="font-sans text-sm text-ton-black/65 mt-2 max-w-sm mx-auto">
                 Thank you for reaching out. Our editorial desk will review your message and respond within 24 hours.
               </p>
               <button
@@ -220,7 +220,7 @@ export default function ContactView() {
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Name */}
               <div>
-                <label htmlFor="contact-name" className="block font-mono text-[9px] text-ton-black/40 font-bold tracking-widest uppercase mb-1.5">
+                <label htmlFor="contact-name" className="block font-mono text-[9px] text-ton-black/55 font-bold tracking-widest uppercase mb-1.5">
                   Name <span className="text-ton-red">*</span>
                 </label>
                 <input
@@ -228,7 +228,7 @@ export default function ContactView() {
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full bg-ton-cream border border-ton-black/15 px-3 py-2.5 font-sans text-sm text-ton-black placeholder:text-ton-black/40 focus:outline-none focus:border-ton-black/40 transition-colors"
+                  className="w-full bg-ton-cream border border-ton-black/15 px-3 py-2.5 font-sans text-sm text-ton-black placeholder:text-ton-black/20 focus:outline-none focus:border-ton-black/40 transition-colors"
                   placeholder="Full name"
                   required
                   minLength={2}
@@ -237,7 +237,7 @@ export default function ContactView() {
 
               {/* Email */}
               <div>
-                <label htmlFor="contact-email" className="block font-mono text-[9px] text-ton-black/40 font-bold tracking-widest uppercase mb-1.5">
+                <label htmlFor="contact-email" className="block font-mono text-[9px] text-ton-black/55 font-bold tracking-widest uppercase mb-1.5">
                   Email <span className="text-ton-red">*</span>
                 </label>
                 <input
@@ -245,7 +245,7 @@ export default function ContactView() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-ton-cream border border-ton-black/15 px-3 py-2.5 font-sans text-sm text-ton-black placeholder:text-ton-black/40 focus:outline-none focus:border-ton-black/40 transition-colors"
+                  className="w-full bg-ton-cream border border-ton-black/15 px-3 py-2.5 font-sans text-sm text-ton-black placeholder:text-ton-black/20 focus:outline-none focus:border-ton-black/40 transition-colors"
                   placeholder="email@example.com"
                   required
                 />
@@ -259,7 +259,7 @@ export default function ContactView() {
 
               {/* Category */}
               <div>
-                <label htmlFor="contact-category" className="block font-mono text-[9px] text-ton-black/40 font-bold tracking-widest uppercase mb-1.5">
+                <label htmlFor="contact-category" className="block font-mono text-[9px] text-ton-black/55 font-bold tracking-widest uppercase mb-1.5">
                   Department <span className="text-ton-red">*</span>
                 </label>
                 <select
@@ -280,7 +280,7 @@ export default function ContactView() {
 
               {/* Message */}
               <div>
-                <label htmlFor="contact-message" className="block font-mono text-[9px] text-ton-black/40 font-bold tracking-widest uppercase mb-1.5">
+                <label htmlFor="contact-message" className="block font-mono text-[9px] text-ton-black/55 font-bold tracking-widest uppercase mb-1.5">
                   Message <span className="text-ton-red">*</span>
                 </label>
                 <textarea
@@ -288,12 +288,12 @@ export default function ContactView() {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   rows={6}
-                  className="w-full bg-ton-cream border border-ton-black/15 px-3 py-2.5 font-sans text-sm text-ton-black placeholder:text-ton-black/40 focus:outline-none focus:border-ton-black/40 transition-colors resize-y"
+                  className="w-full bg-ton-cream border border-ton-black/15 px-3 py-2.5 font-sans text-sm text-ton-black placeholder:text-ton-black/20 focus:outline-none focus:border-ton-black/40 transition-colors resize-y"
                   placeholder="Include source attribution where applicable..."
                   required
                   minLength={10}
                 />
-                <p className="font-mono text-[8px] text-ton-black/40 mt-1">
+                <p className="font-mono text-[8px] text-ton-black/15 mt-1">
                   {message.length} characters (minimum 10)
                 </p>
               </div>
@@ -310,7 +310,7 @@ export default function ContactView() {
             </form>
           )}
 
-          <p className="font-mono text-[8px] text-ton-black/40 uppercase tracking-wider mt-3">
+          <p className="font-mono text-[8px] text-ton-black/20 uppercase tracking-wider mt-3">
             All enquiries are reviewed by the editorial desk. Response within 24 hours.
           </p>
         </div>
@@ -318,7 +318,7 @@ export default function ContactView() {
 
       {/* Footer Note */}
       <div className="py-6 text-center border-t border-ton-black/8">
-        <p className="font-serif italic text-ton-black/45 text-sm">
+        <p className="font-serif italic text-ton-black/30 text-sm">
           Times of Namibia is a TANGISON publication.
         </p>
         <a

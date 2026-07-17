@@ -471,7 +471,7 @@ export default function BrandSystemView() {
             <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-tight">
               Brand System
             </h1>
-            <p className="font-serif italic text-ton-black/50 text-sm sm:text-base mt-2 max-w-xl">
+            <p className="font-serif italic text-ton-black/65 text-sm sm:text-base mt-2 max-w-xl">
               The visual identity of Times of Namibia. Every color, every typeface,
               every pixel carries intent.
             </p>
@@ -522,7 +522,7 @@ export default function BrandSystemView() {
         <div className="flex items-center gap-4 mt-4">
           <a
             href="/"
-            className="font-mono text-[10px] text-ton-black/40 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
+            className="font-mono text-[10px] text-ton-black/55 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
           >
             <ArrowLeft className="w-3 h-3" />
             Newsroom
@@ -580,7 +580,7 @@ export default function BrandSystemView() {
                 <h3 className="font-serif text-sm sm:text-base font-bold text-ton-black">
                   {color.name}
                 </h3>
-                <p className="font-sans text-[10px] sm:text-xs text-ton-black/40 mt-1 leading-relaxed">
+                <p className="font-sans text-[10px] sm:text-xs text-ton-black/55 mt-1 leading-relaxed">
                   {color.description}
                 </p>
               </div>
@@ -606,7 +606,7 @@ export default function BrandSystemView() {
               <p className="font-mono text-[10px] text-ton-red mt-1">
                 {type.category}
               </p>
-              <p className="font-sans text-xs text-ton-black/40 mt-2 leading-relaxed">
+              <p className="font-sans text-xs text-ton-black/55 mt-2 leading-relaxed">
                 {type.usage}
               </p>
               <div className="mt-4 pt-4 border-t border-ton-black/5">
@@ -636,7 +636,7 @@ export default function BrandSystemView() {
                   {principle.title}
                 </h3>
               </div>
-              <p className="font-sans text-xs sm:text-sm text-ton-black/50 leading-relaxed">
+              <p className="font-sans text-xs sm:text-sm text-ton-black/65 leading-relaxed">
                 {principle.description}
               </p>
             </div>
@@ -764,37 +764,37 @@ export default function BrandSystemView() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="pt-5 border-t border-ton-black/8">
             <span className="font-mono text-[10px] text-ton-red font-bold tracking-widest uppercase">Paper Stock</span>
-            <p className="font-sans text-xs text-ton-black/50 mt-2 leading-relaxed">
+            <p className="font-sans text-xs text-ton-black/65 mt-2 leading-relaxed">
               {PRINT_MATERIALS.paperStock}
             </p>
           </div>
           <div className="pt-5 border-t border-ton-black/8">
             <span className="font-mono text-[10px] text-ton-red font-bold tracking-widest uppercase">Typography Grid</span>
-            <p className="font-sans text-xs text-ton-black/50 mt-2 leading-relaxed">
+            <p className="font-sans text-xs text-ton-black/65 mt-2 leading-relaxed">
               {PRINT_MATERIALS.typographyGrid}
             </p>
           </div>
           <div className="pt-5 border-t border-ton-black/8">
             <span className="font-mono text-[10px] text-ton-red font-bold tracking-widest uppercase">Imagery</span>
-            <p className="font-sans text-xs text-ton-black/50 mt-2 leading-relaxed">
+            <p className="font-sans text-xs text-ton-black/65 mt-2 leading-relaxed">
               {PRINT_MATERIALS.imagery}
             </p>
           </div>
           <div className="pt-5 border-t border-ton-black/8">
             <span className="font-mono text-[10px] text-ton-red font-bold tracking-widest uppercase">Physical Space</span>
-            <p className="font-sans text-xs text-ton-black/50 mt-2 leading-relaxed">
+            <p className="font-sans text-xs text-ton-black/65 mt-2 leading-relaxed">
               {PRINT_MATERIALS.physicalSpace}
             </p>
           </div>
           <div className="pt-5 border-t border-ton-black/8">
             <span className="font-mono text-[10px] text-ton-red font-bold tracking-widest uppercase">The Broadside</span>
-            <p className="font-sans text-xs text-ton-black/50 mt-2 leading-relaxed">
+            <p className="font-sans text-xs text-ton-black/65 mt-2 leading-relaxed">
               {PRINT_MATERIALS.theBroadside}
             </p>
           </div>
           <div className="pt-5 border-t border-ton-black/8">
             <span className="font-mono text-[10px] text-ton-red font-bold tracking-widest uppercase">Social Output</span>
-            <p className="font-sans text-xs text-ton-black/50 mt-2 leading-relaxed">
+            <p className="font-sans text-xs text-ton-black/65 mt-2 leading-relaxed">
               {PRINT_MATERIALS.socialOutput}
             </p>
           </div>
@@ -942,7 +942,7 @@ export default function BrandSystemView() {
         <div className="font-serif text-4xl sm:text-6xl md:text-8xl font-bold tracking-tight text-ton-black mt-3">
           TIMES OF NAMIBIA
         </div>
-        <p className="font-serif italic text-ton-black/40 mt-2 text-sm sm:text-lg">
+        <p className="font-serif italic text-ton-black/55 mt-2 text-sm sm:text-lg">
           Namibia. Informed. Instantly.
         </p>
       </div>

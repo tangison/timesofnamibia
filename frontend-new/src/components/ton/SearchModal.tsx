@@ -190,7 +190,7 @@ export default function SearchModal() {
                       <p className="font-serif font-bold text-sm text-ton-black dark:text-ton-cream leading-tight truncate">
                         {item.title}
                       </p>
-                      <p className="font-sans text-xs text-ton-black/40 dark:text-white/40 mt-1 line-clamp-2 leading-relaxed">
+                      <p className="font-sans text-xs text-ton-black/55 dark:text-white/40 mt-1 line-clamp-2 leading-relaxed">
                         {item.snippet}
                       </p>
                     </div>

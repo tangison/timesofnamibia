@@ -73,7 +73,7 @@ function SidebarSection({
 
   return (
     <div className="mb-1">
-      {/* Section header - collapsible */}
+      {/* Section header — collapsible */}
       <button
         onClick={() => setCollapsed(!collapsed)}
         className={`w-full flex items-center justify-between px-3 py-2 text-left hover:bg-ton-black/[0.03] dark:hover:bg-white/[0.03] transition-colors ${
@@ -106,7 +106,7 @@ function SidebarSection({
                     ? redAccent
                       ? "bg-ton-red/[0.06] dark:bg-ton-red/[0.10] text-ton-red"
                       : "bg-ton-black/[0.05] dark:bg-white/[0.05] text-ton-black dark:text-ton-cream font-semibold"
-                    : "text-ton-black/45 dark:text-white/45 hover:text-ton-black dark:hover:text-ton-cream hover:bg-ton-black/[0.03] dark:hover:bg-white/[0.03]"
+                    : "text-ton-black/60 dark:text-white/45 hover:text-ton-black dark:hover:text-ton-cream hover:bg-ton-black/[0.03] dark:hover:bg-white/[0.03]"
                 }`}
               >
                 <Icon
@@ -115,7 +115,7 @@ function SidebarSection({
                       ? redAccent
                         ? "text-ton-red"
                         : "text-ton-black dark:text-ton-cream"
-                      : "text-ton-black/40 dark:text-white/20 group-hover:text-ton-black/50 dark:group-hover:text-white/50"
+                      : "text-ton-black/20 dark:text-white/20 group-hover:text-ton-black/65 dark:group-hover:text-white/50"
                   }`}
                 />
                 <span className="font-sans text-[11px] leading-none">{item.label}</span>
@@ -131,7 +131,7 @@ function SidebarSection({
   );
 }
 
-/* ─── Hamburger Trigger - rendered inside UtilityNav ─── */
+/* ─── Hamburger Trigger — rendered inside UtilityNav ─── */
 
 export function SidebarTrigger() {
   const handleOpen = () => {
@@ -141,7 +141,7 @@ export function SidebarTrigger() {
   return (
     <button
       onClick={handleOpen}
-      className="inline-flex items-center gap-1.5 font-mono text-[8px] sm:text-[9px] uppercase tracking-wider text-ton-black/45 dark:text-white/30 hover:text-ton-red dark:hover:text-ton-red transition-colors duration-300 px-1 py-0.5"
+      className="inline-flex items-center gap-1.5 font-mono text-[8px] sm:text-[9px] uppercase tracking-wider text-ton-black/30 dark:text-white/30 hover:text-ton-red dark:hover:text-ton-red transition-colors duration-300 px-1 py-0.5"
       aria-label="Open menu"
     >
       <Menu className="w-3.5 h-3.5" />
@@ -150,7 +150,7 @@ export function SidebarTrigger() {
   );
 }
 
-/* ─── Main Sidebar Panel - rendered once in TonLayout ─── */
+/* ─── Main Sidebar Panel — rendered once in TonLayout ─── */
 
 export default function Sidebar({ activePage }: { activePage?: string }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -208,13 +208,13 @@ export default function Sidebar({ activePage }: { activePage?: string }) {
             <div className="bg-ton-black text-ton-cream font-mono text-[9px] font-bold px-2 py-0.5">
               TON
             </div>
-            <span className="font-mono text-[8px] text-ton-black/40 dark:text-white/25 tracking-wider uppercase">
+            <span className="font-mono text-[8px] text-ton-black/25 dark:text-white/25 tracking-wider uppercase">
               Navigation
             </span>
           </div>
           <button
             onClick={closeSidebar}
-            className="text-ton-black/40 dark:text-white/25 hover:text-ton-red dark:hover:text-ton-red transition-colors p-1"
+            className="text-ton-black/25 dark:text-white/25 hover:text-ton-red dark:hover:text-ton-red transition-colors p-1"
             aria-label="Close menu"
           >
             <X className="w-4 h-4" />
@@ -226,7 +226,7 @@ export default function Sidebar({ activePage }: { activePage?: string }) {
           <h2 className="font-serif text-lg font-bold text-ton-black dark:text-ton-cream leading-tight">
             Times of Namibia
           </h2>
-          <p className="font-serif italic text-ton-black/45 dark:text-white/30 text-[11px] mt-0.5">
+          <p className="font-serif italic text-ton-black/30 dark:text-white/30 text-[11px] mt-0.5">
             Namibia. Informed. Instantly.
           </p>
         </div>
@@ -288,10 +288,10 @@ export default function Sidebar({ activePage }: { activePage?: string }) {
         {/* Sidebar footer */}
         <div className="border-t border-ton-black/8 dark:border-white/8 px-4 py-3 flex-shrink-0">
           <div className="flex items-center justify-between">
-            <span className="font-mono text-[7px] text-ton-black/40 dark:text-white/15 uppercase tracking-widest">
+            <span className="font-mono text-[7px] text-ton-black/15 dark:text-white/15 uppercase tracking-widest">
               Times OS v2.1
             </span>
-            <span className="font-mono text-[7px] text-ton-black/40 dark:text-white/15 uppercase tracking-widest">
+            <span className="font-mono text-[7px] text-ton-black/15 dark:text-white/15 uppercase tracking-widest">
               &copy; 2026
             </span>
           </div>

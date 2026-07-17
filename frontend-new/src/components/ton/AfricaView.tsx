@@ -115,7 +115,7 @@ export default function AfricaView({ articles }: AfricaViewProps) {
             <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-tight mt-2">
               Africa News
             </h1>
-            <p className="font-serif italic text-ton-black/50 text-sm sm:text-base mt-2 max-w-xl">
+            <p className="font-serif italic text-ton-black/65 text-sm sm:text-base mt-2 max-w-xl">
               Continental coverage from Windhoek. Verified. Timestamped. Every source carries its proof.
             </p>
           </div>
@@ -149,7 +149,7 @@ export default function AfricaView({ articles }: AfricaViewProps) {
           <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-tight mt-2">
             Africa News
           </h1>
-          <p className="font-serif italic text-ton-black/50 text-sm sm:text-base mt-2 max-w-xl">
+          <p className="font-serif italic text-ton-black/65 text-sm sm:text-base mt-2 max-w-xl">
             Continental coverage from Windhoek. Verified. Timestamped. Every source carries its proof.
           </p>
         </div>
@@ -171,7 +171,7 @@ export default function AfricaView({ articles }: AfricaViewProps) {
           This is our home. Southern Africa coverage powered by Times OS v2.1 with 14 dedicated
           regional nodes.
         </p>
-        <p className="font-sans text-xs text-ton-cream/40 leading-relaxed">
+        <p className="font-sans text-xs text-ton-cream/60 leading-relaxed">
           Windhoek serves as the primary data collection hub for the Southern Africa desk. Every
           article is sourced through the same 3-point verification matrix that governs all TON
           reporting. No exceptions. No shortcuts.
@@ -211,7 +211,7 @@ export default function AfricaView({ articles }: AfricaViewProps) {
               </a>
 
               {featuredArticle.subheadline && (
-                <p className="font-serif italic text-ton-black/40 text-sm sm:text-base mt-2 leading-relaxed max-w-xl">
+                <p className="font-serif italic text-ton-black/55 text-sm sm:text-base mt-2 leading-relaxed max-w-xl">
                   {featuredArticle.subheadline}
                 </p>
               )}
@@ -361,7 +361,7 @@ export default function AfricaView({ articles }: AfricaViewProps) {
         <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">
           Africa Desk
         </span>
-        <blockquote className="font-serif italic text-lg sm:text-xl md:text-2xl text-ton-black/40 leading-relaxed mt-3 max-w-2xl mx-auto">
+        <blockquote className="font-serif italic text-lg sm:text-xl md:text-2xl text-ton-black/55 leading-relaxed mt-3 max-w-2xl mx-auto">
           From Windhoek to the continent. Every story verified, timestamped, and sourced. This is
           Africa, covered from home.
         </blockquote>

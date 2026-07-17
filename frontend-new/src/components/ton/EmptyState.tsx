@@ -69,7 +69,7 @@ export default function EmptyState({ type = "generic", title, description, actio
       </h3>
 
       {/* Description */}
-      <p className="font-serif italic text-ton-black/40 text-sm sm:text-base mt-3 leading-relaxed">
+      <p className="font-serif italic text-ton-black/55 text-sm sm:text-base mt-3 leading-relaxed">
         {description || config.description}
       </p>
 

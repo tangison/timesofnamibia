@@ -100,7 +100,7 @@ export default function TenderAnalysisView() {
         <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-tight">
           Tender Analysis Agent
         </h1>
-        <p className="font-serif italic text-ton-black/50 text-sm sm:text-base mt-2 max-w-xl">
+        <p className="font-serif italic text-ton-black/65 text-sm sm:text-base mt-2 max-w-xl">
           Times OS processes RFP PDFs and extracts critical intelligence in 6 seconds.
           Upload a tender document or select from active tenders below.
         </p>
@@ -117,7 +117,7 @@ export default function TenderAnalysisView() {
           <h2 className="font-serif text-lg sm:text-xl font-semibold text-ton-black">
             Upload Tender Document
           </h2>
-          <p className="font-sans text-xs sm:text-sm text-ton-black/40 mt-1.5 max-w-md">
+          <p className="font-sans text-xs sm:text-sm text-ton-black/55 mt-1.5 max-w-md">
             Drag and drop a PDF file here, or click to browse. Times OS will extract
             key intelligence including deadlines, values, and compliance requirements.
           </p>
@@ -138,7 +138,7 @@ export default function TenderAnalysisView() {
           </div>
           <Progress value={65} className="h-1.5" />
           <div className="flex items-center justify-between mt-3">
-            <p className="font-mono text-[11px] text-ton-black/40">
+            <p className="font-mono text-[11px] text-ton-black/55">
               Extracting clauses, cross-referencing compliance matrix, evaluating bid windows...            </p>
             <ScrapedTimestamp label="Processed" />
           </div>
@@ -216,7 +216,7 @@ export default function TenderAnalysisView() {
               <p className="font-serif text-2xl sm:text-3xl font-bold text-ton-red">
                 {selectedTenderData.estimatedValue || "Not specified"}
               </p>
-              <p className="font-mono text-[10px] text-ton-black/40 mt-2">
+              <p className="font-mono text-[10px] text-ton-black/55 mt-2">
                 Based on historical procurement data for similar scope
               </p>
             </div>
@@ -281,7 +281,7 @@ export default function TenderAnalysisView() {
                     <h3 className="font-serif text-base sm:text-lg font-semibold text-ton-black leading-snug group-hover:text-ton-red transition-colors">
                       {tender.title}
                     </h3>
-                    <p className="font-mono text-[11px] text-ton-black/40 mt-1">
+                    <p className="font-mono text-[11px] text-ton-black/55 mt-1">
                       {tender.department}
                     </p>
                     {isExpanded && (
@@ -289,7 +289,7 @@ export default function TenderAnalysisView() {
                         <p className="font-mono text-xs text-ton-red font-semibold">
                           Est. Value: {tender.estimatedValue || "Not specified"}
                         </p>
-                        <p className="font-mono text-xs text-ton-black/50">
+                        <p className="font-mono text-xs text-ton-black/65">
                           Deadline: {tender.deadline.toLocaleDateString()}
                         </p>
                         <ScrapedTimestamp label="Last verified" />

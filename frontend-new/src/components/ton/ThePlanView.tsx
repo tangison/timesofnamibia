@@ -27,8 +27,8 @@ export default function ThePlanView() {
     {
       number: "I",
       title: "The Physical Anchor",
-      period: "Q1 - Q2 2026",
-      description: "Establish the print-ready Business Plan and the Broadside distribution network. This is the constitution of the company - readable, authoritative, and physically imposing. No digital-only strategy survives without a physical manifestation of intent.",
+      period: "Q1 — Q2 2026",
+      description: "Establish the print-ready Business Plan and the Broadside distribution network. This is the constitution of the company — readable, authoritative, and physically imposing. No digital-only strategy survives without a physical manifestation of intent.",
       tasks: [
         "Finalise and print the Business Plan document on 120gsm cream stock",
         "Deploy Broadside print runs at 5 pilot transport hubs in Khomas and Erongo",
@@ -41,15 +41,15 @@ export default function ThePlanView() {
         overlay: "Black rectangular box at bottom-left containing GPS coordinates in JetBrains Mono 8pt. White text on black. Sharp corners only. Position: 20px from left edge, 20px from bottom edge.",
       },
       layout: {
-        title: "The Broadside - A3 Layout",
-        description: "Single A3 sheet, double-sided. Front page: three-column grid with the TON masthead spanning the full width at top. Below the masthead, a 2pt black rule. Column 1: lead story with drop cap, 40% of page height. Column 2: two shorter stories stacked vertically, each with a 1pt column rule separator. Column 3: market data table (6 rows), followed by the Tender Edge - 3 active tenders with doc IDs and values. Bottom strip: 20mm black band with GPS coordinates and publication date in JetBrains Mono on cream. No images wider than one column. Back page: contributor guidelines, submission wire format, and the next edition preview. All text in Playfair Display (headlines), Inter (body), JetBrains Mono (data). No colour. Grayscale only.",
+        title: "The Broadside — A3 Layout",
+        description: "Single A3 sheet, double-sided. Front page: three-column grid with the TON masthead spanning the full width at top. Below the masthead, a 2pt black rule. Column 1: lead story with drop cap, 40% of page height. Column 2: two shorter stories stacked vertically, each with a 1pt column rule separator. Column 3: market data table (6 rows), followed by the Tender Edge — 3 active tenders with doc IDs and values. Bottom strip: 20mm black band with GPS coordinates and publication date in JetBrains Mono on cream. No images wider than one column. Back page: contributor guidelines, submission wire format, and the next edition preview. All text in Playfair Display (headlines), Inter (body), JetBrains Mono (data). No colour. Grayscale only.",
       },
     },
     {
       number: "II",
       title: "Social Media & The Times OS Feed",
-      period: "Q2 - Q3 2026",
-      description: "Conversion of all social outputs to 'Digital Telegrams.' Automation of scraping logs from //Kharas and Oshana directly into public feeds. The social media presence is not a marketing channel - it is a data dissemination channel. Every post carries the same verification metadata as the platform itself.",
+      period: "Q2 — Q3 2026",
+      description: "Conversion of all social outputs to 'Digital Telegrams.' Automation of scraping logs from //Kharas and Oshana directly into public feeds. The social media presence is not a marketing channel — it is a data dissemination channel. Every post carries the same verification metadata as the platform itself.",
       tasks: [
         "Design the Digital Telegram template for all social platforms",
         "Automate scraping log output to X (Twitter), WhatsApp Channels, and Facebook",
@@ -62,15 +62,15 @@ export default function ThePlanView() {
         overlay: "Black rectangular box at bottom-right containing the post timestamp in JetBrains Mono 8pt. The timestamp reads the exact moment of capture, not publication. Sharp corners. Position: 20px from right edge, 20px from bottom edge.",
       },
       layout: {
-        title: "Digital Telegram - Social Template",
-        description: "Each social media post follows an identical template: monospaced timestamp at top (JetBrains Mono, 8pt equivalent), followed by a 1pt horizontal rule, then the source attribution in uppercase red (#CB102E on digital, black on print). Below: the headline in Playfair Display bold, maximum 12 words. Below: a single data point - one number, one fact, one verified datum. No hashtags. No emojis. No call-to-action. Footer: a black band with 'Times of Namibia // TANGISON' in JetBrains Mono. All posts are single-frame images, not threads. The format is rigid because the format IS the brand.",
+        title: "Digital Telegram — Social Template",
+        description: "Each social media post follows an identical template: monospaced timestamp at top (JetBrains Mono, 8pt equivalent), followed by a 1pt horizontal rule, then the source attribution in uppercase red (#CB102E on digital, black on print). Below: the headline in Playfair Display bold, maximum 12 words. Below: a single data point — one number, one fact, one verified datum. No hashtags. No emojis. No call-to-action. Footer: a black band with 'Times of Namibia // TANGISON' in JetBrains Mono. All posts are single-frame images, not threads. The format is rigid because the format IS the brand.",
       },
     },
     {
       number: "III",
       title: "High-Density Physical Distribution",
-      period: "Q3 - Q4 2026",
-      description: "Deployment of 'The Broadside' - single-page physical printouts at regional transport hubs, designed to be read in high-density environments. The Broadside is not a newsletter. It is a tactical information deployment, positioned where people are stationary and attentive: taxi ranks, hospital waiting rooms, municipal queues.",
+      period: "Q3 — Q4 2026",
+      description: "Deployment of 'The Broadside' — single-page physical printouts at regional transport hubs, designed to be read in high-density environments. The Broadside is not a newsletter. It is a tactical information deployment, positioned where people are stationary and attentive: taxi ranks, hospital waiting rooms, municipal queues.",
       tasks: [
         "Scale Broadside distribution from 5 to 14 regional hubs",
         "Implement weekly editorial selection process for Broadside content",
@@ -79,18 +79,18 @@ export default function ThePlanView() {
         "Deploy the 'Reading in 90 Seconds' editorial standard for all Broadside content",
       ],
       imagery: {
-        description: "Photograph of a Broadside display stand at the Windhoek Intercape bus terminal. Grayscale. The black steel stand holds a stack of A3 cream-stock printouts. A commuter in the background reads one while waiting. The stand is bolted to the concrete floor. Shot from 3 metres distance at eye level. GPS overlay: 22.57 S, 17.08 E. The image conveys information access in transit - the Broadside doing its job.",
+        description: "Photograph of a Broadside display stand at the Windhoek Intercape bus terminal. Grayscale. The black steel stand holds a stack of A3 cream-stock printouts. A commuter in the background reads one while waiting. The stand is bolted to the concrete floor. Shot from 3 metres distance at eye level. GPS overlay: 22.57 S, 17.08 E. The image conveys information access in transit — the Broadside doing its job.",
         overlay: "Black rectangular box at bottom-left containing the hub name and GPS coordinates in JetBrains Mono 8pt. Format: 'WINDHOEK INTERCAPE // 22.57 S, 17.08 E'. Sharp corners only.",
       },
       layout: {
-        title: "Display Stand - Physical Specification",
-        description: "The Broadside display stand is fabricated from 3mm black steel plate. Dimensions: 450mm wide x 300mm deep x 1200mm tall. The literature holder is angled at 15 degrees for easy removal. No paint - raw black steel with clear coat only. A laser-cut 'TON' badge on the front panel in JetBrains Mono, 20mm height. The base plate is 400mm x 300mm, bolted to the floor with 4 masonry anchors. Total weight: approximately 18kg. The stand must look permanent, institutional, and unyielding. It is not a promotional item - it is infrastructure.",
+        title: "Display Stand — Physical Specification",
+        description: "The Broadside display stand is fabricated from 3mm black steel plate. Dimensions: 450mm wide x 300mm deep x 1200mm tall. The literature holder is angled at 15 degrees for easy removal. No paint — raw black steel with clear coat only. A laser-cut 'TON' badge on the front panel in JetBrains Mono, 20mm height. The base plate is 400mm x 300mm, bolted to the floor with 4 masonry anchors. Total weight: approximately 18kg. The stand must look permanent, institutional, and unyielding. It is not a promotional item — it is infrastructure.",
       },
     },
     {
       number: "IV",
       title: "Data Sovereignty & Expansion",
-      period: "Q1 - Q4 2027",
+      period: "Q1 — Q4 2027",
       description: "Full deployment of Times OS data licensing. Establish the B2B revenue stream by packaging real-time tender, job, and regulatory data for legal firms, procurement consultants, and logistics companies. This phase transitions Times of Namibia from a media company to a data intelligence company with an editorial front.",
       tasks: [
         "Launch Times OS API with tiered pricing (Free, Professional, Enterprise)",
@@ -104,8 +104,8 @@ export default function ThePlanView() {
         overlay: "Black rectangular box at bottom-centre containing the port name and coordinates in JetBrains Mono 8pt. Format: 'WALVIS BAY PORT // 22.96 S, 14.51 E'. Sharp corners only. Thin 1px white border inside the black box for visual separation.",
       },
       layout: {
-        title: "Times OS API Documentation - Print Format",
-        description: "The API documentation is printed as a saddle-stitched A5 booklet on 120gsm cream stock. Cover: black background with 'Times OS API' in Playfair Display 24pt, version number in JetBrains Mono. Interior: two-column layout with endpoint descriptions on the left and JSON response examples on the right (JetBrains Mono, 8pt). Each endpoint is separated by a 2pt black rule. Authentication section uses a black background with cream text for visual distinction. The booklet must be shelf-stable and reference-grade. It is not a brochure - it is a technical manual.",
+        title: "Times OS API Documentation — Print Format",
+        description: "The API documentation is printed as a saddle-stitched A5 booklet on 120gsm cream stock. Cover: black background with 'Times OS API' in Playfair Display 24pt, version number in JetBrains Mono. Interior: two-column layout with endpoint descriptions on the left and JSON response examples on the right (JetBrains Mono, 8pt). Each endpoint is separated by a 2pt black rule. Authentication section uses a black background with cream text for visual distinction. The booklet must be shelf-stable and reference-grade. It is not a brochure — it is a technical manual.",
       },
     },
     {
@@ -125,8 +125,8 @@ export default function ThePlanView() {
         overlay: "Black rectangular box at bottom-left containing the mountain name and coordinates in JetBrains Mono 8pt. Format: 'BRANDBERG // 21.07 S, 14.28 E'. Sharp corners only. The box sits partially overlaid on the shadow area for visual grounding.",
       },
       layout: {
-        title: "Premium Archive - Annual Compilation",
-        description: "The Annual Compilation is a perfect-bound A4 book, 200-300 pages, on 120gsm cream stock. Cover: full-bleed grayscale photograph of a Namibian landscape with the GPS overlay box. Title in Playfair Display 900, subtitle in Inter 400. Interior: single-column layout with generous margins (25mm top, 20mm sides, 15mm bottom). Each section opens with a 2pt black rule and section title in Playfair Display bold. Entries are chronological, with JetBrains Mono timestamps and source attributions. Index at the back: by region, by sector, by date. The book must feel archival - something a law firm would shelve alongside regulatory codes.",
+        title: "Premium Archive — Annual Compilation",
+        description: "The Annual Compilation is a perfect-bound A4 book, 200-300 pages, on 120gsm cream stock. Cover: full-bleed grayscale photograph of a Namibian landscape with the GPS overlay box. Title in Playfair Display 900, subtitle in Inter 400. Interior: single-column layout with generous margins (25mm top, 20mm sides, 15mm bottom). Each section opens with a 2pt black rule and section title in Playfair Display bold. Entries are chronological, with JetBrains Mono timestamps and source attributions. Index at the back: by region, by sector, by date. The book must feel archival — something a law firm would shelve alongside regulatory codes.",
       },
     },
   ];
@@ -143,7 +143,7 @@ export default function ThePlanView() {
             <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-tight mt-2">
               The Plan
             </h1>
-            <p className="font-serif italic text-ton-black/40 text-sm sm:text-base mt-2 max-w-xl">
+            <p className="font-serif italic text-ton-black/55 text-sm sm:text-base mt-2 max-w-xl">
               Five phases. From physical anchor to editorial citadel. Every phase
               produces working, testable output.
             </p>
@@ -170,7 +170,7 @@ export default function ThePlanView() {
         <div className="flex items-center gap-4 mt-3">
           <a
             href="/"
-            className="font-mono text-[9px] text-ton-black/45 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
+            className="font-mono text-[9px] text-ton-black/30 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
           >
             <ArrowLeft className="w-3 h-3" />
             Newsroom
@@ -180,11 +180,11 @@ export default function ThePlanView() {
 
       {/* Guiding Principle */}
       <div className="py-6 sm:py-8 text-center border-t border-ton-black/8 mb-6 sm:mb-8">
-        <blockquote className="font-serif italic text-xl sm:text-2xl md:text-3xl text-ton-black/50 leading-relaxed">
+        <blockquote className="font-serif italic text-xl sm:text-2xl md:text-3xl text-ton-black/65 leading-relaxed">
           &ldquo;Minimalism as Power. Every process that doesn&apos;t inform the reader or the system is deleted.&rdquo;
         </blockquote>
-        <p className="font-mono text-[9px] text-ton-black/40 mt-3 tracking-widest uppercase">
-          Operational Ethos - Times of Namibia
+        <p className="font-mono text-[9px] text-ton-black/20 mt-3 tracking-widest uppercase">
+          Operational Ethos — Times of Namibia
         </p>
       </div>
 
@@ -196,9 +196,9 @@ export default function ThePlanView() {
         <p className="font-serif text-base sm:text-lg text-ton-cream/70 leading-relaxed">
           If a strategy, image, or document is too heavy to be understood in 6 seconds, it is flawed.
         </p>
-        <p className="font-sans text-sm text-ton-cream/45 mt-2 leading-relaxed">
+        <p className="font-sans text-sm text-ton-cream/55 mt-2 leading-relaxed">
           This principle governs every decision in The Plan. Every phase, every task, every deliverable must
-          pass the 6-second comprehension test. The 3G Logic is not a metaphor - it is a measurement standard.
+          pass the 6-second comprehension test. The 3G Logic is not a metaphor — it is a measurement standard.
         </p>
       </div>
 
@@ -236,7 +236,7 @@ export default function ThePlanView() {
                   <span className="font-mono text-[9px] text-ton-red font-bold flex-shrink-0 mt-0.5">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="font-sans text-sm text-ton-black/50 leading-relaxed">
+                  <span className="font-sans text-sm text-ton-black/65 leading-relaxed">
                     {task}
                   </span>
                 </div>
@@ -246,24 +246,24 @@ export default function ThePlanView() {
 
           {/* Imagery Description */}
           <div className="bg-ton-black/[0.02] p-4 sm:p-5 mb-4">
-            <span className="font-mono text-[8px] text-ton-black/40 uppercase tracking-widest">
+            <span className="font-mono text-[8px] text-ton-black/20 uppercase tracking-widest">
               Phase {phase.number} Imagery
             </span>
             <div className="h-28 sm:h-36 bg-ton-black/[0.04] mt-2 flex items-center justify-center border border-ton-black/6 mb-2.5">
               <div className="text-center px-5">
-                <p className="font-serif text-xs text-ton-black/40 italic line-clamp-3">
+                <p className="font-serif text-xs text-ton-black/15 italic line-clamp-3">
                   {phase.imagery.description.substring(0, 100)}...
                 </p>
               </div>
             </div>
-            <p className="font-serif text-xs sm:text-sm text-ton-black/40 leading-relaxed mb-2.5">
+            <p className="font-serif text-xs sm:text-sm text-ton-black/55 leading-relaxed mb-2.5">
               {phase.imagery.description}
             </p>
             <div className="pt-2.5 border-t border-ton-black/4">
               <span className="font-mono text-[8px] text-ton-red font-bold uppercase tracking-widest">
                 Overlay Specification
               </span>
-              <p className="font-sans text-xs text-ton-black/45 leading-relaxed mt-1">
+              <p className="font-sans text-xs text-ton-black/30 leading-relaxed mt-1">
                 {phase.imagery.overlay}
               </p>
             </div>
@@ -274,7 +274,7 @@ export default function ThePlanView() {
             <span className="font-mono text-[9px] text-ton-red font-bold uppercase tracking-widest">
               {phase.layout.title}
             </span>
-            <p className="font-serif text-sm text-ton-black/50 leading-relaxed mt-1.5">
+            <p className="font-serif text-sm text-ton-black/65 leading-relaxed mt-1.5">
               {phase.layout.description}
             </p>
           </div>
@@ -284,7 +284,7 @@ export default function ThePlanView() {
       {/* Imagery Rules Summary */}
       <section className="mb-8 sm:mb-10 pt-6 border-t-4 border-ton-black ton-bp-page">
         <h2 className="font-serif text-xl sm:text-2xl font-bold text-ton-black mb-2">
-          Imagery Rules - All Phases
+          Imagery Rules — All Phases
         </h2>
         <div className="h-px bg-ton-black/8 mb-5" />
 
@@ -295,20 +295,20 @@ export default function ThePlanView() {
             </h3>
             <div className="space-y-2">
               {[
-                "All photography must be high-contrast grayscale - no exceptions",
+                "All photography must be high-contrast grayscale — no exceptions",
                 "No stock photography. If it is not Namibia, it is not Times of Namibia",
                 "Every image must carry a GPS coordinate watermark in a black box",
                 "Every image must carry a JetBrains Mono timestamp in the same black box",
-                "No rounded corners on any overlay element - sharp rectangles only",
+                "No rounded corners on any overlay element — sharp rectangles only",
                 "Images are displayed grayscale by default; colour appears on hover (digital only)",
-                "Print imagery is always grayscale - no hover state in print",
+                "Print imagery is always grayscale — no hover state in print",
                 "All images must be shot with Namibian content: landscapes, infrastructure, people, commerce",
-                "No artificial lighting in outdoor shots - natural light only",
+                "No artificial lighting in outdoor shots — natural light only",
                 "Aspect ratio: 16:9 for hero images, 4:3 for inline, 1:1 for portraits",
               ].map((rule, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <span className="w-1 h-1 bg-ton-red flex-shrink-0 mt-1.5" />
-                  <span className="font-sans text-xs text-ton-black/50 leading-relaxed">{rule}</span>
+                  <span className="font-sans text-xs text-ton-black/65 leading-relaxed">{rule}</span>
                 </div>
               ))}
             </div>
@@ -320,7 +320,7 @@ export default function ThePlanView() {
             </h3>
             <div className="bg-ton-black/[0.02] p-4">
               <div className="bg-ton-black/[0.04] h-36 flex items-center justify-center border border-ton-black/6 mb-2.5 relative">
-                <p className="font-mono text-[9px] text-ton-black/40 uppercase tracking-widest">[ Image Area ]</p>
+                <p className="font-mono text-[9px] text-ton-black/15 uppercase tracking-widest">[ Image Area ]</p>
                 <div className="absolute bottom-2 left-2 bg-ton-black text-ton-cream px-2 py-1">
                   <p className="font-mono text-[7px] leading-tight">
                     LOCATION NAME // 00.00 S, 00.00 E<br/>
@@ -328,7 +328,7 @@ export default function ThePlanView() {
                   </p>
                 </div>
               </div>
-              <p className="font-sans text-xs text-ton-black/45 leading-relaxed">
+              <p className="font-sans text-xs text-ton-black/30 leading-relaxed">
                 The overlay sits at bottom-left (default) or bottom-right (variant). Black rectangular box.
                 JetBrains Mono 8pt. GPS coordinates in uppercase. Timestamp in ISO-8601 with CAT timezone.
                 Sharp corners. No border-radius. The overlay is mandatory on every published image.
@@ -349,7 +349,7 @@ export default function ThePlanView() {
               ].map((rule, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <span className="w-1 h-1 bg-ton-red flex-shrink-0 mt-1.5" />
-                  <span className="font-sans text-xs text-ton-black/50 leading-relaxed">{rule}</span>
+                  <span className="font-sans text-xs text-ton-black/65 leading-relaxed">{rule}</span>
                 </div>
               ))}
             </div>
@@ -363,7 +363,7 @@ export default function ThePlanView() {
           <div className="bg-ton-black text-ton-cream font-mono text-[9px] font-bold px-2 py-0.5 tracking-widest">TON</div>
           <div className="bg-ton-red text-white font-mono text-[9px] font-bold px-2 py-0.5 tracking-widest">PLAN</div>
         </div>
-        <p className="font-mono text-[9px] text-ton-black/40 tracking-widest uppercase">
+        <p className="font-mono text-[9px] text-ton-black/20 tracking-widest uppercase">
           A TANGISON Publication // {new Date().getFullYear()}
         </p>
       </div>
@@ -412,7 +412,7 @@ function generateStandalonePlanHTML(): string {
     <div class="page">
         <h2 style="font-size: 24pt;"><span class="red">I.</span> The Physical Anchor <span class="mono red">Q1-Q2 2026</span></h2>
         <div class="rule"></div>
-        <p>Establish the print-ready Business Plan and the Broadside distribution network. This is the constitution of the company - readable, authoritative, and physically imposing.</p>
+        <p>Establish the print-ready Business Plan and the Broadside distribution network. This is the constitution of the company — readable, authoritative, and physically imposing.</p>
         <div class="img-desc">Wide-angle photograph of a printing press in operation. Grayscale. GPS overlay: 22.57 S, 17.08 E. JetBrains Mono timestamp in black box at bottom-left.</div>
         <h3>Layout: The Broadside</h3>
         <p>Single A3 sheet, double-sided. Three-column grid with TON masthead spanning full width. No images wider than one column. All text in Playfair Display (headlines), Inter (body), JetBrains Mono (data).</p>
@@ -446,7 +446,7 @@ function generateStandalonePlanHTML(): string {
         <div class="rule"></div>
         <p>Consolidation. Self-sustaining editorial operation. 50 verified correspondents. The definitive source of Namibian business intelligence.</p>
         <div class="img-desc">Photograph of Brandberg Mountain at sunset. Grayscale. GPS overlay: 21.07 S, 14.28 E.</div>
-        <h3>Layout: Premium Archive - Annual Compilation</h3>
+        <h3>Layout: Premium Archive — Annual Compilation</h3>
         <p>Perfect-bound A4, 200-300 pages, 120gsm cream. Full-bleed grayscale cover with GPS overlay. Single-column interior with generous margins. Indexed by region, sector, date.</p>
     </div>
 </body>

@@ -135,7 +135,7 @@ export default function JobScraperView() {
         <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-tight">
           Job Scraper
         </h1>
-        <p className="font-serif italic text-ton-black/50 text-sm sm:text-base mt-2 max-w-xl">
+        <p className="font-serif italic text-ton-black/65 text-sm sm:text-base mt-2 max-w-xl">
           Real-time aggregation from LinkedIn, NIEIS, NamibiaJobs, and CareerPortal.
           {filteredJobs.length} positions across {NAMIBIA_REGIONS.length} regions.
         </p>
@@ -147,7 +147,7 @@ export default function JobScraperView() {
 
       {/* Filters Bar */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 pb-5 mb-6 border-b border-ton-black/10">
-        <div className="flex items-center gap-2 text-ton-black/40 flex-shrink-0">
+        <div className="flex items-center gap-2 text-ton-black/55 flex-shrink-0">
           <Filter className="w-3.5 h-3.5" />
           <span className="font-mono text-[10px] uppercase tracking-widest font-bold">
             Filters
@@ -200,7 +200,7 @@ export default function JobScraperView() {
       {/* Job Listings */}
       {filteredJobs.length === 0 ? (
         <div className="py-12 sm:py-16 text-center">
-          <p className="font-serif italic text-ton-black/50 text-lg">
+          <p className="font-serif italic text-ton-black/65 text-lg">
             No positions match your filters.
           </p>
           <button
@@ -238,7 +238,7 @@ export default function JobScraperView() {
                   </h3>
 
                   {/* Meta */}
-                  <div className="flex items-center gap-3 mt-2 text-ton-black/50 flex-wrap">
+                  <div className="flex items-center gap-3 mt-2 text-ton-black/65 flex-wrap">
                     <span className="flex items-center gap-1 font-sans text-xs">
                       <Building2 className="w-3.5 h-3.5" />
                       {job.company}

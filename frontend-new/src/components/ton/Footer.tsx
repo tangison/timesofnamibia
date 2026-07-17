@@ -35,7 +35,7 @@ export default function Footer() {
               >
                 Times of Namibia
               </div>
-              <div className="text-[0.55rem] font-bold tracking-[0.2em] uppercase mt-1.5 text-ton-cream/40">
+              <div className="text-[0.55rem] font-bold tracking-[0.2em] uppercase mt-1.5 text-ton-cream/60">
                 Est. 2026 • Windhoek
               </div>
             </div>
@@ -53,8 +53,8 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-8 pt-6 border-t border-ton-cream/10 flex flex-col sm:flex-row justify-between items-center gap-3 text-[10px] font-mono uppercase tracking-widest text-ton-cream/30">
-          <div>Published by TANGISON</div>
+        <div className="mt-8 pt-6 border-t border-ton-cream/10 flex flex-col sm:flex-row justify-between items-center gap-3 text-[10px] font-mono uppercase tracking-widest text-ton-cream/55">
+          <div>Powered by TANGISON Applied AI</div>
           <div>© {new Date().getFullYear()} Times of Namibia. All rights reserved.</div>
         </div>
       </div>

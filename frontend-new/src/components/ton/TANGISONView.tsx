@@ -12,14 +12,14 @@ export default function TANGISONView() {
         <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-tight mt-2">
           TANGISON
         </h1>
-        <p className="font-serif italic text-ton-black/50 text-sm sm:text-base mt-2 max-w-xl">
+        <p className="font-serif italic text-ton-black/65 text-sm sm:text-base mt-2 max-w-xl">
           Enterprise data pipelines and publishing infrastructure for the African information landscape.
         </p>
 
         <div className="flex items-center gap-4 mt-4">
           <a
             href="/"
-            className="font-mono text-[10px] text-ton-black/40 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
+            className="font-mono text-[10px] text-ton-black/55 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
           >
             <ArrowLeft className="w-3 h-3" />
             Newsroom
@@ -85,7 +85,7 @@ export default function TANGISONView() {
                 { label: "Principle", value: "Density Over Metrics" },
               ].map((spec, i) => (
                 <div key={i} className="flex items-center justify-between border-b border-ton-cream/8 pb-1.5">
-                  <span className="text-ton-cream/40">{spec.label}</span>
+                  <span className="text-ton-cream/60">{spec.label}</span>
                   <span className="text-ton-cream font-bold">{spec.value}</span>
                 </div>
               ))}
@@ -121,7 +121,7 @@ export default function TANGISONView() {
               <Cpu className="w-4 h-4 text-ton-red" />
               <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">Times OS v2.1</span>
             </div>
-            <p className="font-serif text-sm text-ton-black/50 leading-relaxed">
+            <p className="font-serif text-sm text-ton-black/65 leading-relaxed">
               The proprietary scraping and verification engine that powers every data point on the TON platform. Built on microservices architecture, aggregating from NIEIS, Government Gazette, LinkedIn, CareerPortal, and NamibiaJobs on an independent 6-second cycle with 3-point source validation.
             </p>
           </div>
@@ -132,7 +132,7 @@ export default function TANGISONView() {
               <Radio className="w-4 h-4 text-ton-red" />
               <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">TumaOS</span>
             </div>
-            <p className="font-serif text-sm text-ton-black/50 leading-relaxed">
+            <p className="font-serif text-sm text-ton-black/65 leading-relaxed">
               The WhatsApp-native distribution pipeline. In a country where WhatsApp is the primary internet interface for millions, TumaOS ensures verified stories, tender alerts, and job listings reach the reader where they already are. Share mode formats articles with attribution; Listen mode converts verified content into audio dispatches.
             </p>
           </div>
@@ -143,7 +143,7 @@ export default function TANGISONView() {
               <MapPin className="w-4 h-4 text-ton-red" />
               <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">The Broadside</span>
             </div>
-            <p className="font-serif text-sm text-ton-black/50 leading-relaxed">
+            <p className="font-serif text-sm text-ton-black/65 leading-relaxed">
               A3 single-sheet physical printouts at regional transport hubs, taxi ranks, and municipal notice boards. 14 regional editions, 5,000 copies per week, designed to be read standing up in under 90 seconds. 120gsm cream stock, sharp corners, Playfair Display headlines, and monospaced data columns.
             </p>
           </div>
@@ -183,7 +183,7 @@ export default function TANGISONView() {
                   <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">
                     {String(i + 1).padStart(2, "0")} {"//"} {item.label}
                   </span>
-                  <p className="font-serif text-sm text-ton-black/50 leading-relaxed mt-1.5">
+                  <p className="font-serif text-sm text-ton-black/65 leading-relaxed mt-1.5">
                     {item.desc}
                   </p>
                 </li>

@@ -4,7 +4,7 @@ import { ArrowLeft, FileText, ExternalLink, Clock } from "lucide-react";
 const DOCUMENTS = [
   {
     title: "Business Plan",
-    description: "Strategic Business Plan 2026-2028. The constitutional document of Times of Namibia - covering operations, financials, print materials, and the founding manifesto.",
+    description: "Strategic Business Plan 2026-2028. The constitutional document of Times of Namibia — covering operations, financials, print materials, and the founding manifesto.",
     format: "HTML",
     status: "Available" as const,
     href: "/business-plan",
@@ -18,7 +18,7 @@ const DOCUMENTS = [
   },
   {
     title: "Brand System",
-    description: "Visual identity guidelines - the 3-color palette, typography hierarchy, imagery rules, print specifications, and the TON-GI global identity system prompt.",
+    description: "Visual identity guidelines — the 3-color palette, typography hierarchy, imagery rules, print specifications, and the TON-GI global identity system prompt.",
     format: "HTML",
     status: "Available" as const,
     href: "/brand",
@@ -51,15 +51,15 @@ export default function DocumentsView() {
           <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-tight mt-2">
             Documents
           </h1>
-          <p className="font-serif italic text-ton-black/50 text-sm sm:text-base mt-2 max-w-xl">
-            The institutional archive. Every document, every specification, every protocol - catalogued and accessible.
+          <p className="font-serif italic text-ton-black/65 text-sm sm:text-base mt-2 max-w-xl">
+            The institutional archive. Every document, every specification, every protocol — catalogued and accessible.
           </p>
         </div>
 
         <div className="flex items-center gap-4 mt-4">
           <a
             href="/"
-            className="font-mono text-[10px] text-ton-black/40 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
+            className="font-mono text-[10px] text-ton-black/55 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
           >
             <ArrowLeft className="w-3 h-3" />
             Newsroom
@@ -70,18 +70,18 @@ export default function DocumentsView() {
       {/* Summary Bar */}
       <div className="flex items-center gap-6 mb-8 sm:mb-10 pt-5 border-t border-ton-black/8">
         <div>
-          <span className="font-mono text-[9px] text-ton-black/45 uppercase tracking-widest">Total Documents</span>
+          <span className="font-mono text-[9px] text-ton-black/30 uppercase tracking-widest">Total Documents</span>
           <p className="font-serif text-2xl font-bold text-ton-black mt-0.5">{DOCUMENTS.length}</p>
         </div>
         <div className="h-8 w-px bg-ton-black/8" />
         <div>
-          <span className="font-mono text-[9px] text-ton-black/45 uppercase tracking-widest">Available</span>
+          <span className="font-mono text-[9px] text-ton-black/30 uppercase tracking-widest">Available</span>
           <p className="font-serif text-2xl font-bold text-ton-black mt-0.5">{DOCUMENTS.filter(d => d.status === "Available").length}</p>
         </div>
         <div className="h-8 w-px bg-ton-black/8" />
         <div>
-          <span className="font-mono text-[9px] text-ton-black/45 uppercase tracking-widest">Coming Soon</span>
-          <p className="font-serif text-2xl font-bold text-ton-black/45 mt-0.5">{DOCUMENTS.filter(d => d.status === "Coming Soon").length}</p>
+          <span className="font-mono text-[9px] text-ton-black/30 uppercase tracking-widest">Coming Soon</span>
+          <p className="font-serif text-2xl font-bold text-ton-black/30 mt-0.5">{DOCUMENTS.filter(d => d.status === "Coming Soon").length}</p>
         </div>
       </div>
 
@@ -95,19 +95,19 @@ export default function DocumentsView() {
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
-                  <span className="font-mono text-[9px] text-ton-black/40 font-bold tracking-widest">
+                  <span className="font-mono text-[9px] text-ton-black/20 font-bold tracking-widest">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <h3 className="font-serif text-lg sm:text-xl font-bold text-ton-black">
                     {doc.title}
                   </h3>
                 </div>
-                <p className="font-sans text-xs sm:text-sm text-ton-black/50 leading-relaxed max-w-2xl ml-0 sm:ml-8">
+                <p className="font-sans text-xs sm:text-sm text-ton-black/65 leading-relaxed max-w-2xl ml-0 sm:ml-8">
                   {doc.description}
                 </p>
                 <div className="flex items-center gap-4 mt-3 ml-0 sm:ml-8">
                   {/* Format badge */}
-                  <span className="font-mono text-[9px] font-bold uppercase tracking-widest bg-ton-black/5 px-2 py-0.5 text-ton-black/40">
+                  <span className="font-mono text-[9px] font-bold uppercase tracking-widest bg-ton-black/5 px-2 py-0.5 text-ton-black/55">
                     {doc.format}
                   </span>
                   {/* Status badge */}
@@ -116,7 +116,7 @@ export default function DocumentsView() {
                       Available
                     </span>
                   ) : (
-                    <span className="flex items-center gap-1.5 font-mono text-[9px] font-bold uppercase tracking-widest text-ton-black/40">
+                    <span className="flex items-center gap-1.5 font-mono text-[9px] font-bold uppercase tracking-widest text-ton-black/25">
                       <Clock className="w-3 h-3" />
                       Coming Soon
                     </span>
@@ -135,7 +135,7 @@ export default function DocumentsView() {
                     View Document
                   </a>
                 ) : (
-                  <span className="flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-widest bg-ton-black/5 text-ton-black/40 px-4 py-2.5">
+                  <span className="flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-widest bg-ton-black/5 text-ton-black/20 px-4 py-2.5">
                     <Clock className="w-3.5 h-3.5" />
                     Not Yet Available
                   </span>
@@ -166,7 +166,7 @@ export default function DocumentsView() {
 
       {/* TANGISON */}
       <div className="py-8 text-center border-t border-ton-black/8 mt-8">
-        <p className="font-serif italic text-ton-black/45 text-sm">
+        <p className="font-serif italic text-ton-black/30 text-sm">
           All documents are published by TANGISON.
         </p>
         <a

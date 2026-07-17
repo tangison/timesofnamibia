@@ -26,7 +26,7 @@ export default function Navigation({ activePage }: { activePage?: string }) {
                 className={`flex-shrink-0 px-3 sm:px-4 py-3 min-h-[44px] flex items-center font-sans text-[11px] sm:text-xs font-semibold tracking-widest uppercase transition-colors duration-150 border-b-2 whitespace-nowrap snap-start ${
                   isActive
                     ? "text-ton-black border-ton-red bg-ton-red/[0.04]"
-                    : "border-transparent text-ton-black/40 hover:text-ton-black hover:border-ton-black/20"
+                    : "border-transparent text-ton-black/55 hover:text-ton-black hover:border-ton-black/20"
                 }`}
               >
                 {item.label}

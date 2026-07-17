@@ -14,7 +14,7 @@ export default function AccessibilityView() {
           <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-tight mt-2">
             Accessibility
           </h1>
-          <p className="font-serif italic text-ton-black/50 text-sm sm:text-base mt-2 max-w-xl">
+          <p className="font-serif italic text-ton-black/65 text-sm sm:text-base mt-2 max-w-xl">
             Our commitment to making Times of Namibia accessible to all readers. Last updated: 2026-04-28.
           </p>
         </div>
@@ -22,7 +22,7 @@ export default function AccessibilityView() {
         <div className="flex items-center gap-4 mt-4">
           <a
             href="/"
-            className="font-mono text-[10px] text-ton-black/40 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
+            className="font-mono text-[10px] text-ton-black/55 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
           >
             <ArrowLeft className="w-3 h-3" />
             Newsroom
@@ -89,7 +89,7 @@ export default function AccessibilityView() {
                 key={i}
                 className="flex items-center justify-between border-b border-ton-cream/8 pb-1.5"
               >
-                <span className="text-ton-cream/40">{spec.label}</span>
+                <span className="text-ton-cream/60">{spec.label}</span>
                 <span className="text-ton-cream font-bold">{spec.value}</span>
               </div>
             ))}
@@ -163,7 +163,7 @@ export default function AccessibilityView() {
                   {String(i + 1).padStart(2, "0")} {"//"} {feature.title}
                 </span>
               </div>
-              <p className="font-serif text-sm text-ton-black/50 leading-relaxed">
+              <p className="font-serif text-sm text-ton-black/65 leading-relaxed">
                 {feature.desc}
               </p>
             </div>
@@ -241,7 +241,7 @@ export default function AccessibilityView() {
                     key={i}
                     className="flex items-center justify-between border-b border-ton-cream/8 pb-1.5"
                   >
-                    <span className="text-ton-cream/40">{spec.label}</span>
+                    <span className="text-ton-cream/60">{spec.label}</span>
                     <span className="text-ton-cream font-bold">{spec.value}</span>
                   </div>
                 ))}

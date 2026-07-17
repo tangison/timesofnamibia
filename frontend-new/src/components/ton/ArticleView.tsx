@@ -228,7 +228,7 @@ export default function ArticleView({ article }: ArticleViewProps) {
         {article.subheadline && (
           <motion.h2
             variants={fadeUpItem}
-            className="font-serif italic text-ton-black/50 text-lg sm:text-xl mt-3 leading-relaxed max-w-2xl font-normal"
+            className="font-serif italic text-ton-black/65 text-lg sm:text-xl mt-3 leading-relaxed max-w-2xl font-normal"
           >
             {article.subheadline}
           </motion.h2>
@@ -268,7 +268,7 @@ export default function ArticleView({ article }: ArticleViewProps) {
               {article.authorLine}
             </span>
             {isRss && article.rssFeed && (
-              <span className="font-mono text-[8px] font-bold tracking-widest uppercase bg-ton-black/5 text-ton-black/50 px-2 py-0.5">
+              <span className="font-mono text-[8px] font-bold tracking-widest uppercase bg-ton-black/5 text-ton-black/65 px-2 py-0.5">
                 Via {article.rssFeed.name}
               </span>
             )}
@@ -346,10 +346,10 @@ export default function ArticleView({ article }: ArticleViewProps) {
         {isRss && article.rssFeed && (
           <div className="mt-8 pt-4 border-t border-ton-black/8">
             <div className="flex items-center gap-2">
-              <span className="font-mono text-[8px] font-bold tracking-widest uppercase bg-ton-black/5 text-ton-black/50 px-2 py-0.5">
+              <span className="font-mono text-[8px] font-bold tracking-widest uppercase bg-ton-black/5 text-ton-black/65 px-2 py-0.5">
                 Source
               </span>
-              <span className="font-sans text-xs text-ton-black/40">
+              <span className="font-sans text-xs text-ton-black/55">
                 This article was originally published by{" "}
                 <strong className="text-ton-black/60">{article.rssFeed.name}</strong>
                 {article.rssFeed.url && (

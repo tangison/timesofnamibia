@@ -126,7 +126,7 @@ export default function WorldView({ articles }: WorldViewProps) {
             <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-tight mt-2">
               World News
             </h1>
-            <p className="font-serif italic text-ton-black/50 text-sm sm:text-base mt-2 max-w-xl">
+            <p className="font-serif italic text-ton-black/65 text-sm sm:text-base mt-2 max-w-xl">
               Verified international coverage sourced from wire services, government agencies, and
               confirmed correspondents across five continents.
             </p>
@@ -161,7 +161,7 @@ export default function WorldView({ articles }: WorldViewProps) {
           <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-tight mt-2">
             World News
           </h1>
-          <p className="font-serif italic text-ton-black/50 text-sm sm:text-base mt-2 max-w-xl">
+          <p className="font-serif italic text-ton-black/65 text-sm sm:text-base mt-2 max-w-xl">
             Verified international coverage sourced from wire services, government agencies, and
             confirmed correspondents across five continents.
           </p>
@@ -181,7 +181,7 @@ export default function WorldView({ articles }: WorldViewProps) {
           </h2>
         </div>
         <div className="h-px bg-ton-black/8 mb-5" />
-        <p className="font-serif text-sm text-ton-black/50 leading-relaxed mb-5">
+        <p className="font-serif text-sm text-ton-black/65 leading-relaxed mb-5">
           Every article on the World Desk carries a credibility badge indicating the verification
           status and nature of the source. This is not decoration - it is the structural integrity
           of international reporting.
@@ -209,7 +209,7 @@ export default function WorldView({ articles }: WorldViewProps) {
           ).map((badge) => (
             <div key={badge.type} className="pt-4 border-t border-ton-black/8">
               <SourceBadge type={badge.type} />
-              <p className="font-sans text-[11px] text-ton-black/40 mt-2 leading-relaxed">
+              <p className="font-sans text-[11px] text-ton-black/55 mt-2 leading-relaxed">
                 {badge.desc}
               </p>
             </div>
@@ -247,7 +247,7 @@ export default function WorldView({ articles }: WorldViewProps) {
               </a>
 
               {featuredArticle.subheadline && (
-                <p className="font-serif italic text-ton-black/40 text-sm sm:text-base mt-2 leading-relaxed max-w-xl">
+                <p className="font-serif italic text-ton-black/55 text-sm sm:text-base mt-2 leading-relaxed max-w-xl">
                   {featuredArticle.subheadline}
                 </p>
               )}
@@ -295,7 +295,7 @@ export default function WorldView({ articles }: WorldViewProps) {
           <div className="md:col-span-5 pl-0 md:pl-5 mt-5 md:mt-0">
             <div className="border-t-2 border-ton-black pt-2 mb-3">
               <div className="flex items-center justify-between">
-                <span className="font-mono text-[9px] font-bold tracking-[0.2em] uppercase text-ton-black/50">
+                <span className="font-mono text-[9px] font-bold tracking-[0.2em] uppercase text-ton-black/65">
                   More World News
                 </span>
                 <ScrapedTimestamp label="Updated" />
@@ -397,7 +397,7 @@ export default function WorldView({ articles }: WorldViewProps) {
         <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">
           World Desk
         </span>
-        <blockquote className="font-serif italic text-lg sm:text-xl md:text-2xl text-ton-black/40 leading-relaxed mt-3 max-w-2xl mx-auto">
+        <blockquote className="font-serif italic text-lg sm:text-xl md:text-2xl text-ton-black/55 leading-relaxed mt-3 max-w-2xl mx-auto">
           International coverage sourced, verified, and timestamped. Every datum carries its proof.
         </blockquote>
         <p className="font-mono text-[10px] text-ton-black/40 mt-3 tracking-wider">

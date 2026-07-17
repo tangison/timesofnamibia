@@ -60,7 +60,7 @@ function priorityConfig(priority: WireSubmission["priority"]) {
       };
     case "routine":
       return {
-        color: "text-ton-black/40",
+        color: "text-ton-black/55",
         bg: "bg-ton-black/5",
         icon: <Clock className="w-3 h-3" />,
         label: "ROUTINE",
@@ -83,7 +83,7 @@ function categoryColor(category: string) {
     case "Infrastructure":
       return "text-blue-600";
     default:
-      return "text-ton-black/50";
+      return "text-ton-black/65";
   }
 }
 
@@ -142,12 +142,12 @@ export default function ContributorDashboard() {
         <div className="flex items-center gap-4 mt-4">
           <a
             href="/"
-            className="font-mono text-[10px] text-ton-black/40 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
+            className="font-mono text-[10px] text-ton-black/55 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
           >
             <ArrowLeft className="w-3 h-3" />
             Newsroom
           </a>
-          <span className="font-mono text-[9px] text-ton-black/40">TANGISON</span>
+          <span className="font-mono text-[9px] text-ton-black/20">TANGISON</span>
         </div>
       </div>
 
@@ -162,7 +162,7 @@ export default function ContributorDashboard() {
             <div className="space-y-5">
               {/* Title */}
               <div>
-                <Label className="font-mono text-[10px] uppercase tracking-wider text-ton-black/50">
+                <Label className="font-mono text-[10px] uppercase tracking-wider text-ton-black/65">
                   Wire Title *
                 </Label>
                 <Input
@@ -176,7 +176,7 @@ export default function ContributorDashboard() {
               {/* Category + Priority */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <Label className="font-mono text-[10px] uppercase tracking-wider text-ton-black/50">
+                  <Label className="font-mono text-[10px] uppercase tracking-wider text-ton-black/65">
                     Category *
                   </Label>
                   <Select value={category} onValueChange={setCategory}>
@@ -192,7 +192,7 @@ export default function ContributorDashboard() {
                   </Select>
                 </div>
                 <div>
-                  <Label className="font-mono text-[10px] uppercase tracking-wider text-ton-black/50">
+                  <Label className="font-mono text-[10px] uppercase tracking-wider text-ton-black/65">
                     Priority
                   </Label>
                   <Select
@@ -216,7 +216,7 @@ export default function ContributorDashboard() {
 
               {/* Source */}
               <div>
-                <Label className="font-mono text-[10px] uppercase tracking-wider text-ton-black/50">
+                <Label className="font-mono text-[10px] uppercase tracking-wider text-ton-black/65">
                   Source Attribution
                 </Label>
                 <Input
@@ -229,7 +229,7 @@ export default function ContributorDashboard() {
 
               {/* Content */}
               <div>
-                <Label className="font-mono text-[10px] uppercase tracking-wider text-ton-black/50">
+                <Label className="font-mono text-[10px] uppercase tracking-wider text-ton-black/65">
                   Content Body *
                 </Label>
                 <Textarea
@@ -244,19 +244,19 @@ export default function ContributorDashboard() {
               {/* Verification Toggle */}
               <div className="flex items-center justify-between py-3 border-t border-ton-black/5">
                 <div>
-                  <Label className="font-mono text-[10px] uppercase tracking-wider text-ton-black/50">
+                  <Label className="font-mono text-[10px] uppercase tracking-wider text-ton-black/65">
                     Verification Status
                   </Label>
-                  <p className="font-mono text-[10px] text-ton-black/45 mt-0.5">
+                  <p className="font-mono text-[10px] text-ton-black/30 mt-0.5">
                     {verified ? "Source verified and cross-referenced" : "Awaiting verification"}
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className={`font-mono text-[10px] ${!verified ? "text-ton-red" : "text-ton-black/45"}`}>
+                  <span className={`font-mono text-[10px] ${!verified ? "text-ton-red" : "text-ton-black/30"}`}>
                     Unverified
                   </span>
                   <Switch checked={verified} onCheckedChange={setVerified} />
-                  <span className={`font-mono text-[10px] ${verified ? "text-emerald-600" : "text-ton-black/45"}`}>
+                  <span className={`font-mono text-[10px] ${verified ? "text-emerald-600" : "text-ton-black/30"}`}>
                     Verified
                   </span>
                 </div>
@@ -278,12 +278,12 @@ export default function ContributorDashboard() {
         <div className="lg:col-span-3">
           <div className="flex items-center justify-between mb-5">
             <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-ton-black/45" />
-              <h2 className="font-mono text-[10px] font-bold tracking-widest uppercase text-ton-black/50">
+              <Clock className="w-4 h-4 text-ton-black/30" />
+              <h2 className="font-mono text-[10px] font-bold tracking-widest uppercase text-ton-black/65">
                 Recent Submissions
               </h2>
             </div>
-            <span className="font-mono text-[10px] text-ton-black/45">
+            <span className="font-mono text-[10px] text-ton-black/30">
               {submissions.length} wires
             </span>
           </div>
@@ -322,12 +322,12 @@ export default function ContributorDashboard() {
                   </h3>
 
                   {/* Content preview */}
-                  <p className="font-sans text-xs text-ton-black/50 mt-1.5 line-clamp-2 leading-relaxed">
+                  <p className="font-sans text-xs text-ton-black/65 mt-1.5 line-clamp-2 leading-relaxed">
                     {wire.content}
                   </p>
 
                   {/* Meta */}
-                  <div className="flex items-center gap-3 mt-2.5 font-mono text-[10px] text-ton-black/45 flex-wrap">
+                  <div className="flex items-center gap-3 mt-2.5 font-mono text-[10px] text-ton-black/30 flex-wrap">
                     <span className="flex items-center gap-1">
                       <User className="w-3 h-3" />
                       {wire.author}

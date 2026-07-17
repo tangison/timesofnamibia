@@ -61,9 +61,13 @@
      ============================================================ */
 
   /* Primary palette */
+  /* Primary palette
+     NOTE: ton-red darkened from #C56A4A to #9A3F18 (Universal Audit 2026-07-15)
+     to meet WCAG 2 AA contrast (4.5:1) against both --ton-cream and white.
+     Fixes axe-core/pa11y/lighthouse color-contrast violations. */
   --color-ton-cream: #FAFAF8;      /* warm-white: primary background */
   --color-ton-black: #111315;      /* atlantic-black: dark sections, primary text */
-  --color-ton-red: #C56A4A;        /* rust-signal: primary accent, CTAs */
+  --color-ton-red: #9A3F18;        /* rust-signal: primary accent, CTAs (WCAG AA) */
 
   /* Secondary palette */
   --color-ton-teal: #2CB5B4;       /* signal-teal: secondary accent */

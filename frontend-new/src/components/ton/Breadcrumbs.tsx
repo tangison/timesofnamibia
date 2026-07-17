@@ -26,7 +26,7 @@ export default function Breadcrumbs({ items }: { items: BreadcrumbItem[] }) {
               {item.label}
             </a>
           ) : (
-            <span className="font-mono text-[9px] sm:text-[10px] text-ton-black/50 uppercase tracking-wider font-semibold">
+            <span className="font-mono text-[9px] sm:text-[10px] text-ton-black/65 uppercase tracking-wider font-semibold">
               {item.label}
             </span>
           )}

@@ -14,7 +14,7 @@ export default function TermsView() {
           <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-tight mt-2">
             Terms of Service
           </h1>
-          <p className="font-serif italic text-ton-black/50 text-sm sm:text-base mt-2 max-w-xl">
+          <p className="font-serif italic text-ton-black/65 text-sm sm:text-base mt-2 max-w-xl">
             The terms governing your use of the Times of Namibia platform. Last updated: 2026-04-28.
           </p>
         </div>
@@ -22,7 +22,7 @@ export default function TermsView() {
         <div className="flex items-center gap-4 mt-4">
           <a
             href="/"
-            className="font-mono text-[10px] text-ton-black/40 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
+            className="font-mono text-[10px] text-ton-black/55 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
           >
             <ArrowLeft className="w-3 h-3" />
             Newsroom
@@ -79,7 +79,7 @@ export default function TermsView() {
           <p className="font-serif text-base sm:text-lg font-bold text-ton-black mt-2">
             Access is acceptance. If you disagree, close the tab.
           </p>
-          <p className="font-sans text-xs text-ton-black/40 mt-1">
+          <p className="font-sans text-xs text-ton-black/55 mt-1">
             There is no ambiguity. Reading this platform means accepting these terms.
           </p>
         </div>
@@ -129,7 +129,7 @@ export default function TermsView() {
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-2.5">
                   <span className="text-ton-red font-bold mt-0.5 flex-shrink-0 text-sm">✗</span>
-                  <span className="font-sans text-xs sm:text-sm text-ton-black/50 leading-relaxed">
+                  <span className="font-sans text-xs sm:text-sm text-ton-black/65 leading-relaxed">
                     {item}
                   </span>
                 </li>
@@ -166,7 +166,7 @@ export default function TermsView() {
             <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">
               Our Commitment
             </span>
-            <p className="font-serif text-sm text-ton-black/50 leading-relaxed mt-2">
+            <p className="font-serif text-sm text-ton-black/65 leading-relaxed mt-2">
               We verify before we publish. Every datum carries its source, timestamp, and
               verification status. When errors occur, they are corrected transparently - never
               silently.
@@ -176,7 +176,7 @@ export default function TermsView() {
             <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">
               Your Responsibility
             </span>
-            <p className="font-serif text-sm text-ton-black/50 leading-relaxed mt-2">
+            <p className="font-serif text-sm text-ton-black/65 leading-relaxed mt-2">
               Readers should verify critical information independently before making decisions based
               on published content. No news platform is infallible. Independent verification is the
               mark of an informed citizen.
@@ -186,7 +186,7 @@ export default function TermsView() {
             <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">
               Disclaimer
             </span>
-            <p className="font-serif text-sm text-ton-black/50 leading-relaxed mt-2">
+            <p className="font-serif text-sm text-ton-black/65 leading-relaxed mt-2">
               The materials on the Service are provided on an &ldquo;as is&rdquo; basis. TANGISON
               Digital makes no warranties, expressed or implied, and hereby disclaims all warranties
               including without limitation implied warranties of merchantability or fitness for a
@@ -294,7 +294,7 @@ export default function TermsView() {
                     key={i}
                     className="flex items-center justify-between border-b border-ton-cream/8 pb-1.5"
                   >
-                    <span className="text-ton-cream/40">{spec.label}</span>
+                    <span className="text-ton-cream/60">{spec.label}</span>
                     <span className="text-ton-cream font-bold">{spec.value}</span>
                   </div>
                 ))}

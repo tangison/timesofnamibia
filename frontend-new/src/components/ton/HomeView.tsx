@@ -153,7 +153,7 @@ export default function HomeView({
                 <span className="font-mono text-xs font-bold text-ton-black/70 uppercase tracking-wider">
                   {m.pair}
                 </span>
-                <span className="font-mono text-xs text-ton-black/50">{m.rate}</span>
+                <span className="font-mono text-xs text-ton-black/65">{m.rate}</span>
               </div>
             ))}
           </motion.div>
@@ -262,7 +262,7 @@ export default function HomeView({
                           <a href={job.url} target="_blank" rel="noopener noreferrer">{job.title}</a>
                         ) : job.title}
                       </h4>
-                      <p className="font-mono text-[10px] text-ton-black/40 mt-1 uppercase tracking-wider">
+                      <p className="font-mono text-[10px] text-ton-black/55 mt-1 uppercase tracking-wider">
                         {job.company} • {job.location}
                       </p>
                       {job.salary && (
@@ -289,10 +289,10 @@ export default function HomeView({
                       <h4 className="font-serif font-bold text-sm text-ton-black group-hover:text-ton-red transition-colors leading-snug">
                         {tender.title}
                       </h4>
-                      <p className="font-mono text-[10px] text-ton-black/40 mt-1 uppercase tracking-wider">
+                      <p className="font-mono text-[10px] text-ton-black/55 mt-1 uppercase tracking-wider">
                         {tender.department}
                       </p>
-                      <p className="font-mono text-xs text-ton-black/50 mt-1">
+                      <p className="font-mono text-xs text-ton-black/65 mt-1">
                         Deadline: {new Date(tender.deadline).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
                       </p>
                     </div>

@@ -40,7 +40,7 @@ export default function Masthead() {
               >
                 Times of Namibia
               </div>
-              <div className="text-[0.5rem] font-bold tracking-[0.2em] uppercase mt-0.5 text-ton-black/40">
+              <div className="text-[0.5rem] font-bold tracking-[0.2em] uppercase mt-0.5 text-ton-black/55">
                 Unbiased News. Global Reach.
               </div>
             </a>
@@ -74,7 +74,7 @@ export default function Masthead() {
             >
               Times of Namibia
             </div>
-            <div className="text-xs font-bold tracking-[0.2em] uppercase mt-1 text-ton-black/40">
+            <div className="text-xs font-bold tracking-[0.2em] uppercase mt-1 text-ton-black/55">
               Unbiased News. Global Reach.
             </div>
           </a>

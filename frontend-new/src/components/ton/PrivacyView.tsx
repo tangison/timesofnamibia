@@ -14,7 +14,7 @@ export default function PrivacyView() {
           <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-ton-black leading-tight mt-2">
             Privacy Policy
           </h1>
-          <p className="font-serif italic text-ton-black/50 text-sm sm:text-base mt-2 max-w-xl">
+          <p className="font-serif italic text-ton-black/65 text-sm sm:text-base mt-2 max-w-xl">
             How we collect, use, and protect your information. Last updated: 2026-04-28.
           </p>
         </div>
@@ -22,7 +22,7 @@ export default function PrivacyView() {
         <div className="flex items-center gap-4 mt-4">
           <a
             href="/"
-            className="font-mono text-[10px] text-ton-black/40 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
+            className="font-mono text-[10px] text-ton-black/55 hover:text-ton-black transition-colors flex items-center gap-1.5 uppercase tracking-wider"
           >
             <ArrowLeft className="w-3 h-3" />
             Newsroom
@@ -60,7 +60,7 @@ export default function PrivacyView() {
             <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">
               Direct Information
             </span>
-            <p className="font-serif text-sm text-ton-black/50 leading-relaxed mt-2">
+            <p className="font-serif text-sm text-ton-black/65 leading-relaxed mt-2">
               Information you provide directly: contact details submitted through forms, email
               addresses for newsletter subscriptions, feedback and correspondence, and contributor
               application materials.
@@ -70,7 +70,7 @@ export default function PrivacyView() {
             <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">
               Automatic Information
             </span>
-            <p className="font-serif text-sm text-ton-black/50 leading-relaxed mt-2">
+            <p className="font-serif text-sm text-ton-black/65 leading-relaxed mt-2">
               Information collected automatically when you visit the platform: IP address, browser
               type and version, pages visited, time spent on pages, referring URL, device type, and
               screen resolution. This data is collected via standard HTTP protocols and analytics
@@ -81,7 +81,7 @@ export default function PrivacyView() {
             <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">
               Third-Party Information
             </span>
-            <p className="font-serif text-sm text-ton-black/50 leading-relaxed mt-2">
+            <p className="font-serif text-sm text-ton-black/65 leading-relaxed mt-2">
               Information received from third-party sources: publicly available government databases
               (NIEIS, Government Gazette), verified wire services, and partner publications. All
               third-party data is subject to our 3-point verification matrix before publication.
@@ -128,7 +128,7 @@ export default function PrivacyView() {
           <p className="font-serif text-base sm:text-lg font-bold text-ton-black">
             Data serves the reader. Not the advertiser. Not the algorithm.
           </p>
-          <p className="font-sans text-xs text-ton-black/40 mt-1">
+          <p className="font-sans text-xs text-ton-black/55 mt-1">
             Every data collection decision is measured against this principle. If it does not serve
             the reader, it is not collected.
           </p>
@@ -187,7 +187,7 @@ export default function PrivacyView() {
               <span className="font-mono text-[9px] text-ton-red font-bold tracking-widest uppercase">
                 {String(i + 1).padStart(2, "0")} {"//"} {item.right}
               </span>
-              <p className="font-serif text-sm text-ton-black/50 leading-relaxed mt-2">
+              <p className="font-serif text-sm text-ton-black/65 leading-relaxed mt-2">
                 {item.desc}
               </p>
             </div>
@@ -316,7 +316,7 @@ export default function PrivacyView() {
                     key={i}
                     className="flex items-center justify-between border-b border-ton-cream/8 pb-1.5"
                   >
-                    <span className="text-ton-cream/40">{spec.label}</span>
+                    <span className="text-ton-cream/60">{spec.label}</span>
                     <span className="text-ton-cream font-bold">{spec.value}</span>
                   </div>
                 ))}
